@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shop_style/home/widgets/shadow_text_field.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -32,12 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 Stack(
                   children: [
                     ClipRRect(
-                      borderRadius: const BorderRadius.vertical(
-                        bottom: Radius.circular(140),
-                      ),
                       child: Container(
                         alignment: Alignment.topCenter,
-                        height: height * 0.8,
+                        height: width * 0.45,
                         color: Colors.black,
                         child: PageView.builder(
                           onPageChanged: (value) {
@@ -48,10 +46,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           scrollDirection: Axis.horizontal,
                           itemCount: images.length,
                           itemBuilder: (context, index) {
-                            return SizedBox(
-                              width: width,
-                              child: Image.network(
-                                images[index],
+                            return ClipRRect(
+                              borderRadius: const BorderRadius.vertical(
+                                bottom: Radius.circular(140),
+                              ),
+                              child: Container(
+                                height: width * 0.45,
+                                alignment: Alignment.topCenter,
+                                width: width,
+                                child: Image.network(
+                                  images[index],
+                                ),
                               ),
                             );
                           },
@@ -147,13 +152,31 @@ class _HomeScreenState extends State<HomeScreen> {
                           Row(
                             children: [
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  if (selectedIndex > 0) {
+                                    selectedIndex--;
+                                    setState(() {});
+                                    pageController.animateToPage(selectedIndex,
+                                        duration:
+                                            const Duration(milliseconds: 400),
+                                        curve: Curves.easeInOutCubic);
+                                  }
+                                },
                                 icon: const Icon(
                                   Icons.navigate_before,
                                 ),
                               ),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  if (selectedIndex < images.length - 1) {
+                                    selectedIndex++;
+                                    setState(() {});
+                                    pageController.animateToPage(selectedIndex,
+                                        duration:
+                                            const Duration(milliseconds: 400),
+                                        curve: Curves.easeInOutCubic);
+                                  }
+                                },
                                 icon: const Icon(
                                   Icons.navigate_next_outlined,
                                 ),
@@ -186,108 +209,6 @@ class _HomeScreenState extends State<HomeScreen> {
             border: Border.all(color: Colors.black.withOpacity(0.56)),
             color: (isSelected) ? const Color(0xff524F54) : Colors.transparent,
             shape: BoxShape.circle),
-      ),
-    );
-  }
-}
-
-class GradientBorderPainter extends CustomPainter {
-  final double strokeWidth;
-  final Radius borderRadius;
-  final Gradient gradient;
-
-  GradientBorderPainter({
-    required this.strokeWidth,
-    required this.borderRadius,
-    required this.gradient,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final rect = Offset.zero & size;
-
-    final outerRect = RRect.fromRectAndCorners(
-      Rect.fromLTWH(
-        -strokeWidth / 2,
-        -strokeWidth / 2,
-        size.width + strokeWidth,
-        size.height + strokeWidth,
-      ),
-      topRight: borderRadius,
-      bottomRight: borderRadius,
-    );
-
-    final paint = Paint()
-      ..shader = gradient.createShader(rect)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth;
-
-    canvas.drawRRect(outerRect, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
-}
-
-class ShadowTextField extends StatelessWidget {
-  const ShadowTextField(
-      {super.key,
-      this.height = 40,
-      this.width = 300,
-      this.hintText = 'Search...'});
-  final double height;
-  final double width;
-  final String hintText;
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomPaint(
-      painter: GradientBorderPainter(
-        strokeWidth: 2.0,
-        borderRadius: const Radius.circular(100),
-        gradient: const LinearGradient(
-          colors: [
-            Color(0xff00000000),
-            Color(0xff66666666),
-          ],
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              width: width - 50,
-              height: height,
-              child: TextField(
-                scrollPadding: const EdgeInsets.only(bottom: 10),
-                cursorHeight: 16,
-                style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                  color: Color(0xffbac756D70),
-                ),
-                textDirection: TextDirection.rtl,
-                decoration: InputDecoration(
-                  hintTextDirection: TextDirection.rtl,
-                  hintStyle: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xffbac756D70),
-                  ),
-                  hintText: hintText,
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            const Icon(
-              Icons.search,
-              color: Color(0xffbac756D70),
-            ),
-          ],
-        ),
       ),
     );
   }
