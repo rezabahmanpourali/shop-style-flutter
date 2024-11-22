@@ -3,14 +3,14 @@ import 'package:shop_style/auth/widgets/custom_textfield.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/image_address.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController =
@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: height * 0.175,
                   ),
                   const Text(
-                    'ورود',
+                    'ثبت نام',
                     style: TextStyle(
                       fontSize: 48,
                       color: AppColors.bgrgWhite,
@@ -110,9 +110,22 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                   ),
-
                   SizedBox(
                     height: height * 0.02,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 46, right: 46),
+                    child: CustomTextField(
+                      borderColor: Colors.transparent,
+                      controller: confirmPasswordController,
+                      hintText: 'تکرار رمز عبور',
+                      keyboardType: TextInputType.text,
+                      rightIcon: Icons.lock,
+                      showPasswordIcon: true,
+                    ),
+                  ),
+                  SizedBox(
+                    height: height * 0.04,
                   ),
                   Container(
                     width: width * 0.35,
@@ -123,37 +136,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     child: const Center(
                       child: Text(
-                        'ورود',
+                        'ثبت نام',
                         style: TextStyle(
                           fontSize: 16,
                           color: AppColors.bgBlack,
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: height * 0.01,
-                  ),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'ثبت نام کنید',
-                        style: TextStyle(
-                          decoration: TextDecoration.underline,
-                          decorationColor: AppColors.bgrgWhite,
-                          color: Colors.white,
-                          fontSize: 12,
-                        ),
-                      ),
-                      Text(
-                        'حساب کاربری ندارید؟',
-                        style: TextStyle(
-                          color: AppColors.textBlac100,
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
                   ),
                 ],
               ),

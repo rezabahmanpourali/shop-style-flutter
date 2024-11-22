@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_style/auth/screens/login_screen.dart';
+import 'package:shop_style/auth/screens/register_screen.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/locator.dart';
@@ -35,7 +37,8 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<GlobalController>(
         builder: (context, value, child) {
-          return HomeScreen();
+          // return HomeScreen();
+          return LoginScreen();
         },
       ),
     );
