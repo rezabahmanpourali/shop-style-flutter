@@ -33,6 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 Stack(
                   children: [
                     ClipRRect(
+                      borderRadius: const BorderRadius.vertical(
+                        bottom: Radius.circular(140),
+                      ),
                       child: Container(
                         alignment: Alignment.topCenter,
                         height: width * 0.45,
@@ -46,17 +49,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           scrollDirection: Axis.horizontal,
                           itemCount: images.length,
                           itemBuilder: (context, index) {
-                            return ClipRRect(
-                              borderRadius: const BorderRadius.vertical(
-                                bottom: Radius.circular(140),
-                              ),
-                              child: Container(
-                                height: width * 0.45,
-                                alignment: Alignment.topCenter,
-                                width: width,
-                                child: Image.network(
-                                  images[index],
-                                ),
+                            return Container(
+                              height: width * 0.45,
+                              alignment: Alignment.topCenter,
+                              width: width,
+                              child: Image.network(
+                                images[index],
                               ),
                             );
                           },
