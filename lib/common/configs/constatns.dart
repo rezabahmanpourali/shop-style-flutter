@@ -1,3 +1,3 @@
 class Constatns {
-  static String baseUrl = 'shope_style/api';
+  static String baseUrl = 'https://style-shop.liara.run/';
 }

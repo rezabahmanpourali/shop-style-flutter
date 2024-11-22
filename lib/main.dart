@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_style/auth/screens/login_screen.dart';
 import 'package:shop_style/auth/screens/register_screen.dart';
+import 'package:shop_style/auth/statemanagment/auth_controller.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/locator.dart';
@@ -33,12 +34,15 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => locator.get<GlobalController>(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (context) => locator.get<AuthController>(),
+        ),
       ],
       child: Consumer<GlobalController>(
         builder: (context, value, child) {
           // return HomeScreen();
-          return LoginScreen();
+          return RegisterScreen();
         },
       ),
     );
