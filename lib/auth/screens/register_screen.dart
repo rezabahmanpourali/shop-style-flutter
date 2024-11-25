@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_style/auth/screens/login_screen.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
 import 'package:shop_style/auth/widgets/custom_textfield.dart';
 import 'package:shop_style/common/configs/colors.dart';
@@ -166,14 +167,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               return const CircularProgressIndicator();
                             },
                             errorWidgetBuilder: (message, statusCode) {
-                              return Text('یوز با موفقیت ثبت نشد ');
+                              return const Text('یوز با موفقیت ثبت نشد ');
                             },
                             completedWidgetBuilder: (value) {
                               return const Center(
                                 child: Text(
                                   'یوزر با موفقیت ثبت شد ',
                                   style: TextStyle(
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     color: AppColors.bgBlack,
                                   ),
                                 ),
@@ -181,6 +182,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             },
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: height * 0.01,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              'وارد شوید',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                decorationColor: AppColors.bgrgWhite,
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                          const Text(
+                            'حساب کاربری دارید؟',
+                            style: TextStyle(
+                              color: AppColors.textBlac100,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),

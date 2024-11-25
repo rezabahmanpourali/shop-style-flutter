@@ -8,8 +8,11 @@ import 'package:shop_style/locator.dart';
 class AuthController extends ChangeNotifier {
   IAuthenticateRepository authenticateRepository = locator.get();
   BlocStatus registerUserState = BlocStatusInitial();
-
+  BlocStatus loginUserState = BlocStatusInitial();
   ResponseModel? registerUserResponse;
+  ResponseModel? loginUserResponse;
+
+  //متد ثبت نام
   void registerUser(
       {required String userName, required String password}) async {
     registerUserState = BlocStatusLoading();
@@ -27,6 +30,28 @@ class AuthController extends ChangeNotifier {
       registerUserState = BlocStatusError(
         registerUserResponse?.error?.message,
         registerUserResponse?.statusCode,
+      );
+    }
+    notifyListeners();
+  }
+
+  //متد ورود
+  void loginUser({required String userName, required String password}) async {
+    loginUserState = BlocStatusLoading();
+    notifyListeners();
+    loginUserResponse = await authenticateRepository.loginUser(
+      userName: userName,
+      password: password,
+    );
+    if (loginUserResponse?.statusCode == 200) {
+      loginUserState = BlocStatusCompleted(null);
+      locator
+          .get<GlobalController>()
+          .setToken(loginUserResponse?.json['access_token']);
+    } else {
+      loginUserState = BlocStatusError(
+        loginUserResponse?.error?.message,
+        loginUserResponse?.statusCode,
       );
     }
     notifyListeners();

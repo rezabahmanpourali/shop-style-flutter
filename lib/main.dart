@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
       child: Consumer<GlobalController>(
         builder: (context, value, child) {
           // return HomeScreen();
-          return RegisterScreen();
+          return LoginScreen();
         },
       ),
     );

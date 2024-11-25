@@ -5,6 +5,9 @@ import 'package:shop_style/locator.dart';
 abstract class IAuthenticateRepository {
   Future<ResponseModel> registerUser(
       {required String userName, required String password});
+
+  Future<ResponseModel> loginUser(
+      {required String userName, required String password});
 }
 
 class AuthenticateRepository extends IAuthenticateRepository {
@@ -18,4 +21,15 @@ class AuthenticateRepository extends IAuthenticateRepository {
     });
     return response;
   }
+
+  @override
+  Future<ResponseModel> loginUser(
+      {required String userName, required String password}) async {
+    ResponseModel response = await dio.post('auth/login', data: {
+      "username": userName,
+      "password": password,
+    });
+    return response;
+  }
+  
 }
