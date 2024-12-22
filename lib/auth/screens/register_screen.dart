@@ -67,6 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         style: TextStyle(
                           fontSize: 48,
                           color: AppColors.bgrgWhite,
+                          fontFamily: 'IRANSansBold',
                         ),
                       ),
                       //all textfield
@@ -81,6 +82,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           hintText: 'شماره موبایل خود را وارد کنید',
                           keyboardType: TextInputType.emailAddress,
                           rightIcon: Icons.call,
+                          textStyle: const TextStyle(
+                            fontFamily: 'IRANSansRegular',
+                          ),
                         ),
                       ),
                       //password
@@ -93,6 +97,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           borderColor: Colors.transparent,
                           controller: passwordController,
                           hintText: 'رمز عبور',
+                          textStyle: const TextStyle(
+                            fontFamily: 'IRANSansRegular',
+                          ),
                           keyboardType: TextInputType.text,
                           rightIcon: Icons.lock,
                           showPasswordIcon: true,
@@ -102,23 +109,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         height: height * 0.02,
                       ),
                       //confirm password
-                      const Padding(
-                        padding: EdgeInsets.only(right: 58),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Text(
-                              'رمز خود را فراموش کرده اید؟',
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                decorationColor: AppColors.textBlac100,
-                                color: AppColors.textBlac100,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+
                       SizedBox(
                         height: height * 0.02,
                       ),
@@ -128,6 +119,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           borderColor: Colors.transparent,
                           controller: confirmPasswordController,
                           hintText: 'تکرار رمز عبور',
+                          textStyle: const TextStyle(
+                            fontFamily: 'IRANSansRegular',
+                          ),
                           keyboardType: TextInputType.text,
                           rightIcon: Icons.lock,
                           showPasswordIcon: true,
@@ -159,6 +153,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: AppColors.bgBlack,
+                                    fontFamily: 'IRANYekabXB',
                                   ),
                                 ),
                               );
@@ -197,22 +192,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               );
                             },
-                            child: const Text(
-                              'وارد شوید',
-                              style: TextStyle(
-                                decoration: TextDecoration.underline,
-                                decorationColor: AppColors.bgrgWhite,
-                                color: Colors.white,
-                                fontSize: 12,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ));
+                              },
+                              child: const Text(
+                                'وارد شوید',
+                                style: TextStyle(
+                                    decoration: TextDecoration.underline,
+                                    decorationColor: AppColors.bgrgWhite,
+                                    color: Colors.white,
+                                    fontSize: 10,
+                                    fontFamily: 'IRANSansDB'),
                               ),
                             ),
                           ),
                           const Text(
                             'حساب کاربری دارید؟',
                             style: TextStyle(
-                              color: AppColors.textBlac100,
-                              fontSize: 12,
-                            ),
+                                color: AppColors.textBlac100,
+                                fontSize: 10,
+                                fontFamily: 'IRANSansDB'),
                           ),
                         ],
                       ),

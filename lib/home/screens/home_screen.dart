@@ -1,6 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_style/home/widgets/shadow_text_field.dart';
+import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/home/widgets/banner.dart';
+import 'package:shop_style/home/widgets/category_item.dart';
+import 'package:shop_style/home/widgets/list_tile.dart';
+import 'package:shop_style/home/widgets/show_more_text.dart';
+import 'package:shop_style/home/widgets/widgets/sections/kale_party.dart';
+import 'package:shop_style/home/widgets/widgets/sections/map_in_priducts.dart';
+import 'package:shop_style/home/widgets/widgets/sections/map_in_top.dart';
+import 'package:shop_style/home/widgets/widgets/sections/terends_week.dart';
+import 'package:shop_style/home/widgets/widgets/sections/top_hairstyles.dart';
+import 'package:shop_style/home/widgets/widgets/sections/top_products.dart';
+import 'package:shop_style/home/widgets/widgets/sections/top_shop.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -10,203 +20,556 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> images = [
-    'https://s3-alpha-sig.figma.com/img/59c4/6297/e729f3abd313fce5d432605569c3964d?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EcuOCgNNU3HvytT8ccsqBK3pqkndim6nxHRTmdK8AH6G8nzNqpNpkosfhOtzhqk2Ch~vh88C4HlWrvnoRrqdAaht77PXh7~yjrZcQIrkDxJmsTaOPRjQV1EFkZxL29VWVPWZnBi67oUO-KZWmSghwx2U267bezFB~LmSrt3YT4vHVgU~2WCD4mu7CjCWiJUuHjcqlv1Q5IasIeFqAeH~1X2dMXvGA5XpBjaihdC6hJ-phMQpp3vZ5fdJxRIGUAtjK7oPB0NBpqAf7CbroB1~QTWCdbW2r-xZI0kbGutnM77VvOv0KfbXoeVOKDnKeRWNP2ZFJl-uwN1hHal3VVgGgA__',
-    'https://s3-alpha-sig.figma.com/img/59c4/6297/e729f3abd313fce5d432605569c3964d?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EcuOCgNNU3HvytT8ccsqBK3pqkndim6nxHRTmdK8AH6G8nzNqpNpkosfhOtzhqk2Ch~vh88C4HlWrvnoRrqdAaht77PXh7~yjrZcQIrkDxJmsTaOPRjQV1EFkZxL29VWVPWZnBi67oUO-KZWmSghwx2U267bezFB~LmSrt3YT4vHVgU~2WCD4mu7CjCWiJUuHjcqlv1Q5IasIeFqAeH~1X2dMXvGA5XpBjaihdC6hJ-phMQpp3vZ5fdJxRIGUAtjK7oPB0NBpqAf7CbroB1~QTWCdbW2r-xZI0kbGutnM77VvOv0KfbXoeVOKDnKeRWNP2ZFJl-uwN1hHal3VVgGgA__',
-    'https://s3-alpha-sig.figma.com/img/59c4/6297/e729f3abd313fce5d432605569c3964d?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EcuOCgNNU3HvytT8ccsqBK3pqkndim6nxHRTmdK8AH6G8nzNqpNpkosfhOtzhqk2Ch~vh88C4HlWrvnoRrqdAaht77PXh7~yjrZcQIrkDxJmsTaOPRjQV1EFkZxL29VWVPWZnBi67oUO-KZWmSghwx2U267bezFB~LmSrt3YT4vHVgU~2WCD4mu7CjCWiJUuHjcqlv1Q5IasIeFqAeH~1X2dMXvGA5XpBjaihdC6hJ-phMQpp3vZ5fdJxRIGUAtjK7oPB0NBpqAf7CbroB1~QTWCdbW2r-xZI0kbGutnM77VvOv0KfbXoeVOKDnKeRWNP2ZFJl-uwN1hHal3VVgGgA__',
-    'https://s3-alpha-sig.figma.com/img/59c4/6297/e729f3abd313fce5d432605569c3964d?Expires=1732492800&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=EcuOCgNNU3HvytT8ccsqBK3pqkndim6nxHRTmdK8AH6G8nzNqpNpkosfhOtzhqk2Ch~vh88C4HlWrvnoRrqdAaht77PXh7~yjrZcQIrkDxJmsTaOPRjQV1EFkZxL29VWVPWZnBi67oUO-KZWmSghwx2U267bezFB~LmSrt3YT4vHVgU~2WCD4mu7CjCWiJUuHjcqlv1Q5IasIeFqAeH~1X2dMXvGA5XpBjaihdC6hJ-phMQpp3vZ5fdJxRIGUAtjK7oPB0NBpqAf7CbroB1~QTWCdbW2r-xZI0kbGutnM77VvOv0KfbXoeVOKDnKeRWNP2ZFJl-uwN1hHal3VVgGgA__',
+  var controller = PageController(viewportFraction: 0.7);
+  int _selectedIndex = 2; // متغیر برای ذخیره آیتم انتخاب‌شده
+
+  final List<Widget> _pages = [
+    const Placeholder(),
+    const Placeholder(),
+    const Placeholder(),
+    const Placeholder(),
   ];
-  int selectedIndex = 0;
-  PageController pageController = PageController();
+
+  // تابع برای تغییر صفحه در هنگام تغییر انتخاب در باتم نویگیشن
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final List<double> itemWidth = [94, 127, 136];
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverToBoxAdapter(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Stack(
+      backgroundColor: AppColors.arayeshColor,
+      body: SafeArea(
+        child: Center(
+          child: CustomScrollView(
+            slivers: [
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 5,
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(left: 19, right: 22),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.shopping_bag,
+                      ),
+                      Spacer(),
+                      Column(
+                        children: [
+                          Text(
+                            'موقعیت شما',
+                            style: TextStyle(
+                                fontSize: 11,
+                                fontFamily: 'IRANYekanFn',
+                                color: AppColors.textHeader),
+                          ),
+                          Text(
+                            'پردیسان شهروند',
+                            style: TextStyle(
+                              fontSize: 11,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(),
+                      Icon(
+                        Icons.menu,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 17,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Column(
                   children: [
-                    ClipRRect(
-                      borderRadius: const BorderRadius.vertical(
-                        bottom: Radius.circular(140),
-                      ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 22, right: 22),
                       child: Container(
-                        alignment: Alignment.topCenter,
-                        height: width * 0.45,
-                        color: Colors.black,
-                        child: PageView.builder(
-                          onPageChanged: (value) {
-                            selectedIndex = value;
-                            setState(() {});
-                          },
-                          controller: pageController,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: images.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: width * 0.45,
-                              alignment: Alignment.topCenter,
-                              width: width,
-                              child: Image.network(
-                                images[index],
-                              ),
-                            );
-                          },
+                        width: 358,
+                        height: height * 0.06,
+                        decoration: const BoxDecoration(
+                          color: AppColors.searchBoxColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(47),
+                          ),
                         ),
-                      ),
-                    ),
-                    Positioned(
-                      left: width * 0.03,
-                      top: 40,
-                      child: const ShadowTextField(
-                        hintText: 'جستجو از بین 100 برند',
-                      ),
-                    ),
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      top: 10,
-                      child: Column(
-                        children: [
-                          const Text(
-                            'نام فروشگاه',
-                            style: TextStyle(fontSize: 48),
-                          ),
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8),
-                            width: 300,
-                            height: 1,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(2),
-                              color: Colors.black,
-                            ),
-                          ),
-                          SizedBox(
-                            width: 300,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                InkWell(
-                                    onTap: () {}, child: const Text('زنانه')),
-                                InkWell(
-                                    onTap: () {}, child: const Text('مرانه')),
-                                InkWell(
-                                    onTap: () {},
-                                    child: const Text('بچه گانه')),
-                                InkWell(
-                                    onTap: () {}, child: const Text('اکسسوری')),
-                                InkWell(
-                                    onTap: () {}, child: const Text('برندها')),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      top: 32,
-                      right: width * 0.1,
-                      child: const Row(
-                        children: [
-                          Text('وارد شوید'),
-                          SizedBox(width: 10),
-                          Icon(Icons.shopping_basket),
-                        ],
-                      ),
-                    ),
-                    Positioned(
-                      right: width * 0.05,
-                      bottom: height * 0.05,
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: 100,
-                            height: 50,
-                            child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.horizontal,
-                              itemCount: images.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return circleItems(
-                                  isSelected: (selectedIndex == index),
-                                  onTap: () {
-                                    selectedIndex = index;
-                                    setState(() {});
-                                    pageController.animateToPage(selectedIndex,
-                                        duration:
-                                            const Duration(milliseconds: 400),
-                                        curve: Curves.easeInOutCubic);
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                          Row(
+                        child: const Padding(
+                          padding: EdgeInsets.only(right: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              IconButton(
-                                onPressed: () {
-                                  if (selectedIndex > 0) {
-                                    selectedIndex--;
-                                    setState(() {});
-                                    pageController.animateToPage(selectedIndex,
-                                        duration:
-                                            const Duration(milliseconds: 400),
-                                        curve: Curves.easeInOutCubic);
-                                  }
-                                },
-                                icon: const Icon(
-                                  Icons.navigate_before,
+                              Text(
+                                'جستوجو مدل یا ارایشگاه',
+                                style: TextStyle(
+                                  color: AppColors.searchBoxEvents,
+                                  fontSize: 12,
                                 ),
                               ),
-                              IconButton(
-                                onPressed: () {
-                                  if (selectedIndex < images.length - 1) {
-                                    selectedIndex++;
-                                    setState(() {});
-                                    pageController.animateToPage(selectedIndex,
-                                        duration:
-                                            const Duration(milliseconds: 400),
-                                        curve: Curves.easeInOutCubic);
-                                  }
-                                },
-                                icon: const Icon(
-                                  Icons.navigate_next_outlined,
-                                ),
+                              Icon(
+                                Icons.search,
+                                color: AppColors.searchBoxColor,
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 21,
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 22),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'دسته بندی خدمات',
+                        style: TextStyle(
+                          color: AppColors.black,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 12,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 7, right: 22),
+                  child: SizedBox(
+                    height: 43,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: itemWidth.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 8),
+                          child: CategoryItem(
+                            width: itemWidth[index],
+                            isSelected: _selectedIndex == index,
+                            onTap: () {
+                              setState(() {
+                                _selectedIndex = index;
+                              });
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 20,
+                ),
+              ),
+              BannerWidget(
+                controller: controller,
+                itemCount: 3,
+              ),
+              const SliverToBoxAdapter(
+                child: TopHairstyles(),
+              ),
+              const SliverToBoxAdapter(
+                child: TopShop(),
+              ),
+              const SliverToBoxAdapter(
+                child: KaleParty(),
+              ),
+              const SliverToBoxAdapter(child: MapInShop()),
+              const SliverToBoxAdapter(child: TopProducts()),
+              const SliverToBoxAdapter(child: MapInProducts()),
+              const SliverToBoxAdapter(child: TerendWeek()),
+              const SliverToBoxAdapter(
+                child: Divider(
+                  color: AppColors.dividerColor900,
+                  thickness: 2,
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 15,
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.arrow_upward,
+                      size: 10,
+                    ),
+                    Text(
+                      'بازگشت به بالا',
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: AppColors.bgBlack,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 20,
+                ),
+              ),
+              //call button
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 22, right: 27),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 49,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          border: Border.all(
+                            width: 1,
+                            color: AppColors.bgBlack,
+                          ),
+                        ),
+                        child: const Align(
+                          alignment: AlignmentDirectional.center,
+                          child: Text(
+                            'تماس',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: AppColors.bgBlack,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 13),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              'پشتیبانی 24 ساعته',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: AppColors.greyTextFooter,
+                              ),
+                            ),
+                            Text(
+                              'تماس با پشتیبانی',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.bgBlack,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Icon(Icons.headset_mic_outlined),
+                    ],
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 32,
+                ),
+              ),
+              //download button
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 22, right: 27),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 49,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          color: AppColors.bgBlack,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: const Align(
+                          alignment: AlignmentDirectional.center,
+                          child: Text(
+                            'دانلود',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: AppColors.whiteTextFooter,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      const Padding(
+                        padding: EdgeInsets.only(right: 13),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Text(
+                              'دانلود اپلیکیشن',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: AppColors.greyTextFooter,
+                              ),
+                            ),
+                            Text(
+                              'نام وبسایت',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: AppColors.bgBlack,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(6),
+                          color: AppColors.greyContainer,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              //list Tile 1
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 16,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: CustomListTile(
+                  text: 'خدمات مشتریان',
+                  onTap: () {},
+                ),
+              ),
+              //list Tile 2
+              SliverToBoxAdapter(
+                child: CustomListTile(
+                  text: 'راهنمای ثبت آرایشگاه',
+                  onTap: () {},
+                ),
+              ),
+              //list Tile 3
+              SliverToBoxAdapter(
+                child: CustomListTile(
+                  text: 'راهنمای رزرو نوبت از آرایشگاه',
+                  onTap: () {},
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        color: AppColors.dividerColor900,
+                        width: 2,
+                      ),
+                    ),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 22, right: 22, top: 20),
+                    child: Row(
+                      children: [
+                        Icon(Icons.textsms_sharp),
+                        Icon(Icons.textsms_sharp),
+                        Icon(Icons.textsms_sharp),
+                        Spacer(),
+                        Text(
+                          '!همراه ما باشید',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: AppColors.bgBlack,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 28,
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 22),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        '!از جدیدترین تخفیف ها باخبر بشید',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: AppColors.bgBlack,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      left: 22, right: 22, top: 20, bottom: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Container(
+                        width: 49,
+                        height: 32,
+                        decoration: const BoxDecoration(
+                          color: AppColors.greyButton500,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(6),
+                          ),
+                        ),
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            'ثبت',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: AppColors.whiteTextFooter,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Spacer(),
+                      Container(
+                        padding: const EdgeInsets.only(right: 7, left: 30),
+                        alignment: Alignment.centerRight,
+                        width: 275,
+                        height: 32,
+                        decoration: const BoxDecoration(
+                          color: AppColors.greyCategory,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(6),
+                          ),
+                        ),
+                        child: const Text('ایمیل شما'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: Divider(
+                  color: AppColors.dividerColor100,
+                  thickness: 2,
+                  endIndent: 22,
+                  indent: 22,
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 22, top: 15, bottom: 5),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text('چرا {نام وبسایت} بهترین انتخابه؟'),
+                    ],
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: ShowMoreText(),
+              ),
+              const SliverToBoxAdapter(
+                child: Divider(
+                  color: AppColors.dividerColor900,
+                  thickness: 2,
+                  endIndent: 22,
+                  indent: 22,
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 16,
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.add_circle_outline),
+                    Text('WebSite Name 2024'),
+                  ],
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 16,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            width: double.infinity,
+            height: 2.0,
+            color: AppColors.dividerColor900,
+          ),
+          BottomNavigationBar(
+            backgroundColor: AppColors.navigationColor,
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'حساب کاربری',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.add_a_photo_outlined),
+                label: 'رزرو شده ها',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.location_on_outlined),
+                label: 'جستجو آرایشگاه',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home),
+                label: 'خانه',
+              ),
+            ],
           ),
         ],
-      ),
-    );
-  }
-
-  Widget circleItems({required Function() onTap, required bool isSelected}) {
-    return InkWell(
-      onTap: () {
-        onTap();
-      },
-      child: Container(
-        margin: const EdgeInsets.all(4),
-        height: 15,
-        width: 15,
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.black.withOpacity(0.56)),
-            color: (isSelected) ? const Color(0xff524F54) : Colors.transparent,
-            shape: BoxShape.circle),
       ),
     );
   }

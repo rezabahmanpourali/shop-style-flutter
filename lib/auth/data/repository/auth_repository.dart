@@ -26,8 +26,8 @@ class AuthenticateRepository extends IAuthenticateRepository {
   Future<ResponseModel> loginUser(
       {required String userName, required String password}) async {
     ResponseModel response = await dio.post('auth/login', data: {
-      "username": userName,
-      "password": password,
+      'username': userName,
+      'password': password,
     });
     return response;
   }

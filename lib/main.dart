@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_style/auth/screens/login_screen.dart';
 import 'package:shop_style/auth/screens/register_screen.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
+import 'package:shop_style/barber/screens/barber_shop_page.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/locator.dart';
@@ -12,17 +13,28 @@ import 'package:shop_style/locator.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
-  runApp(MaterialApp(
-    scrollBehavior: const MaterialScrollBehavior().copyWith(
-      dragDevices: {
-        PointerDeviceKind.mouse,
-        PointerDeviceKind.touch,
-        PointerDeviceKind.stylus,
-        PointerDeviceKind.unknown,
-      },
+  runApp(
+    MaterialApp(
+      theme: ThemeData(
+        textTheme: const TextTheme(
+          // bodySmall: TextStyle(color: )
+          headlineSmall: TextStyle(
+            fontFamily: 'IRANYekanFn',
+            fontSize: 11,
+          ),
+        ),
+      ),
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {
+          PointerDeviceKind.mouse,
+          PointerDeviceKind.touch,
+          PointerDeviceKind.stylus,
+          PointerDeviceKind.unknown,
+        },
+      ),
+      home: const MyApp(),
     ),
-    home: MyApp(),
-  ));
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -41,8 +53,7 @@ class MyApp extends StatelessWidget {
       ],
       child: Consumer<GlobalController>(
         builder: (context, value, child) {
-          // return HomeScreen();
-          return LoginScreen();
+          return HomeScreen();
         },
       ),
     );

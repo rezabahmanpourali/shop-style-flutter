@@ -16,8 +16,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +65,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         style: TextStyle(
                           fontSize: 48,
                           color: AppColors.bgrgWhite,
+                          fontFamily: 'IRANSansBold',
+                          fontWeight: FontWeight.w100,
                         ),
                       ),
                       //all textfield
@@ -75,8 +77,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.only(left: 46, right: 46),
                         child: CustomTextField(
                           borderColor: Colors.transparent,
-                          controller: phoneController,
+                          controller: _phoneController,
                           hintText: 'شماره موبایل خود را وارد کنید',
+                          textStyle: const TextStyle(
+                            fontFamily: 'IRANSansRegular',
+                          ),
                           keyboardType: TextInputType.emailAddress,
                           rightIcon: Icons.call,
                         ),
@@ -89,8 +94,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.only(left: 46, right: 46),
                         child: CustomTextField(
                           borderColor: Colors.transparent,
-                          controller: passwordController,
+                          controller: _passwordController,
                           hintText: 'رمز عبور',
+                          textStyle: const TextStyle(
+                            fontFamily: 'IRANSansRegular',
+                          ),
                           keyboardType: TextInputType.text,
                           rightIcon: Icons.lock,
                           showPasswordIcon: true,
@@ -112,6 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 decorationColor: AppColors.textBlac100,
                                 color: AppColors.textBlac100,
                                 fontSize: 12,
+                                fontFamily: 'IRANSansRegular',
                               ),
                             ),
                           ],
@@ -123,10 +132,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       InkWell(
                         onTap: () {
-                          
                           controller.loginUser(
-                            userName: phoneController.text,
-                            password: passwordController.text,
+                            userName: _phoneController.text,
+                            password: _passwordController.text,
                           );
                         },
                         child: Container(
@@ -145,6 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   style: TextStyle(
                                     fontSize: 16,
                                     color: AppColors.bgBlack,
+                                    fontFamily: 'IRANYekabXB',
                                   ),
                                 ),
                               );
@@ -172,23 +181,34 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         height: height * 0.01,
                       ),
-                      const Row(
+                      Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'ثبت نام کنید',
-                            style: TextStyle(
-                              decoration: TextDecoration.underline,
-                              decorationColor: AppColors.bgrgWhite,
-                              color: Colors.white,
-                              fontSize: 12,
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const RegisterScreen(),
+                                ),
+                              );
+                            },
+                            child: const Text(
+                              'ثبت نام کنید',
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                decorationColor: AppColors.bgrgWhite,
+                                color: Colors.white,
+                                fontSize: 10,
+                                fontFamily: 'IRANSansDB',
+                              ),
                             ),
                           ),
                           Text(
                             'حساب کاربری ندارید؟',
                             style: TextStyle(
                               color: AppColors.textBlac100,
-                              fontSize: 12,
+                              fontSize: 10,
+                              fontFamily: 'IRANSansDB',
                             ),
                           ),
                         ],

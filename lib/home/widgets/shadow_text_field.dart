@@ -38,7 +38,7 @@ class ShadowTextField extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,
-                  color: Color(0xffbac756D70),
+                  color: Color(0xffbac756d70),
                 ),
                 textDirection: TextDirection.rtl,
                 decoration: InputDecoration(
