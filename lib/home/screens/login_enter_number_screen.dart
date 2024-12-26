@@ -33,7 +33,7 @@ class LoginEnterNumberPhoneScreen extends StatelessWidget {
                 child: CustomText(
                   text: 'برای ثبت نام یا ورود شماره تلفن خود را وارد کنید',
                   topPadding: height / 4.5,
-                  theme: Theme.of(context).textTheme.bodySmall,
+                  theme: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               const SliverToBoxAdapter(

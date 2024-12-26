@@ -7,11 +7,13 @@ class CustomTextfield extends StatefulWidget {
     this.lableField,
     required this.type,
     this.hintText,
+    this.topPadding,
   });
 
   final String? lableField;
   final String? hintText;
   final TextfieldType type;
+  final double? topPadding;
 
   @override
   State<CustomTextfield> createState() => _CustomTextfieldState();
@@ -26,33 +28,36 @@ class _CustomTextfieldState extends State<CustomTextfield> {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
 
-    return SingleChildScrollView(
-      child: SizedBox(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              widget.lableField ?? '',
-              style: const TextStyle(color: Color(0xFF000000), fontSize: 14),
-            ),
-            SizedBox(height: height / 100),
-            Container(
-              height: height / 20,
-              decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xFFE5E5E5), width: 2),
-                color: const Color(0xFFFFFFFF),
-                borderRadius: const BorderRadius.all(Radius.circular(360)),
+    return Padding(
+      padding: EdgeInsets.only(top: widget.topPadding ?? 0),
+      child: SingleChildScrollView(
+        child: SizedBox(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                widget.lableField ?? '',
+                style: Theme.of(context).textTheme.displaySmall,
               ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: width / 40),
-                child: Row(
-                  children: [
-                    getTextField(width),
-                  ],
+              SizedBox(height: height / 100),
+              Container(
+                height: height / 20,
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xFFE5E5E5), width: 2),
+                  color: const Color(0xFFFFFFFF),
+                  borderRadius: const BorderRadius.all(Radius.circular(360)),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width / 40),
+                  child: Row(
+                    children: [
+                      getTextField(width),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -84,7 +89,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
 
   Widget getTextfield(width) {
     return SizedBox(
-      width: widget.type == TextfieldType.none ? width / 1.3 : width / 1.51,
+      width: widget.type == TextfieldType.none ? width / 1.3 : width / 1.43,
       child: TextField(
         style: Theme.of(context).textTheme.displayMedium,
         decoration: InputDecoration(

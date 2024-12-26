@@ -12,19 +12,24 @@ class CustomTheme {
     // Define the default `TextTheme`. Use this to specify the default
     // text styling for headlines, titles, bodies of text, and more.
     textTheme: const TextTheme(
-      displayLarge: TextStyle(
-        fontSize: 72,
-        fontWeight: FontWeight.bold,
-      ),
       //
       titleLarge: TextStyle(
         color: Color(0xFF0D1619),
         fontWeight: FontWeight.bold,
         fontSize: 40,
       ),
-      bodySmall: TextStyle(
+      titleMedium: TextStyle(
+        color: Color(0xFF0D1619),
+        fontWeight: FontWeight.bold,
+        fontSize: 30,
+      ),
+      bodyMedium: TextStyle(
         color: Color(0xFF000080),
         fontWeight: FontWeight.bold,
+        fontSize: 14,
+      ),
+      displaySmall: TextStyle(
+        color: Color(0xFF0D1619),
         fontSize: 14,
       ),
       labelSmall: TextStyle(
@@ -39,6 +44,14 @@ class CustomTheme {
         color: Color(0xFFFFFFFF),
         fontWeight: FontWeight.bold,
         fontSize: 20,
+      ),
+      bodySmall: TextStyle(
+        fontSize: 13,
+        color: Color(0xFF0D1619),
+      ),
+      displayLarge: TextStyle(
+        fontSize: 13,
+        color: Color(0xFF000080),
       ),
     ),
   );

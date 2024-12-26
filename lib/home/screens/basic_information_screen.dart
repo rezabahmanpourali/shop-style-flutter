@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/home/screens/completion_information.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
+import 'package:shop_style/home/widgets/custom_button.dart';
+import 'package:shop_style/home/widgets/custom_text.dart';
 import 'package:shop_style/home/widgets/custom_textfield.dart';
 import 'package:shop_style/home/widgets/enums/textfield_type.dart';
 
@@ -24,119 +26,119 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
         padding: EdgeInsets.symmetric(horizontal: width / 15),
         child: Directionality(
           textDirection: TextDirection.rtl,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: height / 10),
-              const Text(
-                'تکمیل حساب کاربری',
-                style: TextStyle(
-                  color: Color(0xFF0D1619),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverToBoxAdapter(
+                child: CustomText(
+                  text: 'تکمیل حساب کاربری',
+                  topPadding: height / 10,
+                  theme: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
-              SizedBox(height: height / 100),
-              const Text(
-                'تقریبا تمام شد! ساخت حساب کاربری خود را برای شماره موبایل 09120000000 با وارد کردن اطلاعات زیر تکمیل کنید',
-                style: TextStyle(
-                  color: Color(0xFF000080),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
+              SliverToBoxAdapter(
+                child: CustomText(
+                  text:
+                      'تقریبا تمام شد! ساخت حساب کاربری خود را برای شماره موبایل 09120000000 با وارد کردن اطلاعات زیر تکمیل کنید',
+                  topPadding: height / 100,
+                  theme: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
-              SizedBox(height: height / 50),
-              const CustomTextfield(
-                lableField: 'نام و نام خانوادگی *',
-                type: TextfieldType.none,
-              ),
-              SizedBox(height: height / 50),
-              const CustomTextfield(
-                lableField: 'رمز عبور *',
-                type: TextfieldType.security,
-              ),
-              SizedBox(height: height / 50),
-              const CustomTextfield(
-                lableField: 'تکرار رمز عبور *',
-                type: TextfieldType.security,
-              ),
-              SizedBox(height: height / 50),
-              const CustomTextfield(
-                lableField: 'ایمیل (اختیاری)',
-                type: TextfieldType.none,
-              ),
-              SizedBox(height: height / 30),
-              Row(
-                children: [
-                  Container(
-                    width: width / 20,
-                    height: width / 20,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                    ),
-                    child: Checkbox(
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      checkColor: const Color(0xFFFFFFFF),
-                      activeColor: const Color(0xFF000080),
-                      value: hasAcceptance,
-                      onChanged: (value) {
-                        setState(() {
-                          hasAcceptance = !hasAcceptance;
-                        });
-                      },
-                    ),
-                  ),
-                  SizedBox(width: width / 40),
-                  const Text(
-                    'قبول ',
-                    style: TextStyle(fontSize: 13, color: Color(0xFF0D1619)),
-                  ),
-                  const Text(
-                    'شرایط و قوانین',
-                    style: TextStyle(fontSize: 13, color: Color(0xFF000080)),
-                  ),
-                  const Text(
-                    ' استفاده از سرویس {نام برنامه}',
-                    style: TextStyle(fontSize: 13, color: Color(0xFF0D1619)),
-                  ),
-                ],
-              ),
-              SizedBox(height: height / 5.5),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const CompletionInformation(),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF0D1619),
-                  minimumSize: Size(width / 3, height / 20),
+              SliverToBoxAdapter(
+                child: CustomTextfield(
+                  topPadding: height / 50,
+                  lableField: 'نام و نام خانوادگی *',
+                  type: TextfieldType.none,
                 ),
-                child: const Text(
-                  'ثبت نام',
-                  style: TextStyle(
-                    color: Color(0xFFFFFFFF),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
+              ),
+              SliverToBoxAdapter(
+                child: CustomTextfield(
+                  topPadding: height / 50,
+                  lableField: 'رمز عبور *',
+                  type: TextfieldType.security,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: CustomTextfield(
+                  topPadding: height / 50,
+                  lableField: 'تکرار رمز عبور *',
+                  type: TextfieldType.security,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: CustomTextfield(
+                  topPadding: height / 50,
+                  lableField: 'ایمیل (اختیاری)',
+                  type: TextfieldType.none,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(top: height / 30),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: width / 20,
+                        height: width / 20,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(5)),
+                        ),
+                        child: Checkbox(
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          checkColor: const Color(0xFFFFFFFF),
+                          activeColor: const Color(0xFF000080),
+                          value: hasAcceptance,
+                          onChanged: (value) {
+                            setState(() {
+                              hasAcceptance = !hasAcceptance;
+                            });
+                          },
+                        ),
+                      ),
+                      SizedBox(width: width / 40),
+                      CustomText(
+                        text: 'قبول ',
+                        theme: Theme.of(context).textTheme.bodySmall,
+                      ),
+                      CustomText(
+                        text: 'شرایط و قوانین',
+                        theme: Theme.of(context).textTheme.displayLarge,
+                      ),
+                      CustomText(
+                        text: ' استفاده از سرویس {نام برنامه}',
+                        theme: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(height: height / 40),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const HomeScreen(),
-                    ),
-                  );
-                },
-                child: const Text(
-                  'بعدا تکمیل کنید',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Color(0xFF000000), fontSize: 14),
+              SliverToBoxAdapter(
+                child: CustomButton(
+                  topPadding: height / 5.5,
+                  textButton: 'ثبت نام',
+                  onClick: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const CompletionInformation(),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const HomeScreen(),
+                      ),
+                    );
+                  },
+                  child: CustomText(
+                    textAlign: TextAlign.center,
+                    text: 'بعدا تکمیل کنید',
+                    theme: Theme.of(context).textTheme.labelSmall,
+                  ),
                 ),
               ),
             ],

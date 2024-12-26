@@ -30,14 +30,14 @@ class _LoginEnterPasswordScreenState extends State<LoginEnterPasswordScreen> {
                 child: CustomText(
                   text: 'کد تایید را وارد کنید',
                   topPadding: height / 10,
-                  theme: Theme.of(context).textTheme.titleLarge,
+                  theme: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               SliverToBoxAdapter(
                 child: CustomText(
                   text: 'کد تایید برای شماره 09120000000 پیامک شد.',
                   topPadding: height / 100,
-                  theme: Theme.of(context).textTheme.bodySmall,
+                  theme: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               SliverToBoxAdapter(
@@ -48,7 +48,7 @@ class _LoginEnterPasswordScreenState extends State<LoginEnterPasswordScreen> {
                   text: 'ارسال مجدد کد تایید تا 2:41 ثانیه دیگر',
                   textAlign: TextAlign.center,
                   topPadding: height / 3.6,
-                  theme: Theme.of(context).textTheme.bodySmall,
+                  theme: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               SliverToBoxAdapter(
