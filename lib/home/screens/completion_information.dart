@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/home/screens/hairdresser_selected.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
-import 'package:shop_style/home/widgets/newWidget/custom_dropdown.dart';
+import 'package:shop_style/home/widgets/custom_dropdown.dart';
 
 class CompletionInformation extends StatefulWidget {
   const CompletionInformation({super.key});

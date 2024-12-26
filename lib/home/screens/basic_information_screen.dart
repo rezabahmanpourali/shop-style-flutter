@@ -1,10 +1,8 @@
-//change icon show password
-
 import 'package:flutter/material.dart';
 import 'package:shop_style/home/screens/completion_information.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
-import 'package:shop_style/home/widgets/newWidget/custom_textfield.dart';
-import 'package:shop_style/home/widgets/newWidget/enums/textfield_type.dart';
+import 'package:shop_style/home/widgets/custom_textfield.dart';
+import 'package:shop_style/home/widgets/enums/textfield_type.dart';
 
 class BasicInformationScreen extends StatefulWidget {
   const BasicInformationScreen({super.key});
@@ -48,38 +46,22 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                 ),
               ),
               SizedBox(height: height / 50),
-              CustomTextfield(
-                height: height,
-                width: width,
-                hasSecurity: false,
-                showPassword: true,
+              const CustomTextfield(
                 lableField: 'نام و نام خانوادگی *',
                 type: TextfieldType.none,
               ),
               SizedBox(height: height / 50),
-              CustomTextfield(
-                height: height,
-                width: width,
-                hasSecurity: true,
-                showPassword: true,
+              const CustomTextfield(
                 lableField: 'رمز عبور *',
                 type: TextfieldType.security,
               ),
               SizedBox(height: height / 50),
-              CustomTextfield(
-                height: height,
-                width: width,
-                hasSecurity: true,
-                showPassword: true,
+              const CustomTextfield(
                 lableField: 'تکرار رمز عبور *',
                 type: TextfieldType.security,
               ),
               SizedBox(height: height / 50),
-              CustomTextfield(
-                height: height,
-                width: width,
-                hasSecurity: false,
-                showPassword: true,
+              const CustomTextfield(
                 lableField: 'ایمیل (اختیاری)',
                 type: TextfieldType.none,
               ),

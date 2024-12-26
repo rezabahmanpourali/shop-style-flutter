@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/home/screens/login_enter_password_screen.dart';
-import 'package:shop_style/home/widgets/newWidget/custom_textfield.dart';
-import 'package:shop_style/home/widgets/newWidget/enums/textfield_type.dart';
+import 'package:shop_style/home/widgets/custom_button.dart';
+import 'package:shop_style/home/widgets/custom_text.dart';
+import 'package:shop_style/home/widgets/custom_textfield.dart';
+import 'package:shop_style/home/widgets/enums/textfield_type.dart';
 
 class LoginEnterNumberPhoneScreen extends StatelessWidget {
   const LoginEnterNumberPhoneScreen({super.key});
@@ -17,56 +19,40 @@ class LoginEnterNumberPhoneScreen extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: width / 15),
         child: Directionality(
           textDirection: TextDirection.rtl,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              SizedBox(height: height / 6),
-              const Text(
-                textAlign: TextAlign.center,
-                'ورود / ثبت نام',
-                style: TextStyle(
-                  color: Color(0xFF0D1619),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 40,
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverToBoxAdapter(
+                child: CustomText(
+                  text: 'ورود / ثبت نام',
+                  textAlign: TextAlign.center,
+                  topPadding: height / 6,
+                  theme: Theme.of(context).textTheme.titleLarge,
                 ),
               ),
-              SizedBox(height: height / 4.5),
-              const Text(
-                'برای ثبت نام یا ورود شماره تلفن خود را وارد کنید',
-                style: TextStyle(
-                  color: Color(0xFF000080),
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
+              SliverToBoxAdapter(
+                child: CustomText(
+                  text: 'برای ثبت نام یا ورود شماره تلفن خود را وارد کنید',
+                  topPadding: height / 4.5,
+                  theme: Theme.of(context).textTheme.bodySmall,
                 ),
               ),
-              CustomTextfield(
-                height: height,
-                width: width,
-                hasSecurity: false,
-                showPassword: false,
-                lableField: '',
-                type: TextfieldType.numberPhone,
-              ),
-              SizedBox(height: height / 30),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const LoginEnterPasswordScreen(),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF0D1619),
-                  minimumSize: Size(width / 3, height / 20),
+              const SliverToBoxAdapter(
+                child: CustomTextfield(
+                  hintText: 'شماره موبایل خود را وارد کنید',
+                  type: TextfieldType.numberPhone,
                 ),
-                child: const Text(
-                  'مرحله بعد',
-                  style: TextStyle(
-                    color: Color(0xFFFFFFFF),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                  ),
+              ),
+              SliverToBoxAdapter(
+                child: CustomButton(
+                  textButton: 'مرحله بعد',
+                  topPadding: height / 30,
+                  onClick: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const LoginEnterPasswordScreen(),
+                      ),
+                    );
+                  },
                 ),
               ),
             ],

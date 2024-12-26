@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_style/home/widgets/newWidget/enums/header_for_screen.dart';
+import 'package:shop_style/home/widgets/enums/header_for_screen.dart';
 
 class HairdresserSelection extends StatelessWidget {
   const HairdresserSelection({super.key});

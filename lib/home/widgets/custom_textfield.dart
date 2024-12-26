@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:shop_style/home/widgets/newWidget/enums/textfield_type.dart';
+import 'package:shop_style/home/widgets/enums/textfield_type.dart';
 
 class CustomTextfield extends StatefulWidget {
   const CustomTextfield({
     super.key,
-    required this.height,
-    required this.width,
-    required this.hasSecurity,
-    required this.showPassword,
-    required this.lableField,
+    this.lableField,
     required this.type,
+    this.hintText,
   });
 
-  final double height;
-  final double width;
-  final bool hasSecurity;
-  final bool showPassword;
-  final String lableField;
+  final String? lableField;
+  final String? hintText;
   final TextfieldType type;
 
   @override
@@ -29,28 +23,31 @@ class _CustomTextfieldState extends State<CustomTextfield> {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+
     return SingleChildScrollView(
       child: SizedBox(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              widget.lableField,
+              widget.lableField ?? '',
               style: const TextStyle(color: Color(0xFF000000), fontSize: 14),
             ),
-            SizedBox(height: widget.height / 100),
+            SizedBox(height: height / 100),
             Container(
-              height: widget.height / 20,
+              height: height / 20,
               decoration: BoxDecoration(
                 border: Border.all(color: const Color(0xFFE5E5E5), width: 2),
                 color: const Color(0xFFFFFFFF),
                 borderRadius: const BorderRadius.all(Radius.circular(360)),
               ),
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: widget.width / 40),
+                padding: EdgeInsets.symmetric(horizontal: width / 40),
                 child: Row(
                   children: [
-                    getTextField(),
+                    getTextField(width),
                   ],
                 ),
               ),
@@ -61,22 +58,22 @@ class _CustomTextfieldState extends State<CustomTextfield> {
     );
   }
 
-  getTextField() {
+  getTextField(width) {
     switch (widget.type) {
       case TextfieldType.none:
-        return getTextfield();
+        return getTextfield(width);
       case TextfieldType.numberPhone:
         return Row(
           children: [
             getNumberPhoneIcon(),
-            getTextfield(),
+            getTextfield(width),
           ],
         );
 
       case TextfieldType.security:
         return Row(
           children: [
-            getTextfield(),
+            getTextfield(width),
             getIconShowPasword(),
           ],
         );
@@ -85,18 +82,15 @@ class _CustomTextfieldState extends State<CustomTextfield> {
     }
   }
 
-  Widget getTextfield() {
+  Widget getTextfield(width) {
     return SizedBox(
-      width: widget.type == TextfieldType.none
-          ? widget.width / 1.3
-          : widget.width / 1.51,
-      child: const TextField(
+      width: widget.type == TextfieldType.none ? width / 1.3 : width / 1.51,
+      child: TextField(
+        style: Theme.of(context).textTheme.displayMedium,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintStyle: TextStyle(
-            color: Color(0xFFBABABA),
-            fontSize: 18,
-          ),
+          hintText: widget.hintText ?? '',
+          hintStyle: Theme.of(context).textTheme.labelSmall,
         ),
       ),
     );
