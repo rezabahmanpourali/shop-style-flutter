@@ -29,4 +29,19 @@ class AppColors {
   static const Color arayeshColor = Color(0xffF4F4F4);
   static const Color white2 = Color(0xffFFFFFF);
   static const Color green1 = Color(0xff129800);
+  static const Color purple = Color(0xff000080);
+  static const Color purple1 = Color(0xff0000F6);
+  static const Color purpleOpacity = Color(0xff000080);
+  static const Color categoryBlack = Color(0xff0D1619);
+  static const Color cardWhite = Color(0xffE5E5E5);
+  static const Color cardWhiteTakhfif = Color(0xffFDFDFD);
+  static const Color textSearchColor = Color(0xff757676);
+  static const Color navigationPorple = Color(0xffA6A6D3);
+  static const Color green = Color(0xff78D240);
+  static const Color yellow = Color(0xffE9D502);
+  static const Color red = Color(0xffFF5656);
+  static const Color green3 = Color(0xff1F8900);
+  static const Color contanerBorder = Color(0xffD3D3D3);
+  static const Color porpleLight = Color(0xffD9D9EC);
+  static const Color greyB9 = Color(0xffB9B9B9);
 }

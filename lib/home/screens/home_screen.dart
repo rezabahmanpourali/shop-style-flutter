@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/barber/screens/barber_shop_page.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/home/widgets/banner.dart';
-import 'package:shop_style/home/widgets/category_item.dart';
 import 'package:shop_style/home/widgets/list_tile.dart';
 import 'package:shop_style/home/widgets/show_more_text.dart';
+import 'package:shop_style/home/widgets/widgets/card_item.dart';
 import 'package:shop_style/home/widgets/widgets/sections/kale_party.dart';
 import 'package:shop_style/home/widgets/widgets/sections/map_in_priducts.dart';
 import 'package:shop_style/home/widgets/widgets/sections/map_in_top.dart';
@@ -30,16 +31,9 @@ class _HomeScreenState extends State<HomeScreen> {
     const Placeholder(),
   ];
 
-  // تابع برای تغییر صفحه در هنگام تغییر انتخاب در باتم نویگیشن
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final List<double> itemWidth = [94, 127, 136];
+    final List<double> itemWidth = [136, 127, 94];
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
@@ -61,10 +55,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.shopping_bag,
+                        Icons.menu,
                       ),
                       Spacer(),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
                             'موقعیت شما',
@@ -73,17 +68,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontFamily: 'IRANYekanFn',
                                 color: AppColors.textHeader),
                           ),
-                          Text(
-                            'پردیسان شهروند',
-                            style: TextStyle(
-                              fontSize: 11,
-                            ),
+                          Row(
+                            children: [
+                              Text(
+                                'پردیسان شهروند',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                ),
+                              ),
+                              Icon(Icons.keyboard_arrow_down_rounded)
+                            ],
                           ),
                         ],
                       ),
                       Spacer(),
                       Icon(
-                        Icons.menu,
+                        Icons.shopping_bag,
                       ),
                     ],
                   ),
@@ -94,59 +94,52 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 17,
                 ),
               ),
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(left: 22, right: 22),
-                      child: Container(
-                        width: 358,
-                        height: height * 0.06,
-                        decoration: const BoxDecoration(
-                          color: AppColors.searchBoxColor,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(47),
-                          ),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.only(right: 12),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                'جستوجو مدل یا ارایشگاه',
-                                style: TextStyle(
-                                  color: AppColors.searchBoxEvents,
-                                  fontSize: 12,
-                                ),
-                              ),
-                              Icon(
-                                Icons.search,
-                                color: AppColors.searchBoxColor,
-                              ),
-                            ],
-                          ),
+              const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 22),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'سلام!',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
-                    ),
-                  ],
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Text(
+                        '{نام کاربر}',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               const SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 21,
+                  height: 19,
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 19,
                 ),
               ),
               const SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.only(right: 22),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'دسته بندی خدمات',
+                        'به تازگی مشاهده کردید',
                         style: TextStyle(
-                          color: AppColors.black,
                           fontSize: 16,
                           fontWeight: FontWeight.w700,
                         ),
@@ -157,28 +150,83 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 12,
+                  height: 19,
+                ),
+              ),
+              //آیتم های کارد
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 242,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 6, right: 22),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 6,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const BarberShopPage(),
+                              ));
+                            },
+                            child: const CardItem(),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 38,
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 22),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'آرایشگاه برتر منطقه شما',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 18,
                 ),
               ),
               SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 7, right: 22),
-                  child: SizedBox(
-                    height: 43,
+                child: SizedBox(
+                  height: 242,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 6, right: 22),
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: itemWidth.length,
+                      itemCount: 6,
                       itemBuilder: (context, index) {
                         return Padding(
-                          padding: const EdgeInsets.only(left: 8),
-                          child: CategoryItem(
-                            width: itemWidth[index],
-                            isSelected: _selectedIndex == index,
+                          padding: const EdgeInsets.only(left: 16),
+                          child: InkWell(
                             onTap: () {
-                              setState(() {
-                                _selectedIndex = index;
-                              });
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => const BarberShopPage(),
+                                ),
+                              );
                             },
+                            child: const CardItem(),
                           ),
                         );
                       },
@@ -188,50 +236,78 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 20,
+                  height: 53,
                 ),
               ),
-              BannerWidget(
-                controller: controller,
-                itemCount: 3,
-              ),
-              const SliverToBoxAdapter(
-                child: TopHairstyles(),
-              ),
-              const SliverToBoxAdapter(
-                child: TopShop(),
-              ),
-              const SliverToBoxAdapter(
-                child: KaleParty(),
-              ),
-              const SliverToBoxAdapter(child: MapInShop()),
-              const SliverToBoxAdapter(child: TopProducts()),
-              const SliverToBoxAdapter(child: MapInProducts()),
-              const SliverToBoxAdapter(child: TerendWeek()),
-              const SliverToBoxAdapter(
-                child: Divider(
-                  color: AppColors.dividerColor900,
-                  thickness: 2,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 15,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+              SliverToBoxAdapter(
+                child: Column(
                   children: [
-                    Icon(
-                      Icons.arrow_upward,
-                      size: 10,
-                    ),
-                    Text(
-                      'بازگشت به بالا',
-                      style: TextStyle(
-                        fontSize: 10,
-                        color: AppColors.bgBlack,
+                    SizedBox(
+                      width: double.infinity,
+                      height: 328,
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              height: 328,
+                              decoration: BoxDecoration(
+                                color: AppColors.white2,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.purpleOpacity.withValues(
+                                      alpha: 0.68,
+                                    ),
+                                    offset: const Offset(0, 0), // افست سایه
+                                    blurRadius: 25.0, // میزان پخش سایه
+                                    spreadRadius: 0.0, // میزان گسترش سایه
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 16,
+                            right: 44,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Image.asset('assets/images/percentage.jpg'),
+                                const SizedBox(
+                                  width: 9,
+                                ),
+                                const Text(
+                                  'کله پارتی!',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.purpleOpacity,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Positioned(
+                            top: 62,
+                            left: 2,
+                            right: 44,
+                            child: SizedBox(
+                              height: 242,
+                              width: 358,
+                              child: ListView.builder(
+                                itemCount: 6,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return const Padding(
+                                    padding: EdgeInsets.only(left: 16),
+                                    child: CardItemParty(),
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -239,335 +315,423 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 20,
-                ),
-              ),
-              //call button
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 22, right: 27),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 49,
-                        height: 32,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          border: Border.all(
-                            width: 1,
-                            color: AppColors.bgBlack,
-                          ),
-                        ),
-                        child: const Align(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                            'تماس',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: AppColors.bgBlack,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Spacer(),
-                      const Padding(
-                        padding: EdgeInsets.only(right: 13),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              'پشتیبانی 24 ساعته',
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: AppColors.greyTextFooter,
-                              ),
-                            ),
-                            Text(
-                              'تماس با پشتیبانی',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: AppColors.bgBlack,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Icon(Icons.headset_mic_outlined),
-                    ],
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 32,
-                ),
-              ),
-              //download button
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 22, right: 27),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 49,
-                        height: 32,
-                        decoration: BoxDecoration(
-                          color: AppColors.bgBlack,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: const Align(
-                          alignment: AlignmentDirectional.center,
-                          child: Text(
-                            'دانلود',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: AppColors.whiteTextFooter,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Spacer(),
-                      const Padding(
-                        padding: EdgeInsets.only(right: 13),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              'دانلود اپلیکیشن',
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: AppColors.greyTextFooter,
-                              ),
-                            ),
-                            Text(
-                              'نام وبسایت',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: AppColors.bgBlack,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 32,
-                        height: 32,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(6),
-                          color: AppColors.greyContainer,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              //list Tile 1
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 16,
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: CustomListTile(
-                  text: 'خدمات مشتریان',
-                  onTap: () {},
-                ),
-              ),
-              //list Tile 2
-              SliverToBoxAdapter(
-                child: CustomListTile(
-                  text: 'راهنمای ثبت آرایشگاه',
-                  onTap: () {},
-                ),
-              ),
-              //list Tile 3
-              SliverToBoxAdapter(
-                child: CustomListTile(
-                  text: 'راهنمای رزرو نوبت از آرایشگاه',
-                  onTap: () {},
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Container(
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        color: AppColors.dividerColor900,
-                        width: 2,
-                      ),
-                    ),
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 22, right: 22, top: 20),
-                    child: Row(
-                      children: [
-                        Icon(Icons.textsms_sharp),
-                        Icon(Icons.textsms_sharp),
-                        Icon(Icons.textsms_sharp),
-                        Spacer(),
-                        Text(
-                          '!همراه ما باشید',
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: AppColors.bgBlack,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 28,
+                  height: 38,
                 ),
               ),
               const SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.only(right: 22),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        '!از جدیدترین تخفیف ها باخبر بشید',
+                        'مدل مو های برتر  منطقه شما',
                         style: TextStyle(
-                          fontSize: 13,
-                          color: AppColors.bgBlack,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
                         ),
                       ),
                     ],
                   ),
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 19,
                 ),
               ),
               SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 242,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 22),
+                    child: ListView.builder(
+                      itemCount: 6,
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) {
+                        return const Padding(
+                          padding: EdgeInsets.only(left: 16),
+                          child: BestCardItemParty(),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 38,
+                ),
+              ),
+              const SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 22, right: 22, top: 20, bottom: 20),
+                  padding: EdgeInsets.only(right: 22),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                        width: 49,
-                        height: 32,
-                        decoration: const BoxDecoration(
-                          color: AppColors.greyButton500,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(6),
-                          ),
+                      Text(
+                        'دسته بندی خدمات',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
                         ),
-                        child: const Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'ثبت',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: AppColors.whiteTextFooter,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const Spacer(),
-                      Container(
-                        padding: const EdgeInsets.only(right: 7, left: 30),
-                        alignment: Alignment.centerRight,
-                        width: 275,
-                        height: 32,
-                        decoration: const BoxDecoration(
-                          color: AppColors.greyCategory,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(6),
-                          ),
-                        ),
-                        child: const Text('ایمیل شما'),
                       ),
                     ],
                   ),
                 ),
               ),
               const SliverToBoxAdapter(
-                child: Divider(
-                  color: AppColors.dividerColor100,
-                  thickness: 2,
-                  endIndent: 22,
-                  indent: 22,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22, top: 15, bottom: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Text('چرا {نام وبسایت} بهترین انتخابه؟'),
-                    ],
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: ShowMoreText(),
-              ),
-              const SliverToBoxAdapter(
-                child: Divider(
-                  color: AppColors.dividerColor900,
-                  thickness: 2,
-                  endIndent: 22,
-                  indent: 22,
-                ),
-              ),
-              const SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 16,
+                  height: 19,
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.add_circle_outline),
-                    Text('WebSite Name 2024'),
-                  ],
+              SliverGrid(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return const CategoryItem();
+                  },
+                  childCount: 3,
                 ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 16,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // تعداد ستون‌ها
+                  crossAxisSpacing: 1, // فاصله افقی بین ستون‌ها
+                  mainAxisSpacing: 0, // فاصله عمودی بین ردیف‌ها
+                  childAspectRatio: 2.1, // نسبت ابعاد کارت‌ها
                 ),
               ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: double.infinity,
-            height: 2.0,
-            color: AppColors.dividerColor900,
+    );
+  }
+}
+
+class CategoryItem extends StatelessWidget {
+  const CategoryItem({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          width: 168,
+          height: 75,
+          decoration: BoxDecoration(
+            color: AppColors.dividerColor100,
+            borderRadius: BorderRadius.circular(16),
           ),
-          BottomNavigationBar(
-            backgroundColor: AppColors.navigationColor,
-            type: BottomNavigationBarType.fixed,
-            currentIndex: _selectedIndex,
-            onTap: _onItemTapped,
-            items: const [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'حساب کاربری',
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Container(
+                margin: const EdgeInsets.only(bottom: 7, right: 8),
+                child: const Expanded(
+                  child: Text(
+                    'اصلاح موی سر',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
               ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.add_a_photo_outlined),
-                label: 'رزرو شده ها',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.location_on_outlined),
-                label: 'جستجو آرایشگاه',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'خانه',
+              Expanded(
+                child: Image.asset('assets/images/Subtract.png'),
               ),
             ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class BestCardItemParty extends StatelessWidget {
+  const BestCardItemParty({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 132,
+      height: 242,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(width: 1, color: AppColors.cardWhite),
+      ),
+      child: Flex(
+        direction: Axis.vertical,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+                bottomLeft: Radius.zero,
+                bottomRight: Radius.zero,
+              ),
+              child: Stack(
+                children: [
+                  Image.asset(
+                    'assets/images/3.jpeg',
+                    fit: BoxFit.fill,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.zero,
+                topRight: Radius.zero,
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16),
+              ),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: AppColors.white2,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 12),
+                      child: Text('نام مدل مو'),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(right: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(Icons.star),
+                          Text('4.4'),
+                          Text('(55)'),
+                        ],
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(right: 12),
+                      child: Text('نام آرایشگاه'),
+                    ),
+                    const SizedBox(
+                      height: 6,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(right: 12),
+                      width: 74,
+                      height: 23,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(24),
+                        border: Border.all(
+                          width: 1,
+                          color: AppColors.cardWhite,
+                        ),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          'مدل مو',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.categoryBlack,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CardItemParty extends StatelessWidget {
+  const CardItemParty({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 132,
+      height: 242,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(width: 1, color: AppColors.cardWhite),
+      ),
+      child: Flex(
+        direction: Axis.vertical,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Expanded(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+                bottomLeft: Radius.zero,
+                bottomRight: Radius.zero,
+              ),
+              child: Stack(
+                children: [
+                  Image.asset(
+                    'assets/images/images1.jpg',
+                    fit: BoxFit.fill,
+                    width: double.infinity,
+                    height: double.infinity,
+                  ),
+                  Positioned(
+                    bottom: 5,
+                    right: 5,
+                    child: Container(
+                      width: 50,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: AppColors.white2.withValues(alpha: 100),
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(27),
+                        ),
+                      ),
+                      child: const Center(
+                        child: Text(
+                          '22%',
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.purpleOpacity,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Expanded(
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.zero,
+                topRight: Radius.zero,
+                bottomLeft: Radius.circular(16),
+                bottomRight: Radius.circular(16),
+              ),
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: AppColors.white2,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 12),
+                      child: Text('نام مدل مو'),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(right: 12),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(Icons.star),
+                          Text('4.9'),
+                          Text('(55)'),
+                        ],
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(right: 12),
+                      child: Text('نام آرایشگاه'),
+                    ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 29,
+                            height: 14,
+                            decoration: const BoxDecoration(
+                              color: AppColors.purpleOpacity,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(27),
+                              ),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                '22%',
+                                style: TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.cardWhiteTakhfif,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          const Text(
+                            '189,000',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400,
+                              decoration: TextDecoration.lineThrough,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          const Text(
+                            'تومان',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(right: 16),
+                      child: Row(
+                        children: [
+                          Text(
+                            ' 139,000',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Text(
+                            'تومان',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
           ),
         ],
       ),
