@@ -22,7 +22,7 @@ class LoginEnterNumberPhoneScreen extends StatelessWidget {
           child: CustomScrollView(
             slivers: <Widget>[
               SliverToBoxAdapter(
-                child: CustomText(
+                child: TextPadding(
                   text: 'ورود / ثبت نام',
                   textAlign: TextAlign.center,
                   topPadding: height / 6,
@@ -30,7 +30,7 @@ class LoginEnterNumberPhoneScreen extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: CustomText(
+                child: TextPadding(
                   text: 'برای ثبت نام یا ورود شماره تلفن خود را وارد کنید',
                   topPadding: height / 4.5,
                   theme: Theme.of(context).textTheme.bodyMedium,

@@ -53,6 +53,15 @@ class CustomTheme {
         fontSize: 13,
         color: Color(0xFF000080),
       ),
+      titleSmall: TextStyle(
+        color: Color(0xFF0D1619),
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
+      ),
+      bodyLarge: TextStyle(
+        color: Color(0xFFE1E100),
+        fontSize: 14,
+      ),
     ),
   );
 }

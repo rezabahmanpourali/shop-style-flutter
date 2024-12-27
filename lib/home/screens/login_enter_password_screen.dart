@@ -27,14 +27,14 @@ class _LoginEnterPasswordScreenState extends State<LoginEnterPasswordScreen> {
           child: CustomScrollView(
             slivers: <Widget>[
               SliverToBoxAdapter(
-                child: CustomText(
+                child: TextPadding(
                   text: 'کد تایید را وارد کنید',
                   topPadding: height / 10,
                   theme: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               SliverToBoxAdapter(
-                child: CustomText(
+                child: TextPadding(
                   text: 'کد تایید برای شماره 09120000000 پیامک شد.',
                   topPadding: height / 100,
                   theme: Theme.of(context).textTheme.bodyMedium,
@@ -44,7 +44,7 @@ class _LoginEnterPasswordScreenState extends State<LoginEnterPasswordScreen> {
                 child: OTPWidget(topPadding: height / 50),
               ),
               SliverToBoxAdapter(
-                child: CustomText(
+                child: TextPadding(
                   text: 'ارسال مجدد کد تایید تا 2:41 ثانیه دیگر',
                   textAlign: TextAlign.center,
                   topPadding: height / 3.6,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomText extends StatelessWidget {
-  const CustomText({
+class TextPadding extends StatelessWidget {
+  const TextPadding({
     super.key,
     required this.text,
     this.theme,

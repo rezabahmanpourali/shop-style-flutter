@@ -29,14 +29,14 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
           child: CustomScrollView(
             slivers: <Widget>[
               SliverToBoxAdapter(
-                child: CustomText(
+                child: TextPadding(
                   text: 'تکمیل حساب کاربری',
                   topPadding: height / 10,
                   theme: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
               SliverToBoxAdapter(
-                child: CustomText(
+                child: TextPadding(
                   text:
                       'تقریبا تمام شد! ساخت حساب کاربری خود را برای شماره موبایل 09120000000 با وارد کردن اطلاعات زیر تکمیل کنید',
                   topPadding: height / 100,
@@ -96,15 +96,15 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                         ),
                       ),
                       SizedBox(width: width / 40),
-                      CustomText(
+                      TextPadding(
                         text: 'قبول ',
                         theme: Theme.of(context).textTheme.bodySmall,
                       ),
-                      CustomText(
+                      TextPadding(
                         text: 'شرایط و قوانین',
                         theme: Theme.of(context).textTheme.displayLarge,
                       ),
-                      CustomText(
+                      TextPadding(
                         text: ' استفاده از سرویس {نام برنامه}',
                         theme: Theme.of(context).textTheme.bodySmall,
                       ),
@@ -134,7 +134,7 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                       ),
                     );
                   },
-                  child: CustomText(
+                  child: TextPadding(
                     textAlign: TextAlign.center,
                     text: 'بعدا تکمیل کنید',
                     theme: Theme.of(context).textTheme.labelSmall,
