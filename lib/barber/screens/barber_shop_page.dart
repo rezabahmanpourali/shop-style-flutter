@@ -824,8 +824,6 @@ class _ServiceCategoriesState extends State<ServiceCategories> {
   }
 }
 
-
-
 class UserComment extends StatelessWidget {
   const UserComment({
     super.key,

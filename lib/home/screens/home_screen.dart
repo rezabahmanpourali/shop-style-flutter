@@ -388,15 +388,24 @@ class _HomeScreenState extends State<HomeScreen> {
               SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    return const CategoryItem();
+                    return SizedBox(
+                      height: MediaQuery.of(context).size.height *
+                          0.1, // تنظیم ارتفاع به نسبت ارتفاع صفحه,
+                      child: CategoryItem(
+                        onChange: () {
+                          print('category');
+                        },
+                      ),
+                    );
                   },
                   childCount: 3,
                 ),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // تعداد ستون‌ها
-                  crossAxisSpacing: 1, // فاصله افقی بین ستون‌ها
-                  mainAxisSpacing: 0, // فاصله عمودی بین ردیف‌ها
-                  childAspectRatio: 2.1, // نسبت ابعاد کارت‌ها
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 1.1,
+                  mainAxisSpacing: 2,
+                  childAspectRatio: MediaQuery.of(context).size.width /
+                      (MediaQuery.of(context).size.height / 5),
                 ),
               ),
             ],
@@ -408,28 +417,31 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 class CategoryItem extends StatelessWidget {
+  final VoidCallback onChange;
   const CategoryItem({
     super.key,
+    required this.onChange,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 168,
-          height: 75,
-          decoration: BoxDecoration(
-            color: AppColors.dividerColor100,
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 7, right: 8),
-                child: const Expanded(
-                  child: Text(
+    return GestureDetector(
+      onTap: onChange,
+      child: Column(
+        children: [
+          Container(
+            width: 168,
+            height: 75,
+            decoration: BoxDecoration(
+              color: AppColors.dividerColor100,
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 7, right: 8),
+                  child: const Text(
                     'اصلاح موی سر',
                     style: TextStyle(
                       fontSize: 14,
@@ -437,14 +449,14 @@ class CategoryItem extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Image.asset('assets/images/Subtract.png'),
-              ),
-            ],
+                SizedBox(
+                  child: Image.asset('assets/images/Subtract.png'),
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -463,8 +475,7 @@ class BestCardItemParty extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         border: Border.all(width: 1, color: AppColors.cardWhite),
       ),
-      child: Flex(
-        direction: Axis.vertical,
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Expanded(
@@ -475,15 +486,11 @@ class BestCardItemParty extends StatelessWidget {
                 bottomLeft: Radius.zero,
                 bottomRight: Radius.zero,
               ),
-              child: Stack(
-                children: [
-                  Image.asset(
-                    'assets/images/3.jpeg',
-                    fit: BoxFit.fill,
-                    width: double.infinity,
-                    height: double.infinity,
-                  ),
-                ],
+              child: Image.asset(
+                'assets/images/3.jpeg',
+                fit: BoxFit.fill,
+                width: double.infinity,
+                height: double.infinity,
               ),
             ),
           ),

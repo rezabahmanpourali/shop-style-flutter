@@ -1,8 +1,8 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
+import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/explor/screens/explore_page.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
@@ -12,20 +12,13 @@ import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
 import 'package:shop_style/reserve_page4/screen/reserve_page4.dart';
 import 'package:shop_style/reserve_page5/screen/reseve_page5.dart';
 import 'package:shop_style/user_page/screens/user_page.dart';
+import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   runApp(
     MaterialApp(
-      theme: ThemeData(
-        textTheme: const TextTheme(
-          headlineSmall: TextStyle(
-            fontFamily: 'IRANYekanFn',
-            fontSize: 11,
-          ),
-        ),
-      ),
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {
           PointerDeviceKind.mouse,
@@ -47,36 +40,25 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // تعریف متغیر برای پیگیری انتخاب بخش
   int _selectedIndex = 0;
 
-  // لیست صفحات مربوط به هر بخش
   final List<Widget> _pages = [
-    Directionality(
+    const Directionality(
       textDirection: TextDirection.rtl,
       child: UserPage(),
     ),
-    // Container(
-    //   color: Colors.green,
-    //   child: const Center(
-    //     child: Text('Developing'),
-    //   ),
-    // ), // صفحه اکتشاف
-
-    Container(
-      color: Colors.red,
-      child: const Center(
-        child: Text('Developing'),
-      ),
-    ), // صفحه خانه
+    const Directionality(
+      textDirection: TextDirection.rtl,
+      child: ViewReservedPage(),
+    ),
     const Directionality(
       textDirection: TextDirection.rtl,
       child: ExplorePage(),
-    ), // صفحه آرایشگاه
+    ),
     const Directionality(
       textDirection: TextDirection.rtl,
       child: HomeScreen(),
-    ), // صفحه ورود
+    ),
   ];
 
   @override
@@ -93,57 +75,145 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<GlobalController>(
         builder: (context, value, child) {
           return Scaffold(
+            extendBody: true,
+            backgroundColor: Colors.transparent,
             body: IndexedStack(
               index: _selectedIndex,
               children: _pages,
             ),
-            bottomNavigationBar: BottomNavigationBar(
-              currentIndex: _selectedIndex,
-              onTap: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-              elevation: 0,
-              selectedItemColor: const Color(0xFF000080),
-              unselectedItemColor: const Color(0xFFA6A6D3),
-              showUnselectedLabels: true,
-              selectedLabelStyle: const TextStyle(
-                color: Color(0xFF000080),
-                fontSize: 10,
-                fontWeight: FontWeight.w800,
-              ),
-              unselectedLabelStyle: const TextStyle(
-                color: Color(0xFFA6A6D3),
-                fontSize: 10,
-                fontWeight: FontWeight.w500,
-              ),
-              items: [
-                BottomNavigationBarItem(
-                  icon: Image.asset(
-                    'assets/images/Person.png',
+            bottomNavigationBar: Container(
+              margin: const EdgeInsets.only(bottom: 20, right: 60, left: 60),
+              height: 66,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(56),
+                color: AppColors.white2,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 10,
+                    offset: const Offset(0, -2),
                   ),
-                  label: 'حساب کاربری',
-                  activeIcon: Image.asset('assets/images/homeActive.jpg'),
+                ],
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: _buildNavItem(
+                        icon: _selectedIndex == 0
+                            ? 'assets/images/Vector.png'
+                            : 'assets/images/Person.png',
+                        label: 'پروفایل',
+                        index: 0,
+                        isSelected: _selectedIndex == 0,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: _buildNavItem(
+                        icon: _selectedIndex == 1
+                            ? 'assets/images/Vector (1).png'
+                            : 'assets/images/Cart.png',
+                        label: 'رزرو ها',
+                        index: 1,
+                        isSelected: _selectedIndex == 1,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: _buildNavItem(
+                        icon: _selectedIndex == 2
+                            ? 'assets/images/Vector (2).png'
+                            : 'assets/images/CategoryStroke.png',
+                        label: 'جستجوی',
+                        index: 2,
+                        isSelected: _selectedIndex == 2,
+                      ),
+                    ),
+                    _buildNavItem(
+                      icon: _selectedIndex == 3
+                          ? 'assets/images/HouseFill (1).png'
+                          : 'assets/images/House.png',
+                      label: 'خانه',
+                      index: 3,
+                      isSelected: _selectedIndex == 3,
+                    ),
+                  ],
                 ),
-                BottomNavigationBarItem(
-                  icon: Image.asset('assets/images/Cart.png'),
-                  label: 'رزرو شده ها',
-                ),
-                BottomNavigationBarItem(
-                  icon: Image.asset('assets/images/CategoryStroke.png'),
-                  label: 'جستجوی آرایشگاه',
-                  activeIcon: Image.asset('assets/images/CategoryFill.png'),
-                ),
-                BottomNavigationBarItem(
-                  icon: Image.asset('assets/images/House.jpg'),
-                  label: 'خانه',
-                  activeIcon: Image.asset('assets/images/HouseFill.png'),
-                ),
-              ],
+              ),
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _buildNavItem({
+    required String icon,
+    required String label,
+    required int index,
+    required bool isSelected,
+  }) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedIndex = index;
+        });
+      },
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        width: isSelected ? 90 : 50,
+        height: 50,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: AppColors.bottomSheetColor,
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: isSelected
+                ? AppColors.purpleOpacity
+                : AppColors.bottomSheetColor,
+            borderRadius: BorderRadius.circular(51),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              isSelected
+                  ? Container(
+                      margin: const EdgeInsets.only(top: 3, bottom: 3, left: 3),
+                      width: 44,
+                      height: 44,
+                      decoration: const BoxDecoration(
+                        color: AppColors.purple1,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Text(
+                          label,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.white2,
+                          ),
+                        ),
+                      ),
+                    )
+                  : const SizedBox(),
+              Flexible(
+                child: Center(
+                  child: Image.asset(
+                    icon,
+                    width: 24,
+                    height: 24,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

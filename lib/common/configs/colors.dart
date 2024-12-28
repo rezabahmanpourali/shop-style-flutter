@@ -44,4 +44,6 @@ class AppColors {
   static const Color contanerBorder = Color(0xffD3D3D3);
   static const Color porpleLight = Color(0xffD9D9EC);
   static const Color greyB9 = Color(0xffB9B9B9);
+  static const Color reserveContaner = Color(0xFF000000);
+  static const Color bottomSheetColor = Color(0xffE9E9FF);
 }

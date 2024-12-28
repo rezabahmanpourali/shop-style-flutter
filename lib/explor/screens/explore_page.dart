@@ -136,7 +136,7 @@ class _ExplorePageState extends State<ExplorePage> {
               builder: (context, scrollController) {
                 return Container(
                   decoration: const BoxDecoration(
-                    color: AppColors.white2,
+                    color: AppColors.arayeshColor,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30),
