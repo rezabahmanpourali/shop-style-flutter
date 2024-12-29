@@ -5,7 +5,7 @@ import 'package:shop_style/auth/widgets/custom_textfield.dart';
 import 'package:shop_style/auth/widgets/text_padding.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/enums/textfield_type.dart';
-import 'package:shop_style/home/screens/home_screen.dart';
+import 'package:shop_style/main.dart';
 
 class BasicInformationScreen extends StatefulWidget {
   const BasicInformationScreen({super.key});
@@ -93,7 +93,7 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
+                        builder: (context) => const MyApp(),
                       ),
                     );
                   },
