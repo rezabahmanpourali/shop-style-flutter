@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/barber/model/barber_shop_model.dart';
 import 'package:shop_style/common/configs/colors.dart';
 
 class CardItem extends StatelessWidget {
+  final BarberShopModel barberShopModel;
   const CardItem({
-    super.key,
+    super.key, required this.barberShopModel,
   });
 
   @override
@@ -29,8 +31,8 @@ class CardItem extends StatelessWidget {
                     bottomLeft: Radius.zero,
                     bottomRight: Radius.zero,
                   ),
-                  child: Image.asset(
-                    'assets/images/1.jpeg',
+                  child: Image.network(
+                    barberShopModel.barberShopImage ?? 'assets/images/1.jpeg',
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,
@@ -52,9 +54,9 @@ class CardItem extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
-                          padding: EdgeInsets.only(right: 12),
-                          child: Text('نام آرایشگاه'),
+                         Padding(
+                          padding: const EdgeInsets.only(right: 12),
+                          child: Text(barberShopModel.barberShopName!),
                         ),
                         const Padding(
                           padding: EdgeInsets.only(right: 12),

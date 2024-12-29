@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/widgets/barber_artist.dart';
 import 'package:shop_style/common/configs/colors.dart';
-import 'package:shop_style/home/widgets/widgets/card_item.dart';
+import 'package:shop_style/common/configs/state_handeler.dart';
+import 'package:shop_style/common/widgets/state_manage_widget.dart';
+import 'package:shop_style/locator.dart';
 
 class BarberShopPage extends StatefulWidget {
   const BarberShopPage({super.key});
@@ -12,7 +16,11 @@ class BarberShopPage extends StatefulWidget {
   State<BarberShopPage> createState() => _BarberShopPageState();
 }
 
+
 class _BarberShopPageState extends State<BarberShopPage> {
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -313,22 +321,50 @@ class _BarberShopPageState extends State<BarberShopPage> {
                   height: 16,
                 ),
               ),
-              SliverPadding(
-                padding: const EdgeInsets.only(right: 22),
-                sliver: SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 150,
-                    child: ListView.builder(
-                      itemCount: 10,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return const Padding(
-                          padding: EdgeInsets.only(left: 16),
-                          child: BarberArtists(),
+              SliverToBoxAdapter(
+                child: Consumer<BarberController>(
+                  builder: (context, provider, child) {
+                    return StateManageWidget(
+                      status: provider.barberStatus,
+                      loadingWidget: () {
+                        return const Center(
+                          child: CircularProgressIndicator(),
                         );
                       },
-                    ),
-                  ),
+                      errorWidgetBuilder: (message, statusCode) {
+                        return Center(
+                          child: Text(provider.errorMessage),
+                        );
+                      },
+                      completedWidgetBuilder: (value) {
+                        return SizedBox(
+                          height: 200,
+                          child: CustomScrollView(
+                            slivers: [
+                              SliverPadding(
+                                padding: const EdgeInsets.only(right: 22),
+                                sliver: SliverList(
+                                  delegate: SliverChildBuilderDelegate(
+                                    (context, index) {
+                                      final barbers = provider.barber[index];
+                                      return Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 16),
+                                        child: BarberArtists(
+                                          barbers: barbers,
+                                        ),
+                                      );
+                                    },
+                                    childCount: provider.barber.length,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
                 ),
               ),
               const SliverToBoxAdapter(
@@ -642,7 +678,8 @@ class _BarberShopPageState extends State<BarberShopPage> {
                       itemBuilder: (context, index) {
                         return const Padding(
                           padding: EdgeInsets.only(left: 16),
-                          child: CardItem(),
+                          // child: CardItem(),
+                          child: Text('data'),
                         );
                       },
                     ),
@@ -687,7 +724,8 @@ class _BarberShopPageState extends State<BarberShopPage> {
                       itemBuilder: (context, index) {
                         return const Padding(
                           padding: EdgeInsets.only(left: 16),
-                          child: CardItem(),
+                          // child: CardItem(),
+                          child: Text('data'),
                         );
                       },
                     ),

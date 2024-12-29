@@ -4,7 +4,6 @@ import 'package:shop_style/auth/screens/login_screen.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
 import 'package:shop_style/auth/widgets/custom_textfield.dart';
 import 'package:shop_style/common/configs/colors.dart';
-import 'package:shop_style/common/configs/image_address.dart';
 import 'package:shop_style/common/configs/state_handeler.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 

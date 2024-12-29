@@ -2,6 +2,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
+import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
+import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/explor/screens/explore_page.dart';
@@ -15,6 +17,7 @@ import 'package:shop_style/user_page/screens/user_page.dart';
 import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
 
 void main() {
+  Provider.debugCheckInvalidValueType = null;
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   runApp(
@@ -71,6 +74,12 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => locator.get<AuthController>(),
         ),
+        ChangeNotifierProvider(
+          create: (context) => locator.get<BarberShopController>(),
+        ),
+        // ChangeNotifierProvider(
+        //   create: (context) => locator.get<BarberController>(),
+        // ),
       ],
       child: Consumer<GlobalController>(
         builder: (context, value, child) {
@@ -82,7 +91,7 @@ class _MyAppState extends State<MyApp> {
               children: _pages,
             ),
             bottomNavigationBar: Container(
-              margin: const EdgeInsets.only(bottom: 20, right: 60, left: 60),
+              margin: const EdgeInsets.only(bottom: 20, right: 40, left: 40),
               height: 66,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(56),

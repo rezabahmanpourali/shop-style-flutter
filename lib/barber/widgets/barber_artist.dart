@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/barber/model/barber_model.dart';
 import 'package:shop_style/common/configs/colors.dart';
 
 class BarberArtists extends StatelessWidget {
+  final BarberModel barbers;
   const BarberArtists({
-    super.key,
+    super.key, required this.barbers,
   });
 
   @override
@@ -45,7 +47,7 @@ class BarberArtists extends StatelessWidget {
                   ),
                 ),
               ),
-              const Positioned(
+               Positioned(
                 bottom: 0,
                 left: 12,
                 right: 12,
@@ -53,14 +55,14 @@ class BarberArtists extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'نام آرایشگر',
-                      style: TextStyle(
+                      barbers.barberName!,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
                         color: AppColors.black,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'متخصص رنگ مو',
                       style: TextStyle(
                         fontSize: 10,

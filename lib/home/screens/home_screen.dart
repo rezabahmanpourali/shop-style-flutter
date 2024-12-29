@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_style/barber/screens/barber_shop_page.dart';
+import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
+import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
-import 'package:shop_style/home/widgets/banner.dart';
-import 'package:shop_style/home/widgets/list_tile.dart';
-import 'package:shop_style/home/widgets/show_more_text.dart';
+import 'package:shop_style/common/configs/state_handeler.dart';
+import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/home/widgets/widgets/card_item.dart';
-import 'package:shop_style/home/widgets/widgets/sections/kale_party.dart';
-import 'package:shop_style/home/widgets/widgets/sections/map_in_priducts.dart';
-import 'package:shop_style/home/widgets/widgets/sections/map_in_top.dart';
-import 'package:shop_style/home/widgets/widgets/sections/terends_week.dart';
-import 'package:shop_style/home/widgets/widgets/sections/top_hairstyles.dart';
-import 'package:shop_style/home/widgets/widgets/sections/top_products.dart';
-import 'package:shop_style/home/widgets/widgets/sections/top_shop.dart';
+import 'package:shop_style/locator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,394 +17,440 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var controller = PageController(viewportFraction: 0.7);
-  int _selectedIndex = 2; // متغیر برای ذخیره آیتم انتخاب‌شده
+  Future<void> _onRefresh() async {
+    Provider.of<BarberShopController>(context, listen: false)
+        .fetchBarberShops();
+  }
 
-  final List<Widget> _pages = [
-    const Placeholder(),
-    const Placeholder(),
-    const Placeholder(),
-    const Placeholder(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<BarberShopController>(context, listen: false)
+        .fetchBarberShops();
+  }
+
+  var controller = PageController(viewportFraction: 0.7);
 
   @override
   Widget build(BuildContext context) {
-    final List<double> itemWidth = [136, 127, 94];
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: AppColors.arayeshColor,
       body: SafeArea(
-        child: Center(
-          child: CustomScrollView(
-            slivers: [
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 5,
+        child: RefreshIndicator(
+          onRefresh: _onRefresh,
+          child: Center(
+            child: CustomScrollView(
+              slivers: [
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 5,
+                  ),
                 ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(left: 19, right: 22),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        Icons.menu,
-                      ),
-                      Spacer(),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'موقعیت شما',
-                            style: TextStyle(
-                                fontSize: 11,
-                                fontFamily: 'IRANYekanFn',
-                                color: AppColors.textHeader),
-                          ),
-                          Row(
-                            children: [
-                              Text(
-                                'پردیسان شهروند',
-                                style: TextStyle(
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 19, right: 22),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.menu,
+                        ),
+                        Spacer(),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'موقعیت شما',
+                              style: TextStyle(
                                   fontSize: 11,
-                                ),
-                              ),
-                              Icon(Icons.keyboard_arrow_down_rounded)
-                            ],
-                          ),
-                        ],
-                      ),
-                      Spacer(),
-                      Icon(
-                        Icons.shopping_bag,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 17,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'سلام!',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        '{نام کاربر}',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 19,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 19,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'به تازگی مشاهده کردید',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 19,
-                ),
-              ),
-              //آیتم های کارد
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 242,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 6, right: 22),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 6,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 16),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const BarberShopPage(),
-                              ));
-                            },
-                            child: const CardItem(),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 38,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'آرایشگاه برتر منطقه شما',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 18,
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 242,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 6, right: 22),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 6,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 16),
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const BarberShopPage(),
-                                ),
-                              );
-                            },
-                            child: const CardItem(),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 53,
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      height: 328,
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 0,
-                            right: 0,
-                            child: Container(
-                              height: 328,
-                              decoration: BoxDecoration(
-                                color: AppColors.white2,
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: AppColors.purpleOpacity.withValues(
-                                      alpha: 0.68,
-                                    ),
-                                    offset: const Offset(0, 0), // افست سایه
-                                    blurRadius: 25.0, // میزان پخش سایه
-                                    spreadRadius: 0.0, // میزان گسترش سایه
-                                  )
-                                ],
-                              ),
+                                  fontFamily: 'IRANYekanFn',
+                                  color: AppColors.textHeader),
                             ),
-                          ),
-                          Positioned(
-                            top: 16,
-                            right: 44,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
+                            Row(
                               children: [
-                                Image.asset('assets/images/percentage.jpg'),
-                                const SizedBox(
-                                  width: 9,
-                                ),
-                                const Text(
-                                  'کله پارتی!',
+                                Text(
+                                  'پردیسان شهروند',
                                   style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.purpleOpacity,
+                                    fontSize: 11,
                                   ),
                                 ),
+                                Icon(Icons.keyboard_arrow_down_rounded)
                               ],
                             ),
+                          ],
+                        ),
+                        Spacer(),
+                        Icon(
+                          Icons.shopping_bag,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 17,
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 22),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'سلام!',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
                           ),
-                          Positioned(
-                            top: 62,
-                            left: 2,
-                            right: 44,
-                            child: SizedBox(
-                              height: 242,
-                              width: 358,
+                        ),
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          '{نام کاربر}',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 19,
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 19,
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 22),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'به تازگی مشاهده کردید',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 19,
+                  ),
+                ),
+                //آیتم های کارد
+                SliverToBoxAdapter(
+                  child: Consumer<BarberShopController>(
+                    builder: (context, provider, child) {
+                      return StateManageWidget(
+                        status: provider.barberShopState,
+                        loadingWidget: () {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        errorWidgetBuilder: (message, statusCode) {
+                          return Center(
+                            child: Text(provider.errorMessage),
+                          );
+                        },
+                        completedWidgetBuilder: (value) {
+                          return SizedBox(
+                            height: 242,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 6, right: 22),
                               child: ListView.builder(
-                                itemCount: 6,
                                 scrollDirection: Axis.horizontal,
+                                itemCount: provider.barberShops.length,
                                 itemBuilder: (context, index) {
-                                  return const Padding(
-                                    padding: EdgeInsets.only(left: 16),
-                                    child: CardItemParty(),
+                                  final barbershop =
+                                      provider.barberShops[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(left: 16),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                Provider<BarberController>(
+                                              create: (context) {
+                                                locator
+                                                    .get<BarberController>()
+                                                    .fetchBarber();
+
+                                                return locator
+                                                    .get<BarberController>();
+                                              },
+                                              builder: (context, child) {
+                                                return const BarberShopPage();
+                                              },
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child:
+                                          CardItem(barberShopModel: barbershop),
+                                    ),
                                   );
                                 },
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 38,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'مدل مو های برتر  منطقه شما',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 19,
+
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 38,
+                  ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 242,
+                const SliverToBoxAdapter(
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 22),
-                    child: ListView.builder(
-                      itemCount: 6,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return const Padding(
-                          padding: EdgeInsets.only(left: 16),
-                          child: BestCardItemParty(),
-                        );
-                      },
+                    padding: EdgeInsets.only(right: 22),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'آرایشگاه برتر منطقه شما',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 38,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'دسته بندی خدمات',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 18,
                   ),
                 ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 19,
-                ),
-              ),
-              SliverGrid(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return SizedBox(
-                      height: MediaQuery.of(context).size.height *
-                          0.1, // تنظیم ارتفاع به نسبت ارتفاع صفحه,
-                      child: CategoryItem(
-                        onChange: () {
-                          print('category');
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 242,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 6, right: 22),
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 6,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 16),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const BarberShopPage(),
+                                  ),
+                                );
+                              },
+                              // child: const CardItem(),
+                              child: const Text('data'),
+                            ),
+                          );
                         },
                       ),
-                    );
-                  },
-                  childCount: 3,
+                    ),
+                  ),
                 ),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 1.1,
-                  mainAxisSpacing: 2,
-                  childAspectRatio: MediaQuery.of(context).size.width /
-                      (MediaQuery.of(context).size.height / 5),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 53,
+                  ),
                 ),
-              ),
-            ],
+                SliverToBoxAdapter(
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        width: double.infinity,
+                        height: 328,
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                height: 328,
+                                decoration: BoxDecoration(
+                                  color: AppColors.white2,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: AppColors.purpleOpacity.withValues(
+                                        alpha: 0.68,
+                                      ),
+                                      offset: const Offset(0, 0), // افست سایه
+                                      blurRadius: 25.0, // میزان پخش سایه
+                                      spreadRadius: 0.0, // میزان گسترش سایه
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 16,
+                              right: 44,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Image.asset('assets/images/percentage.jpg'),
+                                  const SizedBox(
+                                    width: 9,
+                                  ),
+                                  const Text(
+                                    'کله پارتی!',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.purpleOpacity,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Positioned(
+                              top: 62,
+                              left: 2,
+                              right: 44,
+                              child: SizedBox(
+                                height: 242,
+                                width: 358,
+                                child: ListView.builder(
+                                  itemCount: 6,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return const Padding(
+                                      padding: EdgeInsets.only(left: 16),
+                                      child: CardItemParty(),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 38,
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 22),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'مدل مو های برتر  منطقه شما',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 19,
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 242,
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 22),
+                      child: ListView.builder(
+                        itemCount: 6,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return const Padding(
+                            padding: EdgeInsets.only(left: 16),
+                            child: BestCardItemParty(),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 38,
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(right: 22),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'دسته بندی خدمات',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 19,
+                  ),
+                ),
+                SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height *
+                            0.1, // تنظیم ارتفاع به نسبت ارتفاع صفحه,
+                        child: CategoryItem(
+                          onChange: () {
+                            print('category');
+                          },
+                        ),
+                      );
+                    },
+                    childCount: 3,
+                  ),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 1.1,
+                    mainAxisSpacing: 2,
+                    childAspectRatio: MediaQuery.of(context).size.width /
+                        (MediaQuery.of(context).size.height / 5),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
