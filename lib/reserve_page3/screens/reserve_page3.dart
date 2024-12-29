@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/auth/widgets/header_for_screen.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ReservePage3 extends StatefulWidget {
   const ReservePage3({
@@ -75,7 +76,7 @@ class _ReservePage3State extends State<ReservePage3> {
                           ),
                           borderRadius: BorderRadius.circular(24),
                         ),
-                        child: const Icon(Icons.abc),
+                        child: FaIcon(FontAwesomeIcons.tents),
                       ),
                     ],
                   ),
