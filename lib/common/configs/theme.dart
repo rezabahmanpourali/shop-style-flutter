@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/common/configs/colors.dart';
 
 class CustomTheme {
   ThemeData lighTheme = ThemeData(
@@ -14,37 +15,45 @@ class CustomTheme {
     textTheme: const TextTheme(
       //
       titleLarge: TextStyle(
-        color: Color(0xFF0D1619),
-        fontWeight: FontWeight.bold,
+        color: AppColors.categoryBlack,
+        fontWeight: FontWeight.w700,
+        fontFamily: 'IRANSansDB',
         fontSize: 40,
       ),
       titleMedium: TextStyle(
-        color: Color(0xFF0D1619),
-        fontWeight: FontWeight.bold,
+       color: AppColors.categoryBlack,
+        fontWeight: FontWeight.w700,
+        fontFamily: 'IRANSansDB',
         fontSize: 30,
       ),
+      //////////////////////////////////////////
       bodyMedium: TextStyle(
-        color: Color(0xFF000080),
-        fontWeight: FontWeight.bold,
+        color:  AppColors.purple,
+        fontWeight: FontWeight.w400,
+        fontFamily: 'IRANSansDB',
         fontSize: 14,
       ),
+      //////////////////////////////////////////
+      labelMedium: TextStyle(
+        color: AppColors.black,
+        fontWeight: FontWeight.w800,
+        fontFamily: 'IRANSansDB',
+        fontSize: 16,
+      ),
+      //////////////////////////////////////////
+
+      
+
       displaySmall: TextStyle(
         color: Color(0xFF0D1619),
         fontSize: 14,
       ),
-      labelSmall: TextStyle(
-        color: Color(0xFFBABABA),
-        fontSize: 18,
-      ),
+
       displayMedium: TextStyle(
         color: Color(0xFF0D1619),
         fontSize: 18,
       ),
-      labelMedium: TextStyle(
-        color: Color(0xFFFFFFFF),
-        fontWeight: FontWeight.bold,
-        fontSize: 20,
-      ),
+
       bodySmall: TextStyle(
         fontSize: 13,
         color: Color(0xFF0D1619),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class AppColors {
   static const Color bgGrey = Color(0xffD1D1D1);
   static const Color bgrgWhite = Color(0xffE3E3E3);
@@ -10,13 +9,12 @@ class AppColors {
   static const Color colorTextField = Color(0xffE8E8E8);
   static const Color searchBoxColor = Color(0xffEDEDED);
   static const Color searchBoxEvents = Color(0xffB4B4B4);
-  static const Color black = Color(0xff000000);
+  static const Color black = Color(0xFF0D1619);
   static const Color whiteCategory = Color(0xffEFEFEF);
   static const Color greyCategory = Color(0xffDCDCDC);
   static const Color greySelectCategory = Color(0xff5A5A5A);
   static const Color bannerColor = Color(0xff524F54);
   static const Color dividerColor900 = Color(0xffDFDFDF);
-
   //footer colors
   static const Color greyTextFooter = Color(0xff656565);
   static const Color whiteTextFooter = Color(0xffFAFAFA);

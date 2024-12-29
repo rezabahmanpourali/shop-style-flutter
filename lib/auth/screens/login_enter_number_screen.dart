@@ -3,6 +3,7 @@ import 'package:shop_style/auth/screens/login_enter_password_screen.dart';
 import 'package:shop_style/auth/widgets/custom_button.dart';
 import 'package:shop_style/auth/widgets/custom_textfield.dart';
 import 'package:shop_style/auth/widgets/text_padding.dart';
+import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/enums/textfield_type.dart';
 
 class LoginEnterNumberPhoneScreen extends StatelessWidget {
@@ -32,8 +33,10 @@ class LoginEnterNumberPhoneScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: TextPadding(
                   text: 'برای ثبت نام یا ورود شماره تلفن خود را وارد کنید',
-                  topPadding: height / 4.5,
-                  theme: Theme.of(context).textTheme.bodyMedium,
+                  topPadding: height / 4,
+                  theme: Theme.of(context)
+                      .textTheme
+                      .bodyMedium,
                 ),
               ),
               const SliverToBoxAdapter(

@@ -24,6 +24,7 @@ void main() {
   setupLocator();
   runApp(
     MaterialApp(
+      theme: CustomTheme().lighTheme,
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {
           PointerDeviceKind.mouse,

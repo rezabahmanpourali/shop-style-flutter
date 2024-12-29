@@ -293,14 +293,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               right: 0,
                               child: Container(
                                 height: 328,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: AppColors.white2,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: AppColors.purpleOpacity.withValues(
-                                        alpha: 0.68,
-                                      ),
-                                      offset: const Offset(0, 0), // افست سایه
+                                      color: AppColors.purpleOpacity,
+                                      // .withValues(
+                                      //   alpha: 0.68,
+                                      // ),
+                                      offset: Offset(0, 0), // افست سایه
                                       blurRadius: 25.0, // میزان پخش سایه
                                       spreadRadius: 0.0, // میزان گسترش سایه
                                     )
@@ -646,9 +647,10 @@ class CardItemParty extends StatelessWidget {
                     child: Container(
                       width: 50,
                       height: 24,
-                      decoration: BoxDecoration(
-                        color: AppColors.white2.withValues(alpha: 100),
-                        borderRadius: const BorderRadius.all(
+                      decoration: const BoxDecoration(
+                        color: AppColors.white2,
+                        // .withValues(alpha: 100),
+                        borderRadius: BorderRadius.all(
                           Radius.circular(27),
                         ),
                       ),
