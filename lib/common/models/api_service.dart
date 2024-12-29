@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:shop_style/common/configs/constatns.dart';
-import 'package:shop_style/common/configs/enums.dart';
+import 'package:shop_style/common/configs/enums/enums.dart';
 import 'package:shop_style/common/services/functions.dart';
 import 'package:shop_style/common/services/response_model.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';

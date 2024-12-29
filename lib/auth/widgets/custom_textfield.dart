@@ -1,125 +1,141 @@
 import 'package:flutter/material.dart';
-import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/common/configs/enums/textfield_type.dart';
 
-class CustomTextField extends StatefulWidget {
-  final TextEditingController? controller; // کنترلر برای مدیریت ورودی
-  final String hintText; // متنی که در داخل فیلد نمایش داده می‌شود
-  final TextInputType keyboardType; // نوع کیبورد (عدد، متن و ...)
-  final String? Function(String?)? validator; // تابع اعتبارسنجی
-  final bool obscureText; // برای مخفی کردن متن (برای رمز عبور)
-  final TextCapitalization
-      textCapitalization; // برای مشخص کردن اینکه متن به صورت بزرگ یا کوچک شروع شود
-  final IconData? leftIcon; // آیکون سمت چپ
-  final IconData? rightIcon; // آیکون سمت راست
-  final Function()? onRightIconPressed; // عملکرد هنگام فشردن آیکون سمت راست
-  final Color? borderColor; // رنگ مرز فیلد
-  final TextStyle? textStyle; // استایل متن (مثل رنگ، فونت و ...)
-  final Color? backgroundColor; // رنگ پس‌زمینه فیلد
-  final bool showPasswordIcon; // برای نمایش آیکون مخفی کردن متن
-
-  const CustomTextField({
+class CustomTextfield extends StatefulWidget {
+  const CustomTextfield({
     super.key,
-    this.controller,
-    required this.hintText,
-    this.keyboardType = TextInputType.text,
-    this.validator,
-    this.obscureText = false,
-    this.textCapitalization = TextCapitalization.none,
-    this.leftIcon,
-    this.rightIcon,
-    this.onRightIconPressed,
-    this.borderColor,
-    this.textStyle,
-    this.backgroundColor, // دریافت رنگ پس‌زمینه
-    this.showPasswordIcon =
-        false, // اگر خواستید نمایش آیکون مخفی کردن رمز فعال باشد
+    this.lableField,
+    required this.type,
+    this.hintText,
+    this.topPadding,
   });
 
+  final String? lableField;
+  final String? hintText;
+  final TextfieldType type;
+  final double? topPadding;
+
   @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
+  State<CustomTextfield> createState() => _CustomTextfieldState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
-  late bool _obscureText; // وضعیت مخفی کردن یا نمایش متن
-
-  @override
-  void initState() {
-    super.initState();
-    _obscureText = widget.obscureText; // تنظیم وضعیت اولیه مخفی کردن متن
-  }
-
-  // تغییر وضعیت مخفی کردن/نمایش متن
-  void _toggleObscureText() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
+class _CustomTextfieldState extends State<CustomTextfield> {
+  bool showPassword = true;
+  bool hasSecurity = true;
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller:
-          widget.controller, // استفاده از کنترلر برای دریافت و مدیریت مقدار
-      keyboardType: widget.keyboardType, // نوع کیبورد
-      obscureText: _obscureText, // مخفی کردن متن (برای رمز عبور)
-      textCapitalization: widget.textCapitalization, // تنظیم حالت تبدیل حروف
-      style: widget.textStyle, // استایل متن
-      decoration: InputDecoration(
-        hintText: widget.hintText, // متن راهنما (Placeholder)
-        hintTextDirection: TextDirection.rtl, // راست‌چین کردن hintText
-        hintStyle:
-            const TextStyle(color: AppColors.hintTextColor, fontSize: 12),
-        prefixIcon: widget.showPasswordIcon
-            ? IconButton(
-                icon: Icon(
-                  _obscureText ? Icons.visibility_off : Icons.visibility,
-                  color: AppColors.iconGrey,
-                ), // آیکون مخفی/نمایش متن
-                onPressed: _toggleObscureText, // تغییر وضعیت مخفی/نمایش
-                hoverColor: Colors.transparent, // حذف اثر hover
-              )
-            : widget.leftIcon != null
-                ? Icon(
-                    widget.leftIcon,
-                    color: AppColors.iconGrey,
-                  ) // آیکون سمت چپ در صورت عدم استفاده از آیکون مخفی کردن
-                : null,
-        suffixIcon: widget.rightIcon != null
-            ? IconButton(
-                icon: Icon(
-                  widget.rightIcon,
-                  color: AppColors.iconGrey,
-                ), // آیکون سمت راست
-                onPressed: widget.onRightIconPressed ??
-                    () {}, // عملکرد هنگام فشردن آیکون
-                hoverColor: Colors.transparent, // حذف اثر hover
-              )
-            : null,
-        border: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: widget.borderColor ??
-                Colors.grey, // اگر رنگ مرز داده نشد، رنگ پیش‌فرض خاکی
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+
+    return Padding(
+      padding: EdgeInsets.only(top: widget.topPadding ?? 0),
+      child: SingleChildScrollView(
+        child: SizedBox(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                widget.lableField ?? '',
+                style: Theme.of(context).textTheme.displaySmall,
+              ),
+              SizedBox(height: height / 100),
+              Container(
+                height: height / 20,
+                decoration: BoxDecoration(
+                  border: Border.all(color: const Color(0xFFE5E5E5), width: 2),
+                  color: const Color(0xFFFFFFFF),
+                  borderRadius: const BorderRadius.all(Radius.circular(360)),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width / 40),
+                  child: Row(
+                    children: [
+                      getTextField(width),
+                    ],
+                  ),
+                ),
+              ),
+            ],
           ),
-          borderRadius: BorderRadius.circular(
-              58), // شما می‌توانید شعاع دایره را تنظیم کنید
-        ),
-        filled: true, // برای پر کردن پس‌زمینه
-        fillColor: widget.backgroundColor ?? Colors.white, // رنگ پس‌زمینه
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color: widget.borderColor ?? Colors.grey, // رنگ مرز هنگام فوکوس
-          ),
-          borderRadius: BorderRadius.circular(58), // شعاع دایره
-        ),
-        enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-            color:
-                widget.borderColor ?? Colors.grey, // رنگ مرز هنگام غیرفعال بودن
-          ),
-          borderRadius: BorderRadius.circular(58), // شعاع دایره
         ),
       ),
-      validator: widget.validator, // اعتبارسنجی ورودی
     );
+  }
+
+  getTextField(width) {
+    switch (widget.type) {
+      case TextfieldType.none:
+        return getTextfield(width);
+      case TextfieldType.numberPhone:
+        return Row(
+          children: [
+            getNumberPhoneIcon(),
+            getTextfield(width),
+          ],
+        );
+
+      case TextfieldType.security:
+        return Row(
+          children: [
+            getTextfield(width),
+            getIconShowPasword(),
+          ],
+        );
+
+      default:
+    }
+  }
+
+  Widget getTextfield(width) {
+    return SizedBox(
+      width: widget.type == TextfieldType.none ? width / 1.3 : width / 1.43,
+      child: TextField(
+        style: Theme.of(context).textTheme.displayMedium,
+        decoration: InputDecoration(
+          border: InputBorder.none,
+          hintText: widget.hintText ?? '',
+          hintStyle: Theme.of(context).textTheme.labelSmall,
+        ),
+      ),
+    );
+  }
+
+  Widget getNumberPhoneIcon() {
+    return const Icon(
+      Icons.phone_enabled_rounded,
+      color: Color(0xFFBABABA),
+      size: 40,
+    );
+  }
+
+  Widget getIconShowPasword() {
+    if (showPassword) {
+      return IconButton(
+        onPressed: () {
+          setState(() {
+            showPassword = !showPassword;
+          });
+        },
+        icon: const Icon(
+          Icons.visibility,
+          color: Color(0xFFBABABA),
+          size: 30,
+        ),
+      );
+    } else {
+      return IconButton(
+        onPressed: () {
+          setState(() {
+            showPassword = !showPassword;
+          });
+        },
+        icon: const Icon(
+          Icons.visibility_off,
+          color: Color(0xFFBABABA),
+          size: 30,
+        ),
+      );
+    }
   }
 }

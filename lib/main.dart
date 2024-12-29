@@ -1,10 +1,12 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_style/auth/screens/login_enter_number_screen.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/common/configs/theme.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/explor/screens/explore_page.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
@@ -30,7 +32,7 @@ void main() {
           PointerDeviceKind.unknown,
         },
       ),
-      home: const MyApp(),
+      home: const LoginEnterNumberPhoneScreen(),
     ),
   );
 }

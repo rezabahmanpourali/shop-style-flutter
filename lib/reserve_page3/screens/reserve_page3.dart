@@ -17,140 +17,145 @@ class _ReservePage3State extends State<ReservePage3> {
     return Scaffold(
       backgroundColor: AppColors.arayeshColor,
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            const SliverPadding(
-              padding: EdgeInsets.only(left: 22, right: 22, bottom: 0),
-              sliver: SliverAppBar(
-                backgroundColor: AppColors.arayeshColor,
-                actions: [
-                  Icon(Icons.close),
-                  Spacer(),
-                  Icon(Icons.arrow_forward),
-                ],
-              ),
-            ),
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.only(right: 22, bottom: 22),
-                child: Text(
-                  'انتخاب تاریخ و ساعت',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 22, right: 22, bottom: 22),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 175,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1,
-                          color: AppColors.purpleOpacity,
-                        ),
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Image.asset('assets/images/img14 2.png'),
-                          const Text(
-                            'نام آرایشگر انتخاب شده',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                          const Icon(Icons.keyboard_arrow_down_rounded),
-                        ],
-                      ),
-                    ),
-                    const Spacer(),
-                    Container(
-                      width: 53,
-                      height: 35,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1,
-                          color: AppColors.contanerBorder,
-                        ),
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      child: const Icon(Icons.abc),
-                    ),
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: CustomScrollView(
+            slivers: [
+              const SliverPadding(
+                padding: EdgeInsets.only(left: 22, right: 22, bottom: 0),
+                sliver: SliverAppBar(
+                  automaticallyImplyLeading: false,
+                  backgroundColor: AppColors.arayeshColor,
+                  actions: [
+                    Icon(Icons.close),
+                    Spacer(),
+                    Icon(Icons.arrow_forward),
                   ],
                 ),
               ),
-            ),
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.only(bottom: 22, right: 22),
-                child: Text(
-                  'دی ماه، 1403',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: SizedBox(
-                height: 100,
+              const SliverToBoxAdapter(
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 22, left: 12),
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 7,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              selectedIndex = index;
-                            });
-                          },
-                          child: SelectCirculTime(
-                            isSelected: selectedIndex == index,
-                          ),
-                        ),
-                      );
-                    },
+                  padding: EdgeInsets.only(right: 22, bottom: 22),
+                  child: Text(
+                    'انتخاب تاریخ و ساعت',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 25,
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.only(left: 22, right: 22, bottom: 22),
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 175,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                            color: AppColors.purpleOpacity,
+                          ),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Image.asset('assets/images/img14 2.png'),
+                            const Text(
+                              'نام آرایشگر انتخاب شده',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                            const Icon(Icons.keyboard_arrow_down_rounded),
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                      Container(
+                        width: 53,
+                        height: 35,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                            color: AppColors.contanerBorder,
+                          ),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        child: const Icon(Icons.abc),
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            const SliverToBoxAdapter(
-                child: Column(
-              children: [
-                SelectRectangleCard(),
-                SizedBox(height: 10),
-                SelectRectangleCard(),
-                SizedBox(height: 10),
-                SelectRectangleCard(),
-                SizedBox(height: 10),
-                SelectRectangleCard(),
-                SizedBox(height: 10),
-                SelectRectangleCard(),
-                SizedBox(height: 10),
-                SelectRectangleCard(),
-                SizedBox(height: 46),
-              ],
-            )),
-          ],
+              const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 22, right: 22),
+                  child: Text(
+                    'دی ماه، 1403',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 100,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 22, left: 12),
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 7,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(left: 10),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedIndex = index;
+                              });
+                            },
+                            child: SelectCirculTime(
+                              isSelected: selectedIndex == index,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 25,
+                ),
+              ),
+              const SliverToBoxAdapter(
+                  child: Column(
+                children: [
+                  SelectRectangleCard(),
+                  SizedBox(height: 10),
+                  SelectRectangleCard(),
+                  SizedBox(height: 10),
+                  SelectRectangleCard(),
+                  SizedBox(height: 10),
+                  SelectRectangleCard(),
+                  SizedBox(height: 10),
+                  SelectRectangleCard(),
+                  SizedBox(height: 10),
+                  SelectRectangleCard(),
+                  SizedBox(height: 46),
+                ],
+              )),
+            ],
+          ),
         ),
       ),
     );

@@ -8,6 +8,7 @@ import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/state_handeler.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/locator.dart';
+import 'package:shop_style/reserve_page1/screens/service_selection_screen.dart';
 
 class BarberShopPage extends StatefulWidget {
   const BarberShopPage({super.key});
@@ -16,11 +17,7 @@ class BarberShopPage extends StatefulWidget {
   State<BarberShopPage> createState() => _BarberShopPageState();
 }
 
-
 class _BarberShopPageState extends State<BarberShopPage> {
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -748,22 +745,29 @@ class _BarberShopPageState extends State<BarberShopPage> {
                   padding: const EdgeInsets.only(right: 7, bottom: 7, top: 7),
                   child: Row(
                     children: [
-                      Container(
-                        width: 179,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          color: AppColors.bgBlack,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: const Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 20, right: 20),
-                            child: Text(
-                              'رزرو نوبت',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w700,
-                                color: AppColors.white2,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ServiceSelectionScreen(),
+                          ));
+                        },
+                        child: Container(
+                          width: 179,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: AppColors.bgBlack,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 20, right: 20),
+                              child: Text(
+                                'رزرو نوبت',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.white2,
+                                ),
                               ),
                             ),
                           ),
