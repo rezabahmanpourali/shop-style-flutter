@@ -1,6 +1,3 @@
-import 'dart:collection';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -91,25 +88,21 @@ class _ExplorePageState extends State<ExplorePage> {
                                   child: const Icon(Icons.menu),
                                 ),
                                 const Spacer(),
-                                const Column(
+                                Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      'آرایشگاه های اطراف',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.categoryBlack,
-                                      ),
-                                    ),
+                                    Text('آرایشگاه های اطراف',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge),
                                     Text(
                                       'بر حسب موقعیت شما',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.textSearchColor,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge
+                                          ?.copyWith(
+                                              color: AppColors.textSearchColor),
                                     ),
                                   ],
                                 ),
@@ -131,7 +124,7 @@ class _ExplorePageState extends State<ExplorePage> {
             DraggableScrollableSheet(
               initialChildSize: 0.6, // اندازه اولیه باتم شیت (60% از صفحه)
               minChildSize: 0.1, // حداقل ارتفاع قابل کشیدن
-              maxChildSize: 0.8, // حداکثر ارتفاع قابل کشیدن
+              maxChildSize: 0.85, // حداکثر ارتفاع قابل کشیدن
               controller: _scrollController,
               builder: (context, scrollController) {
                 return Container(
@@ -181,7 +174,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                     // مرتب سازی
                                     Container(
                                       margin: const EdgeInsets.only(right: 12),
-                                      width: 100,
+                                      width: 110,
                                       height: 35,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(24),
@@ -190,12 +183,17 @@ class _ExplorePageState extends State<ExplorePage> {
                                           color: AppColors.cardWhite,
                                         ),
                                       ),
-                                      child: const Row(
+                                      child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text('مرتب سازی'),
-                                          Icon(Icons
+                                          Text(
+                                            'مرتب سازی',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
+                                          ),
+                                          const Icon(Icons
                                               .keyboard_arrow_down_rounded),
                                         ],
                                       ),
@@ -203,7 +201,7 @@ class _ExplorePageState extends State<ExplorePage> {
                                     // قیمت
                                     Container(
                                       margin: const EdgeInsets.only(right: 12),
-                                      width: 69,
+                                      width: 75,
                                       height: 35,
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(24),
@@ -212,12 +210,17 @@ class _ExplorePageState extends State<ExplorePage> {
                                           color: AppColors.cardWhite,
                                         ),
                                       ),
-                                      child: const Row(
+                                      child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         children: [
-                                          Text('قیمت'),
-                                          Icon(Icons
+                                          Text(
+                                            'قیمت',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyLarge,
+                                          ),
+                                          const Icon(Icons
                                               .keyboard_arrow_down_rounded),
                                         ],
                                       ),
@@ -225,209 +228,28 @@ class _ExplorePageState extends State<ExplorePage> {
                                   ],
                                 ),
                               ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              const Text(
+                              const SizedBox(height: 16),
+                              Text(
                                 '3 آرایشگاه نزدیک',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Image.asset('assets/images/uuacu.jpg'),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(left: 22, right: 22),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'نام آرایشگاه',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    Spacer(),
-                                    Text(
-                                      'حدود',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      '5',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: AppColors.purpleOpacity,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      'کیلومتر',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 5),
-                              const Padding(
-                                padding: EdgeInsets.only(right: 22),
-                                child: Row(
-                                  children: [
-                                    Icon(Icons.star),
-                                    SizedBox(width: 5),
-                                    Text('4.9'),
-                                    SizedBox(width: 5),
-                                    Text('(55)'),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(width: 7),
-                              const Padding(
-                                padding: EdgeInsets.only(right: 22),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      'قم، پردیسان، آدرس آرایشگاه',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: AppColors.textSearchColor,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
                               const SizedBox(height: 16),
-                              const Divider(
-                                color: AppColors.dividerColor900,
-                                endIndent: 22,
-                                indent: 22,
-                              ),
+                              shopInformation(context),
                               const SizedBox(height: 16),
-                              const Padding(
-                                padding: EdgeInsets.only(right: 22, left: 22),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'مدل موی خامه ای',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.categoryBlack,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(Icons.av_timer,
-                                                size: 16,
-                                                color:
-                                                    AppColors.textSearchColor),
-                                            SizedBox(width: 4),
-                                            Text(
-                                              '40 دقیقه',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
-                                                color:
-                                                    AppColors.textSearchColor,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      '125,000 تومان',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: AppColors.textSearchColor,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              modellMoForShop(),
                               const SizedBox(height: 16),
-                              const Padding(
-                                padding: EdgeInsets.only(right: 22, left: 22),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'مدل موی خامه ای',
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.categoryBlack,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(Icons.av_timer,
-                                                size: 16,
-                                                color:
-                                                    AppColors.textSearchColor),
-                                            SizedBox(width: 4),
-                                            Text(
-                                              '40 دقیقه',
-                                              style: TextStyle(
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.w400,
-                                                color:
-                                                    AppColors.textSearchColor,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                      '125,000 تومان',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: AppColors.textSearchColor,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 16),
-                              const Padding(
-                                padding: EdgeInsets.only(right: 22),
+                              modellMoForShop(),
+                              const SizedBox(height: 32),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 22),
                                 child: Row(
                                   children: [
                                     Text(
                                       'مشاهده بیشتر',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.purpleOpacity,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium
+                                          ?.copyWith(color: AppColors.purple),
                                     ),
                                   ],
                                 ),
@@ -444,6 +266,114 @@ class _ExplorePageState extends State<ExplorePage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget shopInformation(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 22, right: 22),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Image.asset('assets/images/uuacu.jpg'),
+          const SizedBox(height: 20),
+          Row(
+            children: [
+              Text(
+                'نام آرایشگاه',
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+              const Spacer(),
+              Text(
+                'حدود',
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+              const SizedBox(width: 5),
+              Text(
+                '5',
+                style: Theme.of(context)
+                    .textTheme
+                    .labelMedium
+                    ?.copyWith(color: AppColors.purple),
+              ),
+              const SizedBox(width: 5),
+              Text(
+                'کیلومتر',
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+            ],
+          ),
+          const SizedBox(width: 5),
+          Row(
+            children: [
+              const Icon(Icons.star),
+              const SizedBox(width: 5),
+              Text(
+                '4.9',
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+              const SizedBox(width: 5),
+              Text(
+                '(55)',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ],
+          ),
+          const SizedBox(width: 7),
+          Text(
+            'قم، پردیسان، آدرس آرایشگاه',
+            style: Theme.of(context)
+                .textTheme
+                .labelMedium
+                ?.copyWith(color: AppColors.textSearchColor),
+          ),
+          const SizedBox(height: 16),
+          const Divider(
+            color: AppColors.dividerColor900,
+            endIndent: 22,
+            indent: 22,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget modellMoForShop() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 22),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'مدل موی خامه ای',
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+              const SizedBox(height: 5),
+              Row(
+                children: [
+                  const Icon(Icons.av_timer,
+                      size: 16, color: AppColors.textSearchColor),
+                  const SizedBox(width: 4),
+                  Text(
+                    '40 دقیقه',
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelMedium
+                        ?.copyWith(color: AppColors.textSearchColor),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Text(
+            '125,000 تومان',
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
+        ],
       ),
     );
   }

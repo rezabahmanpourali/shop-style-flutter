@@ -4,7 +4,6 @@ import 'package:shop_style/barber/screens/barber_shop_page.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
-import 'package:shop_style/common/configs/state_handeler.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/home/widgets/widgets/card_item.dart';
 import 'package:shop_style/locator.dart';
@@ -49,76 +48,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 5,
                   ),
                 ),
-                const SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 19, right: 22),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.menu,
-                        ),
-                        Spacer(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'موقعیت شما',
-                              style: TextStyle(
-                                  fontSize: 11,
-                                  fontFamily: 'IRANYekanFn',
-                                  color: AppColors.textHeader),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'پردیسان شهروند',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                  ),
-                                ),
-                                Icon(Icons.keyboard_arrow_down_rounded)
-                              ],
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-                        Icon(
-                          Icons.shopping_bag,
-                        ),
-                      ],
-                    ),
-                  ),
+                SliverToBoxAdapter(
+                  child: getAppbar(context),
                 ),
                 const SliverToBoxAdapter(
                   child: SizedBox(
                     height: 17,
                   ),
                 ),
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.only(right: 22),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'سلام!',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '{نام کاربر}',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
+                    padding: const EdgeInsets.only(right: 22),
+                    child: Text(
+                      'سلام! {نام کاربر}',
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                 ),
@@ -127,23 +70,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 19,
                   ),
                 ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 19,
-                  ),
-                ),
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.only(right: 22),
+                    padding: const EdgeInsets.only(right: 22),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           'به تازگی مشاهده کردید',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium,
                         ),
                       ],
                     ),
@@ -218,24 +153,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
-
                 const SliverToBoxAdapter(
                   child: SizedBox(
                     height: 38,
                   ),
                 ),
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.only(right: 22),
+                    padding: const EdgeInsets.only(right: 22),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           'آرایشگاه برتر منطقه شما',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium,
                         ),
                       ],
                     ),
@@ -454,6 +385,40 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget getAppbar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 19, right: 22),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.menu),
+          const Spacer(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'موقعیت شما',
+                style: Theme.of(context).textTheme.displaySmall,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'پردیسان شهروند',
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        color: AppColors.black, fontWeight: FontWeight.w700),
+                  ),
+                  const Icon(Icons.keyboard_arrow_down_rounded)
+                ],
+              ),
+            ],
+          ),
+          const Spacer(),
+          const Icon(Icons.shopping_bag),
+        ],
       ),
     );
   }

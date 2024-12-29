@@ -11,10 +11,6 @@ import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/explor/screens/explore_page.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/locator.dart';
-import 'package:shop_style/reserve_page2/screens/reseve_page2.dart';
-import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
-import 'package:shop_style/reserve_page4/screen/reserve_page4.dart';
-import 'package:shop_style/reserve_page5/screen/reseve_page5.dart';
 import 'package:shop_style/user_page/screens/user_page.dart';
 import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
 
@@ -33,7 +29,7 @@ void main() {
           PointerDeviceKind.unknown,
         },
       ),
-      home: const LoginEnterNumberPhoneScreen(),
+      home: const MyApp(),
     ),
   );
 }

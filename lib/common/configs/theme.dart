@@ -23,7 +23,7 @@ class CustomTheme {
         color: AppColors.categoryBlack,
         fontWeight: FontWeight.w700,
         fontFamily: 'IRANSansDB',
-        fontSize: 30,
+        fontSize: 25,
       ),
       titleSmall: TextStyle(
         color: AppColors.categoryBlack,
@@ -58,36 +58,12 @@ class CustomTheme {
         fontSize: 16,
       ),
       //////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       displaySmall: TextStyle(
-        color: Color(0xFF0D1619),
-        fontSize: 14,
+        color: AppColors.textHeader,
+        fontWeight: FontWeight.w400,  
+        fontFamily: 'IRANYekanFn',
+        fontSize: 11,
       ),
-
-      displayMedium: TextStyle(
-        color: Color(0xFF0D1619),
-        fontSize: 18,
-      ),
-
-      displayLarge: TextStyle(
-        fontSize: 13,
-        color: Color(0xFF000080),
-      ),
-      
-      
     ),
   );
 }
