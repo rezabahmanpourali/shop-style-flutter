@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/auth/widgets/header_for_screen.dart';
 import 'package:shop_style/common/configs/colors.dart';
 
 class ReservePage3 extends StatefulWidget {
@@ -19,40 +20,22 @@ class _ReservePage3State extends State<ReservePage3> {
       body: SafeArea(
         child: Directionality(
           textDirection: TextDirection.rtl,
-          child: CustomScrollView(
-            slivers: [
-              const SliverPadding(
-                padding: EdgeInsets.only(left: 22, right: 22, bottom: 0),
-                sliver: SliverAppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: AppColors.arayeshColor,
-                  actions: [
-                    Icon(Icons.close),
-                    Spacer(),
-                    Icon(Icons.arrow_forward),
-                  ],
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22, bottom: 22),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 22),
+            child: CustomScrollView(
+              slivers: [
+                const HeaderScreen(),
+                SliverToBoxAdapter(
                   child: Text(
                     'انتخاب تاریخ و ساعت',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(left: 22, right: 22, bottom: 22),
+                const SliverPadding(padding: EdgeInsets.only(top: 22)),
+                SliverToBoxAdapter(
                   child: Row(
                     children: [
                       Container(
-                        width: 175,
                         height: 35,
                         decoration: BoxDecoration(
                           border: Border.all(
@@ -61,19 +44,24 @@ class _ReservePage3State extends State<ReservePage3> {
                           ),
                           borderRadius: BorderRadius.circular(24),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Image.asset('assets/images/img14 2.png'),
-                            const Text(
-                              'نام آرایشگر انتخاب شده',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 5, right: 1),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Image.asset('assets/images/img14 2.png'),
+                              const SizedBox(width: 5),
+                              Text(
+                                'نام آرایشگر انتخاب شده',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall
+                                    ?.copyWith(color: AppColors.black),
                               ),
-                            ),
-                            const Icon(Icons.keyboard_arrow_down_rounded),
-                          ],
+                              const SizedBox(width: 5),
+                              const Icon(Icons.keyboard_arrow_down_rounded),
+                            ],
+                          ),
                         ),
                       ),
                       const Spacer(),
@@ -92,24 +80,19 @@ class _ReservePage3State extends State<ReservePage3> {
                     ],
                   ),
                 ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 22, right: 22),
-                  child: Text(
-                    'دی ماه، 1403',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
+                const SliverPadding(padding: EdgeInsets.only(top: 22)),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 22, right: 22),
+                    child: Text(
+                      'دی ماه، 1403',
+                      style: Theme.of(context).textTheme.labelMedium,
                     ),
                   ),
                 ),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 100,
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 22, left: 12),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 100,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       itemCount: 7,
@@ -131,30 +114,26 @@ class _ReservePage3State extends State<ReservePage3> {
                     ),
                   ),
                 ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 25,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                  child: Column(
-                children: [
-                  SelectRectangleCard(),
-                  SizedBox(height: 10),
-                  SelectRectangleCard(),
-                  SizedBox(height: 10),
-                  SelectRectangleCard(),
-                  SizedBox(height: 10),
-                  SelectRectangleCard(),
-                  SizedBox(height: 10),
-                  SelectRectangleCard(),
-                  SizedBox(height: 10),
-                  SelectRectangleCard(),
-                  SizedBox(height: 46),
-                ],
-              )),
-            ],
+                const SliverPadding(padding: EdgeInsets.only(top: 25)),
+                const SliverToBoxAdapter(
+                    child: Column(
+                  children: [
+                    SelectRectangleCard(),
+                    SizedBox(height: 10),
+                    SelectRectangleCard(),
+                    SizedBox(height: 10),
+                    SelectRectangleCard(),
+                    SizedBox(height: 10),
+                    SelectRectangleCard(),
+                    SizedBox(height: 10),
+                    SelectRectangleCard(),
+                    SizedBox(height: 10),
+                    SelectRectangleCard(),
+                    SizedBox(height: 46),
+                  ],
+                )),
+              ],
+            ),
           ),
         ),
       ),
@@ -180,14 +159,11 @@ class SelectRectangleCard extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(48),
         ),
-        child: const Row(
+        child: Row(
           children: [
             Text(
               '10:00 صبح',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
+              style: Theme.of(context).textTheme.labelMedium,
             ),
           ],
         ),
@@ -222,23 +198,18 @@ class SelectCirculTime extends StatelessWidget {
           child: Center(
             child: Text(
               '1',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.w700,
-                color: isSelected ? AppColors.white2 : AppColors.categoryBlack,
-              ),
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color:
+                      isSelected ? AppColors.white2 : AppColors.categoryBlack),
             ),
           ),
         ),
         const SizedBox(
           height: 10,
         ),
-        const Text(
+        Text(
           'شنبه',
-          style: TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
-          ),
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
       ],
     );

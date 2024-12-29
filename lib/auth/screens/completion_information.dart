@@ -24,17 +24,14 @@ class _CompletionInformationState extends State<CompletionInformation> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const HeaderScreen(),
-        surfaceTintColor: Colors.transparent,
-      ),
+     
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: width / 15),
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: CustomScrollView(
             slivers: <Widget>[
+              const HeaderScreen(),
               SliverToBoxAdapter(
                 child: TextPadding(
                   text: 'خوش آمدید!',
