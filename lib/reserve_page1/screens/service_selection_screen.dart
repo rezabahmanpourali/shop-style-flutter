@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shop_style/auth/widgets/header_for_screen.dart';
 import 'package:shop_style/reserve_page1/widgets/child_tabbar_view.dart';
 import 'package:shop_style/reserve_page2/screens/reseve_page2.dart';
-import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
 
 class ServiceSelectionScreen extends StatefulWidget {
   const ServiceSelectionScreen({super.key});

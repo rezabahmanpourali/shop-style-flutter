@@ -3,7 +3,7 @@ import 'package:shop_style/auth/widgets/custom_button.dart';
 import 'package:shop_style/auth/widgets/custom_dropdown.dart';
 import 'package:shop_style/auth/widgets/header_for_screen.dart';
 import 'package:shop_style/auth/widgets/text_padding.dart';
-import 'package:shop_style/home/screens/home_screen.dart';
+import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/main.dart';
 
 class CompletionInformation extends StatefulWidget {
@@ -24,17 +24,14 @@ class _CompletionInformationState extends State<CompletionInformation> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const HeaderScreen(),
-        surfaceTintColor: Colors.transparent,
-      ),
+     
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: width / 15),
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: CustomScrollView(
             slivers: <Widget>[
+              const HeaderScreen(),
               SliverToBoxAdapter(
                 child: TextPadding(
                   text: 'خوش آمدید!',
@@ -60,9 +57,12 @@ class _CompletionInformationState extends State<CompletionInformation> {
                       width: width / 2.6,
                       child: Divider(thickness: 1, height: height / 15),
                     ),
-                    const Text(
+                    Text(
                       '   یا   ',
-                      style: TextStyle(color: Color(0xFF757575), fontSize: 14),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: AppColors.black),
                     ),
                     SizedBox(
                       width: width / 2.6,
@@ -82,7 +82,10 @@ class _CompletionInformationState extends State<CompletionInformation> {
                   text:
                       'اطلاعات مورد نیاز برای ارائه بهترین تجربه را به صورت دستی وارد کنید',
                   topPadding: height / 100,
-                  theme: Theme.of(context).textTheme.bodySmall,
+                  theme: Theme.of(context)
+                      .textTheme
+                      .bodySmall
+                      ?.copyWith(color: AppColors.textHeader),
                 ),
               ),
               SliverToBoxAdapter(
@@ -123,16 +126,19 @@ class _CompletionInformationState extends State<CompletionInformation> {
               SliverToBoxAdapter(
                 child: TextButton(
                   onPressed: () {
-                    // Navigator.of(context).push(
-                    //   MaterialPageRoute(
-                    //     builder: (context) => const HomeScreen(),
-                    //   ),
-                    // );
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const MyApp(),
+                      ),
+                    );
                   },
                   child: TextPadding(
                     textAlign: TextAlign.center,
                     text: 'بعدا تکمیل کنید',
-                    theme: Theme.of(context).textTheme.labelSmall,
+                    theme: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: AppColors.black),
                   ),
                 ),
               ),
@@ -155,16 +161,16 @@ class _CompletionInformationState extends State<CompletionInformation> {
             children: [
               TextPadding(
                 text: 'اسکن چهره',
-                theme: Theme.of(context).textTheme.titleSmall,
+                theme: Theme.of(context).textTheme.labelMedium,
               ),
               const Spacer(),
               Container(
                 width: width / 5,
                 height: height / 20,
                 decoration: BoxDecoration(
-                  color: const Color(0xFFFFFFFF),
+                  color: AppColors.white2,
                   borderRadius: const BorderRadius.all(Radius.circular(360)),
-                  border: Border.all(color: const Color(0xFF000080), width: 3),
+                  border: Border.all(color: AppColors.purple, width: 3),
                 ),
                 child: const Icon(Icons.face),
               ),
@@ -176,14 +182,17 @@ class _CompletionInformationState extends State<CompletionInformation> {
             child: TextPadding(
               text:
                   'با اسکن کرده چهره خود با استفاده از دورین سلفی بهترین تجربه را از استفاده از سرویس ما خواهید داشت',
-              theme: Theme.of(context).textTheme.bodySmall,
+              theme: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: AppColors.textHeader),
             ),
           ),
           SizedBox(height: height / 100),
           TextPadding(
             text:
                 'نکته: تمامی اطلاعاتی که در این بخش وارد می کنید کاملا محفوظ است.',
-            theme: Theme.of(context).textTheme.bodyLarge,
+            theme: Theme.of(context).textTheme.bodySmall,
           ),
         ],
       ),

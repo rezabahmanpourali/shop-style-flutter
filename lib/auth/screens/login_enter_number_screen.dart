@@ -32,8 +32,10 @@ class LoginEnterNumberPhoneScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: TextPadding(
                   text: 'برای ثبت نام یا ورود شماره تلفن خود را وارد کنید',
-                  topPadding: height / 4.5,
-                  theme: Theme.of(context).textTheme.bodyMedium,
+                  topPadding: height / 4,
+                  theme: Theme.of(context)
+                      .textTheme
+                      .bodyMedium,
                 ),
               ),
               const SliverToBoxAdapter(

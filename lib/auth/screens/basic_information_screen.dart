@@ -3,8 +3,9 @@ import 'package:shop_style/auth/screens/completion_information.dart';
 import 'package:shop_style/auth/widgets/custom_button.dart';
 import 'package:shop_style/auth/widgets/custom_textfield.dart';
 import 'package:shop_style/auth/widgets/text_padding.dart';
+import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/enums/textfield_type.dart';
-import 'package:shop_style/home/screens/home_screen.dart';
+import 'package:shop_style/main.dart';
 
 class BasicInformationScreen extends StatefulWidget {
   const BasicInformationScreen({super.key});
@@ -40,7 +41,7 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                   text:
                       'تقریبا تمام شد! ساخت حساب کاربری خود را برای شماره موبایل 09120000000 با وارد کردن اطلاعات زیر تکمیل کنید',
                   topPadding: height / 100,
-                  theme: Theme.of(context).textTheme.bodySmall,
+                  theme: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
               SliverToBoxAdapter(
@@ -72,45 +73,7 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(top: height / 30),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: width / 20,
-                        height: width / 20,
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5)),
-                        ),
-                        child: Checkbox(
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          checkColor: const Color(0xFFFFFFFF),
-                          activeColor: const Color(0xFF000080),
-                          value: hasAcceptance,
-                          onChanged: (value) {
-                            setState(() {
-                              hasAcceptance = !hasAcceptance;
-                            });
-                          },
-                        ),
-                      ),
-                      SizedBox(width: width / 40),
-                      TextPadding(
-                        text: 'قبول ',
-                        theme: Theme.of(context).textTheme.bodySmall,
-                      ),
-                      TextPadding(
-                        text: 'شرایط و قوانین',
-                        theme: Theme.of(context).textTheme.displayLarge,
-                      ),
-                      TextPadding(
-                        text: ' استفاده از سرویس {نام برنامه}',
-                        theme: Theme.of(context).textTheme.bodySmall,
-                      ),
-                    ],
-                  ),
-                ),
+                child: acceptance(height, width, context),
               ),
               SliverToBoxAdapter(
                 child: CustomButton(
@@ -130,20 +93,71 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const HomeScreen(),
+                        builder: (context) => const MyApp(),
                       ),
                     );
                   },
                   child: TextPadding(
                     textAlign: TextAlign.center,
                     text: 'بعدا تکمیل کنید',
-                    theme: Theme.of(context).textTheme.labelSmall,
+                    theme: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: AppColors.black),
                   ),
                 ),
               ),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget acceptance(double height, double width, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: height / 30),
+      child: Row(
+        children: [
+          Container(
+            width: width / 20,
+            height: width / 20,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+            ),
+            child: Checkbox(
+              focusColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              checkColor: AppColors.white2,
+              activeColor: AppColors.purple,
+              value: hasAcceptance,
+              onChanged: (value) {
+                setState(() {
+                  hasAcceptance = !hasAcceptance;
+                });
+              },
+            ),
+          ),
+          SizedBox(width: width / 40),
+          TextPadding(
+            text: 'قبول ',
+            theme: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: AppColors.black),
+          ),
+          TextPadding(
+            text: 'شرایط و قوانین',
+            theme: Theme.of(context).textTheme.bodyMedium,
+          ),
+          TextPadding(
+            text: ' استفاده از سرویس {نام برنامه}',
+            theme: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: AppColors.black),
+          ),
+        ],
       ),
     );
   }

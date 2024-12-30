@@ -4,7 +4,6 @@ import 'package:shop_style/barber/screens/barber_shop_page.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
-import 'package:shop_style/common/configs/state_handeler.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/home/widgets/widgets/card_item.dart';
 import 'package:shop_style/locator.dart';
@@ -49,70 +48,21 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 5,
                   ),
                 ),
-                const SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 19, right: 22),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Spacer(),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'موقعیت شما',
-                              style: TextStyle(
-                                  fontSize: 11,
-                                  fontFamily: 'IRANYekanFn',
-                                  color: AppColors.textHeader),
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  'پردیسان شهروند',
-                                  style: TextStyle(
-                                    fontSize: 11,
-                                  ),
-                                ),
-                                Icon(Icons.keyboard_arrow_down_rounded)
-                              ],
-                            ),
-                          ],
-                        ),
-                        Spacer(),
-                      ],
-                    ),
-                  ),
+
+                SliverToBoxAdapter(
+                  child: getAppbar(context),
                 ),
                 const SliverToBoxAdapter(
                   child: SizedBox(
                     height: 17,
                   ),
                 ),
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.only(right: 22),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'سلام!',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                          '{نام کاربر}',
-                          style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w700,
-                          ),
-                        ),
-                      ],
+                    padding: const EdgeInsets.only(right: 22),
+                    child: Text(
+                      'سلام! {نام کاربر}',
+                      style: Theme.of(context).textTheme.titleMedium,
                     ),
                   ),
                 ),
@@ -121,18 +71,16 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 22,
                   ),
                 ),
-                const SliverToBoxAdapter(
+
+                SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.only(right: 22),
+                    padding: const EdgeInsets.only(right: 22),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           'به تازگی مشاهده کردید',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium,
                         ),
                       ],
                     ),
@@ -226,24 +174,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
-
                 const SliverToBoxAdapter(
                   child: SizedBox(
                     height: 38,
                   ),
                 ),
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.only(right: 22),
+                    padding: const EdgeInsets.only(right: 22),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           'آرایشگاه برتر منطقه شما',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium,
                         ),
                       ],
                     ),
@@ -301,14 +245,15 @@ class _HomeScreenState extends State<HomeScreen> {
                               right: 0,
                               child: Container(
                                 height: 328,
-                                decoration: BoxDecoration(
+                                decoration: const BoxDecoration(
                                   color: AppColors.white2,
                                   boxShadow: [
                                     BoxShadow(
-                                      color: AppColors.purpleOpacity.withValues(
-                                        alpha: 0.68,
-                                      ),
-                                      offset: const Offset(0, 0), // افست سایه
+                                      color: AppColors.purpleOpacity,
+                                      // .withValues(
+                                      //   alpha: 0.68,
+                                      // ),
+                                      offset: Offset(0, 0), // افست سایه
                                       blurRadius: 25.0, // میزان پخش سایه
                                       spreadRadius: 0.0, // میزان گسترش سایه
                                     )
@@ -461,6 +406,38 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget getAppbar(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 19, right: 22),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Spacer(),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'موقعیت شما',
+                style: Theme.of(context).textTheme.displaySmall,
+              ),
+              Row(
+                children: [
+                  Text(
+                    'پردیسان شهروند',
+                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        color: AppColors.black, fontWeight: FontWeight.w700),
+                  ),
+                  const Icon(Icons.keyboard_arrow_down_rounded)
+                ],
+              ),
+            ],
+          ),
+          const Spacer(),
+        ],
       ),
     );
   }
@@ -654,9 +631,10 @@ class CardItemParty extends StatelessWidget {
                     child: Container(
                       width: 50,
                       height: 24,
-                      decoration: BoxDecoration(
-                        color: AppColors.white2.withValues(alpha: 100),
-                        borderRadius: const BorderRadius.all(
+                      decoration: const BoxDecoration(
+                        color: AppColors.white2,
+                        // .withValues(alpha: 100),
+                        borderRadius: BorderRadius.all(
                           Radius.circular(27),
                         ),
                       ),

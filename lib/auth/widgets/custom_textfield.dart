@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/enums/textfield_type.dart';
 
 class CustomTextfield extends StatefulWidget {
@@ -37,23 +38,22 @@ class _CustomTextfieldState extends State<CustomTextfield> {
             children: [
               Text(
                 widget.lableField ?? '',
-                style: Theme.of(context).textTheme.displaySmall,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: AppColors.black),
               ),
               SizedBox(height: height / 100),
               Container(
                 height: height / 20,
                 decoration: BoxDecoration(
-                  border: Border.all(color: const Color(0xFFE5E5E5), width: 2),
-                  color: const Color(0xFFFFFFFF),
+                  border: Border.all(color: AppColors.bgGrey, width: 2),
+                  color: AppColors.white2,
                   borderRadius: const BorderRadius.all(Radius.circular(360)),
                 ),
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: width / 40),
-                  child: Row(
-                    children: [
-                      getTextField(width),
-                    ],
-                  ),
+                  child: getComponents(width),
                 ),
               ),
             ],
@@ -63,7 +63,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
     );
   }
 
-  getTextField(width) {
+  getComponents(width) {
     switch (widget.type) {
       case TextfieldType.none:
         return getTextfield(width);
@@ -71,6 +71,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
         return Row(
           children: [
             getNumberPhoneIcon(),
+            SizedBox(width: width / 40),
             getTextfield(width),
           ],
         );
@@ -82,20 +83,28 @@ class _CustomTextfieldState extends State<CustomTextfield> {
             getIconShowPasword(),
           ],
         );
-
-      default:
     }
   }
 
   Widget getTextfield(width) {
     return SizedBox(
-      width: widget.type == TextfieldType.none ? width / 1.3 : width / 1.43,
+      width: widget.type == TextfieldType.none
+          ? width / 1.3
+          : widget.type == TextfieldType.numberPhone
+              ? width / 1.5
+              : width / 1.43,
       child: TextField(
-        style: Theme.of(context).textTheme.displayMedium,
+        style: Theme.of(context)
+            .textTheme
+            .bodyMedium
+            ?.copyWith(color: AppColors.black),
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: widget.hintText ?? '',
-          hintStyle: Theme.of(context).textTheme.labelSmall,
+          hintStyle: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(color: AppColors.hintTextColor),
         ),
       ),
     );
@@ -104,7 +113,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
   Widget getNumberPhoneIcon() {
     return const Icon(
       Icons.phone_enabled_rounded,
-      color: Color(0xFFBABABA),
+      color: AppColors.bgGrey,
       size: 40,
     );
   }

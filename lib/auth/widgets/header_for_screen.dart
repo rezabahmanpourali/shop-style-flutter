@@ -1,33 +1,20 @@
 import 'package:flutter/material.dart';
 
 class HeaderScreen extends StatelessWidget {
-  const HeaderScreen({super.key, this.topPadding});
-
-  final double? topPadding;
+  const HeaderScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Padding(
-        padding: EdgeInsets.only(top: topPadding ?? 0),
-        child: Row(
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.close),
-            ),
-            const Spacer(),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.arrow_back,
-                textDirection: TextDirection.ltr,
-              ),
-            ),
-          ],
-        ),
-      ),
+    return const SliverAppBar(
+      automaticallyImplyLeading: false,
+      backgroundColor: Colors.transparent,
+      actions: [
+        Icon(Icons.close),
+        Spacer(),
+        Icon(Icons.arrow_forward),
+      ],
     );
   }
 }

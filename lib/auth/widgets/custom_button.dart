@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_style/main.dart';
+import 'package:shop_style/common/configs/colors.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
@@ -21,16 +21,14 @@ class CustomButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: topPadding ?? 0),
       child: ElevatedButton(
-        onPressed: onClick ??
-            () {
-            },
+        onPressed: onClick ?? () {},
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF0D1619),
+          backgroundColor: AppColors.black,
           minimumSize: Size(width / 3, height / 20),
         ),
         child: Text(
           textButton ?? '',
-          style: Theme.of(context).textTheme.labelMedium,
+          style: Theme.of(context).textTheme.labelMedium?.copyWith(color: AppColors.white2,),
         ),
       ),
     );

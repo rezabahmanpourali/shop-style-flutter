@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/common/configs/colors.dart';
 
 class CustomDropdown extends StatefulWidget {
   const CustomDropdown({
@@ -30,20 +31,23 @@ class _CustomDropdownState extends State<CustomDropdown> {
           children: [
             Text(
               widget.lableField,
-              style: Theme.of(context).textTheme.bodySmall,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(color: AppColors.black),
             ),
             SizedBox(height: height / 100),
             Container(
               height: height / 20,
               decoration: BoxDecoration(
-                border: Border.all(color: const Color(0xFFE5E5E5), width: 2),
-                color: const Color(0xFFFFFFFF),
+                border: Border.all(color: AppColors.bgGrey, width: 2),
+                color: AppColors.white2,
                 borderRadius: const BorderRadius.all(Radius.circular(30)),
               ),
               child: DropdownButton<String>(
                 icon: const Icon(
                   Icons.keyboard_arrow_down_outlined,
-                  color: Color(0xFF000000),
+                  color: AppColors.black,
                   size: 30,
                 ),
                 value: selectedValue,
@@ -58,7 +62,10 @@ class _CustomDropdownState extends State<CustomDropdown> {
                           SizedBox(width: width / 1.5),
                           Text(
                             value,
-                            style: Theme.of(context).textTheme.displaySmall,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge
+                                ?.copyWith(color: AppColors.black),
                           ),
                         ],
                       ),

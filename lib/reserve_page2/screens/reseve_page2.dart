@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_style/barber/widgets/barber_artist.dart';
+import 'package:shop_style/auth/widgets/header_for_screen.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
 
@@ -20,35 +20,19 @@ class _ResevePage2State extends State<ResevePage2> {
       body: SafeArea(
         child: Directionality(
           textDirection: TextDirection.rtl,
-          child: CustomScrollView(
-            slivers: [
-              const SliverPadding(
-                padding: EdgeInsets.only(left: 22, right: 22, bottom: 0),
-                sliver: SliverAppBar(
-                  automaticallyImplyLeading: false,
-                  backgroundColor: AppColors.arayeshColor,
-                  actions: [
-                    Icon(Icons.close),
-                    Spacer(),
-                    Icon(Icons.arrow_forward),
-                  ],
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22, bottom: 22),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 22),
+            child: CustomScrollView(
+              slivers: [
+                const HeaderScreen(),
+                SliverToBoxAdapter(
                   child: Text(
                     'انتخاب آرایشگر',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.only(left: 22, right: 22),
-                sliver: SliverGrid(
+                const SliverPadding(padding: EdgeInsets.only(top: 22)),
+                SliverGrid(
                   delegate: SliverChildBuilderDelegate(
                     childCount: 6,
                     (context, index) {
@@ -74,8 +58,8 @@ class _ResevePage2State extends State<ResevePage2> {
                     mainAxisSpacing: 10.0, // فاصله عمودی بین آیتم‌ها
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -98,7 +82,7 @@ class BarberSelectArtist extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => ReservePage3(),
+              builder: (context) => const ReservePage3(),
             ));
           },
           child: Container(
@@ -117,78 +101,70 @@ class BarberSelectArtist extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Stack(
-                    children: [
-                      Positioned(
-                        child: SizedBox(
-                          height: 120,
-                          width: 91,
-                          child: Stack(
+                  SizedBox(
+                    height: 120,
+                    width: 100,
+                    child: Stack(
+                      children: [
+                        Positioned(
+                          top: 0,
+                          left: 28,
+                          child: SizedBox(
+                            width: 64,
+                            height: 64,
+                            child: Image.asset('assets/images/img8.png'),
+                          ),
+                        ),
+                        Positioned(
+                          top: 54,
+                          left: 31,
+                          child: Container(
+                            width: 55,
+                            height: 19,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                width: 2,
+                                color: AppColors.cardWhite,
+                              ),
+                              color: AppColors.white2,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(24)),
+                            ),
+                            child: Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '4.5',
+                                    style:
+                                        Theme.of(context).textTheme.labelMedium,
+                                  ),
+                                  const Icon(Icons.star, size: 18),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 80,
+                          left: 20,
+                          right: 0,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Positioned(
-                                top: 0,
-                                child: SizedBox(
-                                  width: 64,
-                                  height: 64,
-                                  child: Image.asset('assets/images/img8.png'),
-                                ),
+                              Text(
+                                'نام آرایشگر',
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
-                              Positioned(
-                                top: 58,
-                                left: 19,
-                                right: 1,
-                                child: Container(
-                                  width: 44,
-                                  height: 19,
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.white2,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(24),
-                                    ),
-                                  ),
-                                  child: const Center(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text('4.5'),
-                                        Icon(Icons.star),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const Positioned(
-                                bottom: 0,
-                                left: 20,
-                                right: 0,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'نام آرایشگر',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w700,
-                                        color: AppColors.black,
-                                      ),
-                                    ),
-                                    Text(
-                                      'متخصص رنگ مو',
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.textHeader,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              Text(
+                                'متخصص رنگ مو',
+                                style: Theme.of(context).textTheme.displaySmall,
                               ),
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

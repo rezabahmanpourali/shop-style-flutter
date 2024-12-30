@@ -13,7 +13,7 @@ class BarberShopController extends ChangeNotifier {
 
   void fetchBarberShops() async {
     barberShopState = BlocStatusLoading();
-    notifyListeners();
+    // notifyListeners();
 
     ResponseModel response = await barberShopRepository.getBarberShops();
 
