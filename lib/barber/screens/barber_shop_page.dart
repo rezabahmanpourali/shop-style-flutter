@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/widgets/barber_artist.dart';
 import 'package:shop_style/common/configs/colors.dart';
-import 'package:shop_style/common/configs/state_handeler.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/reserve_page1/screens/service_selection_screen.dart';
 
@@ -761,7 +760,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ServiceSelectionScreen(),
+                            builder: (context) => const ServiceSelectionScreen(),
                           ));
                         },
                         child: Container(
