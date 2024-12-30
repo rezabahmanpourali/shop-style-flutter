@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/auth/widgets/header_for_screen.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/common/widgets/nemad_user.dart';
 import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
 
 class ResevePage2 extends StatefulWidget {
@@ -95,79 +96,10 @@ class BarberSelectArtist extends StatelessWidget {
                 color: borderColor,
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.only(
+            child: const Padding(
+              padding: EdgeInsets.only(
                   top: 38, right: 20), // فاصله 20 پیکسل از همه طرف
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 120,
-                    width: 100,
-                    child: Stack(
-                      children: [
-                        Positioned(
-                          top: 0,
-                          left: 28,
-                          child: SizedBox(
-                            width: 64,
-                            height: 64,
-                            child: Image.asset('assets/images/img8.png'),
-                          ),
-                        ),
-                        Positioned(
-                          top: 54,
-                          left: 31,
-                          child: Container(
-                            width: 55,
-                            height: 19,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                width: 2,
-                                color: AppColors.cardWhite,
-                              ),
-                              color: AppColors.white2,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(24)),
-                            ),
-                            child: Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    '4.5',
-                                    style:
-                                        Theme.of(context).textTheme.labelMedium,
-                                  ),
-                                  const Icon(Icons.star, size: 18),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 80,
-                          left: 20,
-                          right: 0,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                'نام آرایشگر',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              Text(
-                                'متخصص رنگ مو',
-                                style: Theme.of(context).textTheme.displaySmall,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              child: BarberArtists(),
             ),
           ),
         ),

@@ -18,30 +18,21 @@ class _ViewReservedPageState extends State<ViewReservedPage> {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            const SliverPadding(
-              padding: EdgeInsets.only(right: 22, top: 20, bottom: 32),
+            SliverPadding(
+              padding: const EdgeInsets.only(right: 22, top: 20, bottom: 32),
               sliver: SliverToBoxAdapter(
                 child: Text(
                   'رزرو ها',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
             ),
-            const SliverPadding(
-              padding: EdgeInsets.only(
-                right: 22,
-                bottom: 12,
-              ),
+            SliverPadding(
+              padding: const EdgeInsets.only(right: 22, bottom: 12),
               sliver: SliverToBoxAdapter(
                 child: Text(
                   'جاری',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),
             ),
@@ -60,15 +51,12 @@ class _ViewReservedPageState extends State<ViewReservedPage> {
                 ),
               ),
             ),
-            const SliverPadding(
-              padding: EdgeInsets.only(right: 22, bottom: 12),
+            SliverPadding(
+              padding: const EdgeInsets.only(right: 22, bottom: 12),
               sliver: SliverToBoxAdapter(
                 child: Text(
                   'رزرو های قبلی',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),
             ),
@@ -87,15 +75,12 @@ class _ViewReservedPageState extends State<ViewReservedPage> {
                 ),
               ),
             ),
-            const SliverPadding(
-              padding: EdgeInsets.only(right: 22, bottom: 12),
+            SliverPadding(
+              padding: const EdgeInsets.only(right: 22, bottom: 12),
               sliver: SliverToBoxAdapter(
                 child: Text(
                   'لغو شده',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: Theme.of(context).textTheme.labelMedium,
                 ),
               ),
             ),
@@ -248,48 +233,42 @@ class _ReserveItemState extends State<ReserveItem> {
                             children: [
                               Text(
                                 widget.title, // دریافت عنوان از خارج
-                                style: TextStyle(
-                                  fontSize: _isExpanded ? 20 : 16,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.categoryBlack,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall
+                                    ?.copyWith(
+                                      fontSize: _isExpanded ? 20 : 16,
+                                    ),
                               ),
                               const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 widget.date, // تاریخ رزرو
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.categoryBlack,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: AppColors.black),
                               ),
                               Row(
                                 children: [
                                   Text(
                                     widget.service, // نام سرویس
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.textSearchColor,
-                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium,
                                   ),
                                   Text(
                                     widget.duration, // مدت زمان
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.textSearchColor,
-                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium,
                                   ),
                                   Text(
                                     widget.price, // قیمت
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.textSearchColor,
-                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayMedium,
                                   ),
                                 ],
                               ),
@@ -323,8 +302,14 @@ class _ReserveItemState extends State<ReserveItem> {
                             ),
                             width: _isExpanded ? 116 : 0,
                             height: _isExpanded ? 35 : 0,
-                            child: const Center(
-                              child: Text('مسیریابی با نقشه'),
+                            child: Center(
+                              child: Text(
+                                'مسیریابی با نقشه',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: AppColors.black),
+                              ),
                             ),
                           ),
                           const SizedBox(

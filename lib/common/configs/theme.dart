@@ -57,10 +57,22 @@ class CustomTheme {
         fontFamily: 'IRANSansDB',
         fontSize: 16,
       ),
+      labelSmall: TextStyle(
+        color: AppColors.black,
+        fontWeight: FontWeight.w400,
+        fontFamily: 'IRANSansDB',
+        fontSize: 16,
+      ),
       //////////////////////////////////////////
+      displayMedium: TextStyle(
+        color: AppColors.textHeader,
+        fontWeight: FontWeight.w400,
+        fontFamily: 'IRANYekanFn',
+        fontSize: 12,
+      ),
       displaySmall: TextStyle(
         color: AppColors.textHeader,
-        fontWeight: FontWeight.w400,  
+        fontWeight: FontWeight.w400,
         fontFamily: 'IRANYekanFn',
         fontSize: 11,
       ),

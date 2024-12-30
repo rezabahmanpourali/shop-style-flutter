@@ -38,11 +38,20 @@ class _UserPageState extends State<UserPage> {
                     const SizedBox(
                       width: 13,
                     ),
-                    const Column(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('نام کاربری'),
-                        Text('09120000000'),
+                        Text(
+                          'نام کاربری',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                        Text(
+                          '09120000000',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: AppColors.textHeader),
+                        ),
                       ],
                     ),
                     const Spacer(),
@@ -62,16 +71,25 @@ class _UserPageState extends State<UserPage> {
                 endIndent: 22,
               ),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Padding(
-                padding:
-                    EdgeInsets.only(top: 16, left: 22, right: 22, bottom: 16),
+                padding: const EdgeInsets.only(
+                    top: 16, left: 22, right: 22, bottom: 16),
                 child: Row(
                   children: [
-                    Text('رزرو های من'),
-                    Spacer(),
-                    Text('مشاهده همه'),
-                    Icon(Icons.arrow_forward_ios_outlined),
+                    Text(
+                      'رزرو های من',
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                    const Spacer(),
+                    Text(
+                      'مشاهده همه',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: AppColors.textHeader),
+                    ),
+                    const Icon(Icons.arrow_forward_ios_outlined),
                   ],
                 ),
               ),
@@ -83,21 +101,13 @@ class _UserPageState extends State<UserPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const ReservedCards(),
-                    const SizedBox(
-                      width: 24,
-                    ),
+                    const SizedBox(width: 24),
                     verticalDivider(),
-                    const SizedBox(
-                      width: 24,
-                    ),
+                    const SizedBox(width: 24),
                     const ReservedCards(),
-                    const SizedBox(
-                      width: 24,
-                    ),
+                    const SizedBox(width: 24),
                     verticalDivider(),
-                    const SizedBox(
-                      width: 24,
-                    ),
+                    const SizedBox(width: 24),
                     const ReservedCards(),
                   ],
                 ),
@@ -304,10 +314,16 @@ class _UserPageState extends State<UserPage> {
                 ],
               ),
             ),
-            const SliverToBoxAdapter(
+            SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.only(right: 22, top: 24, bottom: 24),
-                child: Text('نسخه برنامه: 1.1'),
+                padding: const EdgeInsets.only(right: 22, top: 24, bottom: 24),
+                child: Text(
+                  'نسخه برنامه: 1.1',
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: AppColors.textHeader),
+                ),
               ),
             ),
           ],
@@ -351,7 +367,13 @@ class UserAccountItem extends StatelessWidget {
             const SizedBox(
               width: 4,
             ),
-            Text(title),
+            Text(
+              title,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: AppColors.black),
+            ),
             const Spacer(),
             if (iconRight != null) Icon(iconRight), // آیکون راست
           ],
@@ -374,7 +396,13 @@ class ReservedCards extends StatelessWidget {
         const SizedBox(
           height: 6,
         ),
-        const Text('انجام شده'),
+        Text(
+          'انجام شده',
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(color: AppColors.black),
+        ),
       ],
     );
   }

@@ -3,8 +3,9 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
-import 'package:shop_style/barber/widgets/barber_artist.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/common/widgets/nemad_user.dart';
+import 'package:shop_style/common/widgets/stack_widget_view.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/reserve_page1/screens/service_selection_screen.dart';
 
@@ -102,182 +103,47 @@ class _BarberShopPageState extends State<BarberShopPage> {
                   ],
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 16,
-                ),
+              //خط پایین کار sizedbox رو در sliver انجام میده
+              const SliverPadding(padding: EdgeInsets.only(top: 16)),
+              SliverToBoxAdapter(
+                child: getTitleNamePage(context),
               ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22),
-                  child: Text(
-                    'نام کامل آرایشگاه',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22, top: 11),
-                  child: Row(
-                    children: [
-                      Text('45'),
-                      Icon(Icons.star),
-                      Icon(Icons.star),
-                      Icon(Icons.star),
-                      Icon(Icons.star),
-                      Icon(Icons.star_border),
-                      Text('(55)'),
-                    ],
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22, top: 15, bottom: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            'فاصله حدود 5 کیلومتر',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textSearchColor,
-                            ),
-                          ),
-                          Text(
-                            'آدرس کامل آرایشگاه',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.textSearchColor,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Text(
-                        'تا ساعت 21:00 باز است',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.textSearchColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Divider(
-                  height: 1,
-                  color: AppColors.dividerColor900,
-                  indent: 22,
-                  endIndent: 22,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 16),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22, bottom: 12),
-                  child: Text('خدمات'),
-                ),
-              ),
+              const SliverPadding(padding: EdgeInsets.only(top: 16)),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 22, left: 22),
-                  child: ServiceCategories(
-                    onTabChange: (index) {},
-                    tabs: const ['کوتاهی', 'مدل مو', 'اصلاح صورت'],
-                    content: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 22),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('مدل موی خامه ای'),
-                            Row(
-                              children: [
-                                const Icon(Icons.av_timer_outlined),
-                                const Text('40 دقیقه'),
-                                const Spacer(),
-                                Container(
-                                  width: 100,
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      width: 1,
-                                      color: AppColors.cardWhite,
-                                    ),
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  child: const Center(
-                                    child: Text('رزرو نوبت'),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Text('125,000 تومان'),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            const Divider(
-                              height: 1,
-                              color: AppColors.dividerColor900,
-                              endIndent: 22,
-                              indent: 22,
-                            ),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                            const Text('مدل موی خامه ای'),
-                            Row(
-                              children: [
-                                const Icon(Icons.av_timer_outlined),
-                                const Text('40 دقیقه'),
-                                const Spacer(),
-                                Container(
-                                  width: 100,
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      width: 1,
-                                      color: AppColors.cardWhite,
-                                    ),
-                                    borderRadius: BorderRadius.circular(24),
-                                  ),
-                                  child: const Center(
-                                    child: Text('رزرو نوبت'),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Text('125,000 تومان'),
-                            const SizedBox(
-                              height: 16,
-                            ),
-                          ],
-                        ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'خدمات',
+                        style: Theme.of(context).textTheme.titleSmall,
                       ),
-                      Container(
-                        width: 100,
-                        height: 100,
-                        color: Colors.blue,
-                      ),
-                      Container(
-                        width: 100,
-                        height: 100,
-                        color: Colors.green,
+                      const SizedBox(height: 15),
+                      ServiceCategories(
+                        onTabChange: (index) {},
+                        tabs: const ['کوتاهی', 'مدل مو', 'اصلاح صورت'],
+                        content: [
+                          SizedBox(
+                            height: 250,
+                            child: ListView.builder(
+                              itemCount: 2,
+                              itemBuilder: (BuildContext context, int index) {
+                                return const StackWidgetView();
+                              },
+                            ),
+                          ),
+                          Container(
+                            width: 100,
+                            height: 100,
+                            color: Colors.blue,
+                          ),
+                          Container(
+                            width: 100,
+                            height: 100,
+                            color: Colors.green,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -294,42 +160,28 @@ class _BarberShopPageState extends State<BarberShopPage> {
                     borderRadius: BorderRadius.circular(48),
                   ),
                   width: double.infinity,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Center(
                       child: Text(
                         'مشاهده همه',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium,
                       ),
                     ),
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 32,
-                ),
-              ),
-              const SliverToBoxAdapter(
+              const SliverPadding(padding: EdgeInsets.only(top: 32)),
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.only(right: 22),
+                  padding: const EdgeInsets.only(right: 22),
                   child: Text(
                     'اعضای آرایشگاه',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 16,
-                ),
-              ),
+              const SliverPadding(padding: EdgeInsets.only(top: 16)),
               SliverToBoxAdapter(
                 child: Consumer<BarberController>(
                   builder: (context, provider, child) {
@@ -355,14 +207,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                 sliver: SliverList(
                                   delegate: SliverChildBuilderDelegate(
                                     (context, index) {
-                                      final barbers = provider.barber[index];
-                                      return Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 16),
-                                        child: BarberArtists(
-                                          barbers: barbers,
-                                        ),
-                                      );
+                                      return const BarberArtists();
                                     },
                                     childCount: provider.barber.length,
                                   ),
@@ -374,11 +219,6 @@ class _BarberShopPageState extends State<BarberShopPage> {
                       },
                     );
                   },
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 32,
                 ),
               ),
               const SliverToBoxAdapter(
@@ -543,16 +383,17 @@ class _BarberShopPageState extends State<BarberShopPage> {
                 ),
               ),
               SliverToBoxAdapter(
-                  child: SizedBox(
-                height: 156,
-                child: ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 7,
-                  itemBuilder: (context, index) {
-                    return const TimeWork();
-                  },
+                child: SizedBox(
+                  height: 156,
+                  child: ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: 7,
+                    itemBuilder: (context, index) {
+                      return const TimeWork();
+                    },
+                  ),
                 ),
-              )),
+              ),
               const SliverToBoxAdapter(
                 child: SizedBox(
                   height: 32,
@@ -760,7 +601,8 @@ class _BarberShopPageState extends State<BarberShopPage> {
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const ServiceSelectionScreen(),
+                            builder: (context) =>
+                                const ServiceSelectionScreen(),
                           ));
                         },
                         child: Container(
@@ -802,6 +644,62 @@ class _BarberShopPageState extends State<BarberShopPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget getTitleNamePage(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 22, top: 5),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'نام کامل آرایشگاه',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 6),
+          Row(
+            children: [
+              Text(
+                '4.5',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              const Icon(Icons.star),
+              const Icon(Icons.star),
+              const Icon(Icons.star),
+              const Icon(Icons.star),
+              const Icon(Icons.star_border),
+              Text(
+                '(55)',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ],
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'فاصله حدود 5 کیلومتر . آدرس کامل آرایشگاه',
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: AppColors.textHeader),
+          ),
+          const SizedBox(height: 6),
+          Text(
+            'تا ساعت 21:00 باز است',
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium
+                ?.copyWith(color: AppColors.textHeader),
+          ),
+          const SizedBox(height: 6),
+          const Divider(
+            height: 1,
+            color: AppColors.dividerColor900,
+            indent: 22,
+            endIndent: 22,
+          ),
+        ],
       ),
     );
   }
