@@ -14,7 +14,7 @@ class _ViewReservedPageState extends State<ViewReservedPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.arayeshColor,
+      backgroundColor: AppColors.white2,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [

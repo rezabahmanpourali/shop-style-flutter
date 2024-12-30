@@ -7,7 +7,6 @@ import 'package:shop_style/barber/widgets/barber_artist.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/state_handeler.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
-import 'package:shop_style/locator.dart';
 import 'package:shop_style/reserve_page1/screens/service_selection_screen.dart';
 
 class BarberShopPage extends StatefulWidget {
@@ -18,6 +17,20 @@ class BarberShopPage extends StatefulWidget {
 }
 
 class _BarberShopPageState extends State<BarberShopPage> {
+  @override
+  void initState() {
+    super.initState();
+
+    // صدا زدن fetchBarber تنها در صورتی که داده‌ها بارگذاری نشده باشد
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final barberController =
+          Provider.of<BarberController>(context, listen: false);
+      if (barberController.barber.isEmpty) {
+        barberController.fetchBarber();
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -335,7 +348,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
                       },
                       completedWidgetBuilder: (value) {
                         return SizedBox(
-                          height: 200,
+                          height: 140,
                           child: CustomScrollView(
                             slivers: [
                               SliverPadding(

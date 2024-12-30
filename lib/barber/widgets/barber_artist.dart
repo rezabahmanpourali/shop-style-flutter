@@ -5,7 +5,8 @@ import 'package:shop_style/common/configs/colors.dart';
 class BarberArtists extends StatelessWidget {
   final BarberModel barbers;
   const BarberArtists({
-    super.key, required this.barbers,
+    super.key,
+    required this.barbers,
   });
 
   @override
@@ -47,8 +48,8 @@ class BarberArtists extends StatelessWidget {
                   ),
                 ),
               ),
-               Positioned(
-                bottom: 0,
+              Positioned(
+                bottom: 10,
                 left: 12,
                 right: 12,
                 child: Column(

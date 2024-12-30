@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: AppColors.arayeshColor,
+      backgroundColor: AppColors.white2,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: _onRefresh,
@@ -55,9 +55,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.menu,
-                        ),
                         Spacer(),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
@@ -83,9 +80,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                         Spacer(),
-                        Icon(
-                          Icons.shopping_bag,
-                        ),
                       ],
                     ),
                   ),
@@ -124,12 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 const SliverToBoxAdapter(
                   child: SizedBox(
-                    height: 19,
-                  ),
-                ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 19,
+                    height: 22,
                   ),
                 ),
                 const SliverToBoxAdapter(
@@ -184,24 +173,43 @@ class _HomeScreenState extends State<HomeScreen> {
                                       provider.barberShops[index];
                                   return Padding(
                                     padding: const EdgeInsets.only(left: 16),
+                                    // child: GestureDetector(
+                                    //   onTap: () {
+                                    //     // Navigator.of(context).push(
+                                    //     //   MaterialPageRoute(
+                                    //     //     builder: (context) =>
+                                    //     //         Provider<BarberController>(
+                                    //     //       create: (context) {
+                                    //     //         locator
+                                    //     //             .get<BarberController>()
+                                    //     //             .fetchBarber();
+
+                                    //     //         return locator
+                                    //     //             .get<BarberController>();
+                                    //     //       },
+                                    //     //       builder: (context, child) {
+                                    //     //         return const BarberShopPage();
+                                    //     //       },
+                                    //     //     ),
+                                    //     //   ),
+                                    //     // );
+                                    //   },
+                                    //   child:
+                                    //       CardItem(barberShopModel: barbershop),
+                                    // ),
                                     child: GestureDetector(
                                       onTap: () {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                            builder: (context) =>
-                                                Provider<BarberController>(
-                                              create: (context) {
-                                                locator
-                                                    .get<BarberController>()
-                                                    .fetchBarber();
-
-                                                return locator
-                                                    .get<BarberController>();
-                                              },
-                                              builder: (context, child) {
-                                                return const BarberShopPage();
-                                              },
-                                            ),
+                                            builder: (context) {
+                                              return ChangeNotifierProvider<
+                                                  BarberController>(
+                                                create: (context) =>
+                                                    BarberController(),
+                                                child:
+                                                    BarberShopPage(), // صفحه مقصد
+                                              );
+                                            },
                                           ),
                                         );
                                       },
