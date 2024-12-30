@@ -155,7 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 create: (context) =>
                                                     BarberController(),
                                                 child:
-                                                    BarberShopPage(), // صفحه مقصد
+                                                    const BarberShopPage(), // صفحه مقصد
                                               );
                                             },
                                           ),
