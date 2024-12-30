@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
+import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/theme.dart';
@@ -14,7 +15,7 @@ import 'package:shop_style/user_page/screens/user_page.dart';
 import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
 
 void main() {
-  Provider.debugCheckInvalidValueType = null;
+  // Provider.debugCheckInvalidValueType = null;
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   runApp(
@@ -28,7 +29,7 @@ void main() {
           PointerDeviceKind.unknown,
         },
       ),
-      home: const ReservePage3(),
+      home: const MyApp(),
     ),
   );
 }
@@ -41,7 +42,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 3;
 
   final List<Widget> _pages = [
     const Directionality(
@@ -75,9 +76,9 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => locator.get<BarberShopController>(),
         ),
-        // ChangeNotifierProvider(
-        //   create: (context) => locator.get<BarberController>(),
-        // ),
+        ChangeNotifierProvider(
+          create: (context) => locator.get<BarberController>(),
+        ),
       ],
       child: Consumer<GlobalController>(
         builder: (context, value, child) {
@@ -89,7 +90,7 @@ class _MyAppState extends State<MyApp> {
               children: _pages,
             ),
             bottomNavigationBar: Container(
-              margin: const EdgeInsets.only(bottom: 20, right: 40, left: 40),
+              margin: const EdgeInsets.only(bottom: 20, right: 70, left: 70),
               height: 66,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(56),
@@ -107,38 +108,29 @@ class _MyAppState extends State<MyApp> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: _buildNavItem(
-                        icon: _selectedIndex == 0
-                            ? 'assets/images/Vector.png'
-                            : 'assets/images/Person.png',
-                        label: 'پروفایل',
-                        index: 0,
-                        isSelected: _selectedIndex == 0,
-                      ),
+                    _buildNavItem(
+                      icon: _selectedIndex == 0
+                          ? 'assets/images/Vector.png'
+                          : 'assets/images/Person.png',
+                      label: 'پروفایل',
+                      index: 0,
+                      isSelected: _selectedIndex == 0,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: _buildNavItem(
-                        icon: _selectedIndex == 1
-                            ? 'assets/images/Vector (1).png'
-                            : 'assets/images/Cart.png',
-                        label: 'رزرو ها',
-                        index: 1,
-                        isSelected: _selectedIndex == 1,
-                      ),
+                    _buildNavItem(
+                      icon: _selectedIndex == 1
+                          ? 'assets/images/Vector (1).png'
+                          : 'assets/images/Cart.png',
+                      label: 'رزرو ها',
+                      index: 1,
+                      isSelected: _selectedIndex == 1,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 10),
-                      child: _buildNavItem(
-                        icon: _selectedIndex == 2
-                            ? 'assets/images/Vector (2).png'
-                            : 'assets/images/CategoryStroke.png',
-                        label: 'جستجوی',
-                        index: 2,
-                        isSelected: _selectedIndex == 2,
-                      ),
+                    _buildNavItem(
+                      icon: _selectedIndex == 2
+                          ? 'assets/images/Vector (2).png'
+                          : 'assets/images/CategoryStroke.png',
+                      label: 'جستجو',
+                      index: 2,
+                      isSelected: _selectedIndex == 2,
                     ),
                     _buildNavItem(
                       icon: _selectedIndex == 3

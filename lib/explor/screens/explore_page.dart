@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -14,14 +15,38 @@ class _ExplorePageState extends State<ExplorePage> {
   final DraggableScrollableController _scrollController =
       DraggableScrollableController();
 
+  bool _isMenuIcon = true;
+
+  void _toggleIcon() {
+    setState(() {
+      _isMenuIcon = !_isMenuIcon;
+    });
+
+    if (_isMenuIcon) {
+      // حرکت به پایین
+      _scrollController.animateTo(
+        0.1, // حداقل اندازه
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    } else {
+      // حرکت به بالا
+      _scrollController.animateTo(
+        0.9, // حداکثر اندازه
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final controller = PageController(viewportFraction: 0.9);
     return Scaffold(
-      backgroundColor: AppColors.arayeshColor,
+      backgroundColor: AppColors.white2,
       body: SafeArea(
         child: Stack(
           children: [
-            // متن بالای صفحه
             Column(
               children: [
                 Expanded(
@@ -55,7 +80,7 @@ class _ExplorePageState extends State<ExplorePage> {
                         ],
                       ),
                       Positioned(
-                        top: 6, // فاصله از بالا
+                        top: 6,
                         left: 0,
                         right: 0,
                         child: Container(
@@ -67,7 +92,7 @@ class _ExplorePageState extends State<ExplorePage> {
                             borderRadius: BorderRadius.circular(60),
                             border: Border.all(
                               width: 2,
-                              color: AppColors.cardWhite,
+                              color: AppColors.white2,
                             ),
                           ),
                           child: Padding(
@@ -75,17 +100,25 @@ class _ExplorePageState extends State<ExplorePage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Container(
-                                  width: 50,
-                                  height: 50,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      width: 2,
-                                      color: AppColors.cardWhite,
+                                GestureDetector(
+                                  onTap: () {
+                                    _toggleIcon();
+                                    print('object');
+                                  },
+                                  child: Container(
+                                    width: 50,
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        width: 2,
+                                        color: AppColors.cardWhite,
+                                      ),
+                                      shape: BoxShape.circle,
                                     ),
-                                    shape: BoxShape.circle,
+                                    child: _isMenuIcon
+                                        ? const Icon(Icons.menu)
+                                        : const Icon(Icons.close),
                                   ),
-                                  child: const Icon(Icons.menu),
                                 ),
                                 const Spacer(),
                                 Column(
@@ -129,7 +162,7 @@ class _ExplorePageState extends State<ExplorePage> {
               builder: (context, scrollController) {
                 return Container(
                   decoration: const BoxDecoration(
-                    color: AppColors.arayeshColor,
+                    color: AppColors.white2,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30),
@@ -229,12 +262,125 @@ class _ExplorePageState extends State<ExplorePage> {
                                 ),
                               ),
                               const SizedBox(height: 16),
-                              Text(
+                              const Text(
                                 '3 آرایشگاه نزدیک',
-                                style: Theme.of(context).textTheme.bodyLarge,
+                                style: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
-                              const SizedBox(height: 16),
-                              shopInformation(context),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              Stack(
+                                children: [
+                                  SizedBox(
+                                    height: 220,
+                                    child: PageView.builder(
+                                      controller: controller,
+                                      itemCount: 3,
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                          margin: const EdgeInsets.only(
+                                            left: 22,
+                                            right: 22,
+                                            bottom: 20,
+                                          ),
+                                          height: 220,
+                                          child: Image.asset(
+                                              'assets/images/uuacu.jpg'),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  Positioned(
+                                    bottom: 30,
+                                    right: 180,
+                                    child: SmoothPageIndicator(
+                                      controller: controller,
+                                      count: 3,
+                                      effect: const SlideEffect(
+                                        spacing: 8.0,
+                                        radius: 50.0,
+                                        dotWidth: 10.0,
+                                        dotHeight: 10.0,
+                                        paintStyle: PaintingStyle.stroke,
+                                        strokeWidth: 1.5,
+                                        dotColor: Colors.grey,
+                                        activeDotColor: AppColors.bannerColor,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 22, right: 22),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'نام آرایشگاه',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      'حدود',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      '5',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: AppColors.purpleOpacity,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      'کیلومتر',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 5),
+                              const Padding(
+                                padding: EdgeInsets.only(right: 22),
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.star),
+                                    SizedBox(width: 5),
+                                    Text('4.9'),
+                                    SizedBox(width: 5),
+                                    Text('(55)'),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(width: 7),
+                              Padding(
+                                padding: EdgeInsets.only(right: 22),
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'قم، پردیسان، آدرس آرایشگاه',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium
+                                          ?.copyWith(
+                                              color: AppColors.textSearchColor),
+                                    ),
+                                  ],
+                                ),
+                              ),
                               const SizedBox(height: 16),
                               modellMoForShop(),
                               const SizedBox(height: 16),

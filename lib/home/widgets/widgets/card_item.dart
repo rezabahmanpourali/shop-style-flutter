@@ -5,7 +5,8 @@ import 'package:shop_style/common/configs/colors.dart';
 class CardItem extends StatelessWidget {
   final BarberShopModel barberShopModel;
   const CardItem({
-    super.key, required this.barberShopModel,
+    super.key,
+    required this.barberShopModel,
   });
 
   @override
@@ -49,17 +50,17 @@ class CardItem extends StatelessWidget {
                   ),
                   child: Container(
                     decoration: const BoxDecoration(
-                      color: AppColors.arayeshColor,
+                      color: Colors.transparent,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                         Padding(
-                          padding: const EdgeInsets.only(right: 12),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12, top: 8),
                           child: Text(barberShopModel.barberShopName!),
                         ),
                         const Padding(
-                          padding: EdgeInsets.only(right: 12),
+                          padding: EdgeInsets.only(right: 12, top: 5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -77,7 +78,7 @@ class CardItem extends StatelessWidget {
                           height: 6,
                         ),
                         Container(
-                          margin: const EdgeInsets.only(right: 8),
+                          margin: const EdgeInsets.only(right: 8, bottom: 12),
                           decoration: BoxDecoration(
                             border: Border.all(
                               width: 1,

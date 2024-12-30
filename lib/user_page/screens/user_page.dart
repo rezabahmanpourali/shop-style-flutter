@@ -12,14 +12,14 @@ class _UserPageState extends State<UserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.arayeshColor,
+      backgroundColor: AppColors.white2,
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
             const SliverPadding(
               padding: EdgeInsets.only(left: 22, right: 22, bottom: 32),
               sliver: SliverAppBar(
-                backgroundColor: AppColors.arayeshColor,
+                backgroundColor: AppColors.white2,
                 actions: [
                   Icon(Icons.settings),
                   Spacer(),
