@@ -22,7 +22,10 @@ class _ServiceSelectionScreenState extends State<ServiceSelectionScreen> {
         textDirection: TextDirection.rtl,
         child: CustomScrollView(
           slivers: [
-            const SliverToBoxAdapter(child: HeaderScreen()),
+            const SliverPadding(
+              padding: EdgeInsets.symmetric(horizontal: 22),
+              sliver: HeaderScreen(),
+            ),
             SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.only(left: width / 15, right: width / 15),

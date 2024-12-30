@@ -262,12 +262,12 @@ class _ExplorePageState extends State<ExplorePage> {
                                 ),
                               ),
                               const SizedBox(height: 16),
-                              const Text(
+                              Text(
                                 '3 آرایشگاه نزدیک',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w400,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: AppColors.textHeader),
                               ),
                               const SizedBox(
                                 height: 16,
@@ -313,61 +313,69 @@ class _ExplorePageState extends State<ExplorePage> {
                                   ),
                                 ],
                               ),
-                              const Padding(
-                                padding: EdgeInsets.only(left: 22, right: 22),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 22, right: 22),
                                 child: Row(
                                   children: [
                                     Text(
                                       'نام آرایشگاه',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium,
                                     ),
-                                    Spacer(),
+                                    const Spacer(),
                                     Text(
                                       'حدود',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium,
                                     ),
-                                    SizedBox(width: 5),
+                                    const SizedBox(width: 5),
                                     Text(
                                       '5',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: AppColors.purpleOpacity,
-                                        fontWeight: FontWeight.w700,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium
+                                          ?.copyWith(
+                                              color: AppColors.purpleOpacity),
                                     ),
-                                    SizedBox(width: 5),
+                                    const SizedBox(width: 5),
                                     Text(
                                       'کیلومتر',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                      ),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium,
                                     ),
                                   ],
                                 ),
                               ),
                               const SizedBox(width: 5),
-                              const Padding(
-                                padding: EdgeInsets.only(right: 22),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 22),
                                 child: Row(
                                   children: [
-                                    Icon(Icons.star),
-                                    SizedBox(width: 5),
-                                    Text('4.9'),
-                                    SizedBox(width: 5),
-                                    Text('(55)'),
+                                    const Icon(Icons.star),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      '4.9',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelMedium,
+                                    ),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      '(55)',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium,
+                                    ),
                                   ],
                                 ),
                               ),
                               const SizedBox(width: 7),
                               Padding(
-                                padding: EdgeInsets.only(right: 22),
+                                padding: const EdgeInsets.only(right: 22),
                                 child: Row(
                                   children: [
                                     Text(
