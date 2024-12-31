@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_style/barber/model/barber_model.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
-import 'package:shop_style/common/widgets/nemad_user.dart';
+import 'package:shop_style/common/widgets/barber_artists.dart';
 import 'package:shop_style/common/widgets/stack_widget_view.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/common/widgets/user_comment.dart';
@@ -188,9 +188,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
                               SliverPadding(
                                 padding: const EdgeInsets.only(right: 22),
                                 sliver: SliverList(
-                                  
                                   delegate: SliverChildBuilderDelegate(
-                                    
                                     (context, index) {
                                       final barber =
                                       provider.barber[index];
