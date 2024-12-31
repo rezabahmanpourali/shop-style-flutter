@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shop_style/auth/widgets/header_for_screen.dart';
-import 'package:shop_style/reserve_page1/widgets/child_tabbar_view.dart';
-import 'package:shop_style/reserve_page2/screens/reseve_page2.dart';
+import 'package:shop_style/common/configs/enums.dart';
+import 'package:shop_style/common/widgets/header_for_screen.dart';
+import 'package:shop_style/common/widgets/reserve_servise.dart';
 
 class ServiceSelectionScreen extends StatefulWidget {
   const ServiceSelectionScreen({super.key});
@@ -14,7 +14,6 @@ class _ServiceSelectionScreenState extends State<ServiceSelectionScreen> {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    final double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
@@ -29,20 +28,19 @@ class _ServiceSelectionScreenState extends State<ServiceSelectionScreen> {
             SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.only(left: width / 15, right: width / 15),
-                child: const Text(
+                child: Text(
                   'انتخاب خدمات',
-                  style: TextStyle(
-                    color: Color(0xFF0D1619),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
               ),
             ),
             SliverList.builder(
               itemCount: 3,
               itemBuilder: (context, index) {
-                return ChildTabBarView(index: index);
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width / 15),
+                  child: const ReserveServise(type: TypeReserveServise.reserve),
+                );
               },
             ),
             // SliverToBoxAdapter(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/common/widgets/header_for_screen.dart';
+import 'package:shop_style/common/widgets/scoring.dart';
 
 class MyCommentPage extends StatefulWidget {
   const MyCommentPage({super.key});
@@ -11,88 +13,110 @@ class MyCommentPage extends StatefulWidget {
 class _MyCommentPageState extends State<MyCommentPage> {
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: AppColors.white2,
       body: Directionality(
         textDirection: TextDirection.rtl,
         child: SafeArea(
-          child: CustomScrollView(
-            slivers: [
-              const SliverAppBar(),
-              const SliverPadding(
-                padding: EdgeInsets.only(right: 22, bottom: 22),
-                sliver: SliverToBoxAdapter(
-                  child: Text('دیدگاه های من'),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: width / 15),
+            child: CustomScrollView(
+              slivers: [
+                const SliverAppBar(),
+                SliverToBoxAdapter(
+                  child: Text(
+                    'دیدگاه های من',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ),
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return getComments();
-                  },
-                  childCount: 6,
+                SliverPadding(padding: EdgeInsets.only(top: height / 80)),
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    childCount: 6,
+                    (context, index) {
+                      return getComments(height);
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget getComments() {
+  Widget getComments(height) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 22, left: 22),
-          child: Row(
-            children: [
-              Column(
-                children: [
-                  SizedBox(
-                    width: 66,
-                    height: 66,
-                    child: Image.asset('assets/images/uuacu.jpg'),
-                  ),
-                  const Row(
-                    children: [
-                      Text('5'),
-                      Icon(Icons.star),
-                      Icon(Icons.star),
-                      Icon(Icons.star),
-                      Icon(Icons.star),
-                      Icon(Icons.star),
-                    ],
-                  ),
-                  const Text('متن کامل کامنت'),
-                ],
+        SizedBox(height: height / 100),
+        Row(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: SizedBox(
+                width: 66,
+                height: 66,
+                child: Image.asset(
+                  'assets/images/uuacu.jpg',
+                  fit: BoxFit.cover,
+                ),
               ),
-              const SizedBox(
-                width: 8,
-              ),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('نام آرایشگاه'),
-                  Row(
-                    children: [
-                      Icon(Icons.abc),
-                      Text('یکشنبه 1 دی ماه 1403'),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Icon(Icons.abc),
-                      Text('یکشنبه 1 دی ماه 1403'),
-                    ],
-                  ),
-                ],
-              ),
-              const Spacer(),
-              const Icon(Icons.abc),
-            ],
-          ),
+            ),
+            const SizedBox(width: 8),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'نام آرایشگاه',
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                SizedBox(height: height / 200),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.access_time_rounded,
+                      size: 16,
+                      color: AppColors.textHeader,
+                    ),
+                    Text(
+                      'یکشنبه 1 دی ماه 1403',
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
+                  ],
+                ),
+                SizedBox(height: height / 200),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.access_time_rounded,
+                      size: 16,
+                      color: AppColors.textHeader,
+                    ),
+                    Text(
+                      'یکشنبه 1 دی ماه 1403',
+                      style: Theme.of(context).textTheme.displayMedium,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            const Spacer(),
+            const Icon(Icons.menu),
+          ],
         ),
+        SizedBox(height: height / 100),
+        const Scoring(hasShowvotesVotes: false),
+        SizedBox(height: height / 100),
+        Text(
+          'متن کامل کامنت',
+          style: Theme.of(context).textTheme.bodyLarge,
+        ),
+        SizedBox(height: height / 100),
         const Divider(
           indent: 22,
           endIndent: 22,

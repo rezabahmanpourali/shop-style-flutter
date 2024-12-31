@@ -6,6 +6,7 @@ import 'package:shop_style/barber/model/barber_model.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/widgets/barber_artists.dart';
+import 'package:shop_style/common/widgets/scoring.dart';
 import 'package:shop_style/common/widgets/stack_widget_view.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/common/widgets/user_comment.dart';
@@ -190,9 +191,8 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                 sliver: SliverList(
                                   delegate: SliverChildBuilderDelegate(
                                     (context, index) {
-                                      final barber =
-                                      provider.barber[index];
-                                      return  BarberArtists(barberModel: barber);
+                                      final barber = provider.barber[index];
+                                      return BarberArtists(barberModel: barber);
                                     },
                                     childCount: provider.barber.length,
                                   ),
@@ -256,7 +256,10 @@ class _BarberShopPageState extends State<BarberShopPage> {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: 3,
                     itemBuilder: (context, index) {
-                      return const UserComment();
+                      return const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 22),
+                        child: UserComment(),
+                      );
                     },
                   ),
                 ),
@@ -574,23 +577,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 6),
-          Row(
-            children: [
-              Text(
-                '4.5',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              const Icon(Icons.star),
-              const Icon(Icons.star),
-              const Icon(Icons.star),
-              const Icon(Icons.star),
-              const Icon(Icons.star_border),
-              Text(
-                '(55)',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ],
-          ),
+          const Scoring(),
           const SizedBox(height: 6),
           Text(
             'فاصله حدود 5 کیلومتر . آدرس کامل آرایشگاه',

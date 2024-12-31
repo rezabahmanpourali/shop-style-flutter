@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/auth/widgets/custom_button.dart';
 import 'package:shop_style/auth/widgets/custom_dropdown.dart';
-import 'package:shop_style/auth/widgets/header_for_screen.dart';
-import 'package:shop_style/auth/widgets/text_padding.dart';
+import 'package:shop_style/common/widgets/header_for_screen.dart';
+import 'package:shop_style/common/widgets/text_padding.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/main.dart';
 

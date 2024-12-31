@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:shop_style/barber_shop_list/screens/widgets/barber_shop_list.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -21,9 +21,17 @@ class _BarberShopListPageState extends State<BarberShopListPage> {
           child: CustomScrollView(
             slivers: [
               SliverAppBar(
-                title: Text(
-                  'آرایشگاه ها',
-                  style: Theme.of(context).textTheme.titleSmall,
+                surfaceTintColor: AppColors.white2,
+                pinned: true,
+                title: Row(
+                  children: [
+                    const Icon(Icons.arrow_back),
+                    const SizedBox(width: 5),
+                    Text(
+                      'آرایشگاه ها',
+                      style: Theme.of(context).textTheme.titleSmall,
+                    ),
+                  ],
                 ),
               ),
               const SliverToBoxAdapter(
@@ -34,8 +42,10 @@ class _BarberShopListPageState extends State<BarberShopListPage> {
                 ),
               ),
               SliverPadding(
-                padding: const EdgeInsets.only(
-                    left: 29, right: 15, top: 16, bottom: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 22,
+                  vertical: 10,
+                ),
                 sliver: SliverToBoxAdapter(
                   child: getSearchBox(context),
                 ),
@@ -84,56 +94,6 @@ class _BarberShopListPageState extends State<BarberShopListPage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class BarberShopList extends StatelessWidget {
-  const BarberShopList({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Divider(
-          color: AppColors.dividerColor900,
-        ),
-        Padding(
-          padding:
-              const EdgeInsets.only(left: 22, right: 22, top: 16, bottom: 16),
-          child: Row(
-            children: [
-              Container(
-                width: 66,
-                height: 66,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Image.asset(
-                  'assets/images/uuacu.jpg',
-                  fit: BoxFit.cover,
-                ),
-              ),
-              const SizedBox(
-                width: 12,
-              ),
-              Text(
-                'نام آرایشگاه',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              const Spacer(),
-              SvgPicture.asset(
-                'assets/images/Vector (1).svg',
-                height: 10,
-                width: 5,
-                color: AppColors.reserveContaner,
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

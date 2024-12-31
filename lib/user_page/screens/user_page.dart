@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shop_style/barber_shop_list/screens/barber_shop_list.dart';
+import 'package:shop_style/barber_shop_list/screens/barber_shop_list_screen.dart';
 import 'package:shop_style/change_user_info_page/screens/change_user_ingo.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
