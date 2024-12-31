@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shop_style/barber_shop_list/screens/barber_shop_list.dart';
+import 'package:shop_style/change_user_info_page/screens/change_user_ingo.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shop_style/my_comment_page/screens/my_comment_page.dart';
+import 'package:shop_style/recently_viewed_page/screens/recently_viewed_page.dart';
+import 'package:shop_style/saved_barber_shop/screens/saved_barber_shop.dart';
+import 'package:shop_style/saved_model_page/screens/saved_models_page.dart';
+import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -16,16 +25,16 @@ class _UserPageState extends State<UserPage> {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
-            const SliverPadding(
-              padding: EdgeInsets.only(left: 22, right: 22, bottom: 32),
+            SliverPadding(
+              padding: const EdgeInsets.only(left: 22, right: 22, bottom: 32),
               sliver: SliverAppBar(
                 backgroundColor: AppColors.white2,
                 actions: [
-                  Icon(Icons.settings),
-                  Spacer(),
-                  Icon(Icons.access_alarm_outlined),
-                  SizedBox(width: 20),
-                  Icon(Icons.notifications),
+                  SvgPicture.asset('assets/images/settings.svg'),
+                  const Spacer(),
+                  const FaIcon(FontAwesomeIcons.headset),
+                  const SizedBox(width: 20),
+                  const FaIcon(FontAwesomeIcons.bell),
                 ],
               ),
             ),
@@ -55,9 +64,9 @@ class _UserPageState extends State<UserPage> {
                       ],
                     ),
                     const Spacer(),
-                    const Icon(
-                      Icons.edit_rounded,
-                      color: Colors.grey,
+                    const FaIcon(
+                      FontAwesomeIcons.pen,
+                      size: 18,
                     ),
                   ],
                 ),
@@ -89,7 +98,16 @@ class _UserPageState extends State<UserPage> {
                           .bodyMedium
                           ?.copyWith(color: AppColors.textHeader),
                     ),
-                    const Icon(Icons.arrow_forward_ios_outlined),
+                    const SizedBox(
+                      width: 5,
+                    ),
+                    SvgPicture.asset(
+                      'assets/images/Vector (1).svg',
+                      height: 8,
+                      width: 4,
+                      // ignore: deprecated_member_use
+                      color: AppColors.arrowIcon,
+                    ),
                   ],
                 ),
               ),
@@ -123,190 +141,282 @@ class _UserPageState extends State<UserPage> {
                 children: [
                   //item1
                   UserAccountItem(
-                    onChange: () {},
+                    onChange: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SavedBarberShop(),
+                      ));
+                    },
                     title: 'فروشگاه های ذخیره شده',
-                    iconRight: Icons.arrow_forward_ios_rounded,
-                    iconLeft: Icons.save,
+                    iconRight: SvgPicture.asset(
+                      'assets/images/Vector (1).svg',
+                      height: 8,
+                      width: 4,
+                      // ignore: deprecated_member_use
+                      color: AppColors.reserveContaner,
+                    ),
+                    iconLeft: const FaIcon(
+                      FontAwesomeIcons.bookmark,
+                      size: 20,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   const Divider(
                     endIndent: 22,
                     indent: 43,
                     color: AppColors.dividerColor900,
                   ),
-                  const SizedBox(
-                    height: 17,
-                  ),
+
                   //item2
                   UserAccountItem(
-                    onChange: () {},
+                    onChange: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const SavedModelsPage(),
+                      ));
+                    },
                     title: 'مدل های ذخیره شده',
-                    iconRight: Icons.arrow_forward_ios_rounded,
-                    iconLeft: Icons.save,
+                    iconRight: SvgPicture.asset(
+                      'assets/images/Vector (1).svg',
+                      height: 8,
+                      width: 4,
+                      // ignore: deprecated_member_use
+                      color: AppColors.reserveContaner,
+                    ),
+                    iconLeft: const FaIcon(
+                      FontAwesomeIcons.bookmark,
+                      size: 20,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   const Divider(
                     endIndent: 22,
                     indent: 43,
                     color: AppColors.dividerColor900,
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   //item3
                   UserAccountItem(
-                    onChange: () {},
+                    onChange: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ViewReservedPage(),
+                      ));
+                    },
                     title: 'تاریخچه رزرو ها',
-                    iconRight: Icons.arrow_forward_ios_rounded,
-                    iconLeft: Icons.timer_rounded,
+                    iconRight: SvgPicture.asset(
+                      'assets/images/Vector (1).svg',
+                      height: 8,
+                      width: 4,
+                      // ignore: deprecated_member_use
+                      color: AppColors.reserveContaner,
+                    ),
+                    iconLeft: const FaIcon(
+                      FontAwesomeIcons.history,
+                      size: 20,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   const Divider(
                     endIndent: 22,
                     indent: 43,
                     color: AppColors.dividerColor900,
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   //item4
                   UserAccountItem(
-                    onChange: () {},
+                    onChange: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const MyCommentPage(),
+                        ),
+                      );
+                    },
                     title: 'دیدگاه های شما',
-                    iconRight: Icons.arrow_forward_ios_rounded,
-                    iconLeft: Icons.comment,
+                    iconRight: SvgPicture.asset(
+                      'assets/images/Vector (1).svg',
+                      height: 8,
+                      width: 4,
+                      // ignore: deprecated_member_use
+                      color: AppColors.reserveContaner,
+                    ),
+                    iconLeft: const FaIcon(
+                      FontAwesomeIcons.commentLines,
+                      size: 20,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   const Divider(
                     endIndent: 22,
                     indent: 43,
                     color: AppColors.dividerColor900,
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   //item5
                   UserAccountItem(
-                    onChange: () {},
+                    onChange: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const RecentlyViewedPage(),
+                        ),
+                      );
+                    },
                     title: 'بازدید های اخیر',
-                    iconRight: Icons.arrow_forward_ios_rounded,
-                    iconLeft: Icons.remove_red_eye_sharp,
+                    iconRight: SvgPicture.asset(
+                      'assets/images/Vector (1).svg',
+                      height: 8,
+                      width: 4,
+                      // ignore: deprecated_member_use
+                      color: AppColors.reserveContaner,
+                    ),
+                    iconLeft: const FaIcon(
+                      FontAwesomeIcons.eye,
+                      size: 20,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   const Divider(
                     endIndent: 22,
                     indent: 43,
                     color: AppColors.dividerColor900,
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   //item5
                   UserAccountItem(
-                    onChange: () {},
+                    onChange: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const ChangeUserIngo(),
+                      ));
+                    },
                     title: 'اطلاعات حساب کاربری',
-                    iconRight: Icons.arrow_forward_ios_rounded,
-                    iconLeft: Icons.person,
+                    iconRight: SvgPicture.asset(
+                      'assets/images/Vector (1).svg',
+                      height: 8,
+                      width: 4,
+                      // ignore: deprecated_member_use
+                      color: AppColors.reserveContaner,
+                    ),
+                    iconLeft: const FaIcon(
+                      FontAwesomeIcons.user,
+                      size: 20,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   const Divider(
                     thickness: 4,
                     color: AppColors.dividerColor900,
                   ),
                   //item6
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   UserAccountItem(
-                    onChange: () {},
+                    onChange: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const BarberShopListPage(),
+                      ));
+                    },
                     title: 'لیست آرایشگاه ها',
-                    iconRight: Icons.arrow_forward_ios_rounded,
+                    iconRight: SvgPicture.asset(
+                      'assets/images/Vector (1).svg',
+                      height: 8,
+                      width: 4,
+                      // ignore: deprecated_member_use
+                      color: AppColors.arrowIconBig,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   const Divider(
                     endIndent: 22,
                     indent: 19,
                     color: AppColors.dividerColor900,
                   ),
                   //item7
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   UserAccountItem(
                     onChange: () {},
                     title: 'ثبت آرایشگاه',
-                    iconRight: Icons.arrow_forward_ios_rounded,
+                    iconRight: SvgPicture.asset(
+                      'assets/images/Vector (1).svg',
+                      height: 8,
+                      width: 4,
+                      // ignore: deprecated_member_use
+                      color: AppColors.arrowIconBig,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   const Divider(
                     thickness: 4,
                     color: AppColors.dividerColor900,
                   ),
                   //item8
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   UserAccountItem(
                     onChange: () {},
                     title: 'پشتیبانی',
-                    iconRight: Icons.arrow_forward_ios_rounded,
-                    iconLeft: Icons.person_pin,
+                    iconRight: SvgPicture.asset(
+                      'assets/images/Vector (1).svg',
+                      height: 8,
+                      width: 4,
+                      // ignore: deprecated_member_use
+                      color: AppColors.arrowIconBig,
+                    ),
+                    iconLeft: SvgPicture.asset(
+                      'assets/images/fluent_person-support-28-regular.svg',
+                      height: 20,
+                      width: 20,
+                      // ignore: deprecated_member_use
+                      color: AppColors.reserveContaner,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   const Divider(
                     indent: 43,
                     endIndent: 22,
                     color: AppColors.dividerColor900,
                   ),
                   //item9
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   UserAccountItem(
                     onChange: () {},
                     title: 'درباره ما',
-                    iconRight: Icons.arrow_forward_ios_rounded,
-                    iconLeft: Icons.stadium,
+                    iconRight: SvgPicture.asset(
+                      'assets/images/Vector (1).svg',
+                      height: 8,
+                      width: 4,
+                      // ignore: deprecated_member_use
+                      color: AppColors.arrowIconBig,
+                    ),
+                    iconLeft: SvgPicture.asset(
+                      'assets/images/mdi_about-variant.svg',
+                      height: 20,
+                      width: 20,
+                      // ignore: deprecated_member_use
+                      color: AppColors.reserveContaner,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   const Divider(
                     indent: 43,
                     endIndent: 22,
                     color: AppColors.dividerColor900,
                   ),
                   //item10
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   UserAccountItem(
                     onChange: () {},
                     title: 'خروج از حساب کاربری',
-                    iconRight: Icons.arrow_forward_ios_rounded,
-                    iconLeft: Icons.login,
+                    iconRight: SvgPicture.asset(
+                      'assets/images/Vector (1).svg',
+                      height: 8,
+                      width: 4,
+                      // ignore: deprecated_member_use
+                      color: AppColors.arrowIconBig,
+                    ),
+                    iconLeft: SvgPicture.asset(
+                      'assets/images/material-symbols-light_exit-to-app-rounded.svg',
+                      height: 20,
+                      width: 20,
+                      // ignore: deprecated_member_use
+                      color: AppColors.reserveContaner,
+                    ),
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
+
                   const Divider(
                     thickness: 4,
                     color: AppColors.dividerColor900,
@@ -342,8 +452,8 @@ class _UserPageState extends State<UserPage> {
 }
 
 class UserAccountItem extends StatelessWidget {
-  final IconData? iconRight;
-  final IconData? iconLeft;
+  final Widget? iconRight;
+  final Widget? iconLeft;
   final String title;
   final VoidCallback onChange;
 
@@ -357,26 +467,30 @@ class UserAccountItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 22, right: 19),
-      child: GestureDetector(
-        onTap: onChange,
-        child: Row(
-          children: [
-            if (iconLeft != null) Icon(iconLeft), // آیکون چپ
-            const SizedBox(
-              width: 4,
-            ),
-            Text(
-              title,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: AppColors.black),
-            ),
-            const Spacer(),
-            if (iconRight != null) Icon(iconRight), // آیکون راست
-          ],
+    return GestureDetector(
+      onTap: onChange,
+      child: Container(
+        color: Colors.transparent,
+        child: Padding(
+          padding:
+              const EdgeInsets.only(left: 22, right: 19, bottom: 16, top: 16),
+          child: Row(
+            children: [
+              if (iconLeft != null) iconLeft!, // ویجت آیکون چپ
+              const SizedBox(
+                width: 4,
+              ),
+              Text(
+                title,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: AppColors.black),
+              ),
+              const Spacer(),
+              if (iconRight != null) iconRight!, // ویجت آیکون راست
+            ],
+          ),
         ),
       ),
     );

@@ -16,90 +16,93 @@ class _ViewReservedPageState extends State<ViewReservedPage> {
     return Scaffold(
       backgroundColor: AppColors.white2,
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.only(right: 22, top: 20, bottom: 32),
-              sliver: SliverToBoxAdapter(
-                child: Text(
-                  'رزرو ها',
-                  style: Theme.of(context).textTheme.titleMedium,
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: CustomScrollView(
+            slivers: [
+              SliverPadding(
+                padding: const EdgeInsets.only(right: 22, top: 20, bottom: 32),
+                sliver: SliverToBoxAdapter(
+                  child: Text(
+                    'رزرو ها',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ),
               ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(right: 22, bottom: 12),
-              sliver: SliverToBoxAdapter(
-                child: Text(
-                  'جاری',
-                  style: Theme.of(context).textTheme.labelMedium,
+              SliverPadding(
+                padding: const EdgeInsets.only(right: 22, bottom: 12),
+                sliver: SliverToBoxAdapter(
+                  child: Text(
+                    'جاری',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
                 ),
               ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(bottom: 32),
-              sliver: SliverToBoxAdapter(
-                child: ReserveItem(
-                  title: "آرایشگاه رزرو شده",
-                  date: "شنبه، 1 آذر ماه، 1401، ساعت 12:00 صبح",
-                  service: "مدل موی خامه ای",
-                  duration: "40 دقیقه",
-                  price: "125,000 تومان",
-                  onTapCallback: (bool isExpanded) {
-                    print("آیا رزرو گسترش یافته است؟ $isExpanded");
-                  },
+              SliverPadding(
+                padding: const EdgeInsets.only(bottom: 32),
+                sliver: SliverToBoxAdapter(
+                  child: ReserveItem(
+                    title: "آرایشگاه رزرو شده",
+                    date: "شنبه، 1 آذر ماه، 1401، ساعت 12:00 صبح",
+                    service: "مدل موی خامه ای",
+                    duration: "40 دقیقه",
+                    price: "125,000 تومان",
+                    onTapCallback: (bool isExpanded) {
+                      print("آیا رزرو گسترش یافته است؟ $isExpanded");
+                    },
+                  ),
                 ),
               ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(right: 22, bottom: 12),
-              sliver: SliverToBoxAdapter(
-                child: Text(
-                  'رزرو های قبلی',
-                  style: Theme.of(context).textTheme.labelMedium,
+              SliverPadding(
+                padding: const EdgeInsets.only(right: 22, bottom: 12),
+                sliver: SliverToBoxAdapter(
+                  child: Text(
+                    'رزرو های قبلی',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
                 ),
               ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(bottom: 32),
-              sliver: SliverToBoxAdapter(
-                child: ReserveItem(
-                  title: "آرایشگاه رزرو شده",
-                  date: "شنبه، 1 آذر ماه، 1401، ساعت 12:00 صبح",
-                  service: "مدل موی خامه ای",
-                  duration: "40 دقیقه",
-                  price: "125,000 تومان",
-                  onTapCallback: (bool isExpanded) {
-                    print("آیا رزرو گسترش یافته است؟ $isExpanded");
-                  },
+              SliverPadding(
+                padding: const EdgeInsets.only(bottom: 32),
+                sliver: SliverToBoxAdapter(
+                  child: ReserveItem(
+                    title: "آرایشگاه رزرو شده",
+                    date: "شنبه، 1 آذر ماه، 1401، ساعت 12:00 صبح",
+                    service: "مدل موی خامه ای",
+                    duration: "40 دقیقه",
+                    price: "125,000 تومان",
+                    onTapCallback: (bool isExpanded) {
+                      print("آیا رزرو گسترش یافته است؟ $isExpanded");
+                    },
+                  ),
                 ),
               ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(right: 22, bottom: 12),
-              sliver: SliverToBoxAdapter(
-                child: Text(
-                  'لغو شده',
-                  style: Theme.of(context).textTheme.labelMedium,
+              SliverPadding(
+                padding: const EdgeInsets.only(right: 22, bottom: 12),
+                sliver: SliverToBoxAdapter(
+                  child: Text(
+                    'لغو شده',
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
                 ),
               ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(bottom: 32),
-              sliver: SliverToBoxAdapter(
-                child: ReserveItem(
-                  title: "آرایشگاه رزرو شده",
-                  date: "شنبه، 1 آذر ماه، 1401، ساعت 12:00 صبح",
-                  service: "مدل موی خامه ای",
-                  duration: "40 دقیقه",
-                  price: "125,000 تومان",
-                  onTapCallback: (bool isExpanded) {
-                    print("آیا رزرو گسترش یافته است؟ $isExpanded");
-                  },
+              SliverPadding(
+                padding: const EdgeInsets.only(bottom: 32),
+                sliver: SliverToBoxAdapter(
+                  child: ReserveItem(
+                    title: "آرایشگاه رزرو شده",
+                    date: "شنبه، 1 آذر ماه، 1401، ساعت 12:00 صبح",
+                    service: "مدل موی خامه ای",
+                    duration: "40 دقیقه",
+                    price: "125,000 تومان",
+                    onTapCallback: (bool isExpanded) {
+                      print("آیا رزرو گسترش یافته است؟ $isExpanded");
+                    },
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

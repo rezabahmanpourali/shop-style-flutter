@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_style/barber/model/barber_model.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/widgets/nemad_user.dart';
@@ -187,9 +188,13 @@ class _BarberShopPageState extends State<BarberShopPage> {
                               SliverPadding(
                                 padding: const EdgeInsets.only(right: 22),
                                 sliver: SliverList(
+                                  
                                   delegate: SliverChildBuilderDelegate(
+                                    
                                     (context, index) {
-                                      return const BarberArtists();
+                                      final barber =
+                                      provider.barber[index];
+                                      return  BarberArtists(barberModel: barber);
                                     },
                                     childCount: provider.barber.length,
                                   ),

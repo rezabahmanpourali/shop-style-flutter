@@ -4,10 +4,9 @@ import 'package:shop_style/common/configs/colors.dart';
 
 class CardItem extends StatelessWidget {
   final BarberShopModel barberShopModel;
-  const CardItem({
-    super.key,
-    required this.barberShopModel,
-  });
+  const CardItem(
+     this.barberShopModel,
+  );
 
   @override
   Widget build(BuildContext context) {
