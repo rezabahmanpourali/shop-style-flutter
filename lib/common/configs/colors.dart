@@ -45,4 +45,6 @@ class AppColors {
   static const Color greyB9 = Color(0xffB9B9B9);
   static const Color reserveContaner = Color(0xFF000000);
   static const Color bottomSheetColor = Color(0xffE9E9FF);
+  static const Color arrowIcon = Color(0xff989898);
+  static const Color arrowIconBig = Color(0xff696969);
 }

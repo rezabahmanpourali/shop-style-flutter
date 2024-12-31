@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/barber/model/barber_model.dart';
 import 'package:shop_style/common/configs/colors.dart';
 
-
 class BarberArtists extends StatelessWidget {
-  const BarberArtists({
-    super.key,
-  });
+  final BarberModel barberModel;
+  const BarberArtists({super.key, required this.barberModel});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +60,7 @@ class BarberArtists extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      'نام آرایشگر',
+                      barberModel.barberName!,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),

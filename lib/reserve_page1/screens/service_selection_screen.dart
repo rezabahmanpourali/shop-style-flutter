@@ -45,15 +45,16 @@ class _ServiceSelectionScreenState extends State<ServiceSelectionScreen> {
                 return ChildTabBarView(index: index);
               },
             ),
-            SliverToBoxAdapter(
-              child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ResevePage2(),
-                    ));
-                  },
-                  child: Text('data')),
-            )
+            // SliverToBoxAdapter(
+            //   child: ElevatedButton(
+            //     onPressed: () {
+            //       Navigator.of(context).push(MaterialPageRoute(
+            //         builder: (context) => ResevePage2(),
+            //       ));
+            //     },
+            //     child: Text('data'),
+            //   ),
+            // )
           ],
         ),
       ),
