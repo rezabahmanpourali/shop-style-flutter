@@ -51,9 +51,15 @@ class CustomTheme {
         fontSize: 12,
       ),
       //////////////////////////////////////////
+      labelLarge: TextStyle(
+        fontSize: 36,
+        fontWeight: FontWeight.w700,
+        fontFamily: 'IRANSansDB',
+        color: AppColors.white2,
+      ),
       labelMedium: TextStyle(
         color: AppColors.black,
-        fontWeight: FontWeight.w800,
+        fontWeight: FontWeight.w700,
         fontFamily: 'IRANSansDB',
         fontSize: 16,
       ),
@@ -64,6 +70,12 @@ class CustomTheme {
         fontSize: 16,
       ),
       //////////////////////////////////////////
+      displayLarge: TextStyle(
+        color: AppColors.black,
+        fontWeight: FontWeight.w700,
+        fontFamily: 'IRANYekanFn',
+        fontSize: 11,
+      ),
       displayMedium: TextStyle(
         color: AppColors.textHeader,
         fontWeight: FontWeight.w400,

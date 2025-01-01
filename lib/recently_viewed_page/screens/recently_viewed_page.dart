@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_style/barber/screens/barber_shop_page.dart';
-import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/widgets/best_cart_item_party.dart';
-import 'package:shop_style/common/widgets/state_manage_widget.dart';
-import 'package:shop_style/home/widgets/widgets/card_item.dart';
+import 'package:shop_style/common/widgets/header_for_screen.dart';
+import 'package:shop_style/common/widgets/text_padding.dart';
 
 class RecentlyViewedPage extends StatefulWidget {
   const RecentlyViewedPage({super.key});
@@ -34,81 +32,85 @@ class _RecentlyViewedPageState extends State<RecentlyViewedPage> {
       body: SafeArea(
         child: Directionality(
           textDirection: TextDirection.rtl,
-          child: CustomScrollView(
-            slivers: [
-              const SliverAppBar(),
-              const SliverPadding(
-                padding: EdgeInsets.only(bottom: 32, right: 22),
-                sliver: SliverToBoxAdapter(
-                  child: Text('بازدید های اخیر'),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 22),
+            child: CustomScrollView(
+              slivers: [
+                const HeaderScreen(),
+                SliverToBoxAdapter(
+                  child: Text(
+                    'بازدید های اخیر',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                 ),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.only(bottom: 22, right: 22),
-                sliver: SliverToBoxAdapter(
-                  child: Text('آرایشگاه ها'),
+                SliverToBoxAdapter(
+                  child: TextPadding(
+                    topPadding: 22,
+                    text: 'آرایشگاه ها',
+                    theme: Theme.of(context).textTheme.labelMedium,
+                  ),
                 ),
-              ),
-              // Consumer<BarberShopController>(
-              //   builder: (context, provider, child) {
-              //     return StateManageWidget(
-              //       status: provider.barberShopState,
-              //       loadingWidget: () {
-              //         return const SliverToBoxAdapter(
-              //           child: Center(
-              //             child: CircularProgressIndicator(),
-              //           ),
-              //         );
-              //       },
-              //       errorWidgetBuilder: (message, statusCode) {
-              //         return SliverToBoxAdapter(
-              //           child: Center(
-              //             child: Text(provider.errorMessage),
-              //           ),
-              //         );
-              //       },
-              //       completedWidgetBuilder: (value) {
-              //         return SliverList(
-              //           delegate: SliverChildBuilderDelegate(
-              //             (context, index) {
-              //               final barbershop = provider.barberShops[index];
-              //               return Padding(
-              //                   padding: const EdgeInsets.only(left: 16),
-              //                   child: CardItem(barbershop));
-              //             },
-              //             childCount: provider.barberShops.length,
-              //           ),
-              //         );
-              //       },
-              //     );
-              //   },
-              // ),
-              const SliverPadding(
-                padding: EdgeInsets.only(bottom: 22, right: 22),
-                sliver: SliverToBoxAdapter(
-                  child: Text('مدل ها'),
+                // Consumer<BarberShopController>(
+                //   builder: (context, provider, child) {
+                //     return StateManageWidget(
+                //       status: provider.barberShopState,
+                //       loadingWidget: () {
+                //         return const SliverToBoxAdapter(
+                //           child: Center(
+                //             child: CircularProgressIndicator(),
+                //           ),
+                //         );
+                //       },
+                //       errorWidgetBuilder: (message, statusCode) {
+                //         return SliverToBoxAdapter(
+                //           child: Center(
+                //             child: Text(provider.errorMessage),
+                //           ),
+                //         );
+                //       },
+                //       completedWidgetBuilder: (value) {
+                //         return SliverList(
+                //           delegate: SliverChildBuilderDelegate(
+                //             (context, index) {
+                //               final barbershop = provider.barberShops[index];
+                //               return Padding(
+                //                   padding: const EdgeInsets.only(left: 16),
+                //                   child: CardItem(barbershop));
+                //             },
+                //             childCount: provider.barberShops.length,
+                //           ),
+                //         );
+                //       },
+                //     );
+                //   },
+                // ),
+                SliverToBoxAdapter(
+                  child: TextPadding(
+                    topPadding: 22,
+                    text: 'مدل ها',
+                    theme: Theme.of(context).textTheme.labelMedium,
+                  ),
                 ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.only(bottom: 32),
-                sliver: SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 242,
-                    child: ListView.builder(
-                      padding: const EdgeInsets.only(right: 22),
-                      itemCount: 6,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return const Padding(
-                          padding: EdgeInsets.only(left: 16),
-                          child: BestCardItemParty(),
-                        );
-                      },
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 32),
+                    child: SizedBox(
+                      height: 242,
+                      child: ListView.builder(
+                        itemCount: 6,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return const Padding(
+                            padding: EdgeInsets.only(left: 16),
+                            child: BestCardItemParty(),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

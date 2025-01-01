@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_style/auth/screens/basic_information_screen.dart';
 import 'package:shop_style/auth/widgets/OTPWidget.dart';
 import 'package:shop_style/auth/widgets/custom_button.dart';
-import 'package:shop_style/auth/widgets/text_padding.dart';
+import 'package:shop_style/common/widgets/text_padding.dart';
 
 class LoginEnterPasswordScreen extends StatefulWidget {
   const LoginEnterPasswordScreen({super.key});

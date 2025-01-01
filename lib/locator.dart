@@ -6,7 +6,7 @@ import 'package:shop_style/barber/data/repository/barber_repository.dart';
 import 'package:shop_style/barber/data/repository/barber_shop_repository.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
-import 'package:shop_style/common/configs/enums/enums.dart';
+import 'package:shop_style/common/configs/enums.dart';
 import 'package:shop_style/common/models/api_service.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
 

@@ -54,7 +54,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 5,
                   ),
                 ),
-
                 SliverToBoxAdapter(
                   child: getAppbar(context),
                 ),
@@ -77,7 +76,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 22,
                   ),
                 ),
-
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 22),
@@ -167,8 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ),
                                         );
                                       },
-                                      child:
-                                          CardItem( barbershop),
+                                      child: CardItem(barbershop),
                                     ),
                                   );
                                 },
@@ -433,8 +430,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Text(
                     'پردیسان شهروند',
-                    style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                        color: AppColors.black, fontWeight: FontWeight.w700),
+                    style: Theme.of(context).textTheme.displayLarge,
                   ),
                   const Icon(Icons.keyboard_arrow_down_rounded)
                 ],

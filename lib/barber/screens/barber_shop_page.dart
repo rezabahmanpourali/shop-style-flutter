@@ -5,9 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:shop_style/barber/model/barber_model.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
-import 'package:shop_style/common/widgets/nemad_user.dart';
+import 'package:shop_style/common/widgets/barber_artists.dart';
+import 'package:shop_style/common/widgets/scoring.dart';
 import 'package:shop_style/common/widgets/stack_widget_view.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
+import 'package:shop_style/common/widgets/user_comment.dart';
 import 'package:shop_style/reserve_page1/screens/service_selection_screen.dart';
 
 class BarberShopPage extends StatefulWidget {
@@ -151,26 +153,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: Container(
-                  margin: const EdgeInsets.only(left: 22, right: 22),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 2,
-                      color: AppColors.cardWhite,
-                    ),
-                    borderRadius: BorderRadius.circular(48),
-                  ),
-                  width: double.infinity,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(
-                        'مشاهده همه',
-                        style: Theme.of(context).textTheme.labelMedium,
-                      ),
-                    ),
-                  ),
-                ),
+                child: moreButton(context),
               ),
               const SliverPadding(padding: EdgeInsets.only(top: 32)),
               SliverToBoxAdapter(
@@ -206,13 +189,10 @@ class _BarberShopPageState extends State<BarberShopPage> {
                               SliverPadding(
                                 padding: const EdgeInsets.only(right: 22),
                                 sliver: SliverList(
-                                  
                                   delegate: SliverChildBuilderDelegate(
-                                    
                                     (context, index) {
-                                      final barber =
-                                      provider.barber[index];
-                                      return  BarberArtists(barberModel: barber);
+                                      final barber = provider.barber[index];
+                                      return BarberArtists(barberModel: barber);
                                     },
                                     childCount: provider.barber.length,
                                   ),
@@ -226,14 +206,17 @@ class _BarberShopPageState extends State<BarberShopPage> {
                   },
                 ),
               ),
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.only(right: 22),
+                  padding: const EdgeInsets.only(right: 22),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('دیدگاه ها'),
-                      Row(
+                      Text(
+                        'دیدگاه ها',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                      const Row(
                         children: [
                           Icon(Icons.star),
                           Icon(Icons.star),
@@ -244,26 +227,26 @@ class _BarberShopPageState extends State<BarberShopPage> {
                       ),
                       Row(
                         children: [
-                          Text('4.5'),
-                          SizedBox(width: 5),
-                          Text('(55)'),
+                          Text(
+                            '4.5',
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            '(55)',
+                            style: Theme.of(context).textTheme.bodyMedium,
+                          ),
                         ],
-                      )
+                      ),
+                      const SizedBox(height: 12),
+                      const Divider(
+                        height: 1,
+                        color: AppColors.dividerColor900,
+                        indent: 22,
+                        endIndent: 22,
+                      ),
                     ],
                   ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 12,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Divider(
-                  height: 1,
-                  color: AppColors.dividerColor900,
-                  indent: 22,
-                  endIndent: 22,
                 ),
               ),
               SliverToBoxAdapter(
@@ -274,232 +257,138 @@ class _BarberShopPageState extends State<BarberShopPage> {
                     itemCount: 3,
                     itemBuilder: (context, index) {
                       return const Padding(
-                        padding: EdgeInsets.only(top: 32),
+                        padding: EdgeInsets.symmetric(horizontal: 22),
                         child: UserComment(),
                       );
                     },
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 22,
-                ),
-              ),
+              const SliverPadding(padding: EdgeInsets.only(top: 22)),
               SliverToBoxAdapter(
-                child: Container(
-                  margin: const EdgeInsets.only(left: 22, right: 22),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      width: 2,
-                      color: AppColors.cardWhite,
-                    ),
-                    borderRadius: BorderRadius.circular(48),
-                  ),
-                  width: double.infinity,
-                  child: const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Center(
-                      child: Text(
-                        'مشاهده همه',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w800,
-                        ),
+                child: moreButton(context),
+              ),
+              const SliverPadding(padding: EdgeInsets.only(top: 32)),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 22),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'توضیحات',
+                        style: Theme.of(context).textTheme.labelMedium,
                       ),
-                    ),
+                      const SizedBox(height: 16),
+                      Text(
+                        textAlign: TextAlign.right,
+                        'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای ',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: AppColors.black),
+                      ),
+                      const SizedBox(height: 2),
+                      Text(
+                        'خواندن همه',
+                        style: Theme.of(context).textTheme.bodyMedium,
+                      ),
+                    ],
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 32,
-                ),
-              ),
-              const SliverToBoxAdapter(
+              const SliverPadding(padding: EdgeInsets.only(top: 32)),
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.only(right: 22),
-                  child: Text(
-                    'توضیحات',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 16,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22, left: 22),
-                  child: Text(
-                    textAlign: TextAlign.right,
-                    'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای ',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.categoryBlack,
-                    ),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22),
-                  child: Text(
-                    'خواندن همه',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.purpleOpacity,
-                    ),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 32,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                  padding: const EdgeInsets.symmetric(horizontal: 22),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Text(
                         'ساعت کاری',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                      const SizedBox(height: 16),
+                      SizedBox(
+                        height: 156,
+                        child: ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: 7,
+                          itemBuilder: (context, index) {
+                            return const TimeWork();
+                          },
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 16,
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 156,
-                  child: ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 7,
-                    itemBuilder: (context, index) {
-                      return const TimeWork();
-                    },
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 32,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22),
-                  child: Row(
-                    children: [
-                      Text(
-                        'موقعیت روی نقشه',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 22),
-              ),
+              const SliverPadding(padding: EdgeInsets.only(top: 32)),
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.only(left: 22, right: 22),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: SizedBox(
-                      height: 236,
-                      width: double.infinity, // تعیین عرض به صورت خودکار
-                      child: FlutterMap(
-                        options: const MapOptions(
-                          initialCenter: LatLng(34.571112, 50.808330),
-                          initialZoom: 13,
-                        ),
-                        children: [
-                          TileLayer(
-                            urlTemplate:
-                                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                            subdomains: const ['a', 'b', 'c'],
-                          ),
-                          MarkerLayer(
-                            markers: [
-                              Marker(
-                                point: const LatLng(34.571112, 50.808330),
-                                child: Builder(
-                                  builder: (context) => const Icon(
-                                    Icons.location_pin,
-                                    size: 40,
-                                    color: Colors.red,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'موقعیت روی نقشه',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                      const SizedBox(height: 22),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: SizedBox(
+                          height: 236,
+                          width: double.infinity, // تعیین عرض به صورت خودکار
+                          child: FlutterMap(
+                            options: const MapOptions(
+                              initialCenter: LatLng(34.571112, 50.808330),
+                              initialZoom: 13,
+                            ),
+                            children: [
+                              TileLayer(
+                                urlTemplate:
+                                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                subdomains: const ['a', 'b', 'c'],
+                              ),
+                              MarkerLayer(
+                                markers: [
+                                  Marker(
+                                    point: const LatLng(34.571112, 50.808330),
+                                    child: Builder(
+                                      builder: (context) => const Icon(
+                                        Icons.location_pin,
+                                        size: 40,
+                                        color: Colors.red,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 16,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.only(right: 22),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                      const SizedBox(height: 16),
                       Text(
                         'آدرس آرایشگاه',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.categoryBlack,
-                        ),
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: AppColors.black),
                       ),
                       Text(
                         'نمایش روی نقشه',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.purpleOpacity,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ],
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 40,
-                ),
-              ),
+              const SliverPadding(padding: EdgeInsets.only(top: 40)),
+
+              ///////////////////////////////////////////////////////
+
               const SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.only(right: 22),
@@ -653,6 +542,30 @@ class _BarberShopPageState extends State<BarberShopPage> {
     );
   }
 
+  Widget moreButton(BuildContext context) {
+    return Container(
+      height: 50,
+      margin: const EdgeInsets.symmetric(horizontal: 22),
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 2,
+          color: AppColors.cardWhite,
+        ),
+        borderRadius: BorderRadius.circular(48),
+      ),
+      width: double.infinity,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: Text(
+            'مشاهده همه',
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget getTitleNamePage(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 22, top: 5),
@@ -664,23 +577,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 6),
-          Row(
-            children: [
-              Text(
-                '4.5',
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-              const Icon(Icons.star),
-              const Icon(Icons.star),
-              const Icon(Icons.star),
-              const Icon(Icons.star),
-              const Icon(Icons.star_border),
-              Text(
-                '(55)',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-            ],
-          ),
+          const Scoring(),
           const SizedBox(height: 6),
           Text(
             'فاصله حدود 5 کیلومتر . آدرس کامل آرایشگاه',
@@ -781,74 +678,6 @@ class _ServiceCategoriesState extends State<ServiceCategories> {
   }
 }
 
-class UserComment extends StatelessWidget {
-  const UserComment({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 22, left: 22),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                width: 62,
-                height: 62,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                ),
-                child: Image.asset('assets/images/Ellipse49.png'),
-              ),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('نام نویسنده دیدگاه'),
-                  Row(
-                    children: [
-                      Text('چهارشنبه، 25 آذر، 1403'),
-                      SizedBox(width: 10),
-                      Text('ساعت 21:47'),
-                    ],
-                  )
-                ],
-              )
-            ],
-          ),
-          const Row(
-            children: [
-              Icon(Icons.star),
-              Icon(Icons.star),
-              Icon(Icons.star),
-              Icon(Icons.star),
-              Icon(Icons.star_border),
-            ],
-          ),
-          const Text(
-            'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: AppColors.categoryBlack,
-            ),
-          ),
-          const Text(
-            'خواندن همه',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w400,
-              color: AppColors.purpleOpacity,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
 class TimeWork extends StatelessWidget {
   const TimeWork({
     super.key,
@@ -856,36 +685,33 @@ class TimeWork extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 22, right: 22),
-      child: Row(
-        children: [
-          Container(
-            width: 12,
-            height: 12,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: AppColors.green,
-            ),
+    return Row(
+      children: [
+        Container(
+          width: 12,
+          height: 12,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.green,
           ),
-          const SizedBox(width: 8),
-          const Text(
-            'شنبه',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          const Spacer(),
-          const Text(
-            '10 صبح الی 9 شب',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(width: 8),
+        Text(
+          'شنبه',
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(color: AppColors.black),
+        ),
+        const Spacer(),
+        Text(
+          '10 صبح الی 9 شب',
+          style: Theme.of(context)
+              .textTheme
+              .bodyMedium
+              ?.copyWith(color: AppColors.black),
+        ),
+      ],
     );
   }
 }

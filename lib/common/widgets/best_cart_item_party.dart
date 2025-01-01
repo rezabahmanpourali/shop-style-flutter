@@ -42,37 +42,41 @@ class BestCardItemParty extends StatelessWidget {
                 bottomLeft: Radius.circular(16),
                 bottomRight: Radius.circular(16),
               ),
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: AppColors.white2,
-                ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(right: 12, top: 12),
-                      child: Text('نام مدل مو'),
+                    const SizedBox(height: 8),
+                    Text(
+                      'نام مدل مو',
+                      style: Theme.of(context).textTheme.labelMedium,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(right: 12, top: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Icon(Icons.star),
-                          Text('4.4'),
-                          Text('(55)'),
-                        ],
-                      ),
+                    const SizedBox(height: 6),
+                    Row(
+                      children: [
+                        const Icon(Icons.star, size: 20),
+                        Text(
+                          '4.9',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                        const SizedBox(width: 2),
+                        Text(
+                          '(55)',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(right: 12),
-                      child: Text('نام آرایشگاه'),
+                    const SizedBox(height: 6),
+                    Text(
+                      'نام آرایشگاه',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: AppColors.textHeader),
                     ),
-                    const SizedBox(
-                      height: 6,
-                    ),
+                    const SizedBox(height: 6),
                     Container(
-                      margin: const EdgeInsets.only(right: 12),
                       width: 74,
                       height: 23,
                       decoration: BoxDecoration(
@@ -82,14 +86,13 @@ class BestCardItemParty extends StatelessWidget {
                           color: AppColors.cardWhite,
                         ),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
                           'مدل مو',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.categoryBlack,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyMedium
+                              ?.copyWith(color: AppColors.black),
                         ),
                       ),
                     ),

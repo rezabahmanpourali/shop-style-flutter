@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_style/View_comments/View_comments_screen.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
@@ -10,7 +11,6 @@ import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/explor/screens/explore_page.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/locator.dart';
-import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
 import 'package:shop_style/user_page/screens/user_page.dart';
 import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
 
@@ -29,7 +29,7 @@ void main() {
           PointerDeviceKind.unknown,
         },
       ),
-      home: const MyApp(),
+      home: const ViewCommentsScreen(),
     ),
   );
 }
@@ -192,11 +192,10 @@ class _MyAppState extends State<MyApp> {
                       child: Center(
                         child: Text(
                           label,
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.white2,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium
+                              ?.copyWith(color: AppColors.white2),
                         ),
                       ),
                     )

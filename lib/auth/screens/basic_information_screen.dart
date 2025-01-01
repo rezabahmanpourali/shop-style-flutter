@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:shop_style/auth/screens/completion_information.dart';
 import 'package:shop_style/auth/widgets/custom_button.dart';
 import 'package:shop_style/auth/widgets/custom_textfield.dart';
-import 'package:shop_style/auth/widgets/text_padding.dart';
+import 'package:shop_style/common/widgets/text_padding.dart';
 import 'package:shop_style/common/configs/colors.dart';
-import 'package:shop_style/common/configs/enums/textfield_type.dart';
+import 'package:shop_style/common/configs/enums.dart';
 import 'package:shop_style/main.dart';
 
 class BasicInformationScreen extends StatefulWidget {

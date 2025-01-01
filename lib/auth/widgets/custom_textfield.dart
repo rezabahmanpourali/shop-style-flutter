@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/common/configs/colors.dart';
-import 'package:shop_style/common/configs/enums/textfield_type.dart';
+import 'package:shop_style/common/configs/enums.dart';
 
 class CustomTextfield extends StatefulWidget {
   const CustomTextfield({
