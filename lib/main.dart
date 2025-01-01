@@ -90,7 +90,7 @@ class _MyAppState extends State<MyApp> {
               children: _pages,
             ),
             bottomNavigationBar: Container(
-              margin: const EdgeInsets.only(bottom: 20, right: 70, left: 70),
+              margin: const EdgeInsets.only(bottom: 20, right: 60, left: 60),
               height: 66,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(56),

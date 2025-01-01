@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/explor/widgets/show_model_price.dart';
+import 'package:shop_style/explor/widgets/show_model_sort.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class ExplorePage extends StatefulWidget {
@@ -205,57 +207,100 @@ class _ExplorePageState extends State<ExplorePage> {
                                           const Icon(Icons.filter_list_rounded),
                                     ),
                                     // مرتب سازی
-                                    Container(
-                                      margin: const EdgeInsets.only(right: 12),
-                                      width: 110,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(24),
-                                        border: Border.all(
-                                          width: 2,
-                                          color: AppColors.cardWhite,
-                                        ),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'مرتب سازی',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge,
+                                    GestureDetector(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                            ),
                                           ),
-                                          const Icon(Icons
-                                              .keyboard_arrow_down_rounded),
-                                        ],
+                                          builder: (BuildContext context) {
+                                            return ShowModelSort(
+                                              onSelectOption: (p0) {},
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 12),
+                                        width: 110,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(24),
+                                          border: Border.all(
+                                            width: 2,
+                                            color: AppColors.cardWhite,
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'مرتب سازی',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge,
+                                            ),
+                                            const Icon(Icons
+                                                .keyboard_arrow_down_rounded),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                     // قیمت
-                                    Container(
-                                      margin: const EdgeInsets.only(right: 12),
-                                      width: 75,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(24),
-                                        border: Border.all(
-                                          width: 2,
-                                          color: AppColors.cardWhite,
-                                        ),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'قیمت',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge,
+                                    GestureDetector(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                            ),
                                           ),
-                                          const Icon(Icons
-                                              .keyboard_arrow_down_rounded),
-                                        ],
+                                          builder: (BuildContext context) {
+                                            return ShowModelPrice(
+                                              onSelectOption: (p0) {},
+                                              onApplyPressed: () {
+                                                print('object');
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 12),
+                                        width: 75,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(24),
+                                          border: Border.all(
+                                            width: 2,
+                                            color: AppColors.cardWhite,
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'قیمت',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge,
+                                            ),
+                                            const Icon(Icons
+                                                .keyboard_arrow_down_rounded),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],
