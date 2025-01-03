@@ -24,7 +24,6 @@ class _CompletionInformationState extends State<CompletionInformation> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
-     
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: width / 15),
         child: Directionality(
@@ -55,18 +54,26 @@ class _CompletionInformationState extends State<CompletionInformation> {
                   children: [
                     SizedBox(
                       width: width / 2.6,
-                      child: Divider(thickness: 1, height: height / 15),
+                      child: Divider(
+                        thickness: 1,
+                        height: height / 15,
+                        color: AppColors.dividerColor900,
+                      ),
                     ),
                     Text(
                       '   یا   ',
                       style: Theme.of(context)
                           .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: AppColors.black),
+                          .bodySmall
+                          ?.copyWith(color: AppColors.textHeader),
                     ),
                     SizedBox(
                       width: width / 2.6,
-                      child: Divider(thickness: 1, height: height / 15),
+                      child: Divider(
+                        thickness: 1,
+                        height: height / 15,
+                        color: AppColors.dividerColor900,
+                      ),
                     ),
                   ],
                 ),

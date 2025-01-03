@@ -125,30 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       provider.barberShops[index];
                                   return Padding(
                                     padding: const EdgeInsets.only(left: 16),
-                                    // child: GestureDetector(
-                                    //   onTap: () {
-                                    //     // Navigator.of(context).push(
-                                    //     //   MaterialPageRoute(
-                                    //     //     builder: (context) =>
-                                    //     //         Provider<BarberController>(
-                                    //     //       create: (context) {
-                                    //     //         locator
-                                    //     //             .get<BarberController>()
-                                    //     //             .fetchBarber();
-
-                                    //     //         return locator
-                                    //     //             .get<BarberController>();
-                                    //     //       },
-                                    //     //       builder: (context, child) {
-                                    //     //         return const BarberShopPage();
-                                    //     //       },
-                                    //     //     ),
-                                    //     //   ),
-                                    //     // );
-                                    //   },
-                                    //   child:
-                                    //       CardItem(barberShopModel: barbershop),
-                                    // ),
                                     child: GestureDetector(
                                       onTap: () {
                                         Navigator.of(context).push(

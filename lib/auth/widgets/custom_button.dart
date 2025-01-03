@@ -24,11 +24,13 @@ class CustomButton extends StatelessWidget {
         onPressed: onClick ?? () {},
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.black,
-          minimumSize: Size(width / 3, height / 20),
+          minimumSize: Size(width / 3, height / 18),
         ),
         child: Text(
           textButton ?? '',
-          style: Theme.of(context).textTheme.labelMedium?.copyWith(color: AppColors.white2,),
+          style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                color: AppColors.white2,
+              ),
         ),
       ),
     );

@@ -32,32 +32,30 @@ class _CustomTextfieldState extends State<CustomTextfield> {
     return Padding(
       padding: EdgeInsets.only(top: widget.topPadding ?? 0),
       child: SingleChildScrollView(
-        child: SizedBox(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Text(
-                widget.lableField ?? '',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyMedium
-                    ?.copyWith(color: AppColors.black),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              widget.lableField ?? '',
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: AppColors.black),
+            ),
+            SizedBox(height: height / 100),
+            Container(
+              height: height / 18,
+              decoration: BoxDecoration(
+                border: Border.all(color: AppColors.bgGrey, width: 2),
+                color: AppColors.white2,
+                borderRadius: const BorderRadius.all(Radius.circular(360)),
               ),
-              SizedBox(height: height / 100),
-              Container(
-                height: height / 20,
-                decoration: BoxDecoration(
-                  border: Border.all(color: AppColors.bgGrey, width: 2),
-                  color: AppColors.white2,
-                  borderRadius: const BorderRadius.all(Radius.circular(360)),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width / 40),
-                  child: getComponents(width),
-                ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: width / 40),
+                child: getComponents(width),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -92,7 +90,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
           ? width / 1.3
           : widget.type == TextfieldType.numberPhone
               ? width / 1.5
-              : width / 1.43,
+              : width / 1.45,
       child: TextField(
         style: Theme.of(context)
             .textTheme

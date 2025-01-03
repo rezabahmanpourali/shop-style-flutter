@@ -112,7 +112,7 @@ class _ShowModelPriceState extends State<ShowModelPrice> {
               height: 38,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 22, right: 22),
+              padding: const EdgeInsets.only(left: 18, right: 18),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -136,6 +136,7 @@ class _ShowModelPriceState extends State<ShowModelPrice> {
                       ),
                     ),
                   ),
+                  const Spacer(),
                   GestureDetector(
                     onTap: () {
                       widget.onApplyPressed();

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/explor/widgets/show_model_filter.dart';
 import 'package:shop_style/explor/widgets/show_model_price.dart';
 import 'package:shop_style/explor/widgets/show_model_sort.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -191,20 +192,42 @@ class _ExplorePageState extends State<ExplorePage> {
                                 child: Row(
                                   children: [
                                     // فیلتر
-                                    Container(
-                                      margin: const EdgeInsets.only(right: 24),
-                                      width: 50,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        border: Border.all(
-                                          width: 2,
-                                          color: AppColors.cardWhite,
+                                    GestureDetector(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          isScrollControlled:
+                                              true, // برای کنترل ارتفاع باتم شیت
+                                          context: context,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                            ),
+                                          ),
+                                          builder: (BuildContext context) {
+                                            return ShowModelFilter(
+                                              onApplyPressed: () {},
+                                              onSelectOption: (p0) {},
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 24),
+                                        width: 50,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          border: Border.all(
+                                            width: 2,
+                                            color: AppColors.cardWhite,
+                                          ),
                                         ),
+                                        child: const Icon(
+                                            Icons.filter_list_rounded),
                                       ),
-                                      child:
-                                          const Icon(Icons.filter_list_rounded),
                                     ),
                                     // مرتب سازی
                                     GestureDetector(
