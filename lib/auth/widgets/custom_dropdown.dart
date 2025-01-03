@@ -45,6 +45,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
                 borderRadius: const BorderRadius.all(Radius.circular(30)),
               ),
               child: DropdownButton<String>(
+                underline: const SizedBox(),
                 icon: const Icon(
                   Icons.keyboard_arrow_down_outlined,
                   color: AppColors.black,
