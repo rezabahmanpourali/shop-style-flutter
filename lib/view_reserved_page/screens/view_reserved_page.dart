@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ViewReservedPage extends StatefulWidget {
   const ViewReservedPage({super.key});
@@ -330,7 +331,12 @@ class _ReserveItemState extends State<ReserveItem> {
                             width: _isExpanded ? 53 : 0,
                             height: _isExpanded ? 35 : 0,
                             child: Center(
-                              child: _isExpanded ? const Icon(Icons.abc) : null,
+                              child: _isExpanded
+                                  ? const FaIcon(
+                                      FontAwesomeIcons.calendarPlus,
+                                      size: 18,
+                                    )
+                                  : null,
                             ),
                           ),
                         ],

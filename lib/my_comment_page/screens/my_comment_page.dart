@@ -55,6 +55,7 @@ class _MyCommentPageState extends State<MyCommentPage> {
       children: [
         SizedBox(height: height / 100),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(8),
@@ -106,7 +107,10 @@ class _MyCommentPageState extends State<MyCommentPage> {
               ],
             ),
             const Spacer(),
-            const Icon(Icons.menu),
+            const Icon(
+              Icons.more_vert,
+              color: AppColors.textSearchColor,
+            ),
           ],
         ),
         SizedBox(height: height / 100),

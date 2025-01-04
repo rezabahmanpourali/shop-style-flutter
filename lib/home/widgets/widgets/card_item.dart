@@ -5,7 +5,7 @@ import 'package:shop_style/common/configs/colors.dart';
 class CardItem extends StatelessWidget {
   final BarberShopModel barberShopModel;
   const CardItem(
-     this.barberShopModel,
+    this.barberShopModel,
   );
 
   @override
@@ -56,22 +56,29 @@ class CardItem extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 12, top: 8),
-                          child: Text(barberShopModel.barberShopName!),
+                          child: Text(barberShopModel.barberShopName!,
+                              style: Theme.of(context).textTheme.bodyLarge),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(right: 12, top: 5),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12, top: 5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text('(55)'),
-                              Text('4.9'),
-                              Icon(Icons.star),
+                              const Icon(Icons.star),
+                              Text(
+                                '4.9',
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              const Text('(55)'),
                             ],
                           ),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(right: 12),
-                          child: Text('قم، پردیسان'),
+                        Padding(
+                          padding: const EdgeInsets.only(right: 12),
+                          child: Text(
+                            'قم، پردیسان',
+                            style: Theme.of(context).textTheme.displayMedium,
+                          ),
                         ),
                         const SizedBox(
                           height: 6,
@@ -87,13 +94,10 @@ class CardItem extends StatelessWidget {
                           ),
                           height: 23,
                           width: 74,
-                          child: const Center(
+                          child: Center(
                             child: Text(
                               'آرایشگاه',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
-                              ),
+                              style: Theme.of(context).textTheme.bodyLarge,
                             ),
                           ),
                         ),

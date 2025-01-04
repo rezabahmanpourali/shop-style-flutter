@@ -6,6 +6,7 @@ import 'package:shop_style/explor/widgets/show_model_filter.dart';
 import 'package:shop_style/explor/widgets/show_model_price.dart';
 import 'package:shop_style/explor/widgets/show_model_sort.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -128,10 +129,11 @@ class _ExplorePageState extends State<ExplorePage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('آرایشگاه های اطراف',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge),
+                                    Text(
+                                      'آرایشگاه های اطراف',
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                    ),
                                     Text(
                                       'بر حسب موقعیت شما',
                                       style: Theme.of(context)
@@ -225,8 +227,12 @@ class _ExplorePageState extends State<ExplorePage> {
                                             color: AppColors.cardWhite,
                                           ),
                                         ),
-                                        child: const Icon(
-                                            Icons.filter_list_rounded),
+                                        child: const Center(
+                                          child: FaIcon(
+                                            FontAwesomeIcons.slidersUp,
+                                            size: 18,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                     // مرتب سازی
@@ -450,12 +456,22 @@ class _ExplorePageState extends State<ExplorePage> {
                                       'قم، پردیسان، آدرس آرایشگاه',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .labelMedium
+                                          .displayMedium
                                           ?.copyWith(
+                                              fontSize: 16,
                                               color: AppColors.textSearchColor),
                                     ),
                                   ],
                                 ),
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              const Divider(
+                                height: 1,
+                                color: AppColors.dividerColor900,
+                                indent: 22,
+                                endIndent: 22,
                               ),
                               const SizedBox(height: 16),
                               modellMoForShop(),
@@ -572,7 +588,9 @@ class _ExplorePageState extends State<ExplorePage> {
             children: [
               Text(
                 'مدل موی خامه ای',
-                style: Theme.of(context).textTheme.labelMedium,
+                style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      fontSize: 16,
+                    ),
               ),
               const SizedBox(height: 5),
               Row(

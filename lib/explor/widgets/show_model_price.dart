@@ -94,6 +94,7 @@ class _ShowModelPriceState extends State<ShowModelPrice> {
               ),
             ),
             Slider(
+              inactiveColor: AppColors.purpleOpacity,
               value: _currentPrice,
               min: 0,
               max: 1000000,

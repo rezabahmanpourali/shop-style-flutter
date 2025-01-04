@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_style/View_comments/View_comments_screen.dart';
 import 'package:shop_style/auth/screens/login_enter_number_screen.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
+import 'package:shop_style/barber/screens/barber_shop_page.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
@@ -12,6 +13,9 @@ import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/explor/screens/explore_page.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/locator.dart';
+import 'package:shop_style/reserve_page1/screens/service_selection_screen.dart';
+import 'package:shop_style/reserve_page2/screens/reseve_page2.dart';
+import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
 import 'package:shop_style/user_page/screens/user_page.dart';
 import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
 
@@ -21,6 +25,7 @@ void main() {
   setupLocator();
   runApp(
     MaterialApp(
+      color: Colors.transparent,
       theme: CustomTheme().lighTheme,
       scrollBehavior: const MaterialScrollBehavior().copyWith(
         dragDevices: {
@@ -30,7 +35,7 @@ void main() {
           PointerDeviceKind.unknown,
         },
       ),
-      home: const LoginEnterNumberPhoneScreen(),
+      home: const ResevePage2(),
     ),
   );
 }
@@ -43,8 +48,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _selectedIndex = 3;
-
   final List<Widget> _pages = [
     const Directionality(
       textDirection: TextDirection.rtl,
@@ -85,9 +88,10 @@ class _MyAppState extends State<MyApp> {
         builder: (context, value, child) {
           return Scaffold(
             extendBody: true,
+            extendBodyBehindAppBar: true,
             backgroundColor: Colors.transparent,
             body: IndexedStack(
-              index: _selectedIndex,
+              index: value.selectedIdex,
               children: _pages,
             ),
             bottomNavigationBar: Container(
@@ -110,36 +114,36 @@ class _MyAppState extends State<MyApp> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     _buildNavItem(
-                      icon: _selectedIndex == 0
+                      icon: value.selectedIdex == 0
                           ? 'assets/images/Vector.png'
                           : 'assets/images/Person.png',
                       label: 'پروفایل',
                       index: 0,
-                      isSelected: _selectedIndex == 0,
+                      isSelected: value.selectedIdex == 0,
                     ),
                     _buildNavItem(
-                      icon: _selectedIndex == 1
+                      icon: value.selectedIdex == 1
                           ? 'assets/images/Vector (1).png'
                           : 'assets/images/Cart.png',
                       label: 'رزرو ها',
                       index: 1,
-                      isSelected: _selectedIndex == 1,
+                      isSelected: value.selectedIdex == 1,
                     ),
                     _buildNavItem(
-                      icon: _selectedIndex == 2
+                      icon: value.selectedIdex == 2
                           ? 'assets/images/Vector (2).png'
                           : 'assets/images/CategoryStroke.png',
                       label: 'جستجو',
                       index: 2,
-                      isSelected: _selectedIndex == 2,
+                      isSelected: value.selectedIdex == 2,
                     ),
                     _buildNavItem(
-                      icon: _selectedIndex == 3
+                      icon: value.selectedIdex == 3
                           ? 'assets/images/HouseFill (1).png'
                           : 'assets/images/House.png',
                       label: 'خانه',
                       index: 3,
-                      isSelected: _selectedIndex == 3,
+                      isSelected: value.selectedIdex == 3,
                     ),
                   ],
                 ),
@@ -159,9 +163,7 @@ class _MyAppState extends State<MyApp> {
   }) {
     return GestureDetector(
       onTap: () {
-        setState(() {
-          _selectedIndex = index;
-        });
+        locator.get<GlobalController>().update(index);
       },
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
@@ -195,7 +197,7 @@ class _MyAppState extends State<MyApp> {
                           label,
                           style: Theme.of(context)
                               .textTheme
-                              .displayMedium
+                              .displayLarge
                               ?.copyWith(color: AppColors.white2),
                         ),
                       ),

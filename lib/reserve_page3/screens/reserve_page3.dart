@@ -36,32 +36,37 @@ class _ReservePage3State extends State<ReservePage3> {
                 SliverToBoxAdapter(
                   child: Row(
                     children: [
-                      Container(
-                        height: 35,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: AppColors.purpleOpacity,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          height: 35,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: AppColors.purpleOpacity,
+                            ),
+                            borderRadius: BorderRadius.circular(24),
                           ),
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 5, right: 1),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Image.asset('assets/images/img14 2.png'),
-                              const SizedBox(width: 5),
-                              Text(
-                                'نام آرایشگر انتخاب شده',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall
-                                    ?.copyWith(color: AppColors.black),
-                              ),
-                              const SizedBox(width: 5),
-                              const Icon(Icons.keyboard_arrow_down_rounded),
-                            ],
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 5, right: 1),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Image.asset('assets/images/img14 2.png'),
+                                const SizedBox(width: 5),
+                                Text(
+                                  'نام آرایشگر انتخاب شده',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodySmall
+                                      ?.copyWith(color: AppColors.black),
+                                ),
+                                const SizedBox(width: 5),
+                                const Icon(Icons.keyboard_arrow_down_rounded),
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -76,7 +81,8 @@ class _ReservePage3State extends State<ReservePage3> {
                           ),
                           borderRadius: BorderRadius.circular(24),
                         ),
-                        child: FaIcon(FontAwesomeIcons.tents),
+                        child: Center(
+                            child: const FaIcon(FontAwesomeIcons.calendar)),
                       ),
                     ],
                   ),
@@ -115,24 +121,35 @@ class _ReservePage3State extends State<ReservePage3> {
                     ),
                   ),
                 ),
-                const SliverPadding(padding: EdgeInsets.only(top: 25)),
-                const SliverToBoxAdapter(
-                    child: Column(
-                  children: [
-                    SelectRectangleCard(),
-                    SizedBox(height: 10),
-                    SelectRectangleCard(),
-                    SizedBox(height: 10),
-                    SelectRectangleCard(),
-                    SizedBox(height: 10),
-                    SelectRectangleCard(),
-                    SizedBox(height: 10),
-                    SelectRectangleCard(),
-                    SizedBox(height: 10),
-                    SelectRectangleCard(),
-                    SizedBox(height: 46),
-                  ],
-                )),
+                SliverPadding(
+                  padding: const EdgeInsets.only(top: 25),
+                  sliver: SliverList(
+                    
+                      delegate: SliverChildBuilderDelegate(
+                    childCount: 6,
+                    (context, index) {
+                      return const SelectRectangleCard();
+                    },
+                  )),
+                ),
+                // const SliverToBoxAdapter(
+                //   child: Column(
+                //     children: [
+                //       SelectRectangleCard(),
+                //       SizedBox(height: 10),
+                //       SelectRectangleCard(),
+                //       SizedBox(height: 10),
+                //       SelectRectangleCard(),
+                //       SizedBox(height: 10),
+                //       SelectRectangleCard(),
+                //       SizedBox(height: 10),
+                //       SelectRectangleCard(),
+                //       SizedBox(height: 10),
+                //       SelectRectangleCard(),
+                //       SizedBox(height: 46),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),
