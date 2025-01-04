@@ -8,7 +8,6 @@ import 'package:shop_style/common/widgets/best_cart_item_party.dart';
 import 'package:shop_style/common/widgets/card_item_party.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/home/widgets/widgets/card_item.dart';
-import 'package:shop_style/locator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -316,18 +315,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 38,
                   ),
                 ),
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.only(right: 22),
+                    padding: const EdgeInsets.only(right: 22),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           'مدل مو های برتر  منطقه شما',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium,
                         ),
                       ],
                     ),
@@ -359,18 +355,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 38,
                   ),
                 ),
-                const SliverToBoxAdapter(
+                SliverToBoxAdapter(
                   child: Padding(
-                    padding: EdgeInsets.only(right: 22),
+                    padding: const EdgeInsets.only(right: 22),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
                           'دسته بندی خدمات',
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style: Theme.of(context).textTheme.labelMedium,
                         ),
                       ],
                     ),
@@ -385,8 +378,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       return SizedBox(
-                        height: MediaQuery.of(context).size.height *
-                            0.1, // تنظیم ارتفاع به نسبت ارتفاع صفحه,
+                        height:
+                            height * 0.1, // تنظیم ارتفاع به نسبت ارتفاع صفحه,
                         child: CategoryItem(
                           onChange: () {
                             print('category');
@@ -400,8 +393,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     crossAxisCount: 2,
                     crossAxisSpacing: 1.1,
                     mainAxisSpacing: 2,
-                    childAspectRatio: MediaQuery.of(context).size.width /
-                        (MediaQuery.of(context).size.height / 5),
+                    childAspectRatio: width / (height / 5),
                   ),
                 ),
               ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_style/auth/screens/completion_information.dart';
+import 'package:shop_style/auth/screens/login_regester_4.dart';
 import 'package:shop_style/auth/widgets/custom_button.dart';
 import 'package:shop_style/auth/widgets/custom_textfield.dart';
 import 'package:shop_style/common/widgets/text_padding.dart';
@@ -7,14 +7,14 @@ import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/enums.dart';
 import 'package:shop_style/main.dart';
 
-class BasicInformationScreen extends StatefulWidget {
-  const BasicInformationScreen({super.key});
+class LoginRegester3 extends StatefulWidget {
+  const LoginRegester3({super.key});
 
   @override
-  State<BasicInformationScreen> createState() => _BasicInformationScreenState();
+  State<LoginRegester3> createState() => _LoginRegester3State();
 }
 
-class _BasicInformationScreenState extends State<BasicInformationScreen> {
+class _LoginRegester3State extends State<LoginRegester3> {
   bool hasAcceptance = false;
   @override
   Widget build(BuildContext context) {
@@ -82,7 +82,7 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                   onClick: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const CompletionInformation(),
+                        builder: (context) => const LoginRegester4(),
                       ),
                     );
                   },

@@ -7,13 +7,18 @@ class HeaderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverAppBar(
+    return SliverAppBar(
       automaticallyImplyLeading: false,
       backgroundColor: Colors.transparent,
       actions: [
-        Icon(Icons.close),
-        Spacer(),
-        Icon(Icons.arrow_forward),
+        // Icon(Icons.close),
+        // const Spacer(),
+        IconButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          icon: const Icon(Icons.arrow_forward),
+        ),
       ],
     );
   }

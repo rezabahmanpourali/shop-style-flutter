@@ -39,7 +39,7 @@ class CardItemParty extends StatelessWidget {
                     bottom: 5,
                     right: 5,
                     child: Container(
-                      width: 50,
+                      width: 45,
                       height: 24,
                       decoration: const BoxDecoration(
                         color: AppColors.white2,
@@ -48,14 +48,13 @@ class CardItemParty extends StatelessWidget {
                           Radius.circular(27),
                         ),
                       ),
-                      child: const Center(
+                      child: Center(
                         child: Text(
                           '22%',
-                          style: TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.purpleOpacity,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: AppColors.purple, fontSize: 14),
                         ),
                       ),
                     ),
@@ -79,24 +78,45 @@ class CardItemParty extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(right: 12),
-                      child: Text('نام مدل مو'),
+                    const SizedBox(height: 6),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: Text(
+                        'نام مدل مو',
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(right: 12),
+                    const SizedBox(height: 6),
+
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Icon(Icons.star),
-                          Text('4.9'),
-                          Text('(55)'),
+                          const Icon(Icons.star, size: 20),
+                          Text(
+                            '4.9',
+                            style: Theme.of(context).textTheme.labelMedium,
+                          ),
+                          const SizedBox(width: 2),
+                          Text(
+                            '(55)',
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium
+                                ?.copyWith(color: AppColors.purple),
+                          ),
                         ],
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(right: 12),
-                      child: Text('نام آرایشگاه'),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: Text(
+                        'نام آرایشگاه',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: AppColors.textSearchColor),
+                      ),
                     ),
                     const SizedBox(
                       height: 8,
@@ -114,61 +134,65 @@ class CardItemParty extends StatelessWidget {
                                 Radius.circular(27),
                               ),
                             ),
-                            child: const Center(
+                            child: Center(
                               child: Text(
                                 '22%',
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.cardWhiteTakhfif,
-                                ),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displaySmall
+                                    ?.copyWith(
+                                      color: AppColors.cardWhiteTakhfif,
+                                    ),
                               ),
                             ),
                           ),
                           const SizedBox(
                             width: 4,
                           ),
-                          const Text(
+                          Text(
                             '189,000',
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w400,
-                              decoration: TextDecoration.lineThrough,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall
+                                ?.copyWith(
+                                  color: AppColors.textPercentageProdact,
+                                  decoration: TextDecoration.lineThrough,
+                                ),
                           ),
                           const SizedBox(
                             width: 4,
                           ),
-                          const Text(
+                          Text(
                             'تومان',
-                            style: TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w400,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .displaySmall
+                                ?.copyWith(
+                                    color: AppColors.textPercentageProdact),
                           ),
                         ],
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(right: 16),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 16),
                       child: Row(
                         children: [
                           Text(
                             ' 139,000',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: AppColors.black),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 4,
                           ),
                           Text(
                             'تومان',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w500,
-                            ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium
+                                ?.copyWith(color: AppColors.black),
                           ),
                         ],
                       ),

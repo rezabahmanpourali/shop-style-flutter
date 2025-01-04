@@ -50,20 +50,29 @@ class BestCardItemParty extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       'نام مدل مو',
-                      style: Theme.of(context).textTheme.labelMedium,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: AppColors.black),
                     ),
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        const Icon(Icons.star, size: 20),
+                        const Icon(Icons.star, size: 18),
                         Text(
                           '4.9',
-                          style: Theme.of(context).textTheme.labelMedium,
+                          style:  Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: AppColors.black),
                         ),
                         const SizedBox(width: 2),
                         Text(
                           '(55)',
-                          style: Theme.of(context).textTheme.bodyMedium,
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium
+                              ?.copyWith(color: AppColors.purple),
                         ),
                       ],
                     ),
@@ -73,7 +82,7 @@ class BestCardItemParty extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
-                          ?.copyWith(color: AppColors.textHeader),
+                          ?.copyWith(color: AppColors.textSearchColor),
                     ),
                     const SizedBox(height: 6),
                     Container(

@@ -1,7 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_style/View_comments/View_comments_screen.dart';
+import 'package:shop_style/View_comments/view_comments_screen.dart';
+import 'package:shop_style/auth/screens/login_regester_1.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
@@ -29,7 +30,7 @@ void main() {
           PointerDeviceKind.unknown,
         },
       ),
-      home: const ViewCommentsScreen(),
+      home: const MyApp(),
     ),
   );
 }

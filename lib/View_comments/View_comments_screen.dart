@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/View_comments/widgets/percentage_box_score.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/widgets/header_for_screen.dart';
 import 'package:shop_style/common/widgets/scoring.dart';
@@ -39,7 +40,62 @@ class _ViewCommentsScreenState extends State<ViewCommentsScreen> {
                     ],
                   ),
                 ),
-                
+                SliverToBoxAdapter(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(height: height / 20),
+                      Text(
+                        'فیلتر  ',
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                      SizedBox(height: height / 60),
+                      SizedBox(
+                        height: height / 4,
+                        child: const PercentageBoxScore(),
+                      ),
+                      SizedBox(height: height / 60),
+                      Row(
+                        children: [
+                          Text(
+                            '55 دیدگاه',
+                            style: Theme.of(context).textTheme.headlineMedium,
+                          ),
+                          const Spacer(),
+                          Text(
+                            'مرتب سازی:',
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium
+                                ?.copyWith(color: AppColors.textFilterScore),
+                          ),
+                          SizedBox(width: width / 40),
+                          Container(
+                            width: 110,
+                            height: 35,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(24),
+                              border: Border.all(
+                                width: 2,
+                                color: AppColors.cardWhite,
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'مرتب سازی',
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                                const Icon(Icons.keyboard_arrow_down_rounded),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
                 SliverList.builder(
                   itemBuilder: (context, index) {
                     return const UserComment();

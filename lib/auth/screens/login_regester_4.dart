@@ -6,14 +6,19 @@ import 'package:shop_style/common/widgets/text_padding.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/main.dart';
 
-class CompletionInformation extends StatefulWidget {
-  const CompletionInformation({super.key});
+class LoginRegester4 extends StatefulWidget {
+  const LoginRegester4({
+    super.key,
+    this.ferstOpenAplication = true,
+  });
+
+  final bool ferstOpenAplication;
 
   @override
-  State<CompletionInformation> createState() => _CompletionInformationState();
+  State<LoginRegester4> createState() => _LoginRegester4State();
 }
 
-class _CompletionInformationState extends State<CompletionInformation> {
+class _LoginRegester4State extends State<LoginRegester4> {
   String? selectedValue = 'زرد';
   int selected = 0;
 
@@ -24,14 +29,15 @@ class _CompletionInformationState extends State<CompletionInformation> {
 
     return Scaffold(
       backgroundColor: const Color(0xFFFFFFFF),
-     
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: width / 15),
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: CustomScrollView(
             slivers: <Widget>[
-              const HeaderScreen(),
+              widget.ferstOpenAplication
+                  ? SliverPadding(padding: EdgeInsets.only(top: height / 15))
+                  : const HeaderScreen(),
               SliverToBoxAdapter(
                 child: TextPadding(
                   text: 'خوش آمدید!',
@@ -142,9 +148,7 @@ class _CompletionInformationState extends State<CompletionInformation> {
                   ),
                 ),
               ),
-              SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: height / 40),
-              ),
+              SliverPadding(padding: EdgeInsets.only(top: height / 40)),
             ],
           ),
         ),

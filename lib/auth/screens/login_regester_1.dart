@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:shop_style/auth/screens/login_enter_password_screen.dart';
+import 'package:shop_style/auth/screens/login_regester_2.dart';
 import 'package:shop_style/auth/widgets/custom_button.dart';
 import 'package:shop_style/auth/widgets/custom_textfield.dart';
 import 'package:shop_style/common/widgets/text_padding.dart';
 import 'package:shop_style/common/configs/enums.dart';
 
-class LoginEnterNumberPhoneScreen extends StatelessWidget {
-  const LoginEnterNumberPhoneScreen({super.key});
+class LoginRegester1 extends StatelessWidget {
+  const LoginRegester1({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class LoginEnterNumberPhoneScreen extends StatelessWidget {
                   onClick: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const LoginEnterPasswordScreen(),
+                        builder: (context) => const LoginRegester2(),
                       ),
                     );
                   },

@@ -22,7 +22,6 @@ class CustomTextfield extends StatefulWidget {
 
 class _CustomTextfieldState extends State<CustomTextfield> {
   bool showPassword = true;
-  bool hasSecurity = true;
 
   @override
   Widget build(BuildContext context) {
@@ -94,6 +93,8 @@ class _CustomTextfieldState extends State<CustomTextfield> {
               ? width / 1.5
               : width / 1.43,
       child: TextField(
+        obscureText:
+            widget.type == TextfieldType.security ? showPassword : false,
         style: Theme.of(context)
             .textTheme
             .bodyMedium

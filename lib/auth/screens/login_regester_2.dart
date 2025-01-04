@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:shop_style/auth/screens/basic_information_screen.dart';
-import 'package:shop_style/auth/widgets/OTPWidget.dart';
+import 'package:shop_style/auth/screens/login_regester_3.dart';
 import 'package:shop_style/auth/widgets/custom_button.dart';
+import 'package:shop_style/auth/widgets/custom_textfield.dart';
+import 'package:shop_style/common/configs/enums.dart';
 import 'package:shop_style/common/widgets/text_padding.dart';
 
-class LoginEnterPasswordScreen extends StatefulWidget {
-  const LoginEnterPasswordScreen({super.key});
+class LoginRegester2 extends StatefulWidget {
+  const LoginRegester2({super.key});
 
   @override
-  State<LoginEnterPasswordScreen> createState() =>
-      _LoginEnterPasswordScreenState();
+  State<LoginRegester2> createState() =>
+      _LoginRegester2State();
 }
 
-class _LoginEnterPasswordScreenState extends State<LoginEnterPasswordScreen> {
+class _LoginRegester2State extends State<LoginRegester2> {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
@@ -40,8 +41,8 @@ class _LoginEnterPasswordScreenState extends State<LoginEnterPasswordScreen> {
                   theme: Theme.of(context).textTheme.bodyMedium,
                 ),
               ),
-              SliverToBoxAdapter(
-                child: OTPWidget(topPadding: height / 50),
+              const SliverToBoxAdapter(
+                child: CustomTextfield(type: TextfieldType.none)
               ),
               SliverToBoxAdapter(
                 child: TextPadding(
@@ -58,7 +59,7 @@ class _LoginEnterPasswordScreenState extends State<LoginEnterPasswordScreen> {
                   onClick: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (context) => const BasicInformationScreen(),
+                        builder: (context) => const LoginRegester3(),
                       ),
                     );
                   },
