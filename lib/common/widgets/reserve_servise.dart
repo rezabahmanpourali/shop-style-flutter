@@ -98,7 +98,7 @@ class _ReserveServiseState extends State<ReserveServise> {
       children: [
         Text(
           'مدل موی خامه ای',
-          style: Theme.of(context).textTheme.titleSmall,
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 16),
         ),
         SizedBox(height: height / 400),
         Row(
@@ -113,8 +113,8 @@ class _ReserveServiseState extends State<ReserveServise> {
               '40 دقیقه',
               style: Theme.of(context)
                   .textTheme
-                  .titleSmall
-                  ?.copyWith(color: AppColors.textHeader),
+                  .bodySmall
+                  ?.copyWith(color: AppColors.textHeader, fontSize: 16),
             ),
           ],
         ),
@@ -123,8 +123,8 @@ class _ReserveServiseState extends State<ReserveServise> {
           '125,000 تومان',
           style: Theme.of(context)
               .textTheme
-              .titleSmall
-              ?.copyWith(color: AppColors.textHeader),
+              .bodySmall
+              ?.copyWith(color: AppColors.textHeader, fontSize: 16),
         ),
       ],
     );
@@ -138,7 +138,7 @@ class _ReserveServiseState extends State<ReserveServise> {
       icon: const Icon(
         Icons.check_circle,
         color: Color(0xFF000080),
-        size: 50,
+        size: 35,
       ),
     );
   }
@@ -157,7 +157,7 @@ class _ReserveServiseState extends State<ReserveServise> {
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFFFFFFFF),
-          minimumSize: Size(width / 3, height / 20),
+          minimumSize: Size(width / 4, height / 20),
           elevation: 0,
         ),
         child: const Text(

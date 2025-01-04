@@ -27,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     Future.delayed(const Duration(seconds: 2), () {
-      // ignore: use_build_context_synchronously
       Provider.of<BarberShopController>(context, listen: false)
           .fetchBarberShops();
     });
@@ -124,30 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                       provider.barberShops[index];
                                   return Padding(
                                     padding: const EdgeInsets.only(left: 16),
-                                    // child: GestureDetector(
-                                    //   onTap: () {
-                                    //     // Navigator.of(context).push(
-                                    //     //   MaterialPageRoute(
-                                    //     //     builder: (context) =>
-                                    //     //         Provider<BarberController>(
-                                    //     //       create: (context) {
-                                    //     //         locator
-                                    //     //             .get<BarberController>()
-                                    //     //             .fetchBarber();
-
-                                    //     //         return locator
-                                    //     //             .get<BarberController>();
-                                    //     //       },
-                                    //     //       builder: (context, child) {
-                                    //     //         return const BarberShopPage();
-                                    //     //       },
-                                    //     //     ),
-                                    //     //   ),
-                                    //     // );
-                                    //   },
-                                    //   child:
-                                    //       CardItem(barberShopModel: barbershop),
-                                    // ),
                                     child: GestureDetector(
                                       onTap: () {
                                         Navigator.of(context).push(
@@ -201,32 +176,53 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 242,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 6, right: 22),
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 6,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: const EdgeInsets.only(left: 16),
-                            child: InkWell(
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const BarberShopPage(),
-                                  ),
-                                );
-                              },
-                              // child: const CardItem(),
-                              child: const Text('data'),
+                  child: Consumer<BarberShopController>(
+                    builder: (context, controller, child) {
+                      return StateManageWidget(
+                        status: controller.barberShopState,
+                        loadingWidget: () {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        errorWidgetBuilder: (message, statusCode) {
+                          return Center(
+                            child: Text(controller.errorMessage),
+                          );
+                        },
+                        completedWidgetBuilder: (value) {
+                          return SizedBox(
+                            height: 242,
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 6, right: 22),
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: 6,
+                                itemBuilder: (context, index) {
+                                  final barberShop =
+                                      controller.barberShops[index];
+                                  return Padding(
+                                    padding: const EdgeInsets.only(left: 16),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const BarberShopPage(),
+                                          ),
+                                        );
+                                      },
+                                      child: CardItem(barberShop),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           );
                         },
-                      ),
-                    ),
+                      );
+                    },
                   ),
                 ),
                 const SliverToBoxAdapter(
@@ -323,7 +319,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           'مدل مو های برتر  منطقه شما',
-                          style: Theme.of(context).textTheme.labelMedium,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ],
                     ),
@@ -363,7 +362,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           'دسته بندی خدمات',
-                          style: Theme.of(context).textTheme.labelMedium,
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ),
                       ],
                     ),
@@ -461,12 +463,12 @@ class CategoryItem extends StatelessWidget {
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 7, right: 8),
-                  child: const Text(
+                  child: Text(
                     'اصلاح موی سر',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displaySmall!
+                        .copyWith(color: AppColors.reserveContaner),
                   ),
                 ),
                 SizedBox(

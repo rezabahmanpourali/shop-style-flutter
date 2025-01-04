@@ -22,7 +22,7 @@ class BarberShopController extends ChangeNotifier {
       barberShopState = BlocStatusError(errorMessage, response.statusCode);
     } else {
       barberShops = (response.json as List)
-          .map((e) => BarberShopModel.fromJsone(e))
+          .map((e) => BarberShopModel.fromJson(e))
           .toList();
       barberShopState = BlocStatusCompleted(null);
     }

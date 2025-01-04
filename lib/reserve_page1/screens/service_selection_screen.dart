@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shop_style/common/configs/enums.dart';
 import 'package:shop_style/common/widgets/header_for_screen.dart';
 import 'package:shop_style/common/widgets/reserve_servise.dart';
+import 'package:shop_style/common/widgets/service_categories.dart';
+import 'package:shop_style/common/widgets/stack_widget_view.dart';
 
 class ServiceSelectionScreen extends StatefulWidget {
   const ServiceSelectionScreen({super.key});
@@ -27,22 +29,47 @@ class _ServiceSelectionScreenState extends State<ServiceSelectionScreen> {
             ),
             SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.only(left: width / 15, right: width / 15),
+                padding: EdgeInsets.only(
+                    left: width / 15, right: width / 15, bottom: 22),
                 child: Text(
                   'انتخاب خدمات',
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
             ),
-            SliverList.builder(
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width / 15),
-                  child: const ReserveServise(type: TypeReserveServise.reserve),
-                );
-              },
+            SliverPadding(
+              padding: const EdgeInsets.only(right: 22, left: 22),
+              sliver: SliverToBoxAdapter(
+                child: ServiceCategories(
+                  onTabChange: (index) {},
+                  tabs: const ['کوتاهی', 'مدل مو', 'اصلاح صورت'],
+                  content: [
+                    SizedBox(
+                      height: 250,
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 2,
+                        itemBuilder: (BuildContext context, int index) {
+                          return const ReserveServise(
+                              type: TypeReserveServise.reserve);
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      color: Colors.blue,
+                    ),
+                    Container(
+                      width: 100,
+                      height: 100,
+                      color: Colors.green,
+                    ),
+                  ],
+                ),
+              ),
             ),
+
             // SliverToBoxAdapter(
             //   child: ElevatedButton(
             //     onPressed: () {

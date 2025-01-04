@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/common/statemanagment/global_controller.dart';
+import 'package:shop_style/locator.dart';
 
 class BestCardItemParty extends StatelessWidget {
   const BestCardItemParty({
@@ -50,29 +52,20 @@ class BestCardItemParty extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       'نام مدل مو',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: AppColors.black),
+                      style: Theme.of(context).textTheme.labelMedium,
                     ),
                     const SizedBox(height: 6),
                     Row(
                       children: [
-                        const Icon(Icons.star, size: 18),
+                        const Icon(Icons.star, size: 20),
                         Text(
                           '4.9',
-                          style:  Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: AppColors.black),
+                          style: Theme.of(context).textTheme.labelMedium,
                         ),
                         const SizedBox(width: 2),
                         Text(
                           '(55)',
-                          style: Theme.of(context)
-                              .textTheme
-                              .displayMedium
-                              ?.copyWith(color: AppColors.purple),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                       ],
                     ),
@@ -82,7 +75,7 @@ class BestCardItemParty extends StatelessWidget {
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium
-                          ?.copyWith(color: AppColors.textSearchColor),
+                          ?.copyWith(color: AppColors.textHeader),
                     ),
                     const SizedBox(height: 6),
                     Container(

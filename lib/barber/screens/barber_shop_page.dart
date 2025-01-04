@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_style/View_comments/View_comments_screen.dart';
 import 'package:shop_style/barber/model/barber_model.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/widgets/barber_artists.dart';
 import 'package:shop_style/common/widgets/scoring.dart';
+import 'package:shop_style/common/widgets/service_categories.dart';
 import 'package:shop_style/common/widgets/stack_widget_view.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/common/widgets/user_comment.dart';
 import 'package:shop_style/reserve_page1/screens/service_selection_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BarberShopPage extends StatefulWidget {
   const BarberShopPage({super.key});
@@ -83,8 +86,11 @@ class _BarberShopPageState extends State<BarberShopPage> {
                           color: AppColors.cardWhite,
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
-                          Icons.favorite_border,
+                        child: const Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.bookmark,
+                            size: 18,
+                          ),
                         ),
                       ),
                     ),
@@ -98,8 +104,11 @@ class _BarberShopPageState extends State<BarberShopPage> {
                           color: AppColors.cardWhite,
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
-                          Icons.share,
+                        child: const Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.shareNodes,
+                            size: 18,
+                          ),
                         ),
                       ),
                     ),
@@ -130,6 +139,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
                           SizedBox(
                             height: 250,
                             child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
                               itemCount: 2,
                               itemBuilder: (BuildContext context, int index) {
                                 return const StackWidgetView();
@@ -543,23 +553,30 @@ class _BarberShopPageState extends State<BarberShopPage> {
   }
 
   Widget moreButton(BuildContext context) {
-    return Container(
-      height: 50,
-      margin: const EdgeInsets.symmetric(horizontal: 22),
-      decoration: BoxDecoration(
-        border: Border.all(
-          width: 2,
-          color: AppColors.cardWhite,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const ViewCommentsScreen(),
+        ));
+      },
+      child: Container(
+        height: 50,
+        margin: const EdgeInsets.symmetric(horizontal: 22),
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 2,
+            color: AppColors.cardWhite,
+          ),
+          borderRadius: BorderRadius.circular(48),
         ),
-        borderRadius: BorderRadius.circular(48),
-      ),
-      width: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Text(
-            'مشاهده همه',
-            style: Theme.of(context).textTheme.labelMedium,
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Center(
+            child: Text(
+              'مشاهده همه',
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
           ),
         ),
       ),
@@ -607,76 +624,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
   }
 }
 
-class ServiceCategories extends StatefulWidget {
-  final List<String> tabs;
-  final List<Widget> content;
-  final Function(int index) onTabChange;
-  const ServiceCategories({
-    super.key,
-    required this.tabs,
-    required this.content,
-    required this.onTabChange,
-  });
 
-  @override
-  State<ServiceCategories> createState() => _ServiceCategoriesState();
-}
-
-class _ServiceCategoriesState extends State<ServiceCategories> {
-  int currentIndex = 0;
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            ...List.generate(
-              widget.tabs.length,
-              (index) {
-                return InkWell(
-                  onTap: () {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                  },
-                  child: Container(
-                    width: 100,
-                    height: 35,
-                    decoration: BoxDecoration(
-                      color: currentIndex == index
-                          ? AppColors.categoryBlack
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(24),
-                    ),
-                    child: Center(
-                      child: Text(
-                        widget.tabs[index],
-                        style: TextStyle(
-                          color: currentIndex == index
-                              ? AppColors.white2
-                              : AppColors.categoryBlack,
-                          fontSize: currentIndex == index ? 16 : 16,
-                          fontWeight: currentIndex == index
-                              ? FontWeight.w700
-                              : FontWeight.w400,
-                        ),
-                      ),
-                    ),
-                  ),
-                );
-              },
-            )
-          ],
-        ),
-        AnimatedSwitcher(
-          duration: const Duration(milliseconds: 400),
-          child: widget.content[currentIndex],
-        ),
-      ],
-    );
-  }
-}
 
 class TimeWork extends StatelessWidget {
   const TimeWork({

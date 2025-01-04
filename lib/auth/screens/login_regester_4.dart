@@ -61,18 +61,26 @@ class _LoginRegester4State extends State<LoginRegester4> {
                   children: [
                     SizedBox(
                       width: width / 2.6,
-                      child: Divider(thickness: 1, height: height / 15),
+                      child: Divider(
+                        thickness: 1,
+                        height: height / 15,
+                        color: AppColors.dividerColor900,
+                      ),
                     ),
                     Text(
                       '   یا   ',
                       style: Theme.of(context)
                           .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: AppColors.black),
+                          .bodySmall
+                          ?.copyWith(color: AppColors.textHeader),
                     ),
                     SizedBox(
                       width: width / 2.6,
-                      child: Divider(thickness: 1, height: height / 15),
+                      child: Divider(
+                        thickness: 1,
+                        height: height / 15,
+                        color: AppColors.dividerColor900,
+                      ),
                     ),
                   ],
                 ),

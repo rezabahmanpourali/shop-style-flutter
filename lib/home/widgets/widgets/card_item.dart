@@ -56,41 +56,22 @@ class CardItem extends StatelessWidget {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(right: 12, top: 8),
-                          child: Text(
-                            barberShopModel.barberShopName!,
-                            style: Theme.of(context).textTheme.bodyLarge,
-                          ),
+                          child: Text(barberShopModel.barberShopName!),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 12, top: 5),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              const Icon(Icons.star, size: 18),
-                              Text(
-                                '4.9',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              const SizedBox(width: 2),
-                              Text(
-                                '(55)',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayMedium
-                                    ?.copyWith(color: AppColors.purple),
-                              ),
+                              Text('(55)'),
+                              Text('4.9'),
+                              Icon(Icons.star),
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12),
-                          child: Text(
-                            'قم، پردیسان',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(color: AppColors.textSearchColor),
-                          ),
+                        const Padding(
+                          padding: EdgeInsets.only(right: 12),
+                          child: Text('قم، پردیسان'),
                         ),
                         const SizedBox(
                           height: 6,
@@ -109,10 +90,10 @@ class CardItem extends StatelessWidget {
                           child: Center(
                             child: Text(
                               'آرایشگاه',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(color: AppColors.black),
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w400,
+                              ),
                             ),
                           ),
                         ),

@@ -38,13 +38,14 @@ class _CustomDropdownState extends State<CustomDropdown> {
             ),
             SizedBox(height: height / 100),
             Container(
-              height: height / 20,
+              height: height / 18,
               decoration: BoxDecoration(
                 border: Border.all(color: AppColors.bgGrey, width: 2),
                 color: AppColors.white2,
                 borderRadius: const BorderRadius.all(Radius.circular(30)),
               ),
               child: DropdownButton<String>(
+                underline: const SizedBox(),
                 icon: const Icon(
                   Icons.keyboard_arrow_down_outlined,
                   color: AppColors.black,

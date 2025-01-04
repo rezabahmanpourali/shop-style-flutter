@@ -28,6 +28,8 @@ class _UserPageState extends State<UserPage> {
             SliverPadding(
               padding: const EdgeInsets.only(left: 22, right: 22, bottom: 32),
               sliver: SliverAppBar(
+                automaticallyImplyLeading: false,
+                elevation: 0,
                 backgroundColor: AppColors.white2,
                 actions: [
                   SvgPicture.asset('assets/images/settings.svg'),

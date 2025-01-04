@@ -11,10 +11,12 @@ class BarberShopModel {
     this.id,
   );
 
-  factory BarberShopModel.fromJsone(Map<String, dynamic> jsonObject) {
+  factory BarberShopModel.fromJson(Map<String, dynamic> jsonObject) {
     return BarberShopModel(
       jsonObject['barber_shop_name'],
-      jsonObject['barber_shop_image'],
+      jsonObject['images'] != null && jsonObject['images'].isNotEmpty
+          ? jsonObject['images'][0]['url']
+          : null,
       jsonObject['is_active'],
       jsonObject['id'],
     );

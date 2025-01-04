@@ -38,17 +38,16 @@ class BarberArtists extends StatelessWidget {
                     color: AppColors.white2,
                     borderRadius: const BorderRadius.all(Radius.circular(24)),
                   ),
-                  child: Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '4.5',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                        const Icon(Icons.star, size: 18),
-                      ],
-                    ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('4.5',
+                          style: Theme.of(context)
+                              .textTheme
+                              .labelMedium!
+                              .copyWith(fontSize: 14)),
+                      const Icon(Icons.star, size: 11),
+                    ],
                   ),
                 ),
               ),

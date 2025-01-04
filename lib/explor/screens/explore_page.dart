@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/explor/widgets/show_model_filter.dart';
+import 'package:shop_style/explor/widgets/show_model_price.dart';
+import 'package:shop_style/explor/widgets/show_model_sort.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -125,10 +129,11 @@ class _ExplorePageState extends State<ExplorePage> {
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Text('آرایشگاه های اطراف',
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge),
+                                    Text(
+                                      'آرایشگاه های اطراف',
+                                      style:
+                                          Theme.of(context).textTheme.bodyLarge,
+                                    ),
                                     Text(
                                       'بر حسب موقعیت شما',
                                       style: Theme.of(context)
@@ -189,73 +194,142 @@ class _ExplorePageState extends State<ExplorePage> {
                                 child: Row(
                                   children: [
                                     // فیلتر
-                                    Container(
-                                      margin: const EdgeInsets.only(right: 24),
-                                      width: 50,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        border: Border.all(
-                                          width: 2,
-                                          color: AppColors.cardWhite,
+                                    GestureDetector(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          isScrollControlled:
+                                              true, // برای کنترل ارتفاع باتم شیت
+                                          context: context,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                            ),
+                                          ),
+                                          builder: (BuildContext context) {
+                                            return ShowModelFilter(
+                                              onApplyPressed: () {},
+                                              onSelectOption: (p0) {},
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 24),
+                                        width: 50,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(100),
+                                          border: Border.all(
+                                            width: 2,
+                                            color: AppColors.cardWhite,
+                                          ),
+                                        ),
+                                        child: const Center(
+                                          child: FaIcon(
+                                            FontAwesomeIcons.slidersUp,
+                                            size: 18,
+                                          ),
                                         ),
                                       ),
-                                      child:
-                                          const Icon(Icons.filter_list_rounded),
                                     ),
                                     // مرتب سازی
-                                    Container(
-                                      margin: const EdgeInsets.only(right: 12),
-                                      width: 110,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(24),
-                                        border: Border.all(
-                                          width: 2,
-                                          color: AppColors.cardWhite,
-                                        ),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'مرتب سازی',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge,
+                                    GestureDetector(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                            ),
                                           ),
-                                          const Icon(Icons
-                                              .keyboard_arrow_down_rounded),
-                                        ],
+                                          builder: (BuildContext context) {
+                                            return ShowModelSort(
+                                              onSelectOption: (p0) {},
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 12),
+                                        width: 110,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(24),
+                                          border: Border.all(
+                                            width: 2,
+                                            color: AppColors.cardWhite,
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'مرتب سازی',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge,
+                                            ),
+                                            const Icon(Icons
+                                                .keyboard_arrow_down_rounded),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                     // قیمت
-                                    Container(
-                                      margin: const EdgeInsets.only(right: 12),
-                                      width: 75,
-                                      height: 35,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(24),
-                                        border: Border.all(
-                                          width: 2,
-                                          color: AppColors.cardWhite,
-                                        ),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            'قیمت',
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge,
+                                    GestureDetector(
+                                      onTap: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(20),
+                                              topRight: Radius.circular(20),
+                                            ),
                                           ),
-                                          const Icon(Icons
-                                              .keyboard_arrow_down_rounded),
-                                        ],
+                                          builder: (BuildContext context) {
+                                            return ShowModelPrice(
+                                              onSelectOption: (p0) {},
+                                              onApplyPressed: () {
+                                                print('object');
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
+                                      child: Container(
+                                        margin:
+                                            const EdgeInsets.only(right: 12),
+                                        width: 75,
+                                        height: 35,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(24),
+                                          border: Border.all(
+                                            width: 2,
+                                            color: AppColors.cardWhite,
+                                          ),
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              'قیمت',
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge,
+                                            ),
+                                            const Icon(Icons
+                                                .keyboard_arrow_down_rounded),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -382,12 +456,22 @@ class _ExplorePageState extends State<ExplorePage> {
                                       'قم، پردیسان، آدرس آرایشگاه',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .labelMedium
+                                          .displayMedium
                                           ?.copyWith(
+                                              fontSize: 16,
                                               color: AppColors.textSearchColor),
                                     ),
                                   ],
                                 ),
+                              ),
+                              const SizedBox(
+                                height: 16,
+                              ),
+                              const Divider(
+                                height: 1,
+                                color: AppColors.dividerColor900,
+                                indent: 22,
+                                endIndent: 22,
                               ),
                               const SizedBox(height: 16),
                               modellMoForShop(),
@@ -504,7 +588,9 @@ class _ExplorePageState extends State<ExplorePage> {
             children: [
               Text(
                 'مدل موی خامه ای',
-                style: Theme.of(context).textTheme.labelMedium,
+                style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                      fontSize: 16,
+                    ),
               ),
               const SizedBox(height: 5),
               Row(
