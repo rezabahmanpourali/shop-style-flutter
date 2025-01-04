@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_advanced_switch/flutter_advanced_switch.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
 import 'package:shop_style/common/configs/colors.dart';
@@ -274,16 +273,16 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  AdvancedSwitch(
-                    activeColor: AppColors.activeSwitchColor,
-                    inactiveColor: Colors.grey,
-                    initialValue: _isSwitched,
-                    onChanged: (value) {
-                      _isSwitched = value;
-                    },
-                    width: 42,
-                    height: 20,
-                  ),
+                  // AdvancedSwitch(
+                  //   activeColor: AppColors.activeSwitchColor,
+                  //   inactiveColor: Colors.grey,
+                  //   initialValue: _isSwitched,
+                  //   onChanged: (value) {
+                  //     _isSwitched = value;
+                  //   },
+                  //   width: 42,
+                  //   height: 20,
+                  // ),
                   const Spacer(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
