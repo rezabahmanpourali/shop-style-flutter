@@ -461,12 +461,12 @@ class CategoryItem extends StatelessWidget {
               children: [
                 Container(
                   margin: const EdgeInsets.only(bottom: 7, right: 8),
-                  child: const Text(
+                  child: Text(
                     'اصلاح موی سر',
-                    style: TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium
+                        ?.copyWith(color: AppColors.black),
                   ),
                 ),
                 SizedBox(

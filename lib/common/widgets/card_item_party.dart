@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shop_style/barber/screens/barber_shop_page.dart';
 import 'package:shop_style/common/configs/colors.dart';
 
 class CardItemParty extends StatelessWidget {

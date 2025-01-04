@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/common/configs/colors.dart';
-import 'package:shop_style/common/statemanagment/global_controller.dart';
-import 'package:shop_style/locator.dart';
 
 class BestCardItemParty extends StatelessWidget {
   const BestCardItemParty({
