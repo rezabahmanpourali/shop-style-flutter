@@ -17,7 +17,7 @@ class _PercentageBoxScoreState extends State<PercentageBoxScore> {
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
 
-    final List<double> listScore = [55, 30, 16, 0, 1];
+    final List<int> listScore = [55, 30, 16, 0, 1];
     return ListView.builder(
       itemCount: 5,
       itemBuilder: (BuildContext context, int index) {
@@ -25,7 +25,7 @@ class _PercentageBoxScoreState extends State<PercentageBoxScore> {
           alignment: Alignment.center,
           children: [
             Positioned(
-              right: 0,
+              right: -width / 50,
               child: Checkbox(
                 splashRadius: 5,
                 focusColor: Colors.transparent,

@@ -7,8 +7,8 @@ class PercentageBox extends StatelessWidget {
     required this.selectedScores,
   });
 
-  final List<double> scores;
-  final double selectedScores;
+  final List<int> scores;
+  final int selectedScores;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +16,9 @@ class PercentageBox extends StatelessWidget {
     final double height = MediaQuery.of(context).size.height;
 
     // فرمول ریاضی برای محاسبه درصد//
-    final double sum =
+    final int sum =
         scores[0] + scores[1] + scores[2] + scores[3] + scores[4];
-    final double trySum = sum == 0 ? 1 : sum;
+    final int trySum = sum == 0 ? 1 : sum;
     final double percentage = selectedScores * 100 / trySum;
     final double percetageWid =
         (width / 1.44) - (percentage * (width / 1.44) / 100);

@@ -3,8 +3,9 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_style/View_comments/View_comments_screen.dart';
-import 'package:shop_style/barber/model/barber_model.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
+import 'package:shop_style/barber/widgets/more_button.dart';
+import 'package:shop_style/barber/widgets/time_work.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/widgets/barber_artists.dart';
 import 'package:shop_style/common/widgets/scoring.dart';
@@ -163,7 +164,13 @@ class _BarberShopPageState extends State<BarberShopPage> {
                 ),
               ),
               SliverToBoxAdapter(
-                child: moreButton(context),
+                child: MoreButton(
+                  onTap: () {
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => const ViewCommentsScreen(),
+                    // ));
+                  },
+                ),
               ),
               const SliverPadding(padding: EdgeInsets.only(top: 32)),
               SliverToBoxAdapter(
@@ -195,6 +202,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
                         return SizedBox(
                           height: 140,
                           child: CustomScrollView(
+                            physics: const NeverScrollableScrollPhysics(),
                             slivers: [
                               SliverPadding(
                                 padding: const EdgeInsets.only(right: 22),
@@ -276,7 +284,34 @@ class _BarberShopPageState extends State<BarberShopPage> {
               ),
               const SliverPadding(padding: EdgeInsets.only(top: 22)),
               SliverToBoxAdapter(
-                child: moreButton(context),
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ViewCommentsScreen(),
+                    ));
+                  },
+                  child: Container(
+                    height: 50,
+                    margin: const EdgeInsets.symmetric(horizontal: 22),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        width: 2,
+                        color: AppColors.cardWhite,
+                      ),
+                      borderRadius: BorderRadius.circular(48),
+                    ),
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Text(
+                          'مشاهده همه',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               const SliverPadding(padding: EdgeInsets.only(top: 32)),
               SliverToBoxAdapter(
@@ -396,31 +431,21 @@ class _BarberShopPageState extends State<BarberShopPage> {
                 ),
               ),
               const SliverPadding(padding: EdgeInsets.only(top: 40)),
-
-              ///////////////////////////////////////////////////////
-
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.only(right: 22),
+                  padding: const EdgeInsets.only(right: 22),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         'آرایشگاه های نزدیک به این آرایشگاه',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium,
                       ),
                     ],
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 16,
-                ),
-              ),
+              const SliverPadding(padding: EdgeInsets.only(top: 16)),
               SliverToBoxAdapter(
                 child: SizedBox(
                   height: 242,
@@ -440,33 +465,22 @@ class _BarberShopPageState extends State<BarberShopPage> {
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 40,
-                ),
-              ),
-              const SliverToBoxAdapter(
+              const SliverPadding(padding: EdgeInsets.only(top: 40)),
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.only(right: 22),
+                  padding: const EdgeInsets.only(right: 22),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         'آرایشگاه های نزدیک شما',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                        ),
+                        style: Theme.of(context).textTheme.labelMedium,
                       ),
                     ],
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 16,
-                ),
-              ),
+              const SliverPadding(padding: EdgeInsets.only(top: 16)),
               SliverToBoxAdapter(
                 child: SizedBox(
                   height: 242,
@@ -486,11 +500,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
                   ),
                 ),
               ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 32,
-                ),
-              ),
+              const SliverPadding(padding: EdgeInsets.only(top: 32)),
               const SliverToBoxAdapter(
                 child: Divider(
                   color: AppColors.dividerColor100,
@@ -552,37 +562,6 @@ class _BarberShopPageState extends State<BarberShopPage> {
     );
   }
 
-  Widget moreButton(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const ViewCommentsScreen(),
-        ));
-      },
-      child: Container(
-        height: 50,
-        margin: const EdgeInsets.symmetric(horizontal: 22),
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 2,
-            color: AppColors.cardWhite,
-          ),
-          borderRadius: BorderRadius.circular(48),
-        ),
-        width: double.infinity,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Center(
-            child: Text(
-              'مشاهده همه',
-              style: Theme.of(context).textTheme.labelMedium,
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   Widget getTitleNamePage(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 22, top: 5),
@@ -620,46 +599,6 @@ class _BarberShopPageState extends State<BarberShopPage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-
-
-class TimeWork extends StatelessWidget {
-  const TimeWork({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 12,
-          height: 12,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.green,
-          ),
-        ),
-        const SizedBox(width: 8),
-        Text(
-          'شنبه',
-          style: Theme.of(context)
-              .textTheme
-              .bodyMedium
-              ?.copyWith(color: AppColors.black),
-        ),
-        const Spacer(),
-        Text(
-          '10 صبح الی 9 شب',
-          style: Theme.of(context)
-              .textTheme
-              .bodyMedium
-              ?.copyWith(color: AppColors.black),
-        ),
-      ],
     );
   }
 }

@@ -1,10 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_style/View_comments/View_comments_screen.dart';
 import 'package:shop_style/auth/screens/login_regester_1.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
-import 'package:shop_style/barber/screens/barber_shop_page.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
@@ -14,8 +12,6 @@ import 'package:shop_style/explor/screens/explore_page.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/locator.dart';
 import 'package:shop_style/reserve_page1/screens/service_selection_screen.dart';
-import 'package:shop_style/reserve_page2/screens/reseve_page2.dart';
-import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
 import 'package:shop_style/user_page/screens/user_page.dart';
 import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
 
@@ -35,7 +31,7 @@ void main() {
           PointerDeviceKind.unknown,
         },
       ),
-      home: const MyApp(),
+      home:  const ServiceSelectionScreen(),
     ),
   );
 }

@@ -51,10 +51,9 @@ class _ViewCommentsScreenState extends State<ViewCommentsScreen> {
                       ),
                       SizedBox(height: height / 60),
                       SizedBox(
-                        height: height / 4,
+                        height: height / 4.3,
                         child: const PercentageBoxScore(),
                       ),
-                      SizedBox(height: height / 60),
                       Row(
                         children: [
                           Text(
@@ -93,6 +92,7 @@ class _ViewCommentsScreenState extends State<ViewCommentsScreen> {
                           ),
                         ],
                       ),
+                      SizedBox(height: height / 60),
                     ],
                   ),
                 ),
