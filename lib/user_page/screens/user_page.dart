@@ -4,6 +4,7 @@ import 'package:shop_style/barber_shop_list/screens/barber_shop_list_screen.dart
 import 'package:shop_style/change_user_info_page/screens/change_user_ingo.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shop_style/edit_user_info/screen/user_info_page.dart';
 import 'package:shop_style/my_comment_page/screens/my_comment_page.dart';
 import 'package:shop_style/recently_viewed_page/screens/recently_viewed_page.dart';
 import 'package:shop_style/saved_barber_shop/screens/saved_barber_shop.dart';
@@ -66,9 +67,24 @@ class _UserPageState extends State<UserPage> {
                       ],
                     ),
                     const Spacer(),
-                    const FaIcon(
-                      FontAwesomeIcons.pen,
-                      size: 18,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const UserInfoPage(),
+                          ),
+                        );
+                      },
+                      child: const SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: Center(
+                          child: FaIcon(
+                            FontAwesomeIcons.pen,
+                            size: 18,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),

@@ -78,15 +78,16 @@ class _ReserveServiseState extends State<ReserveServise> {
       children: [
         Text(
           'نام آرایشگر',
-          style: Theme.of(context).textTheme.titleSmall,
+          style:
+              Theme.of(context).textTheme.headlineSmall!.copyWith(fontSize: 16),
         ),
         SizedBox(height: height / 80),
         Text(
           'متخصص مدل مو و کوتاهی',
           style: Theme.of(context)
               .textTheme
-              .titleSmall
-              ?.copyWith(color: AppColors.textHeader),
+              .headlineSmall
+              ?.copyWith(color: AppColors.textHeader, fontSize: 16),
         ),
       ],
     );
@@ -98,7 +99,8 @@ class _ReserveServiseState extends State<ReserveServise> {
       children: [
         Text(
           'مدل موی خامه ای',
-          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 16),
+          style:
+              Theme.of(context).textTheme.headlineLarge!.copyWith(fontSize: 16),
         ),
         SizedBox(height: height / 400),
         Row(
@@ -106,14 +108,14 @@ class _ReserveServiseState extends State<ReserveServise> {
             const Icon(
               Icons.access_time_outlined,
               color: Color(0xFF757676),
-              size: 20,
+              size: 14,
             ),
             SizedBox(width: width / 60),
             Text(
               '40 دقیقه',
               style: Theme.of(context)
                   .textTheme
-                  .bodySmall
+                  .headlineSmall
                   ?.copyWith(color: AppColors.textHeader, fontSize: 16),
             ),
           ],
@@ -123,7 +125,7 @@ class _ReserveServiseState extends State<ReserveServise> {
           '125,000 تومان',
           style: Theme.of(context)
               .textTheme
-              .bodySmall
+              .headlineSmall
               ?.copyWith(color: AppColors.textHeader, fontSize: 16),
         ),
       ],

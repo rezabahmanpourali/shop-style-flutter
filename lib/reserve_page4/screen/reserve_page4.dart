@@ -6,6 +6,8 @@ import 'package:shop_style/common/widgets/price_invoice.dart';
 import 'package:shop_style/common/widgets/scoring.dart';
 import 'package:shop_style/common/widgets/reserve_servise.dart';
 import 'package:shop_style/reserve_page4/screen/widgets/component_information.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shop_style/reserve_page5/screen/reseve_page5.dart';
 
 class ReservePage4 extends StatefulWidget {
   const ReservePage4({super.key});
@@ -93,12 +95,19 @@ class _ReservePage4State extends State<ReservePage4> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),
-                          child: Text(
-                            'اگر در مورد رزرو نوبت خود نکته ای وجود دارد در این بخش بنویسید. (آرایشگر این نکته را خواهد دید)',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(color: AppColors.contanerBorder),
+                          child: TextField(
+                            maxLines:
+                                5, // تعداد خطوط مجاز (برای متنی که بیشتر از یک خط است)
+                            decoration: InputDecoration(
+                              hintText:
+                                  'اگر در مورد رزرو نوبت خود نکته ای وجود دارد در این بخش بنویسید. (آرایشگر این نکته را خواهد دید)',
+                              hintStyle: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(color: AppColors.contanerBorder),
+                              border: InputBorder
+                                  .none,
+                            ),
                           ),
                         ),
                       ),
@@ -117,23 +126,32 @@ class _ReservePage4State extends State<ReservePage4> {
                     padding: const EdgeInsets.symmetric(vertical: 7),
                     child: Row(
                       children: [
-                        Container(
-                          width: 179,
-                          height: 60,
-                          decoration: BoxDecoration(
-                            color: AppColors.bgBlack,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Center(
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20, right: 20),
-                              child: Text(
-                                'پرداخت و رزرو نوبت',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .labelMedium
-                                    ?.copyWith(color: AppColors.white2),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => const ResevePage5(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            width: 179,
+                            height: 60,
+                            decoration: BoxDecoration(
+                              color: AppColors.bgBlack,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Center(
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 20, right: 20),
+                                child: Text(
+                                  'پرداخت و رزرو نوبت',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .labelMedium
+                                      ?.copyWith(color: AppColors.white2),
+                                ),
                               ),
                             ),
                           ),
@@ -186,12 +204,12 @@ class _ReservePage4State extends State<ReservePage4> {
               children: [
                 Text(
                   'نام آرایشگاه',
-                  style: Theme.of(context).textTheme.labelMedium,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 const Scoring(),
                 Text(
                   'آدرس کامل آرایشگاه',
-                  style: Theme.of(context).textTheme.displayMedium,
+                  style: Theme.of(context).textTheme.displaySmall,
                 ),
               ],
             ),
@@ -200,24 +218,27 @@ class _ReservePage4State extends State<ReservePage4> {
         SizedBox(height: height / 40),
         ComponentInformation(
           context: context,
-          icon: const Icon(
-            Icons.text_snippet_outlined,
+          icon: const FaIcon(
+            FontAwesomeIcons.calendar,
+            size: 16,
           ),
           text: 'یکشنبه 1 دی ماه 1403',
         ),
         SizedBox(height: height / 100),
         ComponentInformation(
           context: context,
-          icon: const Icon(
-            Icons.text_snippet_outlined,
+          icon: const FaIcon(
+            FontAwesomeIcons.clock,
+            size: 16,
           ),
           text: 'ساعت 10:00 الی 10:30 صبح',
         ),
         SizedBox(height: height / 100),
         ComponentInformation(
           context: context,
-          icon: const Icon(
-            Icons.text_snippet_outlined,
+          icon: FaIcon(
+            FontAwesomeIcons.brakeWarning,
+            size: 16,
             color: AppColors.yellow,
           ),
           text:
@@ -229,7 +250,7 @@ class _ReservePage4State extends State<ReservePage4> {
           height: 1,
           color: AppColors.dividerColor900,
           endIndent: 22,
-          indent: 22,
+          indent: 0,
         ),
       ],
     );

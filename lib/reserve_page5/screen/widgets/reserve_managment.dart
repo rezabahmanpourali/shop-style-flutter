@@ -4,7 +4,7 @@ import 'package:shop_style/common/configs/colors.dart';
 class ReserveManagment extends StatelessWidget {
   final String title;
   final String subtitle;
-  final IconData icon;
+  final Widget icon;
   final VoidCallback ontab;
   const ReserveManagment({
     super.key,
@@ -29,7 +29,7 @@ class ReserveManagment extends StatelessWidget {
                 color: AppColors.porpleLight,
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon),
+              child: icon,
             ),
             const SizedBox(
               width: 12,

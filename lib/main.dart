@@ -35,7 +35,7 @@ void main() {
           PointerDeviceKind.unknown,
         },
       ),
-      home: const ResevePage2(),
+      home: const MyApp(),
     ),
   );
 }

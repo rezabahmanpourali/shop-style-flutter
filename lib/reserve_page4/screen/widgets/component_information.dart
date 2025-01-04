@@ -11,7 +11,7 @@ class ComponentInformation extends StatelessWidget {
   });
 
   final BuildContext context;
-  final Icon icon;
+  final Widget icon;
   final String text;
   final bool hasImportant;
 
@@ -28,7 +28,7 @@ class ComponentInformation extends StatelessWidget {
                 ? Theme.of(context).textTheme.bodySmall
                 : Theme.of(context)
                     .textTheme
-                    .bodyMedium
+                    .displaySmall
                     ?.copyWith(color: AppColors.textHeader),
           ),
         ),

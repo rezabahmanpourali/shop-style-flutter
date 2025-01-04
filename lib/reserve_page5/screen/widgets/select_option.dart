@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/reserve_page5/screen/reseve_page5.dart';
 import 'package:shop_style/reserve_page5/screen/widgets/reserve_managment.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SelectOption extends StatelessWidget {
   const SelectOption({
@@ -51,7 +52,12 @@ class SelectOption extends StatelessWidget {
           ),
           const SizedBox(height: 22),
           ReserveManagment(
-            icon: Icons.battery_0_bar,
+            icon: const Center(
+              child: FaIcon(
+                FontAwesomeIcons.calendarPlus,
+                color: AppColors.purpleOpacity,
+              ),
+            ),
             ontab: () {},
             title: 'افزودن به تقویم گوگل',
             subtitle: 'برای خود یک یادآور بگذارید',
@@ -63,7 +69,12 @@ class SelectOption extends StatelessWidget {
             indent: 74,
           ),
           ReserveManagment(
-            icon: Icons.share,
+            icon: const Center(
+              child: FaIcon(
+                FontAwesomeIcons.locationArrow,
+                color: AppColors.purpleOpacity,
+              ),
+            ),
             ontab: () {},
             title: 'مسیریابی با نقشه',
             subtitle: 'آدرس آرایشگاه',
@@ -75,7 +86,12 @@ class SelectOption extends StatelessWidget {
             indent: 74,
           ),
           ReserveManagment(
-            icon: Icons.access_time_sharp,
+            icon: const Center(
+              child: FaIcon(
+                FontAwesomeIcons.calendarDay,
+                color: AppColors.purpleOpacity,
+              ),
+            ),
             ontab: () {},
             title: 'مدیریت نوبت',
             subtitle:
@@ -85,7 +101,7 @@ class SelectOption extends StatelessWidget {
             height: 1,
             color: AppColors.dividerColor900,
             endIndent: 22,
-            indent: 74,
+            indent: 0,
           ),
         ],
       ),

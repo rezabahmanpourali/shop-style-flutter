@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_style/common/widgets/header_for_screen.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shop_style/reserve_page4/screen/reserve_page4.dart';
 
 class ReservePage3 extends StatefulWidget {
   const ReservePage3({
@@ -124,32 +125,16 @@ class _ReservePage3State extends State<ReservePage3> {
                 SliverPadding(
                   padding: const EdgeInsets.only(top: 25),
                   sliver: SliverList(
-                    
                       delegate: SliverChildBuilderDelegate(
                     childCount: 6,
                     (context, index) {
-                      return const SelectRectangleCard();
+                      return const Padding(
+                        padding: EdgeInsets.only(bottom: 10),
+                        child: SelectRectangleCard(),
+                      );
                     },
                   )),
                 ),
-                // const SliverToBoxAdapter(
-                //   child: Column(
-                //     children: [
-                //       SelectRectangleCard(),
-                //       SizedBox(height: 10),
-                //       SelectRectangleCard(),
-                //       SizedBox(height: 10),
-                //       SelectRectangleCard(),
-                //       SizedBox(height: 10),
-                //       SelectRectangleCard(),
-                //       SizedBox(height: 10),
-                //       SelectRectangleCard(),
-                //       SizedBox(height: 10),
-                //       SelectRectangleCard(),
-                //       SizedBox(height: 46),
-                //     ],
-                //   ),
-                // ),
               ],
             ),
           ),
@@ -168,22 +153,31 @@ class SelectRectangleCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 22, right: 22),
-      child: Container(
-        padding: const EdgeInsets.only(top: 20, bottom: 20, right: 20),
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 2,
-            color: AppColors.cardWhite,
-          ),
-          borderRadius: BorderRadius.circular(48),
-        ),
-        child: Row(
-          children: [
-            Text(
-              '10:00 صبح',
-              style: Theme.of(context).textTheme.labelMedium,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => const ReservePage4(),
             ),
-          ],
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.only(top: 20, bottom: 20, right: 20),
+          decoration: BoxDecoration(
+            border: Border.all(
+              width: 2,
+              color: AppColors.cardWhite,
+            ),
+            borderRadius: BorderRadius.circular(48),
+          ),
+          child: Row(
+            children: [
+              Text(
+                '10:00 صبح',
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+            ],
+          ),
         ),
       ),
     );
