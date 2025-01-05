@@ -48,4 +48,5 @@ class AppColors {
   static const Color arrowIcon = Color(0xff989898);
   static const Color arrowIconBig = Color(0xff696969);
   static const Color activeSwitchColor = Color(0xff7E7EFF);
+  static const Color searchGreyColor = Color(0xffABABAB);
 }

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/barber/screens/barber_shop_page.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/home/models/barber_hair_model.dart';
 
 class CardItemParty extends StatelessWidget {
-  const CardItemParty({
-    super.key,
-  });
+  final HairModel hairModel;
+  const CardItemParty(
+    this.hairModel,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +40,11 @@ class CardItemParty extends StatelessWidget {
                 ),
                 child: Stack(
                   children: [
-                    Image.asset(
-                      'assets/images/images1.jpg',
+                    Image.network(
+                      hairModel.images.isNotEmpty
+                          ? hairModel.images[0].url ??
+                              'assets/images/images1.jpg'
+                          : 'assets/images/images1.jpg',
                       fit: BoxFit.fill,
                       width: double.infinity,
                       height: double.infinity,
@@ -91,7 +96,7 @@ class CardItemParty extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(right: 12),
                         child: Text(
-                          'نام مدل مو',
+                          hairModel.name!,
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),

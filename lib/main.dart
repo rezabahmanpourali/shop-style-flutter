@@ -12,6 +12,7 @@ import 'package:shop_style/common/configs/theme.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/explor/screens/explore_page.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
+import 'package:shop_style/home/statemanagment/home_controller.dart';
 import 'package:shop_style/locator.dart';
 import 'package:shop_style/reserve_page1/screens/service_selection_screen.dart';
 import 'package:shop_style/reserve_page2/screens/reseve_page2.dart';
@@ -82,6 +83,9 @@ class _MyAppState extends State<MyApp> {
         ),
         ChangeNotifierProvider(
           create: (context) => locator.get<BarberController>(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => locator.get<HomeController>(),
         ),
       ],
       child: Consumer<GlobalController>(

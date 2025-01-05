@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/explor/screens/explore_page_search.dart';
 import 'package:shop_style/explor/widgets/show_model_filter.dart';
 import 'package:shop_style/explor/widgets/show_model_price.dart';
 import 'package:shop_style/explor/widgets/show_model_sort.dart';
@@ -100,53 +101,65 @@ class _ExplorePageState extends State<ExplorePage> {
                             ),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 5, left: 22),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    _toggleIcon();
-                                    print('object');
-                                  },
-                                  child: Container(
-                                    width: 50,
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        width: 2,
-                                        color: AppColors.cardWhite,
-                                      ),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: _isMenuIcon
-                                        ? const Icon(Icons.menu)
-                                        : const Icon(Icons.close),
+                            padding: EdgeInsets.only(right: 5, left: 22),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => ExplorePageSearch(),
                                   ),
-                                ),
-                                const Spacer(),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      'آرایشگاه های اطراف',
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      _toggleIcon();
+                                      print('object');
+                                    },
+                                    child: Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 2,
+                                          color: AppColors.cardWhite,
+                                        ),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: _isMenuIcon
+                                          ? const Icon(Icons.menu)
+                                          : const Icon(Icons.close),
                                     ),
-                                    Text(
-                                      'بر حسب موقعیت شما',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge
-                                          ?.copyWith(
-                                              color: AppColors.textSearchColor),
-                                    ),
-                                  ],
-                                ),
-                                const Spacer(),
-                                const Icon(Icons.search),
-                              ],
+                                  ),
+                                  const Spacer(),
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'آرایشگاه های اطراف',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge,
+                                      ),
+                                      Text(
+                                        'بر حسب موقعیت شما',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyLarge
+                                            ?.copyWith(
+                                                color:
+                                                    AppColors.textSearchColor),
+                                      ),
+                                    ],
+                                  ),
+                                  const Spacer(),
+                                  const Icon(Icons.search),
+                                ],
+                              ),
                             ),
                           ),
                         ),

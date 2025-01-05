@@ -187,9 +187,9 @@ class _UserPageState extends State<UserPage> {
                   //item2
                   UserAccountItem(
                     onChange: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const SavedModelsPage(),
-                      ));
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //   builder: (context) => const SavedModelsPage(),
+                      // ));
                     },
                     title: 'مدل های ذخیره شده',
                     iconRight: SvgPicture.asset(
@@ -270,11 +270,11 @@ class _UserPageState extends State<UserPage> {
                   //item5
                   UserAccountItem(
                     onChange: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (context) => const RecentlyViewedPage(),
-                        ),
-                      );
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const RecentlyViewedPage(),
+                      //   ),
+                      // );
                     },
                     title: 'بازدید های اخیر',
                     iconRight: SvgPicture.asset(

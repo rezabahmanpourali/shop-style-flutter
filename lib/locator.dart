@@ -9,6 +9,8 @@ import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/enums.dart';
 import 'package:shop_style/common/models/api_service.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
+import 'package:shop_style/home/data/repository/home_repository.dart';
+import 'package:shop_style/home/statemanagment/home_controller.dart';
 
 final locator = GetIt.instance;
 
@@ -40,11 +42,12 @@ Future<void> setupLocator() async {
   locator.registerSingleton<IAuthenticateRepository>(AuthenticateRepository());
   locator.registerSingleton<IBarberShopRepository>(BarberShopRepository());
   locator.registerSingleton<IBarberRepository>(BarberRepository());
+  locator.registerSingleton<IHomeRepository>(HomeRepository());
 
   //controllers
   locator.registerSingleton<AuthController>(AuthController());
   locator.registerSingleton<GlobalController>(GlobalController());
   locator.registerSingleton<BarberShopController>(BarberShopController());
   locator.registerSingleton<BarberController>(BarberController());
-
+  locator.registerSingleton<HomeController>(HomeController());
 }

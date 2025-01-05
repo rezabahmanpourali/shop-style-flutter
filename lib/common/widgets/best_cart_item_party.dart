@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
+import 'package:shop_style/home/models/barber_hair_model.dart';
 import 'package:shop_style/locator.dart';
 
 class BestCardItemParty extends StatelessWidget {
+  final HairModel hairModel;
   const BestCardItemParty({
-    super.key,
+    super.key, required this.hairModel,
   });
 
   @override
@@ -32,8 +34,11 @@ class BestCardItemParty extends StatelessWidget {
                   bottomLeft: Radius.zero,
                   bottomRight: Radius.zero,
                 ),
-                child: Image.asset(
-                  'assets/images/3.jpeg',
+                child: Image.network(
+                  hairModel.images.isNotEmpty
+                          ? hairModel.images[0].url ??
+                              'assets/images/images1.jpg'
+                          : 'assets/images/images1.jpg',
                   fit: BoxFit.fill,
                   width: double.infinity,
                   height: double.infinity,
@@ -55,7 +60,7 @@ class BestCardItemParty extends StatelessWidget {
                     children: [
                       const SizedBox(height: 8),
                       Text(
-                        'نام مدل مو',
+                        hairModel.name!,
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
                       const SizedBox(height: 6),

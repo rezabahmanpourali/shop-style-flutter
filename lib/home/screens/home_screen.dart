@@ -6,7 +6,10 @@ import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/widgets/best_cart_item_party.dart';
 import 'package:shop_style/common/widgets/card_item_party.dart';
+import 'package:shop_style/common/widgets/category_item.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
+import 'package:shop_style/home/statemanagment/home_controller.dart';
+import 'package:shop_style/home/widgets/show_model_location.dart';
 import 'package:shop_style/home/widgets/widgets/card_item.dart';
 import 'package:shop_style/locator.dart';
 
@@ -30,6 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Future.delayed(const Duration(seconds: 2), () {
       Provider.of<BarberShopController>(context, listen: false)
           .fetchBarberShops();
+      Provider.of<HomeController>(context, listen: false).fetchHair();
     });
   }
 
@@ -199,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const EdgeInsets.only(left: 6, right: 22),
                               child: ListView.builder(
                                 scrollDirection: Axis.horizontal,
-                                itemCount: 6,
+                                itemCount: controller.barberShops.length,
                                 itemBuilder: (context, index) {
                                   final barberShop =
                                       controller.barberShops[index];
@@ -249,9 +253,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   boxShadow: [
                                     BoxShadow(
                                       color: AppColors.purpleOpacity,
-                                      // .withValues(
-                                      //   alpha: 0.68,
-                                      // ),
                                       offset: Offset(0, 0), // افست سایه
                                       blurRadius: 25.0, // میزان پخش سایه
                                       spreadRadius: 0.0, // میزان گسترش سایه
@@ -285,20 +286,43 @@ class _HomeScreenState extends State<HomeScreen> {
                               top: 62,
                               left: 2,
                               right: 0,
-                              child: SizedBox(
-                                height: 242,
-                                width: 358,
-                                child: ListView.builder(
-                                  padding: const EdgeInsets.only(right: 44),
-                                  itemCount: 6,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    return const Padding(
-                                      padding: EdgeInsets.only(left: 16),
-                                      child: CardItemParty(),
-                                    );
-                                  },
-                                ),
+                              child: Consumer<HomeController>(
+                                builder: (context, controller, child) {
+                                  return StateManageWidget(
+                                    status: controller.hairStatus,
+                                    loadingWidget: () {
+                                      return const Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    },
+                                    errorWidgetBuilder: (message, statusCode) {
+                                      return Center(
+                                        child: Text(controller.errorMessage),
+                                      );
+                                    },
+                                    completedWidgetBuilder: (value) {
+                                      return SizedBox(
+                                        height: 242,
+                                        width: 358,
+                                        child: ListView.builder(
+                                          padding:
+                                              const EdgeInsets.only(right: 44),
+                                          itemCount: controller.hairs.length,
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (context, index) {
+                                            final hairs =
+                                                controller.hairs[index];
+                                            return Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 16),
+                                              child: CardItemParty(hairs),
+                                            );
+                                          },
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
                               ),
                             ),
                           ],
@@ -332,19 +356,41 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 242,
-                    child: ListView.builder(
-                      padding: const EdgeInsets.only(right: 22),
-                      itemCount: 6,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return const Padding(
-                          padding: EdgeInsets.only(left: 16),
-                          child: BestCardItemParty(),
-                        );
-                      },
-                    ),
+                  child: Consumer<HomeController>(
+                    builder: (context, controller, child) {
+                      return StateManageWidget(
+                        status: controller.hairStatus,
+                        loadingWidget: () {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                        errorWidgetBuilder: (message, statusCode) {
+                          return Center(
+                            child: Text(controller.errorMessage),
+                          );
+                        },
+                        completedWidgetBuilder: (value) {
+                          return SizedBox(
+                            height: 242,
+                            child: ListView.builder(
+                              padding: const EdgeInsets.only(right: 22),
+                              itemCount: controller.hairs.length,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                final hairs = controller.hairs[index];
+                                return Padding(
+                                  padding: const EdgeInsets.only(left: 16),
+                                  child: BestCardItemParty(
+                                    hairModel: hairs,
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        },
+                      );
+                    },
                   ),
                 ),
                 const SliverToBoxAdapter(
@@ -409,70 +455,44 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Spacer(),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                'موقعیت شما',
-                style: Theme.of(context).textTheme.displaySmall,
-              ),
-              Row(
-                children: [
-                  Text(
-                    'پردیسان شهروند',
-                    style: Theme.of(context).textTheme.displayLarge,
-                  ),
-                  const Icon(Icons.keyboard_arrow_down_rounded)
-                ],
-              ),
-            ],
-          ),
-          const Spacer(),
-        ],
-      ),
-    );
-  }
-}
-
-class CategoryItem extends StatelessWidget {
-  final VoidCallback onChange;
-  const CategoryItem({
-    super.key,
-    required this.onChange,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onChange,
-      child: Column(
-        children: [
-          Container(
-            width: 168,
-            height: 75,
-            decoration: BoxDecoration(
-              color: AppColors.dividerColor100,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(bottom: 7, right: 8),
-                  child: Text(
-                    'اصلاح موی سر',
-                    style: Theme.of(context)
-                        .textTheme
-                        .displaySmall!
-                        .copyWith(color: AppColors.reserveContaner),
+          GestureDetector(
+            onTap: () {
+              showModalBottomSheet(
+                isScrollControlled: true, // برای کنترل ارتفاع باتم شیت
+                context: context,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
                   ),
                 ),
-                SizedBox(
-                  child: Image.asset('assets/images/Subtract.png'),
+                builder: (BuildContext context) {
+                  return ShowModelLocation(
+                    onSelectOption: (p0) {},
+                  );
+                },
+              );
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'موقعیت شما',
+                  style: Theme.of(context).textTheme.displaySmall,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      'پردیسان شهروند',
+                      style: Theme.of(context).textTheme.displayLarge,
+                    ),
+                    const Icon(Icons.keyboard_arrow_down_rounded)
+                  ],
                 ),
               ],
             ),
           ),
+          const Spacer(),
         ],
       ),
     );
