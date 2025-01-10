@@ -13,11 +13,11 @@ class CardItemParty extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => BarberShopPage(),
-          ),
-        );
+        // Navigator.of(context).push(
+        //   MaterialPageRoute(
+        //     builder: (context) => BarberShopPage(),
+        //   ),
+        // );
       },
       child: Container(
         width: 132,

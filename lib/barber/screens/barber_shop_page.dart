@@ -4,19 +4,29 @@ import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_style/View_comments/View_comments_screen.dart';
 import 'package:shop_style/barber/model/barber_model.dart';
+import 'package:shop_style/barber/model/barber_shop_model.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
+import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/common/configs/state_handeler.dart';
 import 'package:shop_style/common/widgets/barber_artists.dart';
 import 'package:shop_style/common/widgets/scoring.dart';
 import 'package:shop_style/common/widgets/service_categories.dart';
 import 'package:shop_style/common/widgets/stack_widget_view.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/common/widgets/user_comment.dart';
+import 'package:shop_style/locator.dart';
 import 'package:shop_style/reserve_page1/screens/service_selection_screen.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class BarberShopPage extends StatefulWidget {
-  const BarberShopPage({super.key});
+  const BarberShopPage({
+    super.key,
+    required this.barberShopId,
+    required this.barberShopModel,
+  });
+  final int barberShopId;
+  final BarberShopModel barberShopModel;
 
   @override
   State<BarberShopPage> createState() => _BarberShopPageState();
@@ -27,18 +37,16 @@ class _BarberShopPageState extends State<BarberShopPage> {
   void initState() {
     super.initState();
 
-    // صدا زدن fetchBarber تنها در صورتی که داده‌ها بارگذاری نشده باشد
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final barberController =
-          Provider.of<BarberController>(context, listen: false);
-      if (barberController.barber.isEmpty) {
-        barberController.fetchBarber();
-      }
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        locator.get<BarberController>().fetchBarber();
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
+    // final barberShopController = Provider.of<BarberShopController>(context);
     return Scaffold(
       backgroundColor: AppColors.arayeshColor,
       body: Directionality(
@@ -52,9 +60,15 @@ class _BarberShopPageState extends State<BarberShopPage> {
                     SizedBox(
                       width: double.infinity,
                       height: 266,
-                      child: Image.asset(
-                        'assets/images/1.jpeg',
-                      ),
+                      child: widget.barberShopModel.images != null &&
+                              widget.barberShopModel.images!.isNotEmpty
+                          ? Image.network(
+                              widget.barberShopModel.images![0].url.toString(),
+                              fit: BoxFit.cover,
+                            )
+                          : Image.asset(
+                              'assets/images/1.jpeg',
+                            ),
                     ),
                     Positioned(
                       top: 14,
@@ -115,7 +129,6 @@ class _BarberShopPageState extends State<BarberShopPage> {
                   ],
                 ),
               ),
-              //خط پایین کار sizedbox رو در sliver انجام میده
               const SliverPadding(padding: EdgeInsets.only(top: 16)),
               SliverToBoxAdapter(
                 child: getTitleNamePage(context),
@@ -177,10 +190,11 @@ class _BarberShopPageState extends State<BarberShopPage> {
               ),
               const SliverPadding(padding: EdgeInsets.only(top: 16)),
               SliverToBoxAdapter(
-                child: Consumer<BarberController>(
-                  builder: (context, provider, child) {
+                child: Selector<BarberController, BlocStatus>(
+                  builder: (context, controller, child) {
+                    final controller = Provider.of<BarberController>(context);
                     return StateManageWidget(
-                      status: provider.barberStatus,
+                      status: controller.barberStatus,
                       loadingWidget: () {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -188,34 +202,29 @@ class _BarberShopPageState extends State<BarberShopPage> {
                       },
                       errorWidgetBuilder: (message, statusCode) {
                         return Center(
-                          child: Text(provider.errorMessage),
+                          child: Text(controller.errorMessage),
                         );
                       },
                       completedWidgetBuilder: (value) {
                         return SizedBox(
                           height: 140,
-                          child: CustomScrollView(
-                            slivers: [
-                              SliverPadding(
-                                padding: const EdgeInsets.only(right: 22),
-                                sliver: SliverList(
-                                  delegate: SliverChildBuilderDelegate(
-                                    (context, index) {
-                                      final barber = provider.barber[index];
-                                      return BarberArtists(barberModel: barber);
-                                    },
-                                    childCount: provider.barber.length,
-                                  ),
-                                ),
-                              )
-                            ],
+                          child: ListView.builder(
+                            padding: const EdgeInsets.only(right: 22),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: controller.barber.length,
+                            itemBuilder: (context, index) {
+                              final barber = controller.barber[index];
+                              return BarberArtists(barberModel: barber);
+                            },
                           ),
                         );
                       },
                     );
                   },
+                  selector: (context, controller) => controller.barberStatus,
                 ),
               ),
+
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.only(right: 22),
@@ -261,19 +270,23 @@ class _BarberShopPageState extends State<BarberShopPage> {
               ),
               SliverToBoxAdapter(
                 child: SizedBox(
-                  height: 550,
+                  height: widget.barberShopModel.comments!.length * 170.0,
                   child: ListView.builder(
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 3,
+                    itemCount: widget.barberShopModel.comments!.length,
                     itemBuilder: (context, index) {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 22),
-                        child: UserComment(),
+                      final comment = widget.barberShopModel.comments![index];
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 22),
+                        child: UserComment(
+                          commentBarberShop: comment,
+                        ),
                       );
                     },
                   ),
                 ),
               ),
+
               const SliverPadding(padding: EdgeInsets.only(top: 22)),
               SliverToBoxAdapter(
                 child: moreButton(context),
@@ -590,7 +603,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'نام کامل آرایشگاه',
+            widget.barberShopModel.barberShopName!,
             style: Theme.of(context).textTheme.titleMedium,
           ),
           const SizedBox(height: 6),
@@ -623,8 +636,6 @@ class _BarberShopPageState extends State<BarberShopPage> {
     );
   }
 }
-
-
 
 class TimeWork extends StatelessWidget {
   const TimeWork({

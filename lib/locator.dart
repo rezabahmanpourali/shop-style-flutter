@@ -4,11 +4,13 @@ import 'package:shop_style/auth/data/repository/auth_repository.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
 import 'package:shop_style/barber/data/repository/barber_repository.dart';
 import 'package:shop_style/barber/data/repository/barber_shop_repository.dart';
+import 'package:shop_style/barber/data/repository/comment_repository.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/enums.dart';
 import 'package:shop_style/common/models/api_service.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
+import 'package:shop_style/home/data/repository/category_repository.dart';
 import 'package:shop_style/home/data/repository/home_repository.dart';
 import 'package:shop_style/home/statemanagment/home_controller.dart';
 
@@ -43,6 +45,9 @@ Future<void> setupLocator() async {
   locator.registerSingleton<IBarberShopRepository>(BarberShopRepository());
   locator.registerSingleton<IBarberRepository>(BarberRepository());
   locator.registerSingleton<IHomeRepository>(HomeRepository());
+  locator.registerSingleton<ICategoryRepository>(CategoryRepository());
+  locator.registerSingleton<ICommentRepository>(CommentRepository());
+  
 
   //controllers
   locator.registerSingleton<AuthController>(AuthController());

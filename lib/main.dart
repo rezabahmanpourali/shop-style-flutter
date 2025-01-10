@@ -1,10 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_style/View_comments/View_comments_screen.dart';
-import 'package:shop_style/auth/screens/login_enter_number_screen.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
-import 'package:shop_style/barber/screens/barber_shop_page.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
@@ -14,14 +11,13 @@ import 'package:shop_style/explor/screens/explore_page.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/home/statemanagment/home_controller.dart';
 import 'package:shop_style/locator.dart';
-import 'package:shop_style/reserve_page1/screens/service_selection_screen.dart';
-import 'package:shop_style/reserve_page2/screens/reseve_page2.dart';
-import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
+import 'package:shop_style/onboard_screen/screen/onboard_screen.dart';
 import 'package:shop_style/user_page/screens/user_page.dart';
 import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
 
 void main() {
-  // Provider.debugCheckInvalidValueType = null;
+  Provider.debugCheckInvalidValueType = null;
+
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator();
   runApp(
@@ -36,7 +32,7 @@ void main() {
           PointerDeviceKind.unknown,
         },
       ),
-      home: const MyApp(),
+      home: const OnbordScreen(),
     ),
   );
 }
@@ -62,7 +58,7 @@ class _MyAppState extends State<MyApp> {
       textDirection: TextDirection.rtl,
       child: ExplorePage(),
     ),
-    const Directionality(
+    Directionality(
       textDirection: TextDirection.rtl,
       child: HomeScreen(),
     ),
@@ -72,20 +68,20 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (context) => locator.get<GlobalController>(),
+        ChangeNotifierProvider.value(
+          value: locator.get<GlobalController>(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => locator.get<AuthController>(),
+        ChangeNotifierProvider.value(
+          value: locator.get<AuthController>(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => locator.get<BarberShopController>(),
+        ChangeNotifierProvider.value(
+          value: locator.get<BarberShopController>(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => locator.get<BarberController>(),
+        ChangeNotifierProvider.value(
+          value: locator.get<BarberController>(),
         ),
-        ChangeNotifierProvider(
-          create: (context) => locator.get<HomeController>(),
+        ChangeNotifierProvider.value(
+          value: locator.get<HomeController>(),
         ),
       ],
       child: Consumer<GlobalController>(

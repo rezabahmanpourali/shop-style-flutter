@@ -8,9 +8,10 @@ class BarberController extends ChangeNotifier {
   BarberRepository barberRepository = BarberRepository();
 
   BlocStatus barberStatus = BlocStatusInitial();
-  List<BarberModel> barber = [];
+  List<BarberModel> barber = []; // اینجا فقط آرایشگرهایی که باید نمایش بدیم
   String errorMessage = '';
 
+  // بارگذاری تمام آرایشگرها
   void fetchBarber() async {
     barberStatus = BlocStatusLoading();
     notifyListeners();

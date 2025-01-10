@@ -7,6 +7,7 @@ import 'package:shop_style/explor/widgets/custom_end_page_container.dart';
 import 'package:shop_style/explor/widgets/custom_textfield_explore.dart';
 import 'package:shop_style/explor/widgets/date_picker_view.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
+import 'package:shop_style/home/widgets/show_model_location.dart';
 
 class ExplorePageSearch extends StatefulWidget {
   const ExplorePageSearch({super.key});
@@ -118,6 +119,23 @@ class _ExplorePageSearchState extends State<ExplorePageSearch> {
                   icon: const FaIcon(FontAwesomeIcons.locationDot),
                   onChange: (p0) {},
                   title: 'موقعیت مکانی ',
+                  onTab: () {
+                    showModalBottomSheet(
+                      isScrollControlled: true, // برای کنترل ارتفاع باتم شیت
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
+                      ),
+                      builder: (BuildContext context) {
+                        return ShowModelLocation(
+                          onSelectOption: (p0) {},
+                        );
+                      },
+                    );
+                  },
                 ),
                 const SizedBox(height: 12),
                 Padding(
@@ -214,25 +232,25 @@ class _ExplorePageSearchState extends State<ExplorePageSearch> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 200,
-                  child: GridView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 3,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2, // تعداد ستون‌ها
-                      crossAxisSpacing: 1, // فاصله بین ستون‌ها
-                      mainAxisSpacing: 1, // فاصله بین ردیف‌ها
-                      childAspectRatio: 2.2, // تنظیم نسبت ابعاد سلول
-                    ),
-                    itemBuilder: (context, index) {
-                      return CategoryItem(
-                        onChange: () {},
-                      );
-                    },
-                  ),
-                ),
+                // SizedBox(
+                //   height: 170,
+                //   child: GridView.builder(
+                //     physics: const NeverScrollableScrollPhysics(),
+                //     itemCount: 3,
+                //     gridDelegate:
+                //         const SliverGridDelegateWithFixedCrossAxisCount(
+                //       crossAxisCount: 2, // تعداد ستون‌ها
+                //       crossAxisSpacing: 1, // فاصله بین ستون‌ها
+                //       mainAxisSpacing: 1, // فاصله بین ردیف‌ها
+                //       childAspectRatio: 2.2, // تنظیم نسبت ابعاد سلول
+                //     ),
+                //     itemBuilder: (context, index) {
+                //       return CategoryItem(
+                //         onChange: () {},
+                //       );
+                //     },
+                //   ),
+                // ),
                 SizedBox(
                   height: height * 0.22,
                 ),

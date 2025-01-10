@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:shop_style/barber/model/barber_model.dart';
+import 'package:shop_style/barber/model/barber_shop_model.dart';
 import 'package:shop_style/barber/screens/barber_shop_page.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/common/configs/state_handeler.dart';
 import 'package:shop_style/common/widgets/best_cart_item_party.dart';
 import 'package:shop_style/common/widgets/card_item_party.dart';
 import 'package:shop_style/common/widgets/category_item.dart';
@@ -14,7 +18,7 @@ import 'package:shop_style/home/widgets/widgets/card_item.dart';
 import 'package:shop_style/locator.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -24,21 +28,31 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _onRefresh() async {
     Provider.of<BarberShopController>(context, listen: false)
         .fetchBarberShops();
+    Provider.of<HomeController>(context, listen: false).fetchHair();
+    Provider.of<HomeController>(context, listen: false).fetchCategory();
   }
 
   @override
   void initState() {
     super.initState();
 
-    Future.delayed(const Duration(seconds: 2), () {
-      Provider.of<BarberShopController>(context, listen: false)
-          .fetchBarberShops();
-      Provider.of<HomeController>(context, listen: false).fetchHair();
-    });
+    Future.delayed(
+      const Duration(seconds: 2),
+      () {
+        // ignore: use_build_context_synchronously
+        Provider.of<BarberShopController>(context, listen: false)
+            .fetchBarberShops();
+        // ignore: use_build_context_synchronously
+        Provider.of<HomeController>(context, listen: false).fetchHair();
+        // ignore: use_build_context_synchronously
+        Provider.of<HomeController>(context, listen: false).fetchCategory();
+      },
+    );
   }
 
   var controller = PageController(viewportFraction: 0.7);
-
+  BarberShopController barberShopController =
+      locator.get<BarberShopController>();
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -58,7 +72,20 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: getAppbar(context),
+                  child: Selector<BarberShopController, BlocStatus>(
+                    builder: (context, barberShopPage, child) {
+                      if (barberShopPage is BlocStatusLoading) {
+                        return const Padding(
+                          padding: EdgeInsets.only(right: 22),
+                          child: SizedBox(),
+                        );
+                      } else {
+                        return getAppbar(context);
+                      }
+                    },
+                    selector: (context, controller) =>
+                        controller.barberShopState,
+                  ),
                 ),
                 const SliverToBoxAdapter(
                   child: SizedBox(
@@ -68,9 +95,24 @@ class _HomeScreenState extends State<HomeScreen> {
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 22),
-                    child: Text(
-                      'سلام! {نام کاربر}',
-                      style: Theme.of(context).textTheme.titleMedium,
+                    child: Selector<BarberShopController, BlocStatus>(
+                      builder: (context, barberShopStatus, child) {
+                        if (barberShopStatus is BlocStatusLoading) {
+                          return TitleSmallShimmer(width: width);
+                        } else {
+                          return Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                'سلام! {نام کاربر}',
+                                style: Theme.of(context).textTheme.labelMedium,
+                              ),
+                            ],
+                          );
+                        }
+                      },
+                      selector: (context, controller) =>
+                          controller.barberShopState,
                     ),
                   ),
                 ),
@@ -80,80 +122,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 22),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'به تازگی مشاهده کردید',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 19,
-                  ),
-                ),
-                //آیتم های کارد
-                SliverToBoxAdapter(
-                  child: Consumer<BarberShopController>(
-                    builder: (context, provider, child) {
-                      return StateManageWidget(
-                        status: provider.barberShopState,
-                        loadingWidget: () {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
-                        errorWidgetBuilder: (message, statusCode) {
-                          return Center(
-                            child: Text(provider.errorMessage),
-                          );
-                        },
-                        completedWidgetBuilder: (value) {
-                          return SizedBox(
-                            height: 242,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 6, right: 22),
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: provider.barberShops.length,
-                                itemBuilder: (context, index) {
-                                  final barbershop =
-                                      provider.barberShops[index];
-                                  return Padding(
-                                    padding: const EdgeInsets.only(left: 16),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return ChangeNotifierProvider<
-                                                  BarberController>(
-                                                create: (context) =>
-                                                    BarberController(),
-                                                child:
-                                                    const BarberShopPage(), // صفحه مقصد
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      },
-                                      child: CardItem(barbershop),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          );
-                        },
+                  child: Selector<BarberShopController, BlocStatus>(
+                    builder: (context, value, child) {
+                      return BarberShopList(
+                        title: 'به تازگی مشاهده کردید',
+                        barberShopListState:
+                            barberShopController.barberShopState,
+                        barbreShopData: barberShopController.barberShops,
                       );
                     },
+                    selector: (p0, p1) => p1.barberShopState,
                   ),
                 ),
                 const SliverToBoxAdapter(
@@ -162,74 +140,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 22),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'آرایشگاه برتر منطقه شما',
-                          style: Theme.of(context).textTheme.labelMedium,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 18,
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: Consumer<BarberShopController>(
-                    builder: (context, controller, child) {
-                      return StateManageWidget(
-                        status: controller.barberShopState,
-                        loadingWidget: () {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        },
-                        errorWidgetBuilder: (message, statusCode) {
-                          return Center(
-                            child: Text(controller.errorMessage),
-                          );
-                        },
-                        completedWidgetBuilder: (value) {
-                          return SizedBox(
-                            height: 242,
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 6, right: 22),
-                              child: ListView.builder(
-                                scrollDirection: Axis.horizontal,
-                                itemCount: controller.barberShops.length,
-                                itemBuilder: (context, index) {
-                                  final barberShop =
-                                      controller.barberShops[index];
-                                  return Padding(
-                                    padding: const EdgeInsets.only(left: 16),
-                                    child: InkWell(
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                const BarberShopPage(),
-                                          ),
-                                        );
-                                      },
-                                      child: CardItem(barberShop),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
+                    child: Selector<BarberShopController, BlocStatus>(
+                  builder: (context, value, child) {
+                    return BarberShopList(
+                      title: 'آرایشگاه برتر منطقه شما',
+                      barberShopListState: barberShopController.barberShopState,
+                      barbreShopData: barberShopController.barberShops,
+                    );
+                  },
+                  selector: (p0, p1) => p1.barberShopState,
+                )),
                 const SliverToBoxAdapter(
                   child: SizedBox(
                     height: 53,
@@ -286,13 +206,28 @@ class _HomeScreenState extends State<HomeScreen> {
                               top: 62,
                               left: 2,
                               right: 0,
-                              child: Consumer<HomeController>(
-                                builder: (context, controller, child) {
+                              child: Selector<HomeController, BlocStatus>(
+                                selector: (context, controller) =>
+                                    controller.hairStatus,
+                                builder: (context, hairStatus, child) {
+                                  final controller =
+                                      Provider.of<HomeController>(context);
                                   return StateManageWidget(
-                                    status: controller.hairStatus,
+                                    status: hairStatus,
                                     loadingWidget: () {
-                                      return const Center(
-                                        child: CircularProgressIndicator(),
+                                      return SizedBox(
+                                        height: 242,
+                                        child: ListView.builder(
+                                          scrollDirection: Axis.horizontal,
+                                          itemCount: 5,
+                                          itemBuilder: (context, index) {
+                                            return SizedBox(
+                                              width: width * 0.6,
+                                              child: SmallShimer(
+                                                  height: height, width: width),
+                                            );
+                                          },
+                                        ),
                                       );
                                     },
                                     errorWidgetBuilder: (message, statusCode) {
@@ -356,13 +291,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                  child: Consumer<HomeController>(
-                    builder: (context, controller, child) {
+                  child: Selector<HomeController, BlocStatus>(
+                    builder: (context, hairStatus, child) {
+                      final controller = Provider.of<HomeController>(context);
                       return StateManageWidget(
-                        status: controller.hairStatus,
+                        status: hairStatus,
                         loadingWidget: () {
-                          return const Center(
-                            child: CircularProgressIndicator(),
+                          return SizedBox(
+                            height: 242,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 5,
+                              itemBuilder: (context, index) {
+                                return SizedBox(
+                                  width: width * 0.6,
+                                  child:
+                                      SmallShimer(height: height, width: width),
+                                );
+                              },
+                            ),
                           );
                         },
                         errorWidgetBuilder: (message, statusCode) {
@@ -391,6 +338,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       );
                     },
+                    selector: (context, controller) => controller.hairStatus,
                   ),
                 ),
                 const SliverToBoxAdapter(
@@ -420,17 +368,57 @@ class _HomeScreenState extends State<HomeScreen> {
                 SliverGrid(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                      return SizedBox(
-                        height: MediaQuery.of(context).size.height *
-                            0.1, // تنظیم ارتفاع به نسبت ارتفاع صفحه,
-                        child: CategoryItem(
-                          onChange: () {
-                            print('category');
-                          },
-                        ),
+                      return Selector<HomeController, BlocStatus>(
+                        selector: (context, controller) =>
+                            controller.categoryStatus,
+                        builder: (context, categoryStatus, child) {
+                          final controller =
+                              Provider.of<HomeController>(context);
+
+                          return StateManageWidget(
+                            status: categoryStatus,
+                            loadingWidget: () {
+                              return SizedBox(
+                                height: 60,
+                                child: ListView.builder(
+                                  padding: EdgeInsets.only(bottom: 10),
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: 1,
+                                  itemBuilder: (context, index) {
+                                    return SizedBox(
+                                      width: width * 0.5,
+                                      child: CategoryShimer(
+                                          height: height, width: width),
+                                    );
+                                  },
+                                ),
+                              );
+                            },
+                            errorWidgetBuilder: (message, statusCode) {
+                              return Center(
+                                child: Text(controller.errorMessage),
+                              );
+                            },
+                            completedWidgetBuilder: (value) {
+                              final categories = controller.categories[index];
+
+                              return SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.1,
+                                child: CategoryItem(
+                                  categoryModel: categories,
+                                  onChange: () {
+                                    print('category');
+                                  },
+                                ),
+                              );
+                            },
+                          );
+                        },
                       );
                     },
-                    childCount: 3,
+                    childCount:
+                        context.watch<HomeController>().categories.length,
                   ),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -439,7 +427,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     childAspectRatio: MediaQuery.of(context).size.width /
                         (MediaQuery.of(context).size.height / 5),
                   ),
-                ),
+                )
               ],
             ),
           ),
@@ -495,6 +483,409 @@ class _HomeScreenState extends State<HomeScreen> {
           const Spacer(),
         ],
       ),
+    );
+  }
+}
+
+class TitleSmallShimmer extends StatelessWidget {
+  const TitleSmallShimmer({
+    super.key,
+    required this.width,
+  });
+
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Container(
+              width: width * 0.4,
+              height: 20,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class TitleShimmer extends StatelessWidget {
+  const TitleShimmer({
+    super.key,
+    required this.width,
+  });
+
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Container(
+              width: width * 0.6,
+              height: 20,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(16),
+            child: Container(
+              width: width * 0.3,
+              height: 20,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BigShimer extends StatelessWidget {
+  const BigShimer({
+    super.key,
+    required this.height,
+    required this.width,
+  });
+
+  final double height;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.grey[300]!),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: SizedBox(
+          height: height * 0.48,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: height * 0.25,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(16),
+                          topRight: Radius.circular(16),
+                        ),
+                        color: Colors.grey[300],
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      width: width * 0.5,
+                      height: 18,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.grey[300],
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      width: width * 0.3,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.grey[300],
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      width: width * 0.45,
+                      height: 11,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.grey[300],
+                      ),
+                    ),
+                    const Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 15,
+                        right: 15,
+                        bottom: 10,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 160,
+                            height: 36,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: Colors.grey[300],
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Container(
+                            width: 50,
+                            height: 36,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.grey[300],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SmallShimer extends StatelessWidget {
+  const SmallShimer({
+    super.key,
+    required this.height,
+    required this.width,
+  });
+
+  final double height;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
+          border: Border.all(color: Colors.grey[300]!),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              spreadRadius: 2,
+              blurRadius: 5,
+              offset: const Offset(0, 3),
+            ),
+          ],
+        ),
+        child: SizedBox(
+          height: height * 0.1,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: height * 0.15,
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(16),
+                          topRight: Radius.circular(16),
+                        ),
+                        color: Colors.grey[300],
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      width: width * 0.4,
+                      height: 18,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.grey[300],
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    Container(
+                      margin: const EdgeInsets.only(right: 10),
+                      width: width * 0.2,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.grey[300],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class CategoryShimer extends StatelessWidget {
+  const CategoryShimer({
+    super.key,
+    required this.height,
+    required this.width,
+  });
+
+  final double height;
+  final double width;
+
+  @override
+  Widget build(BuildContext context) {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 16),
+        decoration: BoxDecoration(
+          color: Colors.grey[300],
+          borderRadius: const BorderRadius.all(Radius.circular(25)),
+          border: Border.all(color: Colors.grey[300]!),
+        ),
+        child: Container(
+          height: height * 0.1,
+        ),
+      ),
+    );
+  }
+}
+
+class BarberShopList extends StatefulWidget {
+  final BlocStatus barberShopListState;
+  final List<BarberShopModel> barbreShopData;
+
+  final String title;
+  const BarberShopList(
+      {super.key,
+      required this.barberShopListState,
+      required this.barbreShopData,
+      required this.title});
+
+  @override
+  State<BarberShopList> createState() => _BarberShopListState();
+}
+
+class _BarberShopListState extends State<BarberShopList> {
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.sizeOf(context).width;
+    final height = MediaQuery.sizeOf(context).height;
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 22),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                widget.title,
+                style: Theme.of(context).textTheme.labelMedium,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(
+          height: 19,
+        ),
+        //آیتم های کارد
+        StateManageWidget(
+          status: widget.barberShopListState,
+          loadingWidget: () {
+            return SizedBox(
+              height: height * 0.482,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 5,
+                itemBuilder: (context, index) {
+                  return SizedBox(
+                    width: width * 0.9,
+                    child: BigShimer(height: height, width: width),
+                  );
+                },
+              ),
+            );
+          },
+          errorWidgetBuilder: (message, statusCode) {
+            return Center(
+              child: Text(message ?? 'خطا'),
+            );
+          },
+          completedWidgetBuilder: (value) {
+            return SizedBox(
+              height: 242,
+              child: ListView.builder(
+                padding: const EdgeInsets.only(right: 22),
+                scrollDirection: Axis.horizontal,
+                itemCount: widget.barbreShopData.length,
+                itemBuilder: (context, index) {
+                  final barberShop = widget.barbreShopData[index];
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 16),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return ChangeNotifierProvider.value(
+                                value: locator.get<BarberController>(),
+                                builder: (context, child) => BarberShopPage(
+                                  barberShopModel: barberShop,
+                                  barberShopId: barberShop.id ?? 0,
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                      child: CardItem(barberShop),
+                    ),
+                  );
+                },
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }

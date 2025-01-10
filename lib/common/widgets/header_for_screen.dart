@@ -15,11 +15,11 @@ class HeaderScreen extends StatelessWidget {
         const Spacer(),
         GestureDetector(
           onTap: () {
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => BarberShopPage(),
-              ),
-            );
+            // Navigator.of(context).pushReplacement(
+            //   MaterialPageRoute(
+            //     builder: (context) => const BarberShopPage(),
+            //   ),
+            // );
           },
           child: const Icon(Icons.arrow_forward),
         )

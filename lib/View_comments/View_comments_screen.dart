@@ -40,12 +40,12 @@ class _ViewCommentsScreenState extends State<ViewCommentsScreen> {
                   ),
                 ),
                 
-                SliverList.builder(
-                  itemBuilder: (context, index) {
-                    return const UserComment();
-                  },
-                  itemCount: 6,
-                ),
+                // SliverList.builder(
+                //   itemBuilder: (context, index) {
+                //     return const UserComment();
+                //   },
+                //   itemCount: 6,
+                // ),
               ],
             ),
           ),

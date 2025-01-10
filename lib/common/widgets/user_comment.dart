@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/barber/model/barber_shop_model.dart';
+import 'package:shop_style/barber/model/comment_model.dart';
 import 'package:shop_style/common/configs/colors.dart';
 
 class UserComment extends StatelessWidget {
-  const UserComment({
+  final CommentModel commentBarberShop;
+   UserComment({
+    required this.commentBarberShop,
     super.key,
   });
 
@@ -34,7 +38,7 @@ class UserComment extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
-                    'چهارشنبه، 25 آذر 1403   ساعت 21:47',
+                    commentBarberShop.createdAt.toString(),
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge
@@ -55,7 +59,7 @@ class UserComment extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است',
+            commentBarberShop.comment,
             style: Theme.of(context)
                 .textTheme
                 .bodyMedium

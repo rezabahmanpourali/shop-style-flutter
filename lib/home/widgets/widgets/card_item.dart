@@ -32,7 +32,9 @@ class CardItem extends StatelessWidget {
                     bottomRight: Radius.zero,
                   ),
                   child: Image.network(
-                    barberShopModel.barberShopImage ?? 'assets/images/1.jpeg',
+                    barberShopModel.images!.isNotEmpty
+                        ? barberShopModel.images![0].url!
+                        : 'assets/images/1.jpeg',
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,

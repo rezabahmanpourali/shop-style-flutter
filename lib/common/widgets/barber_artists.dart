@@ -21,7 +21,23 @@ class BarberArtists extends StatelessWidget {
                 child: SizedBox(
                   width: 75,
                   height: 75,
-                  child: Image.asset('assets/images/img8.png'),
+                  child: ClipOval(
+                    child: barberModel.images != null &&
+                            barberModel.images!.isNotEmpty
+                        ? Image.network(
+                            barberModel.images![0].url ??
+                                'assets/images/img8.png',
+                            fit: BoxFit.cover,
+                            width: 75, 
+                            height: 75,
+                          )
+                        : Image.asset(
+                            'assets/images/img8.png',
+                            fit: BoxFit.cover,
+                            width: 75, 
+                            height: 75,
+                          ),
+                  ),
                 ),
               ),
               Positioned(
@@ -41,11 +57,13 @@ class BarberArtists extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('4.5',
-                          style: Theme.of(context)
-                              .textTheme
-                              .labelMedium!
-                              .copyWith(fontSize: 14)),
+                      Text(
+                        '4.5',
+                        style:
+                            Theme.of(context).textTheme.labelMedium!.copyWith(
+                                  fontSize: 14,
+                                ),
+                      ),
                       const Icon(Icons.star, size: 11),
                     ],
                   ),

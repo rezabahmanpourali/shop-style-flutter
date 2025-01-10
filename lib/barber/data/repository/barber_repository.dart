@@ -11,12 +11,9 @@ class BarberRepository extends IBarberRepository {
 
   @override
   Future<ResponseModel> getBarber() async {
-    try {
-      ResponseModel response =
-          await dio.get('https://style-shop.liara.run/barber/');
-      return response;
-    } catch (e) {
-      throw Exception('خطا در ارسال آرایشگر: $e');
-    }
+    // Map<String, String> qParams = {'filter': 'barber_shop_id="$barberShopId"'};
+    ResponseModel response = await dio
+        .get('https://style-shop.liara.run/barber/');
+    return response;
   }
 }

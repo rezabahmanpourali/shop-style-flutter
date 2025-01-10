@@ -10,14 +10,10 @@ class BarberShopRepository extends IBarberShopRepository {
   ApiClientV3 dio = locator.get();
 
   @override
-  Future<ResponseModel> getBarberShops({String? sortbye }) async {
-    try {
-      ResponseModel response = await dio.get(
-          'https://style-shop.liara.run/barber_shop/barbershops/',
-          queryParameters: {'sortby': sortbye});
-      return response;
-    } catch (e) {
-      throw Exception('ارور در ارسال بابر شاپ: $e');
-    }
+  Future<ResponseModel> getBarberShops({String? sortbye}) async {
+    ResponseModel response = await dio.get(
+        'https://style-shop.liara.run/barber_shop/barbershops/',
+        queryParameters: {'sortby': sortbye});
+    return response;
   }
 }
