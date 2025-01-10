@@ -90,67 +90,78 @@ class _MyAppState extends State<MyApp> {
             extendBody: true,
             extendBodyBehindAppBar: true,
             backgroundColor: Colors.transparent,
-            body: IndexedStack(
-              index: value.selectedIdex,
-              children: _pages,
-            ),
-            bottomNavigationBar: Container(
-              margin: const EdgeInsets.only(bottom: 20, right: 60, left: 60),
-              height: 66,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(56),
-                color: AppColors.white2,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 10,
-                    offset: const Offset(0, -2),
-                  ),
-                ],
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 8, right: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    _buildNavItem(
-                      icon: value.selectedIdex == 0
-                          ? 'assets/images/Vector.png'
-                          : 'assets/images/Person.png',
-                      label: 'پروفایل',
-                      index: 0,
-                      isSelected: value.selectedIdex == 0,
-                    ),
-                    _buildNavItem(
-                      icon: value.selectedIdex == 1
-                          ? 'assets/images/Vector (1).png'
-                          : 'assets/images/Cart.png',
-                      label: 'رزرو ها',
-                      index: 1,
-                      isSelected: value.selectedIdex == 1,
-                    ),
-                    _buildNavItem(
-                      icon: value.selectedIdex == 2
-                          ? 'assets/images/Vector (2).png'
-                          : 'assets/images/CategoryStroke.png',
-                      label: 'جستجو',
-                      index: 2,
-                      isSelected: value.selectedIdex == 2,
-                    ),
-                    _buildNavItem(
-                      icon: value.selectedIdex == 3
-                          ? 'assets/images/HouseFill (1).png'
-                          : 'assets/images/House.png',
-                      label: 'خانه',
-                      index: 3,
-                      isSelected: value.selectedIdex == 3,
-                    ),
-                  ],
+            body: Stack(
+              children: [
+                IndexedStack(
+                  index: value.selectedIdex,
+                  children: _pages,
                 ),
-              ),
+                navBarItems(value),
+              ],
             ),
           );
         },
+      ),
+    );
+  }
+
+  Align navBarItems(GlobalController value) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        margin: const EdgeInsets.only(bottom: 20, right: 60, left: 60),
+        height: 66,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(56),
+          color: AppColors.white2,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 10,
+              offset: const Offset(0, -2),
+            ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 8, right: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              _buildNavItem(
+                icon: value.selectedIdex == 0
+                    ? 'assets/images/Vector.png'
+                    : 'assets/images/Person.png',
+                label: 'پروفایل',
+                index: 0,
+                isSelected: value.selectedIdex == 0,
+              ),
+              _buildNavItem(
+                icon: value.selectedIdex == 1
+                    ? 'assets/images/Vector (1).png'
+                    : 'assets/images/Cart.png',
+                label: 'رزرو ها',
+                index: 1,
+                isSelected: value.selectedIdex == 1,
+              ),
+              _buildNavItem(
+                icon: value.selectedIdex == 2
+                    ? 'assets/images/Vector (2).png'
+                    : 'assets/images/CategoryStroke.png',
+                label: 'جستجو',
+                index: 2,
+                isSelected: value.selectedIdex == 2,
+              ),
+              _buildNavItem(
+                icon: value.selectedIdex == 3
+                    ? 'assets/images/HouseFill (1).png'
+                    : 'assets/images/House.png',
+                label: 'خانه',
+                index: 3,
+                isSelected: value.selectedIdex == 3,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
