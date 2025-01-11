@@ -28,6 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _onRefresh() async {
     Provider.of<BarberShopController>(context, listen: false)
         .fetchBarberShops();
+    Provider.of<BarberShopController>(context, listen: false)
+        .fetchTopBarberShops();
     Provider.of<HomeController>(context, listen: false).fetchHair();
     Provider.of<HomeController>(context, listen: false).fetchCategory();
   }
@@ -42,6 +44,8 @@ class _HomeScreenState extends State<HomeScreen> {
         // ignore: use_build_context_synchronously
         Provider.of<BarberShopController>(context, listen: false)
             .fetchBarberShops();
+        Provider.of<BarberShopController>(context, listen: false)
+            .fetchTopBarberShops();
         // ignore: use_build_context_synchronously
         Provider.of<HomeController>(context, listen: false).fetchHair();
         // ignore: use_build_context_synchronously
@@ -95,24 +99,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.only(right: 22),
-                    child: Selector<BarberShopController, BlocStatus>(
-                      builder: (context, barberShopStatus, child) {
-                        if (barberShopStatus is BlocStatusLoading) {
-                          return TitleSmallShimmer(width: width);
-                        } else {
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                'سلام! {نام کاربر}',
-                                style: Theme.of(context).textTheme.labelMedium,
-                              ),
-                            ],
-                          );
-                        }
-                      },
-                      selector: (context, controller) =>
-                          controller.barberShopState,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'سلام! {نام کاربر}',
+                          style: Theme.of(context).textTheme.labelMedium,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -140,16 +134,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 SliverToBoxAdapter(
-                    child: Selector<BarberShopController, BlocStatus>(
-                  builder: (context, value, child) {
-                    return BarberShopList(
-                      title: 'آرایشگاه برتر منطقه شما',
-                      barberShopListState: barberShopController.barberShopState,
-                      barbreShopData: barberShopController.barberShops,
-                    );
-                  },
-                  selector: (p0, p1) => p1.barberShopState,
-                )),
+                  child: Selector<BarberShopController, BlocStatus>(
+                    builder: (context, value, child) {
+                      return BarberShopList(
+                        title: 'آرایشگاه برتر منطقه شما',
+                        barberShopListState:
+                            barberShopController.topBarberShopState,
+                        barbreShopData: barberShopController.topBarberShops,
+                      );
+                    },
+                    selector: (p0, p1) => p1.barberShopState,
+                  ),
+                ),
                 const SliverToBoxAdapter(
                   child: SizedBox(
                     height: 53,
@@ -461,23 +457,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               );
             },
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'موقعیت شما',
-                  style: Theme.of(context).textTheme.displaySmall,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Container(
+                width: 130,
+                color: AppColors.arayeshColor,
+                child: Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'موقعیت شما',
+                        style: Theme.of(context).textTheme.displaySmall,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'پردیسان شهروند',
+                            style: Theme.of(context).textTheme.displayLarge,
+                          ),
+                          const Icon(Icons.keyboard_arrow_down_rounded)
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    Text(
-                      'پردیسان شهروند',
-                      style: Theme.of(context).textTheme.displayLarge,
-                    ),
-                    const Icon(Icons.keyboard_arrow_down_rounded)
-                  ],
-                ),
-              ],
+              ),
             ),
           ),
           const Spacer(),
@@ -810,48 +816,70 @@ class _BarberShopListState extends State<BarberShopList> {
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
     final height = MediaQuery.sizeOf(context).height;
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(right: 22),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
+    return StateManageWidget(
+      status: widget.barberShopListState,
+      loadingWidget: () {
+        return SizedBox(
+          height: height * 0.55,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(
-                widget.title,
-                style: Theme.of(context).textTheme.labelMedium,
+              Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  margin: const EdgeInsets.only(right: 10),
+                  width: width * 0.45,
+                  height: 15,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey[300],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: height * 0.482,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 5,
+                  itemBuilder: (context, index) {
+                    return SizedBox(
+                      width: width * 0.9,
+                      child: BigShimer(height: height, width: width),
+                    );
+                  },
+                ),
               ),
             ],
           ),
-        ),
-        const SizedBox(
-          height: 19,
-        ),
-        //آیتم های کارد
-        StateManageWidget(
-          status: widget.barberShopListState,
-          loadingWidget: () {
-            return SizedBox(
-              height: height * 0.482,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                itemBuilder: (context, index) {
-                  return SizedBox(
-                    width: width * 0.9,
-                    child: BigShimer(height: height, width: width),
-                  );
-                },
+        );
+      },
+      errorWidgetBuilder: (message, statusCode) {
+        return Center(
+          child: Text(message ?? 'خطا'),
+        );
+      },
+      completedWidgetBuilder: (value) {
+        return Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(right: 22),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.title,
+                    style: Theme.of(context).textTheme.labelMedium,
+                  ),
+                ],
               ),
-            );
-          },
-          errorWidgetBuilder: (message, statusCode) {
-            return Center(
-              child: Text(message ?? 'خطا'),
-            );
-          },
-          completedWidgetBuilder: (value) {
-            return SizedBox(
+            ),
+            const SizedBox(
+              height: 19,
+            ),
+            //آیتم های کارد
+            SizedBox(
               height: 242,
               child: ListView.builder(
                 padding: const EdgeInsets.only(right: 22),
@@ -869,6 +897,7 @@ class _BarberShopListState extends State<BarberShopList> {
                               return ChangeNotifierProvider.value(
                                 value: locator.get<BarberController>(),
                                 builder: (context, child) => BarberShopPage(
+                                  
                                   barberShopModel: barberShop,
                                   barberShopId: barberShop.id ?? 0,
                                 ),
@@ -882,10 +911,10 @@ class _BarberShopListState extends State<BarberShopList> {
                   );
                 },
               ),
-            );
-          },
-        ),
-      ],
+            ),
+          ],
+        );
+      },
     );
   }
 }

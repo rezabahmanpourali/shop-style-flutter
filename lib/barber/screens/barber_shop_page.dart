@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_style/View_comments/View_comments_screen.dart';
 import 'package:shop_style/barber/model/barber_model.dart';
 import 'package:shop_style/barber/model/barber_shop_model.dart';
+import 'package:shop_style/barber/model/comment_model.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
@@ -189,12 +190,13 @@ class _BarberShopPageState extends State<BarberShopPage> {
                 ),
               ),
               const SliverPadding(padding: EdgeInsets.only(top: 16)),
+
               SliverToBoxAdapter(
                 child: Selector<BarberController, BlocStatus>(
-                  builder: (context, controller, child) {
-                    final controller = Provider.of<BarberController>(context);
+                  selector: (context, controller) => controller.barberStatus,
+                  builder: (context, barberStatus, child) {
                     return StateManageWidget(
-                      status: controller.barberStatus,
+                      status: barberStatus,
                       loadingWidget: () {
                         return const Center(
                           child: CircularProgressIndicator(),
@@ -202,26 +204,27 @@ class _BarberShopPageState extends State<BarberShopPage> {
                       },
                       errorWidgetBuilder: (message, statusCode) {
                         return Center(
-                          child: Text(controller.errorMessage),
-                        );
-                      },
-                      completedWidgetBuilder: (value) {
-                        return SizedBox(
-                          height: 140,
-                          child: ListView.builder(
-                            padding: const EdgeInsets.only(right: 22),
-                            scrollDirection: Axis.horizontal,
-                            itemCount: controller.barber.length,
-                            itemBuilder: (context, index) {
-                              final barber = controller.barber[index];
-                              return BarberArtists(barberModel: barber);
-                            },
+                          child: Text(
+                            message.toString(),
                           ),
                         );
                       },
+              completedWidgetBuilder: (value) {
+                return SizedBox(
+                  height: 140,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.only(right: 22),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: value.length,
+                    itemBuilder: (context, index) {
+                      final barber = value[index];
+                      return BarberArtists(barberModel: barber);
+                    },
+                  ),
+                );
+              },
                     );
                   },
-                  selector: (context, controller) => controller.barberStatus,
                 ),
               ),
 
@@ -235,14 +238,21 @@ class _BarberShopPageState extends State<BarberShopPage> {
                         'دیدگاه ها',
                         style: Theme.of(context).textTheme.labelMedium,
                       ),
-                      const Row(
-                        children: [
-                          Icon(Icons.star),
-                          Icon(Icons.star),
-                          Icon(Icons.star),
-                          Icon(Icons.star),
-                          Icon(Icons.star_border),
-                        ],
+                      Row(
+                        children: List.generate(
+                          5,
+                          (index) {
+                            int rating = widget
+                                .barberShopModel.comments![0].rating
+                                .toInt();
+
+                            if (index < rating) {
+                              return const Icon(Icons.star);
+                            } else {
+                              return const Icon(Icons.star_border);
+                            }
+                          },
+                        ),
                       ),
                       Row(
                         children: [
@@ -362,10 +372,12 @@ class _BarberShopPageState extends State<BarberShopPage> {
                         borderRadius: BorderRadius.circular(16),
                         child: SizedBox(
                           height: 236,
-                          width: double.infinity, // تعیین عرض به صورت خودکار
+                          width: double.infinity,
                           child: FlutterMap(
-                            options: const MapOptions(
-                              initialCenter: LatLng(34.571112, 50.808330),
+                            options: MapOptions(
+                              initialCenter: LatLng(
+                                  widget.barberShopModel.location!.latitude!,
+                                  widget.barberShopModel.location!.longitude!),
                               initialZoom: 13,
                             ),
                             children: [
@@ -377,7 +389,11 @@ class _BarberShopPageState extends State<BarberShopPage> {
                               MarkerLayer(
                                 markers: [
                                   Marker(
-                                    point: const LatLng(34.571112, 50.808330),
+                                    point: LatLng(
+                                        widget.barberShopModel.location!
+                                            .latitude!,
+                                        widget.barberShopModel.location!
+                                            .longitude!),
                                     child: Builder(
                                       builder: (context) => const Icon(
                                         Icons.location_pin,

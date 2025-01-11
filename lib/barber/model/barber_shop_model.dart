@@ -4,6 +4,7 @@ class BarberShopModel {
   final int? id;
   final String? barberShopName;
   final bool? isActive;
+  final String? shopType;
   final List<CommentModel>? comments;
   final List<ImageModel>? images;
   final Location? location;
@@ -12,6 +13,7 @@ class BarberShopModel {
     this.id,
     this.barberShopName,
     this.isActive,
+    this.shopType,
     this.comments,
     this.images,
     this.location,
@@ -22,20 +24,18 @@ class BarberShopModel {
       id: json['id'],
       barberShopName: json['barber_shop_name'],
       isActive: json['is_active'],
+      shopType: json['shop_type'],
       comments: (json['comments'] as List?)
           ?.map((e) => CommentModel.fromJson(e))
           .toList(),
       images: (json['images'] as List?)
           ?.map((e) => ImageModel.fromJson(e))
           .toList(),
-      location: json['location'] != null
-          ? Location.fromJson(json['location'])
-          : null,
+      location:
+          json['location'] != null ? Location.fromJson(json['location']) : null,
     );
   }
 }
-
-
 
 class ImageModel {
   final int? id;

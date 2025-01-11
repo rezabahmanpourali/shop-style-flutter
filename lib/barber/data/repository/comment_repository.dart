@@ -13,7 +13,7 @@ class CommentRepository extends ICommentRepository {
   Future<ResponseModel> getComments(int barberShopId) async {
     ResponseModel response = await dio.get(
         'https://style-shop.liara.run/barber_shop/barbershops/1/comments/',queryParameters: {
-          "barber_shop_id ":barberShopId, 
+          "barber_shop_id":barberShopId, 
         });
     return response;
   }

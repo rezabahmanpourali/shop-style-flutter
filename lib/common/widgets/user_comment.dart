@@ -1,14 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:shamsi_date/shamsi_date.dart';
 import 'package:shop_style/barber/model/barber_shop_model.dart';
 import 'package:shop_style/barber/model/comment_model.dart';
 import 'package:shop_style/common/configs/colors.dart';
 
 class UserComment extends StatelessWidget {
   final CommentModel commentBarberShop;
-   UserComment({
+  UserComment({
     required this.commentBarberShop,
     super.key,
   });
+
+  String convertToPersianDate(String isoDate) {
+    try {
+      // تبدیل رشته ISO 8601 به تاریخ میلادی
+      DateTime dateTime = DateTime.parse(isoDate);
+
+      // تبدیل تاریخ میلادی به تاریخ شمسی
+      Jalali jalaliDate = Jalali.fromDateTime(dateTime);
+
+      // بازگرداندن تاریخ به فرمت دلخواه (مثال: 2025-01-10)
+      return '${jalaliDate.year}-${jalaliDate.month.toString().padLeft(2, '0')}-${jalaliDate.day.toString().padLeft(2, '0')}';
+    } catch (e) {
+      return 'Invalid date';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +55,8 @@ class UserComment extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyLarge,
                   ),
                   Text(
-                    commentBarberShop.createdAt.toString(),
+                    convertToPersianDate(
+                        commentBarberShop.createdAt.toString()),
                     style: Theme.of(context)
                         .textTheme
                         .bodyLarge
@@ -48,14 +66,19 @@ class UserComment extends StatelessWidget {
               )
             ],
           ),
-          const Row(
-            children: [
-              Icon(Icons.star),
-              Icon(Icons.star),
-              Icon(Icons.star),
-              Icon(Icons.star),
-              Icon(Icons.star_border),
-            ],
+          Row(
+            children: List.generate(
+              5,
+              (index) {
+                double rating = commentBarberShop.rating;
+
+                if (index < rating) {
+                  return const Icon(Icons.star);
+                } else {
+                  return const Icon(Icons.star_border);
+                }
+              },
+            ),
           ),
           const SizedBox(height: 6),
           Text(

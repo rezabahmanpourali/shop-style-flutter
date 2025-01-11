@@ -18,12 +18,14 @@ class BarberShopController extends ChangeNotifier {
   List<BarberShopModel> topBarberShops = [];
   List<CommentModel> comments = [];
   String errorMessage = '';
+
   //کنترلر آرایشگاه ها
   void fetchBarberShops() async {
     barberShopState = BlocStatusLoading();
     notifyListeners();
 
-    ResponseModel response = await barberShopRepository.getBarberShops();
+    ResponseModel response =
+        await barberShopRepository.getBarberShops(shopType: 'SEEN_RECENTLY');
 
     if (response.hasError) {
       errorMessage = response.messageFactory;
@@ -40,10 +42,11 @@ class BarberShopController extends ChangeNotifier {
 
   //کنترلر آرایشگاه منطقه شما
   void fetchTopBarberShops() async {
-    barberShopState = BlocStatusLoading();
+    topBarberShopState = BlocStatusLoading();
     notifyListeners();
 
-    ResponseModel response = await barberShopRepository.getBarberShops();
+    ResponseModel response =
+        await barberShopRepository.getBarberShops(shopType: 'TOP_BARBERS');
 
     if (response.hasError) {
       errorMessage = response.messageFactory;
@@ -59,11 +62,11 @@ class BarberShopController extends ChangeNotifier {
   }
 
   //کنترلر کامنت ها
-  void fetchCommets(int barberShopId) async {
+  void fetchCommets(int barberShopBarbers) async {
     commentStatus = BlocStatusLoading();
     notifyListeners();
 
-    ResponseModel response = await commentRepository.getComments(barberShopId);
+    ResponseModel response = await commentRepository.getComments(barberShopBarbers);
 
     if (response.hasError) {
       errorMessage = response.messageFactory;
