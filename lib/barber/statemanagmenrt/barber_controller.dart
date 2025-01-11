@@ -11,11 +11,11 @@ class BarberController extends ChangeNotifier {
   List<BarberModel> barber = [];
   String errorMessage = '';
 
-  void fetchBarber() async {
+  void fetchBarber(int? barberShopId) async {
     barberStatus = BlocStatusLoading();
     notifyListeners();
 
-    ResponseModel response = await barberRepository.getBarber();
+    ResponseModel response = await barberRepository.getBarber(barberShopId);
 
     if (response.hasError) {
       errorMessage = response.messageFactory;
