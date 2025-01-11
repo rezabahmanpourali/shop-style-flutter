@@ -40,7 +40,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
 
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        locator.get<BarberController>().fetchBarber();
+        locator.get<BarberController>().fetchBarber(widget.barberShopId);
       },
     );
   }
@@ -209,20 +209,20 @@ class _BarberShopPageState extends State<BarberShopPage> {
                           ),
                         );
                       },
-              completedWidgetBuilder: (value) {
-                return SizedBox(
-                  height: 140,
-                  child: ListView.builder(
-                    padding: const EdgeInsets.only(right: 22),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: value.length,
-                    itemBuilder: (context, index) {
-                      final barber = value[index];
-                      return BarberArtists(barberModel: barber);
-                    },
-                  ),
-                );
-              },
+                      completedWidgetBuilder: (value) {
+                        return SizedBox(
+                          height: 140,
+                          child: ListView.builder(
+                            padding: const EdgeInsets.only(right: 22),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: value.length,
+                            itemBuilder: (context, index) {
+                              final barber = value[index];
+                              return BarberArtists(barberModel: barber);
+                            },
+                          ),
+                        );
+                      },
                     );
                   },
                 ),
