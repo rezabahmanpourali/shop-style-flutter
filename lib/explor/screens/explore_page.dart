@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/explor/screens/explore_page_search.dart';
 import 'package:shop_style/explor/widgets/show_model_filter.dart';
 import 'package:shop_style/explor/widgets/show_model_price.dart';
 import 'package:shop_style/explor/widgets/show_model_sort.dart';
+import 'package:shop_style/locator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -19,6 +22,12 @@ class ExplorePage extends StatefulWidget {
 class _ExplorePageState extends State<ExplorePage> {
   final DraggableScrollableController _scrollController =
       DraggableScrollableController();
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<BarberShopController>(context).fetchBarberShops();
+  }
 
   bool _isMenuIcon = true;
 
@@ -44,6 +53,8 @@ class _ExplorePageState extends State<ExplorePage> {
     }
   }
 
+  BarberShopController barberShopController =
+      locator.get<BarberShopController>();
   @override
   Widget build(BuildContext context) {
     final controller = PageController(viewportFraction: 0.9);
@@ -57,33 +68,35 @@ class _ExplorePageState extends State<ExplorePage> {
                 Expanded(
                   child: Stack(
                     children: [
-                      FlutterMap(
-                        options: const MapOptions(
-                          initialCenter: LatLng(34.571112, 50.808330),
-                          initialZoom: 13,
-                        ),
-                        children: [
-                          TileLayer(
-                            urlTemplate:
-                                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                            subdomains: const ['a', 'b', 'c'],
-                          ),
-                          MarkerLayer(
-                            markers: [
-                              Marker(
-                                point: const LatLng(34.571112, 50.808330),
-                                child: Builder(
-                                  builder: (context) => const Icon(
-                                    Icons.location_pin,
-                                    size: 40,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                      // FlutterMap(
+                      //   options: const MapOptions(
+                      //     initialCenter: LatLng(34.571112, 50.808330),
+                      //     initialZoom: 13,
+                      //   ),
+                      //   children: [
+                      //     TileLayer(
+                      //       urlTemplate:
+                      //           "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                      //       subdomains: const ['a', 'b', 'c'],
+                      //     ),
+                      //     MarkerLayer(
+                      //       markers: [
+                      //         Marker(
+
+                      //           point: const LatLng(ba),
+                      //           child: Builder(
+                      //             builder: (context) => const Icon(
+                      //               Icons.location_pin,
+                      //               size: 40,
+                      //               color: Colors.red,
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ],
+                      // ),
+
                       Positioned(
                         top: 6,
                         left: 0,
@@ -101,12 +114,13 @@ class _ExplorePageState extends State<ExplorePage> {
                             ),
                           ),
                           child: Padding(
-                            padding: EdgeInsets.only(right: 5, left: 22),
+                            padding: const EdgeInsets.only(right: 5, left: 22),
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
-                                    builder: (context) => ExplorePageSearch(),
+                                    builder: (context) =>
+                                        const ExplorePageSearch(),
                                   ),
                                 );
                               },
