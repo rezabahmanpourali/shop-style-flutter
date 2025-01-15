@@ -15,6 +15,7 @@ class BarberArtists extends StatelessWidget {
           height: 120,
           width: 91,
           child: Stack(
+            alignment: Alignment.center,
             children: [
               Positioned(
                 top: 0,
@@ -28,13 +29,13 @@ class BarberArtists extends StatelessWidget {
                             barberModel.images![0].url ??
                                 'assets/images/img8.png',
                             fit: BoxFit.cover,
-                            width: 75, 
+                            width: 75,
                             height: 75,
                           )
                         : Image.asset(
                             'assets/images/img8.png',
                             fit: BoxFit.cover,
-                            width: 75, 
+                            width: 75,
                             height: 75,
                           ),
                   ),
@@ -42,7 +43,7 @@ class BarberArtists extends StatelessWidget {
               ),
               Positioned(
                 top: 60,
-                left: 25,
+                left: 18,
                 child: Container(
                   width: 55,
                   height: 19,
@@ -71,8 +72,7 @@ class BarberArtists extends StatelessWidget {
               ),
               Positioned(
                 top: 82,
-                left: 20,
-                right: 0,
+                left: 18,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

@@ -5,6 +5,7 @@ import 'package:shop_style/auth/statemanagment/auth_controller.dart';
 import 'package:shop_style/barber/data/repository/barber_repository.dart';
 import 'package:shop_style/barber/data/repository/barber_shop_repository.dart';
 import 'package:shop_style/barber/data/repository/comment_repository.dart';
+import 'package:shop_style/barber/data/repository/services_repository.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/enums.dart';
@@ -47,6 +48,7 @@ Future<void> setupLocator() async {
   locator.registerSingleton<IHomeRepository>(HomeRepository());
   locator.registerSingleton<ICategoryRepository>(CategoryRepository());
   locator.registerSingleton<ICommentRepository>(CommentRepository());
+  locator.registerSingleton<IServicesRepository>(ServicesRepository());
   
 
   //controllers

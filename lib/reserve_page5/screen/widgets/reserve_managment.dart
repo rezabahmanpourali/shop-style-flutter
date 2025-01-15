@@ -39,14 +39,16 @@ class ReserveManagment extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                        fontSize: 14,
+                      ),
                 ),
                 Text(
                   subtitle,
-                  style: Theme.of(context)
-                      .textTheme
-                      .displaySmall
-                      ?.copyWith(color: AppColors.black),
+                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                        color: AppColors.textHeader,
+                        fontSize: 10,
+                      ),
                 ),
               ],
             )

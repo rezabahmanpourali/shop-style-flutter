@@ -3,6 +3,8 @@ import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/enums.dart';
 import 'package:shop_style/common/widgets/price_invoice.dart';
 import 'package:shop_style/common/widgets/reserve_servise.dart';
+import 'package:shop_style/home/screens/home_screen.dart';
+import 'package:shop_style/main.dart';
 import 'package:shop_style/reserve_page5/screen/widgets/select_option.dart';
 
 class ResevePage5 extends StatefulWidget {
@@ -31,18 +33,25 @@ class _ResevePage5State extends State<ResevePage5> {
                     Positioned(
                       top: 14,
                       left: 22,
-                      child: Container(
-                        width: 36,
-                        height: 36,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.white2,
-                          border: Border.all(
-                            width: 1,
-                            color: AppColors.cardWhite,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const MyApp(),
+                          ));
+                        },
+                        child: Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.white2,
+                            border: Border.all(
+                              width: 1,
+                              color: AppColors.cardWhite,
+                            ),
                           ),
+                          child: const Icon(Icons.arrow_forward),
                         ),
-                        child: const Icon(Icons.arrow_forward),
                       ),
                     ),
                     Positioned(
@@ -118,5 +127,3 @@ class _ResevePage5State extends State<ResevePage5> {
     );
   }
 }
-
-  

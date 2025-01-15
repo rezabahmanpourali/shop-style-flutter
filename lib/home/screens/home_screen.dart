@@ -13,6 +13,7 @@ import 'package:shop_style/common/widgets/card_item_party.dart';
 import 'package:shop_style/common/widgets/category_item.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/home/statemanagment/home_controller.dart';
+import 'package:shop_style/home/widgets/barber_shop_list_widgets.dart';
 import 'package:shop_style/home/widgets/show_model_location.dart';
 import 'package:shop_style/home/widgets/widgets/card_item.dart';
 import 'package:shop_style/locator.dart';
@@ -44,6 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // ignore: use_build_context_synchronously
         Provider.of<BarberShopController>(context, listen: false)
             .fetchBarberShops();
+        // ignore: use_build_context_synchronously
         Provider.of<BarberShopController>(context, listen: false)
             .fetchTopBarberShops();
         // ignore: use_build_context_synchronously
@@ -104,7 +106,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           'سلام! {نام کاربر}',
-                          style: Theme.of(context).textTheme.labelMedium,
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(fontSize: 24),
                         ),
                       ],
                     ),
@@ -118,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SliverToBoxAdapter(
                   child: Selector<BarberShopController, BlocStatus>(
                     builder: (context, value, child) {
-                      return BarberShopList(
+                      return BarberShopListWidget(
                         title: 'به تازگی مشاهده کردید',
                         barberShopListState:
                             barberShopController.barberShopState,
@@ -136,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 SliverToBoxAdapter(
                   child: Selector<BarberShopController, BlocStatus>(
                     builder: (context, value, child) {
-                      return BarberShopList(
+                      return BarberShopListWidget(
                         title: 'آرایشگاه برتر منطقه شما',
                         barberShopListState:
                             barberShopController.topBarberShopState,
@@ -187,13 +192,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const SizedBox(
                                     width: 9,
                                   ),
-                                  const Text(
+                                  Text(
                                     'کله پارتی!',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                      color: AppColors.purpleOpacity,
-                                    ),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayLarge!
+                                        .copyWith(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w700,
+                                          color: AppColors.purpleOpacity,
+                                        ),
                                   ),
                                 ],
                               ),
@@ -275,7 +283,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           'مدل مو های برتر  منطقه شما',
-                          style: Theme.of(context).textTheme.bodyLarge!,
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(
+                                fontSize: 16,
+                              ),
                         ),
                       ],
                     ),
@@ -350,7 +363,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         Text(
                           'دسته بندی خدمات',
-                          style: Theme.of(context).textTheme.bodyLarge!,
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayLarge!
+                              .copyWith(
+                                fontSize: 16,
+                              ),
                         ),
                       ],
                     ),
@@ -423,7 +441,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     childAspectRatio: MediaQuery.of(context).size.width /
                         (MediaQuery.of(context).size.height / 5),
                   ),
-                )
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: height * 0.01,
+                  ),
+                ),
               ],
             ),
           ),
@@ -457,32 +480,50 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               );
             },
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: Container(
-                width: 130,
-                color: AppColors.arayeshColor,
-                child: Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+            child: Center(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Row(
                     children: [
+                      const Icon(Icons.location_on,
+                          size: 15, color: AppColors.textHeader),
                       Text(
                         'موقعیت شما',
                         style: Theme.of(context).textTheme.displaySmall,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'پردیسان شهروند',
-                            style: Theme.of(context).textTheme.displayLarge,
-                          ),
-                          const Icon(Icons.keyboard_arrow_down_rounded)
-                        ],
-                      ),
                     ],
                   ),
-                ),
+                  const SizedBox(
+                    height: 1,
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Container(
+                      width: 130,
+                      height: 20,
+                      color: AppColors.arayeshColor,
+                      child: Center(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'پردیسان، بلوار شهروند',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .copyWith(
+                                    color: AppColors.black,
+                                  ),
+                            ),
+                            const Icon(Icons.keyboard_arrow_down_rounded)
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
@@ -792,129 +833,6 @@ class CategoryShimer extends StatelessWidget {
           height: height * 0.1,
         ),
       ),
-    );
-  }
-}
-
-class BarberShopList extends StatefulWidget {
-  final BlocStatus barberShopListState;
-  final List<BarberShopModel> barbreShopData;
-
-  final String title;
-  const BarberShopList(
-      {super.key,
-      required this.barberShopListState,
-      required this.barbreShopData,
-      required this.title});
-
-  @override
-  State<BarberShopList> createState() => _BarberShopListState();
-}
-
-class _BarberShopListState extends State<BarberShopList> {
-  @override
-  Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
-    final height = MediaQuery.sizeOf(context).height;
-    return StateManageWidget(
-      status: widget.barberShopListState,
-      loadingWidget: () {
-        return SizedBox(
-          height: height * 0.55,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-                child: Container(
-                  margin: const EdgeInsets.only(right: 10),
-                  width: width * 0.45,
-                  height: 15,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.grey[300],
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: height * 0.482,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 5,
-                  itemBuilder: (context, index) {
-                    return SizedBox(
-                      width: width * 0.9,
-                      child: BigShimer(height: height, width: width),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-      errorWidgetBuilder: (message, statusCode) {
-        return Center(
-          child: Text(message ?? 'خطا'),
-        );
-      },
-      completedWidgetBuilder: (value) {
-        return Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(right: 22),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.title,
-                    style: Theme.of(context).textTheme.labelMedium,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 19,
-            ),
-            //آیتم های کارد
-            SizedBox(
-              height: 242,
-              child: ListView.builder(
-                padding: const EdgeInsets.only(right: 22),
-                scrollDirection: Axis.horizontal,
-                itemCount: widget.barbreShopData.length,
-                itemBuilder: (context, index) {
-                  final barberShop = widget.barbreShopData[index];
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 16),
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
-                              return ChangeNotifierProvider.value(
-                                value: locator.get<BarberController>(),
-                                builder: (context, child) => BarberShopPage(
-                                  
-                                  barberShopModel: barberShop,
-                                  barberShopId: barberShop.id ?? 0,
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      },
-                      child: CardItem(barberShop),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 }

@@ -175,12 +175,22 @@ class CardItemParty extends StatelessWidget {
                         child: Row(
                           children: [
                             Text(' 139,000',
-                                style: Theme.of(context).textTheme.bodyLarge!),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .copyWith(
+                                      fontSize: 14,
+                                    )),
                             const SizedBox(
                               width: 4,
                             ),
                             Text('تومان',
-                                style: Theme.of(context).textTheme.bodyLarge!),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayLarge!
+                                    .copyWith(
+                                      fontSize: 14,
+                                    )),
                           ],
                         ),
                       )

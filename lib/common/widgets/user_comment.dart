@@ -52,7 +52,9 @@ class UserComment extends StatelessWidget {
                 children: [
                   Text(
                     'نام نویسنده دیدگاه',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                          fontSize: 16,
+                        ),
                   ),
                   Text(
                     convertToPersianDate(

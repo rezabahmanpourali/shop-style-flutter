@@ -48,7 +48,9 @@ class SelectOption extends StatelessWidget {
           const SizedBox(height: 22),
           Text(
             'یکشنبه، 1 دی ماه، 1402، ساعت 10:30 صبح',
-            style: Theme.of(context).textTheme.labelMedium,
+            style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                  fontSize: 20,
+                ),
           ),
           const SizedBox(height: 22),
           ReserveManagment(

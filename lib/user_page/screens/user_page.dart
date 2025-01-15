@@ -325,9 +325,9 @@ class _UserPageState extends State<UserPage> {
 
                   UserAccountItem(
                     onChange: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const BarberShopListPage(),
-                      ));
+                      // Navigator.of(context).push(MaterialPageRoute(
+                      //   builder: (context) => const BarberShopListPage(),
+                      // ));
                     },
                     title: 'لیست آرایشگاه ها',
                     iconRight: SvgPicture.asset(

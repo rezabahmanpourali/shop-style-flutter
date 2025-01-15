@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/enums.dart';
+import 'package:shop_style/reserve_page2/screens/reseve_page2.dart';
+import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
 
 class ReserveServise extends StatefulWidget {
   const ReserveServise({
@@ -15,7 +17,7 @@ class ReserveServise extends StatefulWidget {
 }
 
 class _ReserveServiseState extends State<ReserveServise> {
-  bool hasReserved = true;
+  bool hasReserved = false;
 
   @override
   Widget build(BuildContext context) {
@@ -162,13 +164,12 @@ class _ReserveServiseState extends State<ReserveServise> {
           minimumSize: Size(width / 4, height / 20),
           elevation: 0,
         ),
-        child: const Text(
+        child: Text(
           'رزرو نوبت',
-          style: TextStyle(
-            color: Color(0xFF0D1619),
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
+          style: Theme.of(context)
+              .textTheme
+              .displayLarge
+              ?.copyWith(color: AppColors.black, fontSize: 16),
         ),
       ),
     );

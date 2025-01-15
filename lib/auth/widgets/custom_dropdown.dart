@@ -31,10 +31,10 @@ class _CustomDropdownState extends State<CustomDropdown> {
           children: [
             Text(
               widget.lableField,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyLarge
-                  ?.copyWith(color: AppColors.black),
+              style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                    color: AppColors.black,
+                    fontSize: 12,
+                  ),
             ),
             SizedBox(height: height / 100),
             Container(

@@ -28,6 +28,7 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
         child: Directionality(
           textDirection: TextDirection.rtl,
           child: CustomScrollView(
+            physics: const NeverScrollableScrollPhysics(),
             slivers: <Widget>[
               SliverToBoxAdapter(
                 child: TextPadding(
@@ -41,7 +42,9 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                   text:
                       'تقریبا تمام شد! ساخت حساب کاربری خود را برای شماره موبایل 09120000000 با وارد کردن اطلاعات زیر تکمیل کنید',
                   topPadding: height / 100,
-                  theme: Theme.of(context).textTheme.bodyMedium,
+                  theme: Theme.of(context).textTheme.displayMedium!.copyWith(
+                        color: AppColors.purpleOpacity,
+                      ),
                 ),
               ),
               SliverToBoxAdapter(
@@ -100,10 +103,7 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                   child: TextPadding(
                     textAlign: TextAlign.center,
                     text: 'بعدا تکمیل کنید',
-                    theme: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: AppColors.black),
+                    theme: Theme.of(context).textTheme.displayMedium,
                   ),
                 ),
               ),
@@ -141,21 +141,27 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
           SizedBox(width: width / 40),
           TextPadding(
             text: 'قبول ',
-            theme: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: AppColors.black),
+            theme: Theme.of(context).textTheme.displayMedium?.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.bgBlack,
+                ),
           ),
           TextPadding(
             text: 'شرایط و قوانین',
-            theme: Theme.of(context).textTheme.bodyMedium,
+            theme: Theme.of(context).textTheme.displayMedium?.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.purpleOpacity,
+                ),
           ),
           TextPadding(
             text: ' استفاده از سرویس {نام برنامه}',
-            theme: Theme.of(context)
-                .textTheme
-                .bodyMedium
-                ?.copyWith(color: AppColors.black),
+            theme: Theme.of(context).textTheme.displayMedium?.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.bgBlack,
+                ),
           ),
         ],
       ),

@@ -33,11 +33,11 @@ class CategoryItem extends StatelessWidget {
                     categoryModel.title,
                     style: Theme.of(context)
                         .textTheme
-                        .displaySmall!
+                        .displayMedium!
                         .copyWith(color: AppColors.reserveContaner),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
                 SizedBox(
                   width: 80,
                   child: Image.network(

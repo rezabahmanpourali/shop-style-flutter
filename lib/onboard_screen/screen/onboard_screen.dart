@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/auth/screens/login_enter_number_screen.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/main.dart';
 import 'package:shop_style/onboard_screen/content/content.dart';
+import 'package:video_player/video_player.dart';
 
 class OnbordScreen extends StatefulWidget {
   const OnbordScreen({super.key});
@@ -14,16 +16,26 @@ class OnbordScreen extends StatefulWidget {
 class _OnbordScreenState extends State<OnbordScreen> {
   int currentIndex = 0;
   PageController? _controller;
-
+  late VideoPlayerController _videoController;
   @override
   void initState() {
     super.initState();
     _controller = PageController(initialPage: 0);
+    // بارگذاری ویدئو در زمان شروع برنامه
+    _videoController = VideoPlayerController.asset('assets/videos/barber.mp4')
+      ..initialize().then((_) {
+        setState(() {
+          // وقتی ویدئو بارگذاری شد، صفحه را به روز می‌کنیم
+          _videoController.play(); // ویدیو را پس از بارگذاری پخش می‌کنیم
+        });
+      })
+      ..setLooping(true);
   }
 
   @override
   void dispose() {
     _controller?.dispose();
+    _videoController.dispose();
     super.dispose();
   }
 
@@ -53,7 +65,7 @@ class _OnbordScreenState extends State<OnbordScreen> {
                     Container(
                       width: double.infinity,
                       height: height * 0.5,
-                      color: AppColors.onBoardColor,
+                      child: VideoPlayer(_videoController),
                     ),
                     SizedBox(
                       height: height * 0.02,
@@ -103,18 +115,18 @@ class _OnbordScreenState extends State<OnbordScreen> {
                         Text(
                           textAlign: TextAlign.center,
                           contents[index].discription,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .copyWith(fontSize: 20),
                         ),
                         Text(
                           textAlign: TextAlign.center,
                           contents[index].discription2,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey,
-                          ),
+                          style: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .copyWith(fontSize: 20),
                         ),
                       ],
                     ),
@@ -138,7 +150,8 @@ class _OnbordScreenState extends State<OnbordScreen> {
                   onTap: () {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => const MyApp(),
+                        builder: (context) =>
+                            const LoginEnterNumberPhoneScreen(),
                       ),
                     );
                   },

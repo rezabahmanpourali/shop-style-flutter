@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:shop_style/auth/widgets/custom_button.dart';
 import 'package:shop_style/auth/widgets/custom_dropdown.dart';
 import 'package:shop_style/common/widgets/header_for_screen.dart';
 import 'package:shop_style/common/widgets/text_padding.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/main.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CompletionInformation extends StatefulWidget {
   const CompletionInformation({super.key});
@@ -42,7 +44,9 @@ class _CompletionInformationState extends State<CompletionInformation> {
                   text:
                       'برای تجربه بهتر در استفاده از سرویس {نام برنامه} اطلاعات زیر را بر اساس سلیقه خود وارد کنید.',
                   topPadding: height / 100,
-                  theme: Theme.of(context).textTheme.bodyMedium,
+                  theme: Theme.of(context).textTheme.displayMedium!.copyWith(
+                        color: AppColors.purpleOpacity,
+                      ),
                 ),
               ),
               SliverToBoxAdapter(
@@ -80,9 +84,10 @@ class _CompletionInformationState extends State<CompletionInformation> {
               ),
               SliverToBoxAdapter(
                 child: TextPadding(
-                  text: 'به صورت دستی وارد کنید',
-                  theme: Theme.of(context).textTheme.titleSmall,
-                ),
+                    text: 'به صورت دستی وارد کنید',
+                    theme: Theme.of(context).textTheme.displayLarge!.copyWith(
+                          fontSize: 16,
+                        )),
               ),
               SliverToBoxAdapter(
                 child: TextPadding(
@@ -91,7 +96,7 @@ class _CompletionInformationState extends State<CompletionInformation> {
                   topPadding: height / 100,
                   theme: Theme.of(context)
                       .textTheme
-                      .bodySmall
+                      .displayMedium
                       ?.copyWith(color: AppColors.textHeader),
                 ),
               ),
@@ -142,15 +147,13 @@ class _CompletionInformationState extends State<CompletionInformation> {
                   child: TextPadding(
                     textAlign: TextAlign.center,
                     text: 'بعدا تکمیل کنید',
-                    theme: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: AppColors.black),
+                    theme:
+                        Theme.of(context).textTheme.displayMedium?.copyWith(),
                   ),
                 ),
               ),
               SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: height / 40),
+                padding: EdgeInsets.symmetric(vertical: height / 150),
               ),
             ],
           ),
@@ -168,18 +171,24 @@ class _CompletionInformationState extends State<CompletionInformation> {
             children: [
               TextPadding(
                 text: 'اسکن چهره',
-                theme: Theme.of(context).textTheme.labelMedium,
+                theme: Theme.of(context).textTheme.displayLarge!.copyWith(
+                      fontSize: 16,
+                    ),
               ),
               const Spacer(),
               Container(
                 width: width / 5,
-                height: height / 20,
+                height: height / 15,
                 decoration: BoxDecoration(
                   color: AppColors.white2,
                   borderRadius: const BorderRadius.all(Radius.circular(360)),
                   border: Border.all(color: AppColors.purple, width: 3),
                 ),
-                child: const Icon(Icons.face),
+                child: Center(
+                  child: SvgPicture.asset(
+                    'assets/images/teenyicons_face-id-solid.svg',
+                  ),
+                ),
               ),
               SizedBox(width: width / 20),
             ],
@@ -189,17 +198,20 @@ class _CompletionInformationState extends State<CompletionInformation> {
             child: TextPadding(
               text:
                   'با اسکن کرده چهره خود با استفاده از دورین سلفی بهترین تجربه را از استفاده از سرویس ما خواهید داشت',
-              theme: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: AppColors.textHeader),
+              theme: Theme.of(context).textTheme.displayMedium?.copyWith(
+                    color: AppColors.textHeader,
+                    fontSize: 12,
+                  ),
             ),
           ),
           SizedBox(height: height / 100),
           TextPadding(
             text:
                 'نکته: تمامی اطلاعاتی که در این بخش وارد می کنید کاملا محفوظ است.',
-            theme: Theme.of(context).textTheme.bodySmall,
+            theme: Theme.of(context).textTheme.bodySmall!.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                ),
           ),
         ],
       ),

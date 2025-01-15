@@ -50,7 +50,10 @@ class _ReservePage4State extends State<ReservePage4> {
                       SizedBox(height: height / 50),
                       Text(
                         'جزئیات مبالغ',
-                        style: Theme.of(context).textTheme.labelMedium,
+                        style:
+                            Theme.of(context).textTheme.displayLarge!.copyWith(
+                                  fontSize: 16,
+                                ),
                       ),
                       SizedBox(height: height / 60),
                       const Row(
@@ -105,8 +108,7 @@ class _ReservePage4State extends State<ReservePage4> {
                                   .textTheme
                                   .bodyMedium
                                   ?.copyWith(color: AppColors.contanerBorder),
-                              border: InputBorder
-                                  .none,
+                              border: InputBorder.none,
                             ),
                           ),
                         ),
@@ -204,12 +206,17 @@ class _ReservePage4State extends State<ReservePage4> {
               children: [
                 Text(
                   'نام آرایشگاه',
-                  style: Theme.of(context).textTheme.bodyLarge,
+                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                        fontSize: 16,
+                      ),
                 ),
                 const Scoring(),
                 Text(
                   'آدرس کامل آرایشگاه',
-                  style: Theme.of(context).textTheme.displaySmall,
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                        fontSize: 12,
+                        color: AppColors.textSearchColor,
+                      ),
                 ),
               ],
             ),

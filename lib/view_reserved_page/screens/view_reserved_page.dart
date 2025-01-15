@@ -177,43 +177,46 @@ class _ReserveItemState extends State<ReserveItem> {
                   right: _isExpanded ? 0 : 7,
                   child: Column(
                     children: [
-                      Container(
-                        width: _isExpanded ? double.infinity : 95,
-                        height: _isExpanded ? 230 : 95,
-                        decoration: BoxDecoration(
-                          borderRadius: _isExpanded
-                              ? const BorderRadius.only(
-                                  topLeft: Radius.circular(16),
-                                  topRight: Radius.circular(16),
-                                )
-                              : BorderRadius.circular(16),
-                        ),
-                        child: FlutterMap(
-                          options: const MapOptions(
-                            initialCenter: LatLng(34.571112, 50.808330),
-                            initialZoom: 13,
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(16),
+                        child: Container(
+                          width: _isExpanded ? double.infinity : 95,
+                          height: _isExpanded ? 230 : 95,
+                          decoration: BoxDecoration(
+                            borderRadius: _isExpanded
+                                ? const BorderRadius.only(
+                                    topLeft: Radius.circular(16),
+                                    topRight: Radius.circular(16),
+                                  )
+                                : BorderRadius.circular(16),
                           ),
-                          children: [
-                            TileLayer(
-                              urlTemplate:
-                                  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                              subdomains: const ['a', 'b', 'c'],
+                          child: FlutterMap(
+                            options: const MapOptions(
+                              initialCenter: LatLng(34.571112, 50.808330),
+                              initialZoom: 13,
                             ),
-                            MarkerLayer(
-                              markers: [
-                                Marker(
-                                  point: const LatLng(34.571112, 50.808330),
-                                  child: Builder(
-                                    builder: (context) => const Icon(
-                                      Icons.location_pin,
-                                      size: 40,
-                                      color: Colors.red,
+                            children: [
+                              TileLayer(
+                                urlTemplate:
+                                    "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                                subdomains: const ['a', 'b', 'c'],
+                              ),
+                              MarkerLayer(
+                                markers: [
+                                  Marker(
+                                    point: const LatLng(34.571112, 50.808330),
+                                    child: Builder(
+                                      builder: (context) => const Icon(
+                                        Icons.location_pin,
+                                        size: 40,
+                                        color: Colors.red,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],

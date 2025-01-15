@@ -17,24 +17,34 @@ class _ReservePage3State extends State<ReservePage3> {
   int? selectedIndex;
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: AppColors.arayeshColor,
       body: SafeArea(
         child: Directionality(
           textDirection: TextDirection.rtl,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 22),
-            child: CustomScrollView(
-              slivers: [
-                const HeaderScreen(),
-                SliverToBoxAdapter(
+          child: CustomScrollView(
+            slivers: [
+              const SliverPadding(
+                padding: EdgeInsets.only(left: 22),
+                sliver: HeaderScreen(),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 22),
+                sliver: SliverToBoxAdapter(
                   child: Text(
                     'انتخاب تاریخ و ساعت',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                 ),
-                const SliverPadding(padding: EdgeInsets.only(top: 22)),
-                SliverToBoxAdapter(
+              ),
+              const SliverPadding(
+                padding: EdgeInsets.only(top: 22),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 22),
+                sliver: SliverToBoxAdapter(
                   child: Row(
                     children: [
                       GestureDetector(
@@ -61,8 +71,11 @@ class _ReservePage3State extends State<ReservePage3> {
                                   'نام آرایشگر انتخاب شده',
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodySmall
-                                      ?.copyWith(color: AppColors.black),
+                                      .displayLarge
+                                      ?.copyWith(
+                                        color: AppColors.black,
+                                        fontSize: 12,
+                                      ),
                                 ),
                                 const SizedBox(width: 5),
                                 const Icon(Icons.keyboard_arrow_down_rounded),
@@ -72,71 +85,106 @@ class _ReservePage3State extends State<ReservePage3> {
                         ),
                       ),
                       const Spacer(),
-                      Container(
-                        width: 53,
-                        height: 35,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            width: 1,
-                            color: AppColors.contanerBorder,
+                      GestureDetector(
+                        onTap: () {
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              // محتوای Bottom Sheet
+                              return ClipRRect(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(16),
+                                  topRight: Radius.circular(16),
+                                ),
+                                child: Container(
+                                  padding: const EdgeInsets.all(16),
+                                  height: height * 0.6,
+                                  color: Colors.white,
+                                  child: const Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'این یک Bottom Sheet است',
+                                          style: TextStyle(fontSize: 18),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
+                        child: Container(
+                          width: 53,
+                          height: 35,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              width: 1,
+                              color: Colors.blue, // رنگ مرز دلخواه
+                            ),
+                            borderRadius: BorderRadius.circular(24),
                           ),
-                          borderRadius: BorderRadius.circular(24),
+                          child: const Center(
+                            child: FaIcon(FontAwesomeIcons.calendar),
+                          ),
                         ),
-                        child: Center(
-                            child: const FaIcon(FontAwesomeIcons.calendar)),
-                      ),
+                      )
                     ],
                   ),
                 ),
-                const SliverPadding(padding: EdgeInsets.only(top: 22)),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 22, right: 22),
-                    child: Text(
-                      'دی ماه، 1403',
-                      style: Theme.of(context).textTheme.labelMedium,
-                    ),
+              ),
+              const SliverPadding(padding: EdgeInsets.only(top: 22)),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 22, right: 22),
+                  child: Text(
+                    'دی ماه، 1403',
+                    style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
-                SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 100,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 7,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedIndex = index;
-                              });
-                            },
-                            child: SelectCirculTime(
-                              isSelected: selectedIndex == index,
-                            ),
+              ),
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 100,
+                  child: ListView.builder(
+                    padding: const EdgeInsets.symmetric(horizontal: 22),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: 7,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              selectedIndex = index;
+                            });
+                          },
+                          child: SelectCirculTime(
+                            isSelected: selectedIndex == index,
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                SliverPadding(
-                  padding: const EdgeInsets.only(top: 25),
-                  sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                    childCount: 6,
-                    (context, index) {
-                      return const Padding(
-                        padding: EdgeInsets.only(bottom: 10),
-                        child: SelectRectangleCard(),
+                        ),
                       );
                     },
-                  )),
+                  ),
                 ),
-              ],
-            ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.only(top: 25),
+                sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                  childCount: 6,
+                  (context, index) {
+                    return const Padding(
+                      padding: EdgeInsets.only(bottom: 10),
+                      child: SelectRectangleCard(),
+                    );
+                  },
+                )),
+              ),
+            ],
           ),
         ),
       ),
@@ -219,10 +267,11 @@ class SelectCirculTime extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        Text(
-          'شنبه',
-          style: Theme.of(context).textTheme.bodyLarge,
-        ),
+        Text('شنبه',
+            style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+                  fontSize: 15,
+                  color: AppColors.black,
+                )),
       ],
     );
   }

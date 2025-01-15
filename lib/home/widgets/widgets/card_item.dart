@@ -59,7 +59,12 @@ class CardItem extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.only(right: 12, top: 8),
                           child: Text(barberShopModel.barberShopName!,
-                              style: Theme.of(context).textTheme.bodyLarge),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .copyWith(
+                                    fontSize: 14,
+                                  )),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 12, top: 5),
@@ -97,10 +102,14 @@ class CardItem extends StatelessWidget {
                           height: 23,
                           width: 74,
                           child: Center(
-                            child: Text(
-                              'آرایشگاه',
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
+                            child: Text('آرایشگاه',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displaySmall!
+                                    .copyWith(
+                                      fontSize: 14,
+                                      color: AppColors.black,
+                                    )),
                           ),
                         ),
                       ],

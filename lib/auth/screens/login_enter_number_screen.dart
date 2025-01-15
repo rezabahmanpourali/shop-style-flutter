@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shop_style/auth/screens/login_enter_password_screen.dart';
 import 'package:shop_style/auth/widgets/custom_button.dart';
 import 'package:shop_style/auth/widgets/custom_textfield.dart';
+import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/widgets/text_padding.dart';
 import 'package:shop_style/common/configs/enums.dart';
 
@@ -33,9 +34,11 @@ class LoginEnterNumberPhoneScreen extends StatelessWidget {
                 child: TextPadding(
                   text: 'برای ثبت نام یا ورود شماره تلفن خود را وارد کنید',
                   topPadding: height / 4,
-                  theme: Theme.of(context)
-                      .textTheme
-                      .bodyMedium,
+                  theme: Theme.of(context).textTheme.displayLarge!.copyWith(
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                        color: AppColors.purpleOpacity,
+                      ),
                 ),
               ),
               const SliverToBoxAdapter(
@@ -47,7 +50,7 @@ class LoginEnterNumberPhoneScreen extends StatelessWidget {
               SliverToBoxAdapter(
                 child: CustomButton(
                   textButton: 'مرحله بعد',
-                  topPadding: height / 30,
+                  topPadding: height / 25,
                   onClick: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(

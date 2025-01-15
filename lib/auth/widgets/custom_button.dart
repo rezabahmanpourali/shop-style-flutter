@@ -21,7 +21,10 @@ class CustomButton extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: topPadding ?? 0),
       child: ElevatedButton(
-        onPressed: onClick ?? () {},
+        onPressed: onClick ??
+            () {
+              print('object');
+            },
         style: ElevatedButton.styleFrom(
           backgroundColor: AppColors.black,
           minimumSize: Size(width / 3, height / 18),
@@ -30,6 +33,7 @@ class CustomButton extends StatelessWidget {
           textButton ?? '',
           style: Theme.of(context).textTheme.labelMedium?.copyWith(
                 color: AppColors.white2,
+                fontWeight: FontWeight.w800,
               ),
         ),
       ),

@@ -13,9 +13,6 @@ class BarberRepository extends IBarberRepository {
   Future<ResponseModel> getBarber(int? barberShopId) async {
     ResponseModel response = await dio.get(
       'https://style-shop.liara.run/barber/barbershop/${barberShopId}/barbers',
-      // queryParameters: {
-      //   "barber_shop_id":barberShopBarbers,
-      // }
     );
     return response;
   }

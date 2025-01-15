@@ -37,16 +37,15 @@ class _CustomTextfieldState extends State<CustomTextfield> {
           children: [
             Text(
               widget.lableField ?? '',
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(color: AppColors.black),
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                    fontSize: 12,
+                  ),
             ),
             SizedBox(height: height / 100),
             Container(
               height: height / 18,
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.bgGrey, width: 2),
+                border: Border.all(color: AppColors.cardWhite, width: 2),
                 color: AppColors.white2,
                 borderRadius: const BorderRadius.all(Radius.circular(360)),
               ),
@@ -78,7 +77,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
         return Row(
           children: [
             getTextfield(width),
-            getIconShowPasword(),
+            getIconShowPassword(),
           ],
         );
     }
@@ -92,6 +91,8 @@ class _CustomTextfieldState extends State<CustomTextfield> {
               ? width / 1.5
               : width / 1.45,
       child: TextField(
+        obscureText: widget.type == TextfieldType.security &&
+            showPassword, // مخفی کردن متن در صورت نیاز
         style: Theme.of(context)
             .textTheme
             .bodyMedium
@@ -99,10 +100,11 @@ class _CustomTextfieldState extends State<CustomTextfield> {
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: widget.hintText ?? '',
-          hintStyle: Theme.of(context)
-              .textTheme
-              .bodyMedium
-              ?.copyWith(color: AppColors.hintTextColor),
+          hintStyle: Theme.of(context).textTheme.displayMedium?.copyWith(
+                color: AppColors.cardWhite,
+                fontWeight: FontWeight.w300,
+                fontSize: 12,
+              ),
         ),
       ),
     );
@@ -116,33 +118,18 @@ class _CustomTextfieldState extends State<CustomTextfield> {
     );
   }
 
-  Widget getIconShowPasword() {
-    if (showPassword) {
-      return IconButton(
-        onPressed: () {
-          setState(() {
-            showPassword = !showPassword;
-          });
-        },
-        icon: const Icon(
-          Icons.visibility,
-          color: Color(0xFFBABABA),
-          size: 30,
-        ),
-      );
-    } else {
-      return IconButton(
-        onPressed: () {
-          setState(() {
-            showPassword = !showPassword;
-          });
-        },
-        icon: const Icon(
-          Icons.visibility_off,
-          color: Color(0xFFBABABA),
-          size: 30,
-        ),
-      );
-    }
+  Widget getIconShowPassword() {
+    return IconButton(
+      onPressed: () {
+        setState(() {
+          showPassword = !showPassword; // تغییر وضعیت نمایش پسورد
+        });
+      },
+      icon: Icon(
+        showPassword ? Icons.visibility : Icons.visibility_off,
+        color: Color(0xFFBABABA),
+        size: 30,
+      ),
+    );
   }
 }

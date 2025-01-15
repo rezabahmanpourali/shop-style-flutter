@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/barber/model/barber_shop_model.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/common/configs/state_handeler.dart';
 
 class BarberShopList extends StatelessWidget {
   const BarberShopList({
-    super.key,
+    super.key, required String title, required BlocStatus barberShopListState, required List<BarberShopModel> barbreShopData,
   });
 
   @override
