@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:shop_style/barber/model/barber_model.dart';
 import 'package:shop_style/common/widgets/header_for_screen.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shop_style/reserve_page4/screen/reserve_page4.dart';
 
 class ReservePage3 extends StatefulWidget {
+  final BarberModel barberModel;
   const ReservePage3({
     super.key,
+    required this.barberModel,
   });
 
   @override
@@ -65,18 +69,44 @@ class _ReservePage3State extends State<ReservePage3> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Image.asset('assets/images/img14 2.png'),
-                                const SizedBox(width: 5),
-                                Text(
-                                  'نام آرایشگر انتخاب شده',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displayLarge
-                                      ?.copyWith(
-                                        color: AppColors.black,
-                                        fontSize: 12,
-                                      ),
+                                ClipOval(
+                                  child: widget.barberModel.images != null &&
+                                          widget.barberModel.images!.isNotEmpty
+                                      ? Image.network(
+                                          widget.barberModel.images![0].url ??
+                                              'assets/images/img8.png',
+                                          fit: BoxFit.cover,
+                                          width: 29,
+                                          height: 29,
+                                        )
+                                      : SvgPicture.asset(
+                                          'assets/images/fluent_people-community-20-regular.svg',
+                                          width: 26,
+                                          height: 26,
+                                        ),
                                 ),
+                                const SizedBox(width: 5),
+                                widget.barberModel.barberName != null
+                                    ? Text(
+                                        widget.barberModel.barberName!,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge
+                                            ?.copyWith(
+                                              color: AppColors.black,
+                                              fontSize: 12,
+                                            ),
+                                      )
+                                    : Text(
+                                        'هر آرایشگری',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge
+                                            ?.copyWith(
+                                              color: AppColors.black,
+                                              fontSize: 12,
+                                            ),
+                                      ),
                                 const SizedBox(width: 5),
                                 const Icon(Icons.keyboard_arrow_down_rounded),
                               ],

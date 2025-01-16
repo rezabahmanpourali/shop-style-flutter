@@ -60,23 +60,41 @@ class _ResevePage2State extends State<ResevePage2> {
                       completedWidgetBuilder: (value) {
                         return SliverGrid(
                           delegate: SliverChildBuilderDelegate(
-                            childCount: value.length,
+                            childCount: value.length + 1,
                             (context, index) {
-                              // bool isSpecialItem = index == 10;
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _selectedIndex = index;
-                                  });
-                                },
-                                child: BarberSelectArtist(
-                                  barberModel: value[index],
+                              if (index == 0) {
+                                return BarberSelectArtist(
+                                  isSpecial: true, // نشان دادن گزینه ویژه
+                                  barberModel:
+                                      BarberModel(), // مدل خالی برای گزینه ویژه
                                   borderColor: _selectedIndex == index
                                       ? AppColors.purple
                                       : AppColors.cardWhite,
-                                  // isSpecial: isSpecialItem,
-                                ),
-                              );
+                                );
+                              } else {
+                                // در غیر این صورت، آرایشگرهای واقعی را نمایش می‌دهیم
+                                int realBarberIndex =
+                                    index - 1; // برای جبران ایندکس 0
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      _selectedIndex = index;
+                                    });
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => ReservePage3(
+                                          barberModel: value[realBarberIndex]),
+                                    ));
+                                  },
+                                  child: BarberSelectArtist(
+                                    isSpecial: false,
+                                    barberModel: value[realBarberIndex],
+                                    borderColor: _selectedIndex == index
+                                        ? AppColors.purple
+                                        : AppColors.cardWhite,
+                                  ),
+                                );
+                              }
                             },
                           ),
                           gridDelegate:
@@ -84,7 +102,7 @@ class _ResevePage2State extends State<ResevePage2> {
                             crossAxisCount: 2,
                             childAspectRatio: 1,
                             crossAxisSpacing: 10.0,
-                            mainAxisSpacing: 5.0,
+                            mainAxisSpacing: 30.0,
                           ),
                         );
                       },
@@ -104,12 +122,12 @@ class _ResevePage2State extends State<ResevePage2> {
 class BarberSelectArtist extends StatelessWidget {
   final BarberModel barberModel;
   final Color borderColor;
-  // final bool isSpecial;
+  final bool isSpecial;
 
   const BarberSelectArtist({
     super.key,
     required this.borderColor,
-    // required this.isSpecial,
+    required this.isSpecial,
     required this.barberModel,
   });
 
@@ -122,12 +140,14 @@ class BarberSelectArtist extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const ReservePage3(),
+              builder: (context) => ReservePage3(
+                barberModel: barberModel,
+              ),
             ));
           },
           child: Container(
             width: width * 0.45,
-            height: height * 0.2,
+            height: height * 0.23,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
               border: Border.all(
@@ -135,179 +155,177 @@ class BarberSelectArtist extends StatelessWidget {
                 color: borderColor,
               ),
             ),
-            child:
-                //  isSpecial
-                //     ? Column(
-                //         mainAxisAlignment: MainAxisAlignment.end,
-                //         children: [
-                //           Container(
-                //             margin: const EdgeInsets.only(bottom: 22),
-                //             child: SvgPicture.asset(
-                //                 'assets/images/fluent_people-community-20-regular.svg'),
-                //           ),
-                //           Text(
-                //             'هر آرایشگری',
-                //             style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                //                   fontSize: 14,
-                //                 ),
-                //           ),
-                //           Padding(
-                //             padding: const EdgeInsets.only(bottom: 12, top: 5),
-                //             child: Text(
-                //               textAlign: TextAlign.center,
-                //               'با انتخاب این گزینه آرایشگر به صورت اتفاقی انتخاب میشود',
-                //               style: Theme.of(context)
-                //                   .textTheme
-                //                   .displaySmall!
-                //                   .copyWith(
-                //                     fontSize: 10,
-                //                   ),
-                //             ),
-                //           ),
-                //         ],
-                //       )
-                //     :
-                Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: height * 0.17,
-                  width: width * 0.25,
-                  child: Stack(
-                    alignment: Alignment.center,
+            child: isSpecial
+                ? Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Positioned(
-                        top: 0,
-                        child: SizedBox(
-                          width: 75,
-                          height: 75,
-                          child: ClipOval(
-                            child: barberModel.images != null &&
-                                    barberModel.images!.isNotEmpty
-                                ? Image.network(
-                                    barberModel.images![0].url ??
-                                        'assets/images/img8.png',
-                                    fit: BoxFit.cover,
-                                    width: 75,
-                                    height: 75,
-                                  )
-                                : Image.asset(
-                                    'assets/images/img8.png',
-                                    fit: BoxFit.cover,
-                                    width: 75,
-                                    height: 75,
-                                  ),
-                          ),
+                      Container(
+                        margin: const EdgeInsets.only(bottom: 22),
+                        child: SvgPicture.asset(
+                            'assets/images/fluent_people-community-20-regular.svg'),
+                      ),
+                      Text(
+                        'هر آرایشگری',
+                        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                              fontSize: 14,
+                            ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 12, top: 5),
+                        child: Text(
+                          textAlign: TextAlign.center,
+                          'با انتخاب این گزینه آرایشگر به صورت اتفاقی انتخاب میشود',
+                          style: Theme.of(context)
+                              .textTheme
+                              .displaySmall!
+                              .copyWith(
+                                fontSize: 10,
+                              ),
                         ),
                       ),
-                      Positioned(
-                        top: 60,
-                        left: 10,
-                        child: Container(
-                          width: 82,
-                          height: 19,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              width: 2,
-                              color: AppColors.cardWhite,
-                            ),
-                            color: AppColors.white2,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(24)),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                '4.5',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .copyWith(
-                                      fontSize: 12,
-                                    ),
-                              ),
-                              const Icon(Icons.star, size: 11),
-                              const SizedBox(
-                                width: 2,
-                              ),
-                              Container(
-                                width: 2,
-                                height: 2,
-                                decoration: const BoxDecoration(
-                                  color: AppColors.textSearchColor,
-                                  shape: BoxShape.circle,
+                    ],
+                  )
+                : Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: height * 0.18,
+                        width: width * 0.25,
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Positioned(
+                              top: 0,
+                              child: SizedBox(
+                                width: 75,
+                                height: 75,
+                                child: ClipOval(
+                                  child: barberModel.images != null &&
+                                          barberModel.images!.isNotEmpty
+                                      ? Image.network(
+                                          barberModel.images![0].url ??
+                                              'assets/images/img8.png',
+                                          fit: BoxFit.cover,
+                                          width: 75,
+                                          height: 75,
+                                        )
+                                      : Image.asset(
+                                          'assets/images/img8.png',
+                                          fit: BoxFit.cover,
+                                          width: 75,
+                                          height: 75,
+                                        ),
                                 ),
                               ),
-                              const SizedBox(
-                                width: 2,
-                              ),
-                              Text(
-                                '7 سال',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .copyWith(
-                                      fontSize: 10,
+                            ),
+                            Positioned(
+                              top: 60,
+                              left: 10,
+                              child: Container(
+                                width: 82,
+                                height: 19,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    width: 2,
+                                    color: AppColors.cardWhite,
+                                  ),
+                                  color: AppColors.white2,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(24)),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      '4.5',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge!
+                                          .copyWith(
+                                            fontSize: 12,
+                                          ),
                                     ),
+                                    const Icon(Icons.star, size: 11),
+                                    const SizedBox(
+                                      width: 2,
+                                    ),
+                                    Container(
+                                      width: 2,
+                                      height: 2,
+                                      decoration: const BoxDecoration(
+                                        color: AppColors.textSearchColor,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 2,
+                                    ),
+                                    Text(
+                                      '7 سال',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge!
+                                          .copyWith(
+                                            fontSize: 10,
+                                          ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Positioned(
-                        top: 82,
-                        left: 0,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              barberModel.barberName!,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayLarge!
-                                  .copyWith(
-                                    fontSize: 14,
+                            ),
+                            Positioned(
+                              top: 82,
+                              left: 0,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    barberModel.barberName!,
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displayLarge!
+                                        .copyWith(
+                                          fontSize: 14,
+                                        ),
                                   ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              'متخصص رنگ مو',
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displaySmall!
-                                  .copyWith(
-                                    fontSize: 10,
-                                    color: AppColors.textHeader,
+                                  const SizedBox(
+                                    height: 5,
                                   ),
-                            ),
-                            const SizedBox(
-                              height: 13,
-                            ),
-                            Text(
-                              '125,000 تومان',
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displaySmall!
-                                  .copyWith(
-                                    fontSize: 16,
-                                    color: AppColors.textHeader,
+                                  Text(
+                                    'متخصص رنگ مو',
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall!
+                                        .copyWith(
+                                          fontSize: 10,
+                                          color: AppColors.textHeader,
+                                        ),
                                   ),
+                                  const SizedBox(
+                                    height: 13,
+                                  ),
+                                  Text(
+                                    '125,000 تومان',
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .displaySmall!
+                                        .copyWith(
+                                          fontSize: 16,
+                                          color: AppColors.textHeader,
+                                        ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ],
                         ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
           ),
         ),
       ],

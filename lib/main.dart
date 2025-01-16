@@ -25,12 +25,12 @@ void main() {
   setupLocator();
   runApp(
     MaterialApp(
-       supportedLocales: [
-        Locale('en', 'US'),  // زبان انگلیسی
+       supportedLocales: const [
         Locale('fa', 'IR'),  // زبان فارسی
+        Locale('en', 'US'),  // زبان انگلیسی
         // می‌توانید زبان‌های دیگر را هم اضافه کنید
       ],
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,

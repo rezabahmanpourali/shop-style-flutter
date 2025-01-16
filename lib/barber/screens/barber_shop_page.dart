@@ -603,107 +603,107 @@ class _BarberShopPageState extends State<BarberShopPage> {
                       height: 1,
                     ),
                   ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding:
-                          const EdgeInsets.only(right: 7, bottom: 7, top: 7),
-                      child: Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) =>
-                                    const ServiceSelectionScreen(),
-                              ));
-                            },
-                            child: Container(
-                              width: 179,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                color: AppColors.bgBlack,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: const Center(
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 20, right: 20),
-                                  child: Text(
-                                    'رزرو نوبت',
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      color: AppColors.white2,
-                                    ),
-                                  ),
+                  // SliverToBoxAdapter(
+                  //   child: Padding(
+                  //     padding:
+                  //         const EdgeInsets.only(right: 7, bottom: 7, top: 7),
+                  //     child: Row(
+                  //       children: [
+                  //         GestureDetector(
+                  //           onTap: () {
+                  //             Navigator.of(context).push(MaterialPageRoute(
+                  //               builder: (context) =>
+                  //                   const ServiceSelectionScreen(),
+                  //             ));
+                  //           },
+                  //           child: Container(
+                  //             width: 179,
+                  //             height: 60,
+                  //             decoration: BoxDecoration(
+                  //               color: AppColors.bgBlack,
+                  //               borderRadius: BorderRadius.circular(8),
+                  //             ),
+                  //             child: const Center(
+                  //               child: Padding(
+                  //                 padding: EdgeInsets.only(left: 20, right: 20),
+                  //                 child: Text(
+                  //                   'رزرو نوبت',
+                  //                   style: TextStyle(
+                  //                     fontSize: 16,
+                  //                     fontWeight: FontWeight.w700,
+                  //                     color: AppColors.white2,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //         const Spacer(),
+                  //         const Text(
+                  //           '6 مدل مو',
+                  //           style: TextStyle(
+                  //             fontSize: 16,
+                  //             fontWeight: FontWeight.w500,
+                  //             color: AppColors.textSearchColor,
+                  //           ),
+                  //         ),
+                  //         const Spacer(),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
+              Positioned(
+                bottom: 5,
+                child: Container(
+                  width: double.infinity,
+                  color: AppColors.arayeshColor,
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) =>
+                                const ServiceSelectionScreen(),
+                          ));
+                        },
+                        child: Container(
+                          width: 179,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: AppColors.bgBlack,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: const Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 20, right: 20),
+                              child: Text(
+                                'رزرو نوبت',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.white2,
                                 ),
                               ),
                             ),
                           ),
-                          const Spacer(),
-                          const Text(
-                            '6 مدل مو',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.textSearchColor,
-                            ),
-                          ),
-                          const Spacer(),
-                        ],
+                        ),
                       ),
-                    ),
+                      const Spacer(),
+                      const Text(
+                        '6 مدل مو',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.textSearchColor,
+                        ),
+                      ),
+                      const Spacer(),
+                    ],
                   ),
-                ],
+                ),
               ),
-              // Positioned(
-              //   bottom: 5,
-              //   child: Container(
-              //     width: double.infinity,
-              //     color: AppColors.arayeshColor,
-              //     child: Row(
-              //       children: [
-              //         GestureDetector(
-              //           onTap: () {
-              //             Navigator.of(context).push(MaterialPageRoute(
-              //               builder: (context) =>
-              //                   const ServiceSelectionScreen(),
-              //             ));
-              //           },
-              //           child: Container(
-              //             width: 179,
-              //             height: 60,
-              //             decoration: BoxDecoration(
-              //               color: AppColors.bgBlack,
-              //               borderRadius: BorderRadius.circular(8),
-              //             ),
-              //             child: const Center(
-              //               child: Padding(
-              //                 padding: EdgeInsets.only(left: 20, right: 20),
-              //                 child: Text(
-              //                   'رزرو نوبت',
-              //                   style: TextStyle(
-              //                     fontSize: 16,
-              //                     fontWeight: FontWeight.w700,
-              //                     color: AppColors.white2,
-              //                   ),
-              //                 ),
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //         const Spacer(),
-              //         const Text(
-              //           '6 مدل مو',
-              //           style: TextStyle(
-              //             fontSize: 16,
-              //             fontWeight: FontWeight.w500,
-              //             color: AppColors.textSearchColor,
-              //           ),
-              //         ),
-              //         const Spacer(),
-              //       ],
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),
