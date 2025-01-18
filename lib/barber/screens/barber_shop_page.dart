@@ -148,8 +148,6 @@ class _BarberShopPageState extends State<BarberShopPage> {
                               ),
                             ),
                             Positioned(
-                              // top: 14,
-                              // right: 70,
                               top: height * 0.02,
                               right: globallController.language == 'fa'
                                   ? width * 0.05
@@ -196,69 +194,6 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                   AppLocalizations.of(context)!.shaving,
                                 ],
                                 content: [
-                                  // Selector<BarberShopController, BlocStatus>(
-                                  //   builder: (context, serviceState, child) {
-                                  //     return StateManageWidget(
-                                  //       status: serviceState,
-                                  //       loadingWidget: () {
-                                  //         return const Center(
-                                  //           child: CircularProgressIndicator(),
-                                  //         );
-                                  //       },
-                                  //       errorWidgetBuilder:
-                                  //           (message, statusCode) {
-                                  //         return Center(
-                                  //           child: Text(
-                                  //             message.toString(),
-                                  //           ),
-                                  //         );
-                                  //       },
-                                  //       completedWidgetBuilder: (value) {
-                                  //         if (value.isEmpty) {
-                                  //           return Center(
-                                  //             child: Text(
-                                  //               'هیچ داده‌ای وجود ندارد',
-                                  //               style: Theme.of(context)
-                                  //                   .textTheme
-                                  //                   .titleLarge
-                                  //                   ?.copyWith(
-                                  //                     color: Colors.black54,
-                                  //                     fontSize: 16,
-                                  //                   ),
-                                  //             ),
-                                  //           );
-                                  //         }
-                                  //         return SizedBox(
-                                  //           height:
-                                  //               value.isNotEmpty ? null : 250.0,
-                                  //           child: ListView.builder(
-                                  //             shrinkWrap: true,
-                                  //             physics:
-                                  //                 const NeverScrollableScrollPhysics(),
-                                  //             itemCount: value.length > 3
-                                  //                 ? 3
-                                  //                 : value.length,
-                                  //             itemBuilder:
-                                  //                 (BuildContext context,
-                                  //                     int index) {
-                                  //               final service = value[index];
-                                  //               return ServicesView(
-                                  //                 serviceModel: service,
-                                  //                 isLastItem: (index ==
-                                  //                     (value.length > 3
-                                  //                         ? 2
-                                  //                         : value.length - 1)),
-                                  //               );
-                                  //             },
-                                  //           ),
-                                  //         );
-                                  //       },
-                                  //     );
-                                  //   },
-                                  //   selector: (context, controller) =>
-                                  //       controller.servicState,
-                                  // ),
-
                                   Selector<BarberShopController, BlocStatus>(
                                     builder: (context, serviceState, child) {
                                       return StateManageWidget(
@@ -321,7 +256,6 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                                   },
                                                 ),
                                               ),
-                                              // Only show "See more" button if there is data
                                               if (value.isNotEmpty)
                                                 SizedBox(
                                                   height: height * 0.02,
@@ -330,9 +264,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                                 context,
                                                 AppLocalizations.of(context)!
                                                     .see_more,
-                                                () {
-                                                  // Your navigation code here
-                                                },
+                                                () {},
                                               ),
                                             ],
                                           );
@@ -342,7 +274,6 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                     selector: (context, controller) =>
                                         controller.servicState,
                                   ),
-
                                   Container(
                                     width: 100,
                                     height: 100,
