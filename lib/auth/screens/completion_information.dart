@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_style/auth/widgets/custom_button.dart';
 import 'package:shop_style/auth/widgets/custom_dropdown.dart';
+import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/common/widgets/header_for_screen.dart';
 import 'package:shop_style/common/widgets/text_padding.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/main.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
 
 class CompletionInformation extends StatefulWidget {
   const CompletionInformation({super.key});
@@ -28,135 +31,146 @@ class _CompletionInformationState extends State<CompletionInformation> {
       backgroundColor: const Color(0xFFFFFFFF),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: width / 15),
-        child: Directionality(
-          textDirection: TextDirection.rtl,
-          child: CustomScrollView(
-            slivers: <Widget>[
-              const HeaderScreen(),
-              SliverToBoxAdapter(
-                child: TextPadding(
-                  text: 'خوش آمدید!',
-                  theme: Theme.of(context).textTheme.titleMedium,
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: TextPadding(
-                  text:
-                      'برای تجربه بهتر در استفاده از سرویس {نام برنامه} اطلاعات زیر را بر اساس سلیقه خود وارد کنید.',
-                  topPadding: height / 100,
-                  theme: Theme.of(context).textTheme.displayMedium!.copyWith(
-                        color: AppColors.purpleOpacity,
-                      ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: scanFace(height, width),
-              ),
-              SliverToBoxAdapter(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: width / 2.6,
-                      child: Divider(
-                        thickness: 1,
-                        height: height / 15,
-                        color: AppColors.dividerColor900,
-                      ),
+        child: Consumer<GlobalController>(
+          builder: (context, globalController, child) {
+            return Directionality(
+              textDirection: globalController.language == 'fa' ||
+                      globalController.language == 'ar'
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
+              child: CustomScrollView(
+                slivers: <Widget>[
+                  const HeaderScreen(),
+                  SliverToBoxAdapter(
+                    child: TextPadding(
+                      text: AppLocalizations.of(context)!.welcome,
+                      theme: Theme.of(context).textTheme.titleMedium,
                     ),
-                    Text(
-                      '   یا   ',
-                      style: Theme.of(context)
+                  ),
+                  SliverToBoxAdapter(
+                    child: TextPadding(
+                      text:
+                          AppLocalizations.of(context)!.better_experience_info,
+                      topPadding: height / 100,
+                      theme:
+                          Theme.of(context).textTheme.displayMedium!.copyWith(
+                                color: AppColors.purpleOpacity,
+                              ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: scanFace(height, width),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: width / 2.6,
+                          child: Divider(
+                            thickness: 1,
+                            height: height / 15,
+                            color: AppColors.dividerColor900,
+                          ),
+                        ),
+                        Text(
+                          AppLocalizations.of(context)!.orr,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(color: AppColors.textHeader),
+                        ),
+                        SizedBox(
+                          width: width / 2.6,
+                          child: Divider(
+                            thickness: 1,
+                            height: height / 15,
+                            color: AppColors.dividerColor900,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: TextPadding(
+                      text: AppLocalizations.of(context)!.manual_entry_info,
+                      theme: Theme.of(context).textTheme.displayLarge!.copyWith(
+                            fontSize: 16,
+                          ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: TextPadding(
+                      text: AppLocalizations.of(context)!.manual_entry_desc,
+                      topPadding: height / 100,
+                      theme: Theme.of(context)
                           .textTheme
-                          .bodySmall
+                          .displayMedium
                           ?.copyWith(color: AppColors.textHeader),
                     ),
-                    SizedBox(
-                      width: width / 2.6,
-                      child: Divider(
-                        thickness: 1,
-                        height: height / 15,
-                        color: AppColors.dividerColor900,
+                  ),
+                  SliverToBoxAdapter(
+                    child: CustomDropdown(
+                      lableField: AppLocalizations.of(context)!.face_form,
+                      topPadding: height / 40,
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: CustomDropdown(
+                      lableField: AppLocalizations.of(context)!.hair_style,
+                      topPadding: height / 40,
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: CustomDropdown(
+                      lableField: AppLocalizations.of(context)!.eye_color,
+                      topPadding: height / 40,
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: CustomDropdown(
+                      lableField:
+                          AppLocalizations.of(context)!.preferred_hair_model,
+                      topPadding: height / 40,
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: CustomButton(
+                      textButton: AppLocalizations.of(context)!.let_go,
+                      topPadding: height / 20,
+                      onClick: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MyApp(),
+                        ));
+                      },
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const MyApp(),
+                          ),
+                        );
+                      },
+                      child: TextPadding(
+                        textAlign: TextAlign.center,
+                        text: AppLocalizations.of(context)!.complete_later,
+                        theme: Theme.of(context)
+                            .textTheme
+                            .displayMedium
+                            ?.copyWith(),
                       ),
                     ),
-                  ],
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: TextPadding(
-                    text: 'به صورت دستی وارد کنید',
-                    theme: Theme.of(context).textTheme.displayLarge!.copyWith(
-                          fontSize: 16,
-                        )),
-              ),
-              SliverToBoxAdapter(
-                child: TextPadding(
-                  text:
-                      'اطلاعات مورد نیاز برای ارائه بهترین تجربه را به صورت دستی وارد کنید',
-                  topPadding: height / 100,
-                  theme: Theme.of(context)
-                      .textTheme
-                      .displayMedium
-                      ?.copyWith(color: AppColors.textHeader),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: CustomDropdown(
-                  lableField: 'فرم چهره',
-                  topPadding: height / 40,
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: CustomDropdown(
-                  lableField: 'حالت مو',
-                  topPadding: height / 40,
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: CustomDropdown(
-                  lableField: 'رنگ چشم',
-                  topPadding: height / 40,
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: CustomDropdown(
-                  lableField: 'چه مدل مویی را میپسندید؟',
-                  topPadding: height / 40,
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: CustomButton(
-                  textButton: 'بزن بریم!',
-                  topPadding: height / 20,
-                  onClick: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => MyApp(),
-                    ));
-                  },
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => const MyApp(),
-                      ),
-                    );
-                  },
-                  child: TextPadding(
-                    textAlign: TextAlign.center,
-                    text: 'بعدا تکمیل کنید',
-                    theme:
-                        Theme.of(context).textTheme.displayMedium?.copyWith(),
                   ),
-                ),
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(vertical: height / 150),
+                  ),
+                ],
               ),
-              SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: height / 150),
-              ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
@@ -170,7 +184,7 @@ class _CompletionInformationState extends State<CompletionInformation> {
           Row(
             children: [
               TextPadding(
-                text: 'اسکن چهره',
+                text: AppLocalizations.of(context)!.scan_face,
                 theme: Theme.of(context).textTheme.displayLarge!.copyWith(
                       fontSize: 16,
                     ),
@@ -194,10 +208,9 @@ class _CompletionInformationState extends State<CompletionInformation> {
             ],
           ),
           Padding(
-            padding: EdgeInsets.only(left: width / 3.5),
+            padding: EdgeInsets.only(),
             child: TextPadding(
-              text:
-                  'با اسکن کرده چهره خود با استفاده از دورین سلفی بهترین تجربه را از استفاده از سرویس ما خواهید داشت',
+              text: AppLocalizations.of(context)!.face_scan_info,
               theme: Theme.of(context).textTheme.displayMedium?.copyWith(
                     color: AppColors.textHeader,
                     fontSize: 12,
@@ -206,8 +219,7 @@ class _CompletionInformationState extends State<CompletionInformation> {
           ),
           SizedBox(height: height / 100),
           TextPadding(
-            text:
-                'نکته: تمامی اطلاعاتی که در این بخش وارد می کنید کاملا محفوظ است.',
+            text: AppLocalizations.of(context)!.face_scan_note,
             theme: Theme.of(context).textTheme.bodySmall!.copyWith(
                   fontSize: 12,
                   fontWeight: FontWeight.w700,

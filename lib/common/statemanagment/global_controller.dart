@@ -2,14 +2,21 @@ import 'package:flutter/material.dart';
 
 class GlobalController extends ChangeNotifier {
   String? token;
-  int selectedIdex = 3;
+  int selectedIndex = 0;
+  String language = 'en';
+  BuildContext? context;
   void setToken(String inputToken) {
     token = inputToken;
     notifyListeners();
   }
 
+  void changeLanguage(String languageInput) {
+    language = languageInput;
+    notifyListeners();
+  }
+
   void update(int index) {
-    selectedIdex = index;
+    selectedIndex = index;
     notifyListeners();
   }
 }

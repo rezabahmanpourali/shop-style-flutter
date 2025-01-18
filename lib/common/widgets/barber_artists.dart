@@ -65,6 +65,9 @@ class BarberArtists extends StatelessWidget {
                                   fontSize: 14,
                                 ),
                       ),
+                      SizedBox(
+                        width: 5,
+                      ),
                       const Icon(Icons.star, size: 11),
                     ],
                   ),
@@ -72,7 +75,7 @@ class BarberArtists extends StatelessWidget {
               ),
               Positioned(
                 top: 82,
-                left: 18,
+                left: 5,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

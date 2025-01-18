@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/home/models/category_model.dart';
 
 class CategoryItem extends StatelessWidget {
@@ -28,7 +30,17 @@ class CategoryItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
-                  margin: const EdgeInsets.only(bottom: 7, right: 8),
+                  padding: EdgeInsets.only(
+                    right: (Provider.of<GlobalController>(context).language ==
+                            'fa')
+                        ? 8
+                        : 0,
+                    left: (Provider.of<GlobalController>(context).language ==
+                            'fa')
+                        ? 0
+                        : 8,
+                    bottom: 7,
+                  ),
                   child: Text(
                     categoryModel.title,
                     style: Theme.of(context)

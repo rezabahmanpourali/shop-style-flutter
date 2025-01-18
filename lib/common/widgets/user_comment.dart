@@ -4,6 +4,7 @@ import 'package:shamsi_date/shamsi_date.dart';
 import 'package:shop_style/barber/model/barber_shop_model.dart';
 import 'package:shop_style/barber/model/comment_model.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
 
 class UserComment extends StatelessWidget {
   final CommentModel commentBarberShop;
@@ -92,7 +93,7 @@ class UserComment extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'خواندن همه',
+            AppLocalizations.of(context)!.read_all,
             style: Theme.of(context).textTheme.bodyMedium,
           ),
         ],

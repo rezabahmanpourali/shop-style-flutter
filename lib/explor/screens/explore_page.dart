@@ -7,6 +7,7 @@ import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/state_handeler.dart';
+import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/explor/screens/explore_page_search.dart';
 import 'package:shop_style/explor/widgets/show_model_filter.dart';
@@ -15,6 +16,7 @@ import 'package:shop_style/explor/widgets/show_model_sort.dart';
 import 'package:shop_style/locator.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
 
 class ExplorePage extends StatefulWidget {
   const ExplorePage({super.key});
@@ -67,6 +69,7 @@ class _ExplorePageState extends State<ExplorePage> {
 
   BarberShopController barberShopController =
       locator.get<BarberShopController>();
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -179,10 +182,8 @@ class _ExplorePageState extends State<ExplorePage> {
                                   },
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
-                                    const begin =
-                                        Offset(1.0, 0.0);
-                                    const end =
-                                        Offset.zero;
+                                    const begin = Offset(1.0, 0.0);
+                                    const end = Offset.zero;
                                     const curve = Curves.easeInOut;
 
                                     var tween = Tween(begin: begin, end: end)
@@ -273,7 +274,18 @@ class _ExplorePageState extends State<ExplorePage> {
                             ),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 5, left: 22),
+                            padding: EdgeInsets.only(
+                              right: (Provider.of<GlobalController>(context)
+                                          .language ==
+                                      'fa')
+                                  ? 5
+                                  : 0,
+                              left: (Provider.of<GlobalController>(context)
+                                          .language ==
+                                      'fa')
+                                  ? 0
+                                  : 5,
+                            ),
                             child: GestureDetector(
                               onTap: () {
                                 Navigator.of(context).push(
@@ -312,7 +324,8 @@ class _ExplorePageState extends State<ExplorePage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        'آرایشگاه های اطراف',
+                                        AppLocalizations.of(context)!
+                                            .salons_near_you,
                                         style: Theme.of(context)
                                             .textTheme
                                             .displayLarge!
@@ -321,7 +334,8 @@ class _ExplorePageState extends State<ExplorePage> {
                                             ),
                                       ),
                                       Text(
-                                        'بر حسب موقعیت شما',
+                                        AppLocalizations.of(context)!
+                                            .based_on_your_location,
                                         style: Theme.of(context)
                                             .textTheme
                                             .displayMedium
@@ -333,7 +347,23 @@ class _ExplorePageState extends State<ExplorePage> {
                                     ],
                                   ),
                                   const Spacer(),
-                                  const Icon(Icons.search),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                      left: (Provider.of<GlobalController>(
+                                                      context)
+                                                  .language ==
+                                              'fa')
+                                          ? 22
+                                          : 0,
+                                      right: (Provider.of<GlobalController>(
+                                                      context)
+                                                  .language ==
+                                              'fa')
+                                          ? 0
+                                          : 22,
+                                    ),
+                                    child: const Icon(Icons.search),
+                                  ),
                                 ],
                               ),
                             ),
@@ -416,8 +446,20 @@ class _ExplorePageState extends State<ExplorePage> {
                                         );
                                       },
                                       child: Container(
-                                        margin:
-                                            const EdgeInsets.only(right: 24),
+                                        margin: EdgeInsets.only(
+                                          right: (Provider.of<GlobalController>(
+                                                          context)
+                                                      .language ==
+                                                  'fa')
+                                              ? 24
+                                              : 0,
+                                          left: (Provider.of<GlobalController>(
+                                                          context)
+                                                      .language ==
+                                                  'fa')
+                                              ? 0
+                                              : 24,
+                                        ),
                                         width: 50,
                                         height: 35,
                                         decoration: BoxDecoration(
@@ -455,8 +497,20 @@ class _ExplorePageState extends State<ExplorePage> {
                                         );
                                       },
                                       child: Container(
-                                        margin:
-                                            const EdgeInsets.only(right: 12),
+                                        margin: EdgeInsets.only(
+                                          right: (Provider.of<GlobalController>(
+                                                          context)
+                                                      .language ==
+                                                  'fa')
+                                              ? 12
+                                              : 0,
+                                          left: (Provider.of<GlobalController>(
+                                                          context)
+                                                      .language ==
+                                                  'fa')
+                                              ? 0
+                                              : 12,
+                                        ),
                                         width: 110,
                                         height: 35,
                                         decoration: BoxDecoration(
@@ -471,7 +525,9 @@ class _ExplorePageState extends State<ExplorePage> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            Text('مرتب سازی',
+                                            Text(
+                                                AppLocalizations.of(context)!
+                                                    .sort_by,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .titleLarge!
@@ -504,8 +560,20 @@ class _ExplorePageState extends State<ExplorePage> {
                                         );
                                       },
                                       child: Container(
-                                        margin:
-                                            const EdgeInsets.only(right: 12),
+                                        margin: EdgeInsets.only(
+                                          right: (Provider.of<GlobalController>(
+                                                          context)
+                                                      .language ==
+                                                  'fa')
+                                              ? 12
+                                              : 0,
+                                          left: (Provider.of<GlobalController>(
+                                                          context)
+                                                      .language ==
+                                                  'fa')
+                                              ? 0
+                                              : 12,
+                                        ),
                                         width: 75,
                                         height: 35,
                                         decoration: BoxDecoration(
@@ -521,7 +589,8 @@ class _ExplorePageState extends State<ExplorePage> {
                                               MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              'قیمت',
+                                              AppLocalizations.of(context)!
+                                                  .price,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .titleLarge!
@@ -739,7 +808,20 @@ class _ExplorePageState extends State<ExplorePage> {
                                   ),
                                   const SizedBox(width: 5),
                                   Padding(
-                                    padding: const EdgeInsets.only(right: 22),
+                                    padding: EdgeInsets.only(
+                                      right: (Provider.of<GlobalController>(
+                                                      context)
+                                                  .language ==
+                                              'fa')
+                                          ? 22
+                                          : 0,
+                                      left: (Provider.of<GlobalController>(
+                                                      context)
+                                                  .language ==
+                                              'fa')
+                                          ? 0
+                                          : 22,
+                                    ),
                                     child: Row(
                                       children: [
                                         const Icon(Icons.star),
@@ -762,7 +844,20 @@ class _ExplorePageState extends State<ExplorePage> {
                                   ),
                                   const SizedBox(width: 7),
                                   Padding(
-                                    padding: const EdgeInsets.only(right: 22),
+                                    padding: EdgeInsets.only(
+                                      right: (Provider.of<GlobalController>(
+                                                      context)
+                                                  .language ==
+                                              'fa')
+                                          ? 22
+                                          : 0,
+                                      left: (Provider.of<GlobalController>(
+                                                      context)
+                                                  .language ==
+                                              'fa')
+                                          ? 0
+                                          : 22,
+                                    ),
                                     child: Row(
                                       children: [
                                         Text(
@@ -793,11 +888,25 @@ class _ExplorePageState extends State<ExplorePage> {
                                   modellMoForShop(),
                                   const SizedBox(height: 16),
                                   Padding(
-                                    padding: const EdgeInsets.only(right: 22),
+                                    padding: EdgeInsets.only(
+                                      right: (Provider.of<GlobalController>(
+                                                      context)
+                                                  .language ==
+                                              'fa')
+                                          ? 22
+                                          : 0,
+                                      left: (Provider.of<GlobalController>(
+                                                      context)
+                                                  .language ==
+                                              'fa')
+                                          ? 0
+                                          : 22,
+                                    ),
                                     child: Row(
                                       children: [
                                         Text(
-                                          'مشاهده بیشتر',
+                                          AppLocalizations.of(context)!
+                                              .see_more,
                                           style: Theme.of(context)
                                               .textTheme
                                               .headlineMedium

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
 
 class CustomDropdown extends StatefulWidget {
   const CustomDropdown({
@@ -16,10 +17,9 @@ class CustomDropdown extends StatefulWidget {
 }
 
 class _CustomDropdownState extends State<CustomDropdown> {
-  String? selectedValue = 'زرد';
-
   @override
   Widget build(BuildContext context) {
+    String? selectedValue = AppLocalizations.of(context)!.yellow;
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
 
@@ -52,8 +52,12 @@ class _CustomDropdownState extends State<CustomDropdown> {
                   size: 30,
                 ),
                 value: selectedValue,
-                items:
-                    <String>['زرد', 'قرمز', 'سبز', 'آبی'].map((String value) {
+                items: <String>[
+                  AppLocalizations.of(context)!.yellow,
+                  AppLocalizations.of(context)!.red,
+                  AppLocalizations.of(context)!.green,
+                  AppLocalizations.of(context)!.blue,
+                ].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Padding(

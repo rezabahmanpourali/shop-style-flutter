@@ -17,69 +17,16 @@ import 'package:shop_style/locator.dart';
 import 'package:shop_style/onboard_screen/screen/onboard_screen.dart';
 import 'package:shop_style/user_page/screens/user_page.dart';
 import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
 
 void main() {
   Provider.debugCheckInvalidValueType = null;
 
   WidgetsFlutterBinding.ensureInitialized();
-  setupLocator();
+  setupLocator(); // مقداردهی اولیه کنترلرها
+
   runApp(
-    MaterialApp(
-       supportedLocales: const [
-        Locale('fa', 'IR'),  // زبان فارسی
-        Locale('en', 'US'),  // زبان انگلیسی
-        // می‌توانید زبان‌های دیگر را هم اضافه کنید
-      ],
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      color: Colors.transparent,
-      theme: CustomTheme().lighTheme,
-      scrollBehavior: const MaterialScrollBehavior().copyWith(
-        dragDevices: {
-          PointerDeviceKind.mouse,
-          PointerDeviceKind.touch,
-          PointerDeviceKind.stylus,
-          PointerDeviceKind.unknown,
-        },
-      ),
-      home: const OnbordScreen(),
-    ),
-  );
-}
-
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final List<Widget> _pages = [
-    const Directionality(
-      textDirection: TextDirection.rtl,
-      child: UserPage(),
-    ),
-    const Directionality(
-      textDirection: TextDirection.rtl,
-      child: ViewReservedPage(),
-    ),
-    const Directionality(
-      textDirection: TextDirection.rtl,
-      child: ExplorePage(),
-    ),
-    Directionality(
-      textDirection: TextDirection.rtl,
-      child: HomeScreen(),
-    ),
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return MultiProvider(
+    MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
           value: locator.get<GlobalController>(),
@@ -98,95 +45,296 @@ class _MyAppState extends State<MyApp> {
         ),
       ],
       child: Consumer<GlobalController>(
-        builder: (context, value, child) {
-          return Scaffold(
-            extendBody: false,
-            extendBodyBehindAppBar: true,
-            backgroundColor: Colors.transparent,
-            body: IndexedStack(
-              index: value.selectedIdex,
-              children: _pages,
-            ),
-            bottomNavigationBar: BottomNavigationBar(
-              currentIndex: value.selectedIdex,
-              onTap: (int selectedIndex) {
-                value.update(selectedIndex);
+        builder: (context, globalController, child) {
+          return MaterialApp(
+            locale: Locale(globalController.language),
+            supportedLocales: const [
+              Locale('en', ''), // زبان انگلیسی
+              Locale('fa', ''), // زبان فارسی
+              Locale('ar', ''), // زبان عربی
+              Locale('tr', ''), // زبان ترکی
+            ],
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            color: Colors.transparent,
+            theme: CustomTheme().lighTheme,
+            scrollBehavior: const MaterialScrollBehavior().copyWith(
+              dragDevices: {
+                PointerDeviceKind.mouse,
+                PointerDeviceKind.touch,
+                PointerDeviceKind.stylus,
+                PointerDeviceKind.unknown,
               },
-              selectedItemColor: AppColors.purpleOpacity, // رنگ آیکن انتخابی
-              selectedFontSize: 10,
-              unselectedFontSize: 10,
-              selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w800),
-              unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500),
-              unselectedItemColor: Colors.grey, // رنگ آیکن‌های غیرفعال
-              showUnselectedLabels: true, // نمایش برچسب‌های غیرفعال
-              items: [
-                BottomNavigationBarItem(
-                  activeIcon: SvgPicture.asset('assets/images/PersonFill.svg'),
-                  icon: SvgPicture.asset('assets/images/Person.svg'),
-                  label: 'حساب کاربری',
-                ),
-                BottomNavigationBarItem(
-                  activeIcon: SvgPicture.asset('assets/images/CartFill.svg'),
-                  icon: SvgPicture.asset('assets/images/Cart.svg'),
-                  label: 'رزرو شده ها',
-                ),
-                BottomNavigationBarItem(
-                  activeIcon:
-                      SvgPicture.asset('assets/images/locationActive.svg'),
-                  icon: SvgPicture.asset('assets/images/locationOnActive.svg'),
-                  label: 'جستجوی آرایشگاه',
-                ),
-                BottomNavigationBarItem(
-                  activeIcon: SvgPicture.asset('assets/images/HouseFill.svg'),
-                  icon: SvgPicture.asset('assets/images/homeOnActive.svg'),
-                  label: 'خانه',
-                ),
-              ],
             ),
-            // extendBody: true,
-            // extendBodyBehindAppBar: true,
-            // body: Stack(
-            //   children: [
-            //     IndexedStack(
-            //       index: value.selectedIdex,
-            //       children: _pages,
-            //     ),
-            //   ],
-            // ),
-
-            // backgroundColor: Colors.transparent,
-            // bottomNavigationBar: CurvedNavigationBar(
-            //   backgroundColor: AppColors.white2,
-            //   color: AppColors.purpleOpacity,
-            //   height: 60,
-            //   animationDuration: Duration(milliseconds: 300),
-            //   onTap: (int selectedIndex) {
-            //     locator.get<GlobalController>().update(selectedIndex);
-            //   },
-            //   buttonBackgroundColor: AppColors.purpleOpacity,
-            //   items: [
-            //     Image.asset(
-            //       'assets/images/Vector.png',
-            //       width: 30,
-            //     ),
-            //     Image.asset(
-            //       'assets/images/Vector (1).png',
-            //       width: 30,
-            //     ),
-            //     Image.asset(
-            //       'assets/images/Vector (2).png',
-            //       width: 30,
-            //     ),
-            //     Image.asset(
-            //       'assets/images/HouseFill (1).png',
-            //       width: 30,
-            //     ),
-            //   ],
-            // ),
+            home: const OnbordScreen(),
+            builder: (context, child) {
+              return Directionality(
+                textDirection: globalController.language == 'fa' ||
+                        globalController.language == 'ar'
+                    ? TextDirection.ltr
+                    : TextDirection.ltr,
+                child: child!,
+              );
+            },
           );
         },
       ),
-    );
+    ),
+  );
+}
+
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  Widget build(BuildContext context) {
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider.value(
+            value: locator.get<GlobalController>(),
+          ),
+          ChangeNotifierProvider.value(
+            value: locator.get<AuthController>(),
+          ),
+          ChangeNotifierProvider.value(
+            value: locator.get<BarberShopController>(),
+          ),
+          ChangeNotifierProvider.value(
+            value: locator.get<BarberController>(),
+          ),
+          ChangeNotifierProvider.value(
+            value: locator.get<HomeController>(),
+          ),
+        ],
+        child: Consumer<GlobalController>(
+          builder: (context, globalController, child) {
+            // تغییر ترتیب نوار پیمایش بر اساس زبان
+            final List<
+                BottomNavigationBarItem> navigationItems = globalController
+                            .language ==
+                        'fa' ||
+                    globalController.language == 'ar'
+                ? [
+                    BottomNavigationBarItem(
+                      activeIcon:
+                          SvgPicture.asset('assets/images/PersonFill.svg'),
+                      icon: SvgPicture.asset('assets/images/Person.svg'),
+                      label: AppLocalizations.of(context)!.account_info,
+                    ),
+                    BottomNavigationBarItem(
+                      activeIcon:
+                          SvgPicture.asset('assets/images/CartFill.svg'),
+                      icon: SvgPicture.asset('assets/images/Cart.svg'),
+                      label: AppLocalizations.of(context)!.reservation_history,
+                    ),
+                    BottomNavigationBarItem(
+                      activeIcon:
+                          SvgPicture.asset('assets/images/locationActive.svg'),
+                      icon: SvgPicture.asset(
+                          'assets/images/locationOnActive.svg'),
+                      label: AppLocalizations.of(context)!.salon_list,
+                    ),
+                    BottomNavigationBarItem(
+                      activeIcon:
+                          SvgPicture.asset('assets/images/HouseFill.svg'),
+                      icon: SvgPicture.asset('assets/images/homeOnActive.svg'),
+                      label: AppLocalizations.of(context)!.home,
+                    ),
+                  ]
+                : [
+                    BottomNavigationBarItem(
+                      activeIcon:
+                          SvgPicture.asset('assets/images/HouseFill.svg'),
+                      icon: SvgPicture.asset('assets/images/homeOnActive.svg'),
+                      label: AppLocalizations.of(context)!.home,
+                    ),
+                    BottomNavigationBarItem(
+                      activeIcon:
+                          SvgPicture.asset('assets/images/locationActive.svg'),
+                      icon: SvgPicture.asset(
+                          'assets/images/locationOnActive.svg'),
+                      label: AppLocalizations.of(context)!.salon_list,
+                    ),
+                    BottomNavigationBarItem(
+                      activeIcon:
+                          SvgPicture.asset('assets/images/CartFill.svg'),
+                      icon: SvgPicture.asset('assets/images/Cart.svg'),
+                      label: AppLocalizations.of(context)!.reservation_history,
+                    ),
+                    BottomNavigationBarItem(
+                      activeIcon:
+                          SvgPicture.asset('assets/images/PersonFill.svg'),
+                      icon: SvgPicture.asset('assets/images/Person.svg'),
+                      label: AppLocalizations.of(context)!.account_info,
+                    ),
+                  ];
+
+            final List<Widget> pages = globalController.language == 'en' ||
+                    globalController.language == 'tr'
+                ? [
+                    Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: HomeScreen(),
+                    ),
+                    const Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: ExplorePage(),
+                    ),
+                    const Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: ViewReservedPage(),
+                    ),
+                    const Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: UserPage(),
+                    ),
+                  ]
+                : [
+                    const Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: UserPage(),
+                    ),
+                    const Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: ViewReservedPage(),
+                    ),
+                    const Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: ExplorePage(),
+                    ),
+                    Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: HomeScreen(),
+                    ),
+                  ];
+
+            return Scaffold(
+              extendBody: false,
+              extendBodyBehindAppBar: true,
+              backgroundColor: Colors.transparent,
+              body: IndexedStack(
+                index: globalController.selectedIndex,
+                children: pages, // لیست صفحات
+              ),
+              bottomNavigationBar: BottomNavigationBar(
+                currentIndex: globalController.selectedIndex,
+                onTap: (int selectedIndex) {
+                  globalController.update(selectedIndex);
+                },
+                selectedItemColor: AppColors.purpleOpacity, // رنگ آیکن انتخابی
+                selectedFontSize: 10,
+                unselectedFontSize: 10,
+                selectedLabelStyle:
+                    const TextStyle(fontWeight: FontWeight.w800),
+                unselectedLabelStyle:
+                    const TextStyle(fontWeight: FontWeight.w500),
+                unselectedItemColor: Colors.grey, // رنگ آیکن‌های غیرفعال
+                showUnselectedLabels: true, // نمایش برچسب‌های غیرفعال
+                items: navigationItems, // استفاده از آیتم‌ها بر اساس زبان
+              ),
+            );
+          },
+        )
+
+        //  Consumer<GlobalController>(
+        //   builder: (context, value, child) {
+        //     return Scaffold(
+        //       extendBody: false,
+        //       extendBodyBehindAppBar: true,
+        //       backgroundColor: Colors.transparent,
+        //       body: IndexedStack(
+        //         index: value.selectedIndex,
+        //         children: _pages,
+        //       ),
+        //       bottomNavigationBar: BottomNavigationBar(
+        //         currentIndex: value.selectedIndex,
+        //         onTap: (int selectedIndex) {
+        //           value.update(selectedIndex);
+        //         },
+        //         selectedItemColor: AppColors.purpleOpacity, // رنگ آیکن انتخابی
+        //         selectedFontSize: 10,
+        //         unselectedFontSize: 10,
+        //         selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w800),
+        //         unselectedLabelStyle:
+        //             const TextStyle(fontWeight: FontWeight.w500),
+        //         unselectedItemColor: Colors.grey, // رنگ آیکن‌های غیرفعال
+        //         showUnselectedLabels: true, // نمایش برچسب‌های غیرفعال
+        //         items: [
+        //           BottomNavigationBarItem(
+        //               activeIcon:
+        //                   SvgPicture.asset('assets/images/PersonFill.svg'),
+        //               icon: SvgPicture.asset('assets/images/Person.svg'),
+        //               label: AppLocalizations.of(context)!.account_info),
+        //           BottomNavigationBarItem(
+        //             activeIcon: SvgPicture.asset('assets/images/CartFill.svg'),
+        //             icon: SvgPicture.asset('assets/images/Cart.svg'),
+        //             label: AppLocalizations.of(context)!.reservation_history,
+        //           ),
+        //           BottomNavigationBarItem(
+        //               activeIcon:
+        //                   SvgPicture.asset('assets/images/locationActive.svg'),
+        //               icon:
+        //                   SvgPicture.asset('assets/images/locationOnActive.svg'),
+        //               label: AppLocalizations.of(context)!.salon_list),
+        //           BottomNavigationBarItem(
+        //               activeIcon: SvgPicture.asset('assets/images/HouseFill.svg'),
+        //               icon: SvgPicture.asset('assets/images/homeOnActive.svg'),
+        //               label: AppLocalizations.of(context)!.home),
+        //         ],
+        //       ),
+        //       // extendBody: true,
+        //       // extendBodyBehindAppBar: true,
+        //       // body: Stack(
+        //       //   children: [
+        //       //     IndexedStack(
+        //       //       index: value.selectedIdex,
+        //       //       children: _pages,
+        //       //     ),
+        //       //   ],
+        //       // ),
+
+        //       // backgroundColor: Colors.transparent,
+        //       // bottomNavigationBar: CurvedNavigationBar(
+        //       //   backgroundColor: AppColors.white2,
+        //       //   color: AppColors.purpleOpacity,
+        //       //   height: 60,
+        //       //   animationDuration: Duration(milliseconds: 300),
+        //       //   onTap: (int selectedIndex) {
+        //       //     locator.get<GlobalController>().update(selectedIndex);
+        //       //   },
+        //       //   buttonBackgroundColor: AppColors.purpleOpacity,
+        //       //   items: [
+        //       //     Image.asset(
+        //       //       'assets/images/Vector.png',
+        //       //       width: 30,
+        //       //     ),
+        //       //     Image.asset(
+        //       //       'assets/images/Vector (1).png',
+        //       //       width: 30,
+        //       //     ),
+        //       //     Image.asset(
+        //       //       'assets/images/Vector (2).png',
+        //       //       width: 30,
+        //       //     ),
+        //       //     Image.asset(
+        //       //       'assets/images/HouseFill (1).png',
+        //       //       width: 30,
+        //       //     ),
+        //       //   ],
+        //       // ),
+        //     );
+        //   },
+        // ),
+        );
   }
 
   // Align navBarItems(GlobalController value) {

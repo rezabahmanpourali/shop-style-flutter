@@ -3,6 +3,7 @@ import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/enums.dart';
 import 'package:shop_style/reserve_page2/screens/reseve_page2.dart';
 import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
 
 class ReserveServise extends StatefulWidget {
   const ReserveServise({
@@ -165,7 +166,7 @@ class _ReserveServiseState extends State<ReserveServise> {
           elevation: 0,
         ),
         child: Text(
-          'رزرو نوبت',
+          AppLocalizations.of(context)!.book_appointment,
           style: Theme.of(context)
               .textTheme
               .displayLarge

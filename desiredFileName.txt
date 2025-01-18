@@ -1,1 +1,17 @@
-{}
+{
+  "ar": [
+    "yearss",
+    "yellow",
+    "red",
+    "green",
+    "blue"
+  ],
+
+  "tr": [
+    "yearss",
+    "yellow",
+    "red",
+    "green",
+    "blue"
+  ]
+}

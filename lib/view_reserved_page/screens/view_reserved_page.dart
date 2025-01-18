@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shop_style/common/statemanagment/global_controller.dart';
+import 'package:shop_style/locator.dart'; // فایل لوکالیزیشن
 
 class ViewReservedPage extends StatefulWidget {
   const ViewReservedPage({super.key});
@@ -17,93 +21,104 @@ class _ViewReservedPageState extends State<ViewReservedPage> {
     return Scaffold(
       backgroundColor: AppColors.white2,
       body: SafeArea(
-        child: Directionality(
-          textDirection: TextDirection.rtl,
-          child: CustomScrollView(
-            slivers: [
-              SliverPadding(
-                padding: const EdgeInsets.only(right: 22, top: 20, bottom: 32),
-                sliver: SliverToBoxAdapter(
-                  child: Text(
-                    'رزرو ها',
-                    style: Theme.of(context).textTheme.titleMedium,
+        child: Consumer<GlobalController>(
+          builder: (context, globalController, child) {
+            return Directionality(
+              textDirection: globalController.language == 'fa' ||
+                      globalController.language == 'ar'
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
+              child: CustomScrollView(
+                slivers: [
+                  SliverPadding(
+                    padding: const EdgeInsets.only(
+                        right: 22, top: 20, bottom: 32, left: 22),
+                    sliver: SliverToBoxAdapter(
+                      child: Text(
+                        AppLocalizations.of(context)!.reservess,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.only(right: 22, bottom: 12),
-                sliver: SliverToBoxAdapter(
-                  child: Text(
-                    'جاری',
-                    style: Theme.of(context).textTheme.labelMedium,
+                  SliverPadding(
+                    padding:
+                        const EdgeInsets.only(right: 22, bottom: 12, left: 22),
+                    sliver: SliverToBoxAdapter(
+                      child: Text(
+                        AppLocalizations.of(context)!.current,
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.only(bottom: 32),
-                sliver: SliverToBoxAdapter(
-                  child: ReserveItem(
-                    title: "آرایشگاه رزرو شده",
-                    date: "شنبه، 1 آذر ماه، 1401، ساعت 12:00 صبح",
-                    service: "مدل موی خامه ای",
-                    duration: "40 دقیقه",
-                    price: "125,000 تومان",
-                    onTapCallback: (bool isExpanded) {
-                      print("آیا رزرو گسترش یافته است؟ $isExpanded");
-                    },
+                  SliverPadding(
+                    padding: const EdgeInsets.only(bottom: 32),
+                    sliver: SliverToBoxAdapter(
+                      child: ReserveItem(
+                        title: "آرایشگاه رزرو شده",
+                        date: "شنبه، 1 آذر ماه، 1401، ساعت 12:00 صبح",
+                        service: "مدل موی خامه ای",
+                        duration: "40 دقیقه",
+                        price: "125,000 تومان",
+                        onTapCallback: (bool isExpanded) {
+                          print("آیا رزرو گسترش یافته است؟ $isExpanded");
+                        },
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.only(right: 22, bottom: 12),
-                sliver: SliverToBoxAdapter(
-                  child: Text(
-                    'رزرو های قبلی',
-                    style: Theme.of(context).textTheme.labelMedium,
+                  SliverPadding(
+                    padding:
+                        const EdgeInsets.only(right: 22, bottom: 12, left: 22),
+                    sliver: SliverToBoxAdapter(
+                      child: Text(
+                        AppLocalizations.of(context)!.previous_reservations,
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.only(bottom: 32),
-                sliver: SliverToBoxAdapter(
-                  child: ReserveItem(
-                    title: "آرایشگاه رزرو شده",
-                    date: "شنبه، 1 آذر ماه، 1401، ساعت 12:00 صبح",
-                    service: "مدل موی خامه ای",
-                    duration: "40 دقیقه",
-                    price: "125,000 تومان",
-                    onTapCallback: (bool isExpanded) {
-                      print("آیا رزرو گسترش یافته است؟ $isExpanded");
-                    },
+                  SliverPadding(
+                    padding: const EdgeInsets.only(bottom: 32),
+                    sliver: SliverToBoxAdapter(
+                      child: ReserveItem(
+                        title: "آرایشگاه رزرو شده",
+                        date: "شنبه، 1 آذر ماه، 1401، ساعت 12:00 صبح",
+                        service: "مدل موی خامه ای",
+                        duration: "40 دقیقه",
+                        price: "125,000 تومان",
+                        onTapCallback: (bool isExpanded) {
+                          print("آیا رزرو گسترش یافته است؟ $isExpanded");
+                        },
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.only(right: 22, bottom: 12),
-                sliver: SliverToBoxAdapter(
-                  child: Text(
-                    'لغو شده',
-                    style: Theme.of(context).textTheme.labelMedium,
+                  SliverPadding(
+                    padding:
+                        const EdgeInsets.only(right: 22, bottom: 12, left: 22),
+                    sliver: SliverToBoxAdapter(
+                      child: Text(
+                        AppLocalizations.of(context)!.canceled,
+                        style: Theme.of(context).textTheme.labelMedium,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.only(bottom: 32),
-                sliver: SliverToBoxAdapter(
-                  child: ReserveItem(
-                    title: "آرایشگاه رزرو شده",
-                    date: "شنبه، 1 آذر ماه، 1401، ساعت 12:00 صبح",
-                    service: "مدل موی خامه ای",
-                    duration: "40 دقیقه",
-                    price: "125,000 تومان",
-                    onTapCallback: (bool isExpanded) {
-                      print("آیا رزرو گسترش یافته است؟ $isExpanded");
-                    },
+                  SliverPadding(
+                    padding: const EdgeInsets.only(bottom: 32),
+                    sliver: SliverToBoxAdapter(
+                      child: ReserveItem(
+                        title: "آرایشگاه رزرو شده",
+                        date: "شنبه، 1 آذر ماه، 1401، ساعت 12:00 صبح",
+                        service: "مدل موی خامه ای",
+                        duration: "40 دقیقه",
+                        price: "125,000 تومان",
+                        onTapCallback: (bool isExpanded) {
+                          print("آیا رزرو گسترش یافته است؟ $isExpanded");
+                        },
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
@@ -224,13 +239,13 @@ class _ReserveItemState extends State<ReserveItem> {
                 ),
                 Positioned(
                   top: _isExpanded ? 240 : 12,
-                  left: _isExpanded ? 100 : 0,
-                  right: _isExpanded ? 0 : 80,
+                  left: _isExpanded ? 0 : 0,
+                  right: _isExpanded ? 0 : 95,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const SizedBox(width: 9),
@@ -239,7 +254,7 @@ class _ReserveItemState extends State<ReserveItem> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                widget.title, // دریافت عنوان از خارج
+                                widget.title,
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleSmall
@@ -251,7 +266,7 @@ class _ReserveItemState extends State<ReserveItem> {
                                 height: 10,
                               ),
                               Text(
-                                widget.date, // تاریخ رزرو
+                                widget.date,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
@@ -311,11 +326,15 @@ class _ReserveItemState extends State<ReserveItem> {
                             height: _isExpanded ? 35 : 0,
                             child: Center(
                               child: Text(
-                                'مسیریابی با نقشه',
+                                AppLocalizations.of(context)!
+                                    .navigate_with_mapp,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
-                                    ?.copyWith(color: AppColors.black),
+                                    ?.copyWith(
+                                      color: AppColors.black,
+                                      fontSize: 12,
+                                    ),
                               ),
                             ),
                           ),

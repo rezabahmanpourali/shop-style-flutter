@@ -44,7 +44,7 @@ class _BarberShopListWidgetState extends State<BarberShopListWidget> {
                 baseColor: Colors.grey[300]!,
                 highlightColor: Colors.grey[100]!,
                 child: Container(
-                  margin: const EdgeInsets.only(right: 22),
+                  margin: const EdgeInsets.only(right: 22, left: 22),
                   width: width * 0.45,
                   height: 15,
                   decoration: BoxDecoration(
@@ -79,7 +79,7 @@ class _BarberShopListWidgetState extends State<BarberShopListWidget> {
         return Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 22),
+              padding: const EdgeInsets.only(right: 22, left: 22),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

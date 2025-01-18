@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
+
 class ContentOnboard {
   // String image;
   String title;
@@ -47,3 +50,33 @@ List<ContentOnboard> contents = [
     discription2: '',
   ),
 ];
+
+List<ContentOnboard> getContents(BuildContext context) {
+  return [
+    ContentOnboard(
+      title: AppLocalizations.of(context)!.reservationTitle1,
+      title2: AppLocalizations.of(context)!.reservationTitle2,
+      title3: AppLocalizations.of(context)!.reservationTitle3,
+      title4: AppLocalizations.of(context)!.reservationTitle4,
+      discription: AppLocalizations.of(context)!.reservationDescription1,
+      discription2: AppLocalizations.of(context)!.reservationDescription2,
+    ),
+    ContentOnboard(
+      title: AppLocalizations.of(context)!.reservationTitle5,
+      title2: AppLocalizations.of(context)!.reservationTitle6,
+      title3: AppLocalizations.of(context)!.reservationTitle7,
+      title4: AppLocalizations.of(context)!.reservationTitle8,
+      discription: AppLocalizations.of(context)!.reservationDescription3,
+      discription2: AppLocalizations.of(context)!.reservationDescription4,
+    ),
+    ContentOnboard(
+      title: AppLocalizations.of(context)!.haircutTitle1,
+      title2: AppLocalizations.of(context)!.haircutTitle2,
+      title3: AppLocalizations.of(context)!.haircutTitle3,
+      title4: AppLocalizations.of(context)!.haircutTitle4,
+      discription: AppLocalizations.of(context)!.haircutDescription,
+      discription2: '',
+    ),
+  ];
+}
+

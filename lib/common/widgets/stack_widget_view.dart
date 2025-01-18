@@ -7,6 +7,7 @@ import 'package:shop_style/locator.dart';
 import 'package:shop_style/reserve_page2/screens/reseve_page2.dart';
 import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
 import 'package:shop_style/reserve_page4/screen/reserve_page4.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
 
 class ServicesView extends StatelessWidget {
   final ServiceModel serviceModel;
@@ -66,9 +67,10 @@ class ServicesView extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      'رزرو نوبت',
+                      textAlign: TextAlign.center,
+                      AppLocalizations.of(context)!.book_appointment,
                       style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                            fontSize: 16,
+                            fontSize: 13,
                           ),
                     ),
                   ),

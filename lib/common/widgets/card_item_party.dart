@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_style/barber/screens/barber_shop_page.dart';
 import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/home/models/barber_hair_model.dart';
 
 class CardItemParty extends StatelessWidget {
@@ -11,6 +13,8 @@ class CardItemParty extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
     return GestureDetector(
       onTap: () {
         // Navigator.of(context).push(
@@ -94,14 +98,37 @@ class CardItemParty extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 12),
+                        padding: EdgeInsets.only(
+                          right: (Provider.of<GlobalController>(context)
+                                      .language ==
+                                  'fa')
+                              ? 16
+                              : 0,
+                          left: (Provider.of<GlobalController>(context)
+                                      .language ==
+                                  'fa')
+                              ? 0
+                              : 16,
+                          top: 12,
+                        ),
                         child: Text(
                           hairModel.name!,
                           style: Theme.of(context).textTheme.bodyLarge,
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 12),
+                        padding: EdgeInsets.only(
+                          right: (Provider.of<GlobalController>(context)
+                                      .language ==
+                                  'fa')
+                              ? 16
+                              : 0,
+                          left: (Provider.of<GlobalController>(context)
+                                      .language ==
+                                  'fa')
+                              ? 0
+                              : 16,
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -115,7 +142,18 @@ class CardItemParty extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 12),
+                        padding: EdgeInsets.only(
+                          right: (Provider.of<GlobalController>(context)
+                                      .language ==
+                                  'fa')
+                              ? 16
+                              : 0,
+                          left: (Provider.of<GlobalController>(context)
+                                      .language ==
+                                  'fa')
+                              ? 0
+                              : 16,
+                        ),
                         child: Text(
                           'نام آرایشگاه',
                           style: Theme.of(context).textTheme.displayMedium,
@@ -125,7 +163,18 @@ class CardItemParty extends StatelessWidget {
                         height: 8,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 16),
+                        padding: EdgeInsets.only(
+                          right: (Provider.of<GlobalController>(context)
+                                      .language ==
+                                  'fa')
+                              ? 16
+                              : 0,
+                          left: (Provider.of<GlobalController>(context)
+                                      .language ==
+                                  'fa')
+                              ? 0
+                              : 16,
+                        ),
                         child: Row(
                           children: [
                             Container(
@@ -171,7 +220,18 @@ class CardItemParty extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 16),
+                        padding: EdgeInsets.only(
+                          right: (Provider.of<GlobalController>(context)
+                                      .language ==
+                                  'fa')
+                              ? 16
+                              : 0,
+                          left: (Provider.of<GlobalController>(context)
+                                      .language ==
+                                  'fa')
+                              ? 0
+                              : 16,
+                        ),
                         child: Row(
                           children: [
                             Text(' 139,000',
