@@ -10,6 +10,7 @@ import 'package:shop_style/common/configs/state_handeler.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/explor/screens/explore_page_search.dart';
+import 'package:shop_style/explor/widgets/barber_shop_carousel.dart';
 import 'package:shop_style/explor/widgets/show_model_filter.dart';
 import 'package:shop_style/explor/widgets/show_model_price.dart';
 import 'package:shop_style/explor/widgets/show_model_sort.dart';
@@ -74,7 +75,7 @@ class _ExplorePageState extends State<ExplorePage> {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    final controller = PageController(viewportFraction: 0.9);
+    final controller = PageController(viewportFraction: 1);
     return Scaffold(
       backgroundColor: AppColors.white2,
       body: SafeArea(
@@ -607,320 +608,28 @@ class _ExplorePageState extends State<ExplorePage> {
                                   ],
                                 ),
                               ),
-                              Column(
-                                children: [
-                                  const SizedBox(height: 16),
-                                  Text(
-                                    '3 آرایشگاه نزدیک',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .displayMedium
-                                        ?.copyWith(color: AppColors.textHeader),
-                                  ),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  Stack(
-                                    children: [
-                                      SizedBox(
-                                        height: 220,
-                                        child: PageView.builder(
-                                          controller: controller,
-                                          itemCount: 3,
-                                          itemBuilder: (context, index) {
-                                            if (selectedMarkerIndex != null) {
-                                              return GestureDetector(
-                                                onTap: () {
-                                                  final selectBarberShop =
-                                                      barberShopController
-                                                              .barberShops[
-                                                          selectedMarkerIndex!];
-
-                                                  Navigator.of(context).push(
-                                                    PageRouteBuilder(
-                                                      pageBuilder: (context,
-                                                          animation,
-                                                          secondaryAnimation) {
-                                                        return MultiProvider(
-                                                          providers: [
-                                                            ChangeNotifierProvider
-                                                                .value(
-                                                              value: locator.get<
-                                                                  BarberController>(),
-                                                            ),
-                                                            ChangeNotifierProvider
-                                                                .value(
-                                                              value: locator.get<
-                                                                  BarberShopController>(),
-                                                            ),
-                                                          ],
-                                                          child: BarberShopPage(
-                                                            barberShopModel:
-                                                                selectBarberShop,
-                                                            barberShopId:
-                                                                selectBarberShop
-                                                                        .id ??
-                                                                    0,
-                                                          ),
-                                                        );
-                                                      },
-                                                      transitionsBuilder:
-                                                          (context,
-                                                              animation,
-                                                              secondaryAnimation,
-                                                              child) {
-                                                        const begin = Offset(
-                                                            1.0,
-                                                            0.0); // انیمیشن از راست
-                                                        const end = Offset
-                                                            .zero; // پایان در وسط صفحه
-                                                        const curve =
-                                                            Curves.easeInOut;
-
-                                                        var tween = Tween(
-                                                                begin: begin,
-                                                                end: end)
-                                                            .chain(CurveTween(
-                                                                curve: curve));
-                                                        var offsetAnimation =
-                                                            animation
-                                                                .drive(tween);
-
-                                                        return SlideTransition(
-                                                            position:
-                                                                offsetAnimation,
-                                                            child: child);
-                                                      },
-                                                    ),
-                                                  );
-                                                },
-                                                child: Container(
-                                                  margin: const EdgeInsets.only(
-                                                    left: 22,
-                                                    right: 22,
-                                                    bottom: 20,
-                                                  ),
-                                                  height: 220,
-                                                  child: Image.network(
-                                                    barberShopController
-                                                        .barberShops[
-                                                            selectedMarkerIndex!]
-                                                        .images![0]
-                                                        .url
-                                                        .toString(),
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            if (selectedMarkerIndex == null) {
-                                              Container(
-                                                margin: const EdgeInsets.only(
-                                                  left: 22,
-                                                  right: 22,
-                                                  bottom: 20,
-                                                ),
-                                                color:
-                                                    AppColors.activeSwitchColor,
-                                                height: 220,
-                                                width: 100,
-                                                child: const Center(
-                                                  child:
-                                                      Text('چیزی انتخاب نشده'),
-                                                ),
-                                              );
-                                            }
-                                            return null;
-                                          },
-                                        ),
-                                      ),
-                                      if (selectedMarkerIndex != null)
-                                        Positioned(
-                                          bottom: 30,
-                                          right: 180,
-                                          child: SmoothPageIndicator(
-                                            controller: controller,
-                                            count: 3,
-                                            effect: const SlideEffect(
-                                              spacing: 8.0,
-                                              radius: 50.0,
-                                              dotWidth: 10.0,
-                                              dotHeight: 10.0,
-                                              paintStyle: PaintingStyle.stroke,
-                                              strokeWidth: 1.5,
-                                              dotColor: Colors.grey,
-                                              activeDotColor:
-                                                  AppColors.bannerColor,
-                                            ),
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 22, right: 22),
-                                    child: Row(
-                                      children: [
-                                        if (selectedMarkerIndex != null) ...[
-                                          Text(
-                                            barberShopController
-                                                .barberShops[
-                                                    selectedMarkerIndex!]
-                                                .barberShopName!,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .titleLarge!
-                                                .copyWith(
-                                                  fontSize: 16,
-                                                ),
-                                          ),
-                                        ],
-                                        const Spacer(),
-                                        if (selectedMarkerIndex != null)
-                                          Text('حدود',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .displayLarge!
-                                                  .copyWith(
-                                                    fontSize: 16,
-                                                  )),
-                                        const SizedBox(width: 5),
-                                        Text(
-                                          '5',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium
-                                              ?.copyWith(
-                                                  color:
-                                                      AppColors.purpleOpacity),
-                                        ),
-                                        const SizedBox(width: 5),
-                                        Text(
-                                          'کیلومتر',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .displayLarge!
-                                              .copyWith(
-                                                fontSize: 16,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      right: (Provider.of<GlobalController>(
-                                                      context)
-                                                  .language ==
-                                              'fa')
-                                          ? 22
-                                          : 0,
-                                      left: (Provider.of<GlobalController>(
-                                                      context)
-                                                  .language ==
-                                              'fa')
-                                          ? 0
-                                          : 22,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        const Icon(Icons.star),
-                                        const SizedBox(width: 5),
-                                        Text(
-                                          '4.9',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .labelMedium,
-                                        ),
-                                        const SizedBox(width: 5),
-                                        Text(
-                                          '(55)',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(width: 7),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      right: (Provider.of<GlobalController>(
-                                                      context)
-                                                  .language ==
-                                              'fa')
-                                          ? 22
-                                          : 0,
-                                      left: (Provider.of<GlobalController>(
-                                                      context)
-                                                  .language ==
-                                              'fa')
-                                          ? 0
-                                          : 22,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          'قم، پردیسان، آدرس آرایشگاه',
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .displayMedium
-                                              ?.copyWith(
-                                                  fontSize: 16,
-                                                  color: AppColors
-                                                      .textSearchColor),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 16,
-                                  ),
-                                  const Divider(
-                                    height: 1,
-                                    color: AppColors.dividerColor900,
-                                    indent: 22,
-                                    endIndent: 22,
-                                  ),
-                                  const SizedBox(height: 16),
-                                  modellMoForShop(),
-                                  const SizedBox(height: 16),
-                                  modellMoForShop(),
-                                  const SizedBox(height: 16),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      right: (Provider.of<GlobalController>(
-                                                      context)
-                                                  .language ==
-                                              'fa')
-                                          ? 22
-                                          : 0,
-                                      left: (Provider.of<GlobalController>(
-                                                      context)
-                                                  .language ==
-                                              'fa')
-                                          ? 0
-                                          : 22,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          AppLocalizations.of(context)!
-                                              .see_more,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .headlineMedium
-                                              ?.copyWith(
-                                                color: AppColors.purpleOpacity,
-                                                fontSize: 16,
-                                              ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const SizedBox(height: 32),
-                                ],
-                              )
+                              if (selectedMarkerIndex == null)
+                                Column(
+                                  children: barberShopController.barberShops
+                                      .map((barberShop) {
+                                    return BarberShopCarousel(
+                                      barberShopModel: barberShop,
+                                      controller: controller,
+                                      selectedMarkerIndex: selectedMarkerIndex,
+                                      barberShopController:
+                                          barberShopController,
+                                    );
+                                  }).toList(),
+                                ),
+                              if (selectedMarkerIndex != null)
+                                BarberShopCarousel(
+                                  barberShopModel: barberShopController
+                                          .barberShops[
+                                      selectedMarkerIndex!], // فقط آرایشگاه انتخاب‌شده
+                                  controller: controller,
+                                  selectedMarkerIndex: selectedMarkerIndex,
+                                  barberShopController: barberShopController,
+                                ),
                             ],
                           ),
                         ),

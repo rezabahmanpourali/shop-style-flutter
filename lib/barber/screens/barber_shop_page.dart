@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -9,6 +10,7 @@ import 'package:shop_style/barber/model/barber_shop_model.dart';
 import 'package:shop_style/barber/model/comment_model.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
+import 'package:shop_style/barber/widgets/book_mark_save.dart';
 import 'package:shop_style/barber_shop_list/screens/widgets/barber_shop_list.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/state_handeler.dart';
@@ -42,7 +44,6 @@ class _BarberShopPageState extends State<BarberShopPage> {
   @override
   void initState() {
     super.initState();
-
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         locator.get<BarberController>().fetchBarber(widget.barberShopId);
@@ -62,6 +63,10 @@ class _BarberShopPageState extends State<BarberShopPage> {
 
   BarberShopController barberShopController =
       locator.get<BarberShopController>();
+  bool isBookmarked = false;
+  final FlutterSecureStorage _storage =
+      FlutterSecureStorage(); // شیء ذخیره‌سازی
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -132,17 +137,21 @@ class _BarberShopPageState extends State<BarberShopPage> {
                               right: globallController.language == 'fa'
                                   ? width * 0.18
                                   : width * 0.85,
-                              child: Container(
-                                width: 36,
-                                height: 36,
-                                decoration: const BoxDecoration(
-                                  color: AppColors.cardWhite,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Center(
-                                  child: FaIcon(
-                                    FontAwesomeIcons.bookmark,
-                                    size: 18,
+                              child: GestureDetector(
+                                onTap: () {},
+                                child: Container(
+                                  width: 36,
+                                  height: 36,
+                                  decoration: const BoxDecoration(
+                                    color: AppColors.cardWhite,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Center(
+                                    child: Icon(
+                                      isBookmarked
+                                          ? Icons.bookmark
+                                          : Icons.bookmark_border,
+                                    ),
                                   ),
                                 ),
                               ),

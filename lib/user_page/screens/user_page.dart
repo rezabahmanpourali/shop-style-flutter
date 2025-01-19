@@ -306,71 +306,72 @@ class _UserPageState extends State<UserPage> {
                       endIndent: 22,
                     ),
                   ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 16, left: 22, right: 22, bottom: 16),
-                      child: Row(
-                        children: [
-                          Text(
-                            AppLocalizations.of(context)!.my_reservations,
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
-                          const Spacer(),
-                          Text(
-                            AppLocalizations.of(context)!.view_all,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyMedium
-                                ?.copyWith(color: AppColors.textHeader),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          SvgPicture.asset(
-                            'assets/images/Vector (1).svg',
-                            height: 8,
-                            width: 4,
-                            // ignore: deprecated_member_use
-                            color: AppColors.arrowIcon,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 22, left: 22),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          const ReservedCards(),
-                          const SizedBox(width: 24),
-                          verticalDivider(),
-                          const SizedBox(width: 24),
-                          const ReservedCards(),
-                          const SizedBox(width: 24),
-                          verticalDivider(),
-                          const SizedBox(width: 24),
-                          const ReservedCards(),
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 40,
-                    ),
-                  ),
+                  //شاید دوباره از کامنت دربیاد
+                  // SliverToBoxAdapter(
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.only(
+                  //         top: 16, left: 22, right: 22, bottom: 16),
+                  //     child: Row(
+                  //       children: [
+                  //         Text(
+                  //           AppLocalizations.of(context)!.my_reservations,
+                  //           style: Theme.of(context).textTheme.titleSmall,
+                  //         ),
+                  //         const Spacer(),
+                  //         Text(
+                  //           AppLocalizations.of(context)!.view_all,
+                  //           style: Theme.of(context)
+                  //               .textTheme
+                  //               .bodyMedium
+                  //               ?.copyWith(color: AppColors.textHeader),
+                  //         ),
+                  //         const SizedBox(
+                  //           width: 5,
+                  //         ),
+                  //         SvgPicture.asset(
+                  //           'assets/images/Vector (1).svg',
+                  //           height: 8,
+                  //           width: 4,
+                  //           // ignore: deprecated_member_use
+                  //           color: AppColors.arrowIcon,
+                  //         ),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  // SliverToBoxAdapter(
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.only(right: 22, left: 22),
+                  //     child: Row(
+                  //       mainAxisAlignment: MainAxisAlignment.start,
+                  //       children: [
+                  //         const ReservedCards(),
+                  //         const SizedBox(width: 24),
+                  //         verticalDivider(),
+                  //         const SizedBox(width: 24),
+                  //         const ReservedCards(),
+                  //         const SizedBox(width: 24),
+                  //         verticalDivider(),
+                  //         const SizedBox(width: 24),
+                  //         const ReservedCards(),
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
+                  // const SliverToBoxAdapter(
+                  //   child: SizedBox(
+                  //     height: 40,
+                  //   ),
+                  // ),
                   SliverToBoxAdapter(
                     child: Column(
                       children: [
                         //item1
                         UserAccountItem(
                           onChange: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const SavedBarberShop(),
-                            ));
+                            // Navigator.of(context).push(MaterialPageRoute(
+                            //   builder: (context) =>  SavedBarberShopsPage(),
+                            // ));
                           },
                           title: AppLocalizations.of(context)!.saved_stores,
                           iconRight: SvgPicture.asset(

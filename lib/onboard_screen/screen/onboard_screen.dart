@@ -73,11 +73,20 @@ class _OnbordScreenState extends State<OnbordScreen> {
                             height: globallController.language == 'fa' ||
                                     globallController.language == 'ar'
                                 ? height * 0.1
-                                : height * 0.04,
+                                : height * 0.0,
                           ),
                           Container(
                             width: double.infinity,
-                            height: height * 0.5,
+                            height: globallController.language == 'fa' ||
+                                    globallController.language == 'ar'
+                                ? height * 0.5
+                                : height * 0.42,
+                            //    SizedBox(
+                            //   height: globallController.language == 'fa' ||
+                            //           globallController.language == 'ar'
+                            //       ? height * 0.1
+                            //       : height * 0.0,
+                            // ),
                             child: VideoPlayer(_videoController),
                           ),
                           SizedBox(
