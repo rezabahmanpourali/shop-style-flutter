@@ -48,39 +48,7 @@ class _UserPageState extends State<UserPage> {
                       elevation: 0,
                       backgroundColor: AppColors.white2,
                       actions: [
-                        SvgPicture.asset('assets/images/settings.svg'),
                         const Spacer(),
-                        // Consumer<GlobalController>(
-                        //   builder: (context, globalController, child) {
-                        //     return DropdownButton<String>(
-                        //       value: globalController.language,
-                        //       items: const [
-                        //         DropdownMenuItem(
-                        //           value: 'fa',
-                        //           child: Text('فارسی'),
-                        //         ),
-                        //         DropdownMenuItem(
-                        //           value: 'en',
-                        //           child: Text('English'),
-                        //         ),
-                        //         DropdownMenuItem(
-                        //           value: 'ar',
-                        //           child: Text('العربية'),
-                        //         ),
-                        //         DropdownMenuItem(
-                        //           value: 'tr',
-                        //           child: Text('Türkish'),
-                        //         ),
-                        //       ],
-                        //       onChanged: (value) {
-                        //         if (value != null) {
-                        //           globalController.changeLanguage(value);
-                        //         }
-                        //       },
-                        //     );
-                        //   },
-                        // ),
-
                         Consumer<GlobalController>(
                           builder: (context, globalController, child) {
                             return PopupMenuButton<String>(
@@ -238,7 +206,6 @@ class _UserPageState extends State<UserPage> {
                             );
                           },
                         ),
-
                         const SizedBox(
                           width: 20,
                         ),
@@ -369,18 +336,24 @@ class _UserPageState extends State<UserPage> {
                         //item1
                         UserAccountItem(
                           onChange: () {
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //   builder: (context) =>  SavedBarberShopsPage(),
-                            // ));
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const SavedBarberShop(),
+                            ));
                           },
                           title: AppLocalizations.of(context)!.saved_stores,
-                          iconRight: SvgPicture.asset(
-                            'assets/images/Vector (1).svg',
-                            height: 8,
-                            width: 4,
-                            // ignore: deprecated_member_use
-                            color: AppColors.reserveContaner,
-                          ),
+                          iconRight: globalController.language == 'fa' ||
+                                  globalController.language == 'ar'
+                              ? SvgPicture.asset(
+                                  'assets/images/Vector (1).svg',
+                                  height: 8,
+                                  width: 4,
+                                  color: AppColors.reserveContaner,
+                                )
+                              : const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 8,
+                                  color: AppColors.reserveContaner,
+                                ),
                           iconLeft: const FaIcon(
                             FontAwesomeIcons.bookmark,
                             size: 20,
@@ -401,13 +374,19 @@ class _UserPageState extends State<UserPage> {
                             // ));
                           },
                           title: AppLocalizations.of(context)!.saved_models,
-                          iconRight: SvgPicture.asset(
-                            'assets/images/Vector (1).svg',
-                            height: 8,
-                            width: 4,
-                            // ignore: deprecated_member_use
-                            color: AppColors.reserveContaner,
-                          ),
+                          iconRight: globalController.language == 'fa' ||
+                                  globalController.language == 'ar'
+                              ? SvgPicture.asset(
+                                  'assets/images/Vector (1).svg',
+                                  height: 8,
+                                  width: 4,
+                                  color: AppColors.reserveContaner,
+                                )
+                              : const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 8,
+                                  color: AppColors.reserveContaner,
+                                ),
                           iconLeft: const FaIcon(
                             FontAwesomeIcons.bookmark,
                             size: 20,
@@ -429,13 +408,19 @@ class _UserPageState extends State<UserPage> {
                           },
                           title:
                               AppLocalizations.of(context)!.reservation_history,
-                          iconRight: SvgPicture.asset(
-                            'assets/images/Vector (1).svg',
-                            height: 8,
-                            width: 4,
-                            // ignore: deprecated_member_use
-                            color: AppColors.reserveContaner,
-                          ),
+                          iconRight: globalController.language == 'fa' ||
+                                  globalController.language == 'ar'
+                              ? SvgPicture.asset(
+                                  'assets/images/Vector (1).svg',
+                                  height: 8,
+                                  width: 4,
+                                  color: AppColors.reserveContaner,
+                                )
+                              : const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 8,
+                                  color: AppColors.reserveContaner,
+                                ),
                           iconLeft: const FaIcon(
                             FontAwesomeIcons.history,
                             size: 20,
@@ -458,13 +443,19 @@ class _UserPageState extends State<UserPage> {
                             );
                           },
                           title: AppLocalizations.of(context)!.your_reviews,
-                          iconRight: SvgPicture.asset(
-                            'assets/images/Vector (1).svg',
-                            height: 8,
-                            width: 4,
-                            // ignore: deprecated_member_use
-                            color: AppColors.reserveContaner,
-                          ),
+                          iconRight: globalController.language == 'fa' ||
+                                  globalController.language == 'ar'
+                              ? SvgPicture.asset(
+                                  'assets/images/Vector (1).svg',
+                                  height: 8,
+                                  width: 4,
+                                  color: AppColors.reserveContaner,
+                                )
+                              : const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 8,
+                                  color: AppColors.reserveContaner,
+                                ),
                           iconLeft: const FaIcon(
                             FontAwesomeIcons.commentLines,
                             size: 20,
@@ -487,13 +478,19 @@ class _UserPageState extends State<UserPage> {
                             // );
                           },
                           title: AppLocalizations.of(context)!.recent_visits,
-                          iconRight: SvgPicture.asset(
-                            'assets/images/Vector (1).svg',
-                            height: 8,
-                            width: 4,
-                            // ignore: deprecated_member_use
-                            color: AppColors.reserveContaner,
-                          ),
+                          iconRight: globalController.language == 'fa' ||
+                                  globalController.language == 'ar'
+                              ? SvgPicture.asset(
+                                  'assets/images/Vector (1).svg',
+                                  height: 8,
+                                  width: 4,
+                                  color: AppColors.reserveContaner,
+                                )
+                              : const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 8,
+                                  color: AppColors.reserveContaner,
+                                ),
                           iconLeft: const FaIcon(
                             FontAwesomeIcons.eye,
                             size: 20,
@@ -514,13 +511,19 @@ class _UserPageState extends State<UserPage> {
                             ));
                           },
                           title: AppLocalizations.of(context)!.account_info,
-                          iconRight: SvgPicture.asset(
-                            'assets/images/Vector (1).svg',
-                            height: 8,
-                            width: 4,
-                            // ignore: deprecated_member_use
-                            color: AppColors.reserveContaner,
-                          ),
+                          iconRight: globalController.language == 'fa' ||
+                                  globalController.language == 'ar'
+                              ? SvgPicture.asset(
+                                  'assets/images/Vector (1).svg',
+                                  height: 8,
+                                  width: 4,
+                                  color: AppColors.reserveContaner,
+                                )
+                              : const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 8,
+                                  color: AppColors.reserveContaner,
+                                ),
                           iconLeft: const FaIcon(
                             FontAwesomeIcons.user,
                             size: 20,
@@ -540,13 +543,19 @@ class _UserPageState extends State<UserPage> {
                             // ));
                           },
                           title: AppLocalizations.of(context)!.salon_listtt,
-                          iconRight: SvgPicture.asset(
-                            'assets/images/Vector (1).svg',
-                            height: 8,
-                            width: 4,
-                            // ignore: deprecated_member_use
-                            color: AppColors.arrowIconBig,
-                          ),
+                          iconRight: globalController.language == 'fa' ||
+                                  globalController.language == 'ar'
+                              ? SvgPicture.asset(
+                                  'assets/images/Vector (1).svg',
+                                  height: 8,
+                                  width: 4,
+                                  color: AppColors.reserveContaner,
+                                )
+                              : const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 8,
+                                  color: AppColors.reserveContaner,
+                                ),
                         ),
 
                         const Divider(
@@ -559,13 +568,19 @@ class _UserPageState extends State<UserPage> {
                         UserAccountItem(
                           onChange: () {},
                           title: AppLocalizations.of(context)!.register_salon,
-                          iconRight: SvgPicture.asset(
-                            'assets/images/Vector (1).svg',
-                            height: 8,
-                            width: 4,
-                            // ignore: deprecated_member_use
-                            color: AppColors.arrowIconBig,
-                          ),
+                          iconRight: globalController.language == 'fa' ||
+                                  globalController.language == 'ar'
+                              ? SvgPicture.asset(
+                                  'assets/images/Vector (1).svg',
+                                  height: 8,
+                                  width: 4,
+                                  color: AppColors.reserveContaner,
+                                )
+                              : const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 8,
+                                  color: AppColors.reserveContaner,
+                                ),
                         ),
 
                         const Divider(
@@ -577,13 +592,19 @@ class _UserPageState extends State<UserPage> {
                         UserAccountItem(
                           onChange: () {},
                           title: AppLocalizations.of(context)!.support,
-                          iconRight: SvgPicture.asset(
-                            'assets/images/Vector (1).svg',
-                            height: 8,
-                            width: 4,
-                            // ignore: deprecated_member_use
-                            color: AppColors.arrowIconBig,
-                          ),
+                          iconRight: globalController.language == 'fa' ||
+                                  globalController.language == 'ar'
+                              ? SvgPicture.asset(
+                                  'assets/images/Vector (1).svg',
+                                  height: 8,
+                                  width: 4,
+                                  color: AppColors.reserveContaner,
+                                )
+                              : const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 8,
+                                  color: AppColors.reserveContaner,
+                                ),
                           iconLeft: SvgPicture.asset(
                             'assets/images/fluent_person-support-28-regular.svg',
                             height: 20,
@@ -603,13 +624,19 @@ class _UserPageState extends State<UserPage> {
                         UserAccountItem(
                           onChange: () {},
                           title: AppLocalizations.of(context)!.about_us,
-                          iconRight: SvgPicture.asset(
-                            'assets/images/Vector (1).svg',
-                            height: 8,
-                            width: 4,
-                            // ignore: deprecated_member_use
-                            color: AppColors.arrowIconBig,
-                          ),
+                          iconRight: globalController.language == 'fa' ||
+                                  globalController.language == 'ar'
+                              ? SvgPicture.asset(
+                                  'assets/images/Vector (1).svg',
+                                  height: 8,
+                                  width: 4,
+                                  color: AppColors.reserveContaner,
+                                )
+                              : const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 8,
+                                  color: AppColors.reserveContaner,
+                                ),
                           iconLeft: SvgPicture.asset(
                             'assets/images/mdi_about-variant.svg',
                             height: 20,
@@ -629,13 +656,19 @@ class _UserPageState extends State<UserPage> {
                         UserAccountItem(
                           onChange: () {},
                           title: AppLocalizations.of(context)!.logout,
-                          iconRight: SvgPicture.asset(
-                            'assets/images/Vector (1).svg',
-                            height: 8,
-                            width: 4,
-                            // ignore: deprecated_member_use
-                            color: AppColors.arrowIconBig,
-                          ),
+                          iconRight: globalController.language == 'fa' ||
+                                  globalController.language == 'ar'
+                              ? SvgPicture.asset(
+                                  'assets/images/Vector (1).svg',
+                                  height: 8,
+                                  width: 4,
+                                  color: AppColors.reserveContaner,
+                                )
+                              : const Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 8,
+                                  color: AppColors.reserveContaner,
+                                ),
                           iconLeft: SvgPicture.asset(
                             'assets/images/material-symbols-light_exit-to-app-rounded.svg',
                             height: 20,

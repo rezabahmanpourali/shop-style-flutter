@@ -6,8 +6,9 @@ import 'package:shop_style/common/statemanagment/global_controller.dart';
 
 class CardItem extends StatelessWidget {
   final BarberShopModel barberShopModel;
+  
   const CardItem(
-    this.barberShopModel,
+    this.barberShopModel, {super.key}
   );
 
   @override

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:hive/hive.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shop_style/View_comments/View_comments_screen.dart';
 import 'package:shop_style/barber/model/barber_model.dart';
 import 'package:shop_style/barber/model/barber_shop_model.dart';
+import 'package:shop_style/barber/model/barber_shop_saved_model.dart';
 import 'package:shop_style/barber/model/comment_model.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
-import 'package:shop_style/barber/widgets/book_mark_save.dart';
 import 'package:shop_style/barber_shop_list/screens/widgets/barber_shop_list.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/state_handeler.dart';
@@ -21,6 +21,7 @@ import 'package:shop_style/common/widgets/service_categories.dart';
 import 'package:shop_style/common/widgets/stack_widget_view.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/common/widgets/user_comment.dart';
+import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/home/widgets/barber_shop_list_widgets.dart';
 import 'package:shop_style/locator.dart';
 import 'package:shop_style/reserve_page1/screens/service_selection_screen.dart';
@@ -41,9 +42,16 @@ class BarberShopPage extends StatefulWidget {
 }
 
 class _BarberShopPageState extends State<BarberShopPage> {
+  Box<BarberShopSavedModel> box = Hive.box<BarberShopSavedModel>('CardBox');
   @override
   void initState() {
     super.initState();
+    var savedBarberShop = box.get(widget.barberShopId);
+    widget.barberShopModel.isBookmarked =
+        savedBarberShop?.isBookmarked ?? false;
+    if (savedBarberShop != null) {
+      widget.barberShopModel.isBookmarked = savedBarberShop.isBookmarked;
+    }
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         locator.get<BarberController>().fetchBarber(widget.barberShopId);
@@ -59,13 +67,18 @@ class _BarberShopPageState extends State<BarberShopPage> {
         locator.get<BarberShopController>().fetchServic(widget.barberShopId);
       },
     );
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        locator.get<BarberShopController>().fetchBarberShops();
+      },
+    );
+    Hive.openBox<BarberShopSavedModel>('CardBox');
   }
 
   BarberShopController barberShopController =
       locator.get<BarberShopController>();
   bool isBookmarked = false;
-  final FlutterSecureStorage _storage =
-      FlutterSecureStorage(); // شیء ذخیره‌سازی
+  bool isLoading = true;
 
   @override
   Widget build(BuildContext context) {
@@ -86,236 +99,471 @@ class _BarberShopPageState extends State<BarberShopPage> {
                   child: CustomScrollView(
                     slivers: [
                       SliverToBoxAdapter(
-                        child: Stack(
-                          children: [
-                            SizedBox(
-                              width: double.infinity,
-                              height: 266,
-                              child: widget.barberShopModel.images != null &&
-                                      widget.barberShopModel.images!.isNotEmpty
-                                  ? Image.network(
-                                      widget.barberShopModel.images![0].url
-                                          .toString(),
-                                      fit: BoxFit.cover,
-                                    )
-                                  : Shimmer.fromColors(
-                                      baseColor:
-                                          Colors.grey.shade300, // رنگ پایه شیمر
-                                      highlightColor:
-                                          Colors.grey.shade100, // رنگ شیمر
+                        child: Selector<BarberShopController, BlocStatus>(
+                          selector: (context, controller) =>
+                              controller.barberShopState,
+                          builder: (context, barberShopState, child) {
+                            return StateManageWidget(
+                              status: barberShopState,
+                              loadingWidget: () {
+                                return Stack(
+                                  children: [
+                                    // شیمر برای تصویر
+                                    Shimmer.fromColors(
+                                      baseColor: Colors.grey.shade300,
+                                      highlightColor: Colors.grey.shade100,
                                       child: Container(
                                         color: Colors.grey.shade300,
                                         width: double.infinity,
-                                        height: 266,
+                                        height: height * 0.3,
                                       ),
                                     ),
-                            ),
-                            Positioned(
-                              top: height * 0.02,
-                              right: globallController.language == 'fa'
-                                  ? width * 0.85
-                                  : width * 0.05,
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Container(
-                                  width: 36,
-                                  height: 36,
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.cardWhite,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: const Icon(
-                                    Icons.arrow_forward,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: height * 0.02,
-                              right: globallController.language == 'fa'
-                                  ? width * 0.18
-                                  : width * 0.85,
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                  width: 36,
-                                  height: 36,
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.cardWhite,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Center(
-                                    child: Icon(
-                                      isBookmarked
-                                          ? Icons.bookmark
-                                          : Icons.bookmark_border,
+                                    if (!isLoading)
+                                      Positioned(
+                                        top: height * 0.02,
+                                        right:
+                                            globallController.language == 'fa'
+                                                ? width * 0.85
+                                                : width * 0.05,
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Container(
+                                            width: 36,
+                                            height: 36,
+                                            decoration: const BoxDecoration(
+                                              color: AppColors.cardWhite,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child:
+                                                const Icon(Icons.arrow_forward),
+                                          ),
+                                        ),
+                                      ),
+                                    if (!isLoading)
+                                      Positioned(
+                                        top: height * 0.02,
+                                        right:
+                                            globallController.language == 'fa'
+                                                ? width * 0.18
+                                                : width * 0.85,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              widget.barberShopModel
+                                                      .isBookmarked =
+                                                  !widget.barberShopModel
+                                                      .isBookmarked;
+
+                                              if (widget.barberShopModel
+                                                  .isBookmarked) {
+                                                box.put(
+                                                  widget.barberShopModel.id,
+                                                  BarberShopSavedModel(
+                                                    widget.barberShopModel.id,
+                                                    barberShopName: widget
+                                                        .barberShopModel
+                                                        .barberShopName,
+                                                    imageUrl: widget
+                                                        .barberShopModel
+                                                        .images![0]
+                                                        .url,
+                                                    isBookmarked: widget
+                                                        .barberShopModel
+                                                        .isBookmarked,
+                                                  ),
+                                                );
+                                              } else {
+                                                box.delete(
+                                                    widget.barberShopModel.id);
+                                              }
+                                            });
+                                          },
+                                          child: Container(
+                                            width: 36,
+                                            height: 36,
+                                            decoration: const BoxDecoration(
+                                              color: AppColors.cardWhite,
+                                              shape: BoxShape.circle,
+                                            ),
+                                            child: Center(
+                                              child: Icon(
+                                                widget.barberShopModel
+                                                        .isBookmarked
+                                                    ? Icons.bookmark
+                                                    : Icons.bookmark_border,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    if (!isLoading)
+                                      Positioned(
+                                        top: height * 0.02,
+                                        right:
+                                            globallController.language == 'fa'
+                                                ? width * 0.05
+                                                : width * 0.72,
+                                        child: Container(
+                                          width: 36,
+                                          height: 36,
+                                          decoration: const BoxDecoration(
+                                            color: AppColors.cardWhite,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: const Center(
+                                            child: FaIcon(
+                                              FontAwesomeIcons.shareNodes,
+                                              size: 18,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                  ],
+                                );
+                              },
+                              errorWidgetBuilder: (message, statusCode) {
+                                return Center(child: Text(message ?? 'خطا'));
+                              },
+                              completedWidgetBuilder: (value) {
+                                return Stack(
+                                  children: [
+                                    SizedBox(
+                                      width: double.infinity,
+                                      height: 266,
+                                      child: widget.barberShopModel.images !=
+                                                  null &&
+                                              widget.barberShopModel.images!
+                                                  .isNotEmpty
+                                          ? Image.network(
+                                              widget.barberShopModel.images![0]
+                                                  .url
+                                                  .toString(),
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Container(),
+                                    ),
+                                    Positioned(
+                                      top: height * 0.02,
+                                      right: globallController.language == 'fa'
+                                          ? width * 0.85
+                                          : width * 0.05,
+                                      child: InkWell(
+                                        onTap: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Container(
+                                          width: 36,
+                                          height: 36,
+                                          decoration: const BoxDecoration(
+                                            color: AppColors.cardWhite,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child:
+                                              const Icon(Icons.arrow_forward),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: height * 0.02,
+                                      right: globallController.language == 'fa'
+                                          ? width * 0.18
+                                          : width * 0.85,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            widget.barberShopModel
+                                                    .isBookmarked =
+                                                !widget.barberShopModel
+                                                    .isBookmarked;
+                                            if (widget
+                                                .barberShopModel.isBookmarked) {
+                                              box.put(
+                                                widget.barberShopModel.id,
+                                                BarberShopSavedModel(
+                                                  widget.barberShopModel.id,
+                                                  barberShopName: widget
+                                                      .barberShopModel
+                                                      .barberShopName,
+                                                  imageUrl: widget
+                                                      .barberShopModel
+                                                      .images![0]
+                                                      .url,
+                                                  isBookmarked: widget
+                                                      .barberShopModel
+                                                      .isBookmarked,
+                                                ),
+                                              );
+                                            } else {
+                                              box.delete(
+                                                  widget.barberShopModel.id);
+                                            }
+                                          });
+                                        },
+                                        child: Container(
+                                          width: 36,
+                                          height: 36,
+                                          decoration: const BoxDecoration(
+                                            color: AppColors.cardWhite,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Center(
+                                            child: Icon(
+                                              widget.barberShopModel
+                                                      .isBookmarked
+                                                  ? Icons.bookmark
+                                                  : Icons.bookmark_border,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: height * 0.02,
+                                      right: globallController.language == 'fa'
+                                          ? width * 0.05
+                                          : width * 0.72,
+                                      child: Container(
+                                        width: 36,
+                                        height: 36,
+                                        decoration: const BoxDecoration(
+                                          color: AppColors.cardWhite,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: const Center(
+                                          child: FaIcon(
+                                            FontAwesomeIcons.shareNodes,
+                                            size: 18,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                        ),
+                      ),
+
+                      const SliverPadding(padding: EdgeInsets.only(top: 16)),
+
+                      SliverToBoxAdapter(
+                        child: Selector<BarberShopController, BlocStatus>(
+                          selector: (context, controller) =>
+                              controller.barberShopState,
+                          builder: (context, barberShopState, child) {
+                            return BarberShopTitle(
+                              barberShopListState: barberShopState,
+                              barberShopModel: widget.barberShopModel,
+                            );
+                          },
+                        ),
+                      ),
+
+                      const SliverPadding(padding: EdgeInsets.only(top: 16)),
+                      SliverToBoxAdapter(
+                        child: Selector<BarberShopController, BlocStatus>(
+                          builder: (context, barberShopState, child) {
+                            return StateManageWidget(
+                              status: barberShopState,
+                              loadingWidget: () {
+                                return Shimmer.fromColors(
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        right: width * 0.05,
+                                        top: height * 0.01),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(bottom: 15),
+                                          width: width * 0.2,
+                                          height: 15,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            color: Colors.grey[300],
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: height * 0.04,
+                                          child: ListView.builder(
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: 6,
+                                            itemBuilder: (context, index) {
+                                              return Container(
+                                                margin: const EdgeInsets.only(
+                                                    left: 5),
+                                                width: width * 0.3,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                  color: Colors.grey[300],
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: height * 0.02,
-                              right: globallController.language == 'fa'
-                                  ? width * 0.05
-                                  : width * 0.72,
-                              child: Container(
-                                width: 36,
-                                height: 36,
-                                decoration: const BoxDecoration(
-                                  color: AppColors.cardWhite,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: const Center(
-                                  child: FaIcon(
-                                    FontAwesomeIcons.shareNodes,
-                                    size: 18,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SliverPadding(padding: EdgeInsets.only(top: 16)),
-                      SliverToBoxAdapter(
-                        child: getTitleNamePage(context),
-                      ),
-                      const SliverPadding(padding: EdgeInsets.only(top: 16)),
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 22, left: 22),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.services,
-                                style: Theme.of(context).textTheme.titleSmall,
-                              ),
-                              const SizedBox(height: 15),
-                              ServiceCategories(
-                                onTabChange: (index) {},
-                                tabs: [
-                                  AppLocalizations.of(context)!.hair_cut,
-                                  AppLocalizations.of(context)!.hair_style,
-                                  AppLocalizations.of(context)!.shaving,
-                                ],
-                                content: [
-                                  Selector<BarberShopController, BlocStatus>(
-                                    builder: (context, serviceState, child) {
-                                      return StateManageWidget(
-                                        status: serviceState,
-                                        loadingWidget: () {
-                                          return const Center(
-                                            child: CircularProgressIndicator(),
-                                          );
-                                        },
-                                        errorWidgetBuilder:
-                                            (message, statusCode) {
-                                          return Center(
-                                            child: Text(
-                                              message.toString(),
-                                            ),
-                                          );
-                                        },
-                                        completedWidgetBuilder: (value) {
-                                          if (value.isEmpty) {
-                                            return Center(
-                                              child: Text(
-                                                'هیچ داده‌ای وجود ندارد',
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .titleLarge
-                                                    ?.copyWith(
-                                                      color: Colors.black54,
-                                                      fontSize: 16,
+                                );
+                              },
+                              errorWidgetBuilder: (message, statusCode) {
+                                return Center(
+                                  child: Text(message!),
+                                );
+                              },
+                              completedWidgetBuilder: (value) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 22, left: 22),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                    children: [
+                                      Text(
+                                        AppLocalizations.of(context)!.services,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      ),
+                                      const SizedBox(height: 15),
+                                      ServiceCategories(
+                                        onTabChange: (index) {},
+                                        tabs: [
+                                          AppLocalizations.of(context)!
+                                              .hair_cut,
+                                          AppLocalizations.of(context)!
+                                              .hair_style,
+                                          AppLocalizations.of(context)!.shaving,
+                                        ],
+                                        content: [
+                                          Selector<BarberShopController,
+                                              BlocStatus>(
+                                            builder:
+                                                (context, serviceState, child) {
+                                              return StateManageWidget(
+                                                status: serviceState,
+                                                loadingWidget: () {
+                                                  return const Center(
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  );
+                                                },
+                                                errorWidgetBuilder:
+                                                    (message, statusCode) {
+                                                  return Center(
+                                                    child: Text(
+                                                      message.toString(),
                                                     ),
-                                              ),
-                                            );
-                                          }
-
-                                          return Column(
-                                            children: [
-                                              SizedBox(
-                                                height: value.isNotEmpty
-                                                    ? null
-                                                    : 250.0,
-                                                child: ListView.builder(
-                                                  shrinkWrap: true,
-                                                  physics:
-                                                      const NeverScrollableScrollPhysics(),
-                                                  itemCount: value.length > 3
-                                                      ? 3
-                                                      : value.length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int index) {
-                                                    final service =
-                                                        value[index];
-                                                    return ServicesView(
-                                                      serviceModel: service,
-                                                      isLastItem: (index ==
-                                                          (value.length > 3
-                                                              ? 2
-                                                              : value.length -
-                                                                  1)),
+                                                  );
+                                                },
+                                                completedWidgetBuilder:
+                                                    (value) {
+                                                  if (value.isEmpty) {
+                                                    return Center(
+                                                      child: Text(
+                                                        'هیچ داده‌ای وجود ندارد',
+                                                        style: Theme.of(context)
+                                                            .textTheme
+                                                            .titleLarge
+                                                            ?.copyWith(
+                                                              color: Colors
+                                                                  .black54,
+                                                              fontSize: 16,
+                                                            ),
+                                                      ),
                                                     );
-                                                  },
-                                                ),
-                                              ),
-                                              if (value.isNotEmpty)
-                                                SizedBox(
-                                                  height: height * 0.02,
-                                                ),
-                                              moreButton(
-                                                context,
-                                                AppLocalizations.of(context)!
-                                                    .see_more,
-                                                () {},
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
-                                    },
-                                    selector: (context, controller) =>
-                                        controller.servicState,
+                                                  }
+                                                  return Column(
+                                                    children: [
+                                                      SizedBox(
+                                                        height: value.isNotEmpty
+                                                            ? null
+                                                            : 250.0,
+                                                        child: ListView.builder(
+                                                          shrinkWrap: true,
+                                                          physics:
+                                                              const NeverScrollableScrollPhysics(),
+                                                          itemCount:
+                                                              value.length > 3
+                                                                  ? 3
+                                                                  : value
+                                                                      .length,
+                                                          itemBuilder:
+                                                              (BuildContext
+                                                                      context,
+                                                                  int index) {
+                                                            final service =
+                                                                value[index];
+                                                            return ServicesView(
+                                                              serviceModel:
+                                                                  service,
+                                                              isLastItem: (index ==
+                                                                  (value.length >
+                                                                          3
+                                                                      ? 2
+                                                                      : value.length -
+                                                                          1)),
+                                                            );
+                                                          },
+                                                        ),
+                                                      ),
+                                                      if (value.isNotEmpty)
+                                                        SizedBox(
+                                                          height: height * 0.02,
+                                                        ),
+                                                      moreButton(
+                                                        context,
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .see_more,
+                                                        () {},
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                            },
+                                            selector: (context, controller) =>
+                                                controller.servicState,
+                                          ),
+                                          Container(
+                                            width: 100,
+                                            height: 100,
+                                            color: Colors.blue,
+                                          ),
+                                          Container(
+                                            width: 100,
+                                            height: 100,
+                                            color: Colors.green,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                  Container(
-                                    width: 100,
-                                    height: 100,
-                                    color: Colors.blue,
-                                  ),
-                                  Container(
-                                    width: 100,
-                                    height: 100,
-                                    color: Colors.green,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                                );
+                              },
+                            );
+                          },
+                          selector: (context, controller) =>
+                              controller.barberShopState,
                         ),
                       ),
+
                       SliverToBoxAdapter(
                         child: SizedBox(
                           height: height * 0.02,
                         ),
                       ),
                       const SliverPadding(padding: EdgeInsets.only(top: 32)),
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 22, left: 22),
-                          child: Text(
-                            AppLocalizations.of(context)!.salon_members,
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
-                        ),
-                      ),
-                      const SliverPadding(padding: EdgeInsets.only(top: 16)),
-
                       SliverToBoxAdapter(
                         child: Selector<BarberController, BlocStatus>(
                           selector: (context, controller) =>
@@ -324,8 +572,64 @@ class _BarberShopPageState extends State<BarberShopPage> {
                             return StateManageWidget(
                               status: barberStatus,
                               loadingWidget: () {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
+                                return Shimmer.fromColors(
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        right: width * 0.05,
+                                        top: height * 0.01),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(bottom: 15),
+                                          width: width * 0.24,
+                                          height: 13,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            color: Colors.grey[300],
+                                          ),
+                                        ),
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(bottom: 15),
+                                          width: width * 0.2,
+                                          height: 8,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            color: Colors.grey[300],
+                                          ),
+                                        ),
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(top: 15),
+                                          width: width * 0.2,
+                                          height: 8,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            color: Colors.grey[300],
+                                          ),
+                                        ),
+                                        Container(
+                                          margin:
+                                              const EdgeInsets.only(top: 15),
+                                          width: width * 0.9,
+                                          height: 1,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            color: Colors.grey[300],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 );
                               },
                               errorWidgetBuilder: (message, statusCode) {
@@ -336,92 +640,49 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                 );
                               },
                               completedWidgetBuilder: (value) {
-                                return SizedBox(
-                                  height: 140,
-                                  child: ListView.builder(
-                                    padding: const EdgeInsets.only(
-                                        right: 22, left: 22),
-                                    scrollDirection: Axis.horizontal,
-                                    itemCount: value.length,
-                                    itemBuilder: (context, index) {
-                                      final barber = value[index];
-                                      return BarberArtists(barberModel: barber);
-                                    },
-                                  ),
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 22, left: 22, bottom: 16),
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                            .salon_members,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 140,
+                                      child: ListView.builder(
+                                        padding: const EdgeInsets.only(
+                                            right: 22, left: 22),
+                                        scrollDirection: Axis.horizontal,
+                                        itemCount: value.length,
+                                        itemBuilder: (context, index) {
+                                          final barber = value[index];
+                                          return BarberArtists(
+                                            barberModel: barber,
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 );
                               },
                             );
                           },
                         ),
                       ),
-
-                      SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(right: 22, left: 22),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                AppLocalizations.of(context)!.reviews,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayLarge!
-                                    .copyWith(
-                                      fontSize: 16,
-                                    ),
-                              ),
-                              Row(
-                                children: List.generate(
-                                  5,
-                                  (index) {
-                                    int rating = widget
-                                        .barberShopModel.comments![0].rating
-                                        .toInt();
-
-                                    if (index < rating) {
-                                      return const Icon(Icons.star);
-                                    } else {
-                                      return const Icon(Icons.star_border);
-                                    }
-                                  },
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Text(
-                                    '4.5',
-                                    style:
-                                        Theme.of(context).textTheme.labelMedium,
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    '(55)',
-                                    style:
-                                        Theme.of(context).textTheme.bodyMedium,
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-                              const Divider(
-                                height: 1,
-                                color: AppColors.dividerColor900,
-                                indent: 22,
-                                endIndent: 22,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-
                       SliverToBoxAdapter(
                         child: Selector<BarberShopController, BlocStatus>(
                           builder: (context, commentStatus, child) {
                             return StateManageWidget(
                               status: commentStatus,
                               loadingWidget: () {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
+                                return const SizedBox();
                               },
                               errorWidgetBuilder: (message, statusCode) {
                                 return Center(
@@ -436,27 +697,113 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                   );
                                 }
 
-                                return SizedBox(
-                                  height:
-                                      widget.barberShopModel.comments!.length *
-                                          170.0,
-                                  child: ListView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount:
-                                        widget.barberShopModel.comments!.length,
-                                    itemBuilder: (context, index) {
-                                      final comment = widget
-                                          .barberShopModel.comments![index];
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 22),
-                                        child: UserComment(
-                                          commentBarberShop: comment,
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 22, right: 22),
+                                      child: Text(
+                                        AppLocalizations.of(context)!.reviews,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .displayLarge!
+                                            .copyWith(
+                                              fontSize: 16,
+                                            ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 22, left: 22),
+                                      child: Row(
+                                        children: List.generate(
+                                          5,
+                                          (index) {
+                                            if (widget.barberShopModel
+                                                        .comments !=
+                                                    null &&
+                                                widget.barberShopModel.comments!
+                                                    .isNotEmpty) {
+                                              int rating = widget
+                                                  .barberShopModel
+                                                  .comments![0]
+                                                  .rating
+                                                  .toInt();
+
+                                              if (index < rating) {
+                                                return const Icon(Icons.star);
+                                              } else {
+                                                return const Icon(
+                                                    Icons.star_border);
+                                              }
+                                            } else {
+                                              return const Icon(
+                                                  Icons.star_border);
+                                            }
+                                          },
                                         ),
-                                      );
-                                    },
-                                  ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          left: 22, right: 22),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            '4.5',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelMedium,
+                                          ),
+                                          const SizedBox(width: 5),
+                                          Text(
+                                            '(55)',
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodyMedium,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    const Divider(
+                                      height: 1,
+                                      color: AppColors.dividerColor900,
+                                      indent: 22,
+                                      endIndent: 22,
+                                    ),
+                                    SizedBox(
+                                      height: widget.barberShopModel.comments!
+                                              .length *
+                                          170.0,
+                                      child: ListView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        itemCount: widget
+                                            .barberShopModel.comments!.length,
+                                        itemBuilder: (context, index) {
+                                          final comment = widget
+                                              .barberShopModel.comments![index];
+                                          return Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 22),
+                                            child: UserComment(
+                                              commentBarberShop: comment,
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 22),
+                                      child: moreButton(
+                                        context,
+                                        AppLocalizations.of(context)!.see_more,
+                                        () {},
+                                      ),
+                                    ),
+                                  ],
                                 );
                               },
                             );
@@ -467,19 +814,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
                       ),
 
                       const SliverPadding(padding: EdgeInsets.only(top: 22)),
-                      SliverToBoxAdapter(
-                        child: moreButton(
-                          context,
-                          AppLocalizations.of(context)!.see_more,
-                          () {
-                            // Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //     builder: (context) => const ViewCommentsScreen(),
-                            //   ),
-                            // );
-                          },
-                        ),
-                      ),
+
                       const SliverPadding(padding: EdgeInsets.only(top: 32)),
                       SliverToBoxAdapter(
                         child: Padding(
@@ -743,56 +1078,6 @@ class _BarberShopPageState extends State<BarberShopPage> {
                 );
               },
             ),
-            // Positioned(
-            //   bottom: 5,
-            //   child: Container(
-            //     width: double.infinity,
-            //     color: AppColors.arayeshColor,
-            //     child: Row(
-            //       children: [
-            //         GestureDetector(
-            //           onTap: () {
-            //             Navigator.of(context).push(MaterialPageRoute(
-            //               builder: (context) =>
-            //                   const ServiceSelectionScreen(),
-            //             ));
-            //           },
-            //           child: Container(
-            //             width: 179,
-            //             height: 60,
-            //             decoration: BoxDecoration(
-            //               color: AppColors.bgBlack,
-            //               borderRadius: BorderRadius.circular(8),
-            //             ),
-            //             child: const Center(
-            //               child: Padding(
-            //                 padding: EdgeInsets.only(left: 20, right: 20),
-            //                 child: Text(
-            //                   'رزرو نوبت',
-            //                   style: TextStyle(
-            //                     fontSize: 16,
-            //                     fontWeight: FontWeight.w700,
-            //                     color: AppColors.white2,
-            //                   ),
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //         const Spacer(),
-            //         const Text(
-            //           '6 مدل مو',
-            //           style: TextStyle(
-            //             fontSize: 16,
-            //             fontWeight: FontWeight.w500,
-            //             color: AppColors.textSearchColor,
-            //           ),
-            //         ),
-            //         const Spacer(),
-            //       ],
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
@@ -802,7 +1087,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
   Widget moreButton(
       BuildContext context, String buttonText, VoidCallback onTapCallback) {
     return GestureDetector(
-      onTap: onTapCallback, // استفاده از تابع کلیک شدن که از بیرون پاس داده شده
+      onTap: onTapCallback,
       child: Container(
         height: 50,
         margin: const EdgeInsets.symmetric(horizontal: 22),
@@ -818,7 +1103,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
           padding: const EdgeInsets.all(8.0),
           child: Center(
             child: Text(
-              buttonText, // استفاده از متن داینامیک که از بیرون پاس داده شده
+              buttonText,
               style: Theme.of(context).textTheme.displayLarge!.copyWith(
                     fontSize: 16,
                   ),
@@ -828,44 +1113,118 @@ class _BarberShopPageState extends State<BarberShopPage> {
       ),
     );
   }
+}
 
-  Widget getTitleNamePage(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(right: 22, top: 5, left: 22),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Text(
-            widget.barberShopModel.barberShopName!,
-            style: Theme.of(context).textTheme.titleMedium,
-          ),
-          const SizedBox(height: 6),
-          const Scoring(),
-          const SizedBox(height: 6),
-          Text(
-            'فاصله حدود 5 کیلومتر . آدرس کامل آرایشگاه',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: AppColors.textHeader,
-                  fontSize: 14,
+class BarberShopTitle extends StatelessWidget {
+  final BarberShopModel barberShopModel;
+  final BlocStatus barberShopListState;
+
+  const BarberShopTitle(
+      {super.key,
+      required this.barberShopModel,
+      required this.barberShopListState});
+
+  @override
+  Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
+
+    return StateManageWidget(
+      status: barberShopListState,
+      loadingWidget: () {
+        return Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: Padding(
+            padding: EdgeInsets.only(right: width * 0.05, top: height * 0.01),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(bottom: 15),
+                  width: width * 0.5,
+                  height: 15,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey[300],
+                  ),
                 ),
-          ),
-          const SizedBox(height: 6),
-          Text(
-            'تا ساعت 21:00 باز است',
-            style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                  color: AppColors.textHeader,
-                  fontSize: 14,
+                Container(
+                  margin: const EdgeInsets.only(bottom: 15),
+                  width: width * 0.3,
+                  height: 22,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey[300],
+                  ),
                 ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  width: width * 0.2,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey[300],
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(bottom: 10),
+                  width: width * 0.2,
+                  height: 10,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: Colors.grey[300],
+                  ),
+                ),
+              ],
+            ),
           ),
-          const SizedBox(height: 6),
-          const Divider(
-            height: 1,
-            color: AppColors.dividerColor900,
-            indent: 22,
-            endIndent: 22,
+        );
+      },
+      errorWidgetBuilder: (message, statusCode) {
+        return Center(
+          child: Text(message!),
+        );
+      },
+      completedWidgetBuilder: (value) {
+        return Padding(
+          padding: const EdgeInsets.only(right: 22, top: 5, left: 22),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                barberShopModel.barberShopName!,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(height: 6),
+              const Scoring(),
+              const SizedBox(height: 6),
+              Text(
+                'فاصله حدود 5 کیلومتر . آدرس کامل آرایشگاه',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      color: AppColors.textHeader,
+                      fontSize: 14,
+                    ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'تا ساعت 21:00 باز است',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      color: AppColors.textHeader,
+                      fontSize: 14,
+                    ),
+              ),
+              const SizedBox(height: 6),
+              const Divider(
+                height: 1,
+                color: AppColors.dividerColor900,
+                indent: 22,
+                endIndent: 22,
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

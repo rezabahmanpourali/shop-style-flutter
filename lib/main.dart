@@ -3,8 +3,11 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
+import 'package:shop_style/barber/model/barber_shop_saved_model.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
@@ -19,12 +22,13 @@ import 'package:shop_style/user_page/screens/user_page.dart';
 import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
 
-void main() {
+void main() async {
   Provider.debugCheckInvalidValueType = null;
-
   WidgetsFlutterBinding.ensureInitialized();
   setupLocator(); // مقداردهی اولیه کنترلرها
-
+  await Hive.initFlutter();
+  Hive.registerAdapter(BarberShopSavedModelAdapter());
+  await Hive.openBox<BarberShopSavedModel>('CardBox');
   runApp(
     MultiProvider(
       providers: [
@@ -240,6 +244,8 @@ class _MyAppState extends State<MyApp> {
                 unselectedItemColor: Colors.grey, // رنگ آیکن‌های غیرفعال
                 showUnselectedLabels: true, // نمایش برچسب‌های غیرفعال
                 items: navigationItems, // استفاده از آیتم‌ها بر اساس زبان
+                type: BottomNavigationBarType.fixed,
+                elevation: 15,
               ),
             );
           },

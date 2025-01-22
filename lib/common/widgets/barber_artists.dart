@@ -5,12 +5,12 @@ import 'package:shop_style/common/configs/colors.dart';
 class BarberArtists extends StatelessWidget {
   final BarberModel barberModel;
   const BarberArtists({super.key, required this.barberModel});
-
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        
         SizedBox(
           height: 120,
           width: 91,

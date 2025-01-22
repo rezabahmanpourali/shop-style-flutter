@@ -8,6 +8,7 @@ class BarberShopModel {
   final List<CommentModel>? comments;
   final List<ImageModel>? images;
   final Location? location;
+  bool isBookmarked; 
 
   BarberShopModel({
     this.id,
@@ -17,6 +18,7 @@ class BarberShopModel {
     this.comments,
     this.images,
     this.location,
+    this.isBookmarked = false,
   });
 
   factory BarberShopModel.fromJson(Map<String, dynamic> json) {

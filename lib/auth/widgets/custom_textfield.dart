@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/enums.dart';
+import 'package:shop_style/common/statemanagment/global_controller.dart';
 
 class CustomTextfield extends StatefulWidget {
   const CustomTextfield({
@@ -67,7 +69,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
       case TextfieldType.numberPhone:
         return Row(
           children: [
-            getNumberPhoneIcon(),
+            getNumberPhoneIcon(context),
             SizedBox(width: width / 40),
             getTextfield(width),
           ],
@@ -110,10 +112,14 @@ class _CustomTextfieldState extends State<CustomTextfield> {
     );
   }
 
-  Widget getNumberPhoneIcon() {
-    return const Icon(
-      Icons.phone_enabled_rounded,
-      color: AppColors.bgGrey,
+  Widget getNumberPhoneIcon(BuildContext context) {
+    final globalController = Provider.of<GlobalController>(context);
+    bool isLanguageFarsi =
+        globalController.language == 'fa' || globalController.language == 'ar';
+
+    return Icon(
+      isLanguageFarsi ? Icons.phone_enabled_rounded : Icons.phone,
+      color: AppColors.onBoardColor,
       size: 40,
     );
   }

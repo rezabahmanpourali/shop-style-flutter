@@ -16,11 +16,12 @@ class BarberShopListWidget extends StatefulWidget {
   final List<BarberShopModel> barbreShopData;
 
   final String title;
-  const BarberShopListWidget(
-      {super.key,
-      required this.barberShopListState,
-      required this.barbreShopData,
-      required this.title});
+  const BarberShopListWidget({
+    super.key,
+    required this.barberShopListState,
+    required this.barbreShopData,
+    required this.title,
+  });
 
   @override
   State<BarberShopListWidget> createState() => _BarberShopListWidgetState();
@@ -131,7 +132,9 @@ class _BarberShopListWidgetState extends State<BarberShopListWidget> {
                           ),
                         );
                       },
-                      child: CardItem(barberShop),
+                      child: CardItem(
+                        barberShop
+                      ),
                     ),
                   );
                 },
