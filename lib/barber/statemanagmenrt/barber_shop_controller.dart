@@ -24,8 +24,10 @@ class BarberShopController extends ChangeNotifier {
   List<CommentModel> comments = [];
   List<ServiceModel> services = [];
   String errorMessage = '';
+  String searchQuery = ''; // برای ذخیره عبارت جستجو
+  List<BarberShopModel> filteredBarberShops = []; // لیست فیلتر شده آرایشگاه‌ها
 
-  //کنترلر آرایشگاه ها
+  // کنترلر آرایشگاه ها
   void fetchBarberShops() async {
     barberShopState = BlocStatusLoading();
     notifyListeners();
@@ -100,6 +102,21 @@ class BarberShopController extends ChangeNotifier {
           (response.json as List).map((e) => ServiceModel.fromJson(e)).toList();
       servicState = BlocStatusCompleted(services);
     }
+    notifyListeners();
+  }
+
+  void filterBarberShops(String query) {
+    searchQuery = query;
+
+    // ترکیب لیست آرایشگاه‌ها از هر دو منبع (SEEN_RECENTLY و TOP_BARBERS)
+    List<BarberShopModel> allShops = [...barberShops, ...topBarberShops];
+
+    // اعمال فیلتر
+    filteredBarberShops = allShops
+        .where((shop) =>
+            shop.barberShopName != null && shop.barberShopName!.contains(query))
+        .toList();
+
     notifyListeners();
   }
 }

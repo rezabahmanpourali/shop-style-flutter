@@ -21,7 +21,6 @@ import 'package:shop_style/common/widgets/service_categories.dart';
 import 'package:shop_style/common/widgets/stack_widget_view.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/common/widgets/user_comment.dart';
-import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/home/widgets/barber_shop_list_widgets.dart';
 import 'package:shop_style/locator.dart';
 import 'package:shop_style/reserve_page1/screens/service_selection_screen.dart';
@@ -43,9 +42,13 @@ class BarberShopPage extends StatefulWidget {
 
 class _BarberShopPageState extends State<BarberShopPage> {
   Box<BarberShopSavedModel> box = Hive.box<BarberShopSavedModel>('CardBox');
+  late Box<BarberShopSavedModel> recentVisitsBox;
   @override
   void initState() {
     super.initState();
+    recentVisitsBox = Hive.box<BarberShopSavedModel>('recentVisitsBox');
+    _saveRecentlyViewedShop();
+    //////////////////////////
     var savedBarberShop = box.get(widget.barberShopId);
     widget.barberShopModel.isBookmarked =
         savedBarberShop?.isBookmarked ?? false;
@@ -75,6 +78,23 @@ class _BarberShopPageState extends State<BarberShopPage> {
     Hive.openBox<BarberShopSavedModel>('CardBox');
   }
 
+  void _saveRecentlyViewedShop() {
+    var savedShop = recentVisitsBox.get(widget.barberShopId);
+
+    if (savedShop == null) {
+      recentVisitsBox.put(
+        widget.barberShopId,
+        BarberShopSavedModel(
+          widget.barberShopId,
+          barberShopName: widget.barberShopModel.barberShopName,
+          imageUrl: widget.barberShopModel.images?.first.url,
+          shopType: widget.barberShopModel.shopType,
+          isBookmarked: widget.barberShopModel.isBookmarked,
+        ),
+      );
+    }
+  }
+
   BarberShopController barberShopController =
       locator.get<BarberShopController>();
   bool isBookmarked = false;
@@ -87,16 +107,16 @@ class _BarberShopPageState extends State<BarberShopPage> {
     return Scaffold(
       backgroundColor: AppColors.arayeshColor,
       body: SafeArea(
-        child: Stack(
-          children: [
-            Consumer<GlobalController>(
-              builder: (context, globallController, child) {
-                return Directionality(
-                  textDirection: globallController.language == 'fa' ||
-                          globallController.language == 'ar'
-                      ? TextDirection.rtl
-                      : TextDirection.ltr,
-                  child: CustomScrollView(
+        child: Consumer<GlobalController>(
+          builder: (context, globallController, child) {
+            return Directionality(
+              textDirection: globallController.language == 'fa' ||
+                      globallController.language == 'ar'
+                  ? TextDirection.rtl
+                  : TextDirection.ltr,
+              child: Stack(
+                children: [
+                  CustomScrollView(
                     slivers: [
                       SliverToBoxAdapter(
                         child: Selector<BarberShopController, BlocStatus>(
@@ -159,7 +179,8 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                               if (widget.barberShopModel
                                                   .isBookmarked) {
                                                 box.put(
-                                                  widget.barberShopModel.id,
+                                                  // widget.barberShopModel.id,
+                                                  widget.barberShopId,
                                                   BarberShopSavedModel(
                                                     widget.barberShopModel.id,
                                                     barberShopName: widget
@@ -169,6 +190,9 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                                         .barberShopModel
                                                         .images![0]
                                                         .url,
+                                                    shopType: widget
+                                                        .barberShopModel
+                                                        .shopType,
                                                     isBookmarked: widget
                                                         .barberShopModel
                                                         .isBookmarked,
@@ -504,6 +528,8 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                                             final service =
                                                                 value[index];
                                                             return ServicesView(
+                                                              shouldNavigate:
+                                                                  true,
                                                               serviceModel:
                                                                   service,
                                                               isLastItem: (index ==
@@ -516,17 +542,31 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                                           },
                                                         ),
                                                       ),
-                                                      if (value.isNotEmpty)
+                                                      if (value.isNotEmpty &&
+                                                          value.length >
+                                                              3) // اضافه کردن شرط برای نمایش دکمه
                                                         SizedBox(
                                                           height: height * 0.02,
                                                         ),
-                                                      moreButton(
-                                                        context,
-                                                        AppLocalizations.of(
-                                                                context)!
-                                                            .see_more,
-                                                        () {},
-                                                      ),
+                                                      if (value.length >
+                                                          3) // نمایش دکمه "see_more" فقط اگر تعداد آیتم‌ها بیشتر از 3 باشد
+                                                        moreButton(
+                                                          context,
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .see_more,
+                                                          () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .push(
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        ServiceSelectionScreen(),
+                                                              ),
+                                                            );
+                                                          },
+                                                        ),
                                                     ],
                                                   );
                                                 },
@@ -775,13 +815,21 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                     ),
                                     SizedBox(
                                       height: widget.barberShopModel.comments!
-                                              .length *
-                                          170.0,
+                                                  .length >
+                                              3
+                                          ? 3 * 170.0
+                                          : widget.barberShopModel.comments!
+                                                  .length *
+                                              170.0,
                                       child: ListView.builder(
                                         physics:
                                             const NeverScrollableScrollPhysics(),
-                                        itemCount: widget
-                                            .barberShopModel.comments!.length,
+                                        itemCount: widget.barberShopModel
+                                                    .comments!.length >
+                                                3
+                                            ? 3
+                                            : widget.barberShopModel.comments!
+                                                .length,
                                         itemBuilder: (context, index) {
                                           final comment = widget
                                               .barberShopModel.comments![index];
@@ -795,14 +843,28 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                         },
                                       ),
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 22),
-                                      child: moreButton(
-                                        context,
-                                        AppLocalizations.of(context)!.see_more,
-                                        () {},
+                                    if (widget
+                                            .barberShopModel.comments!.length >=
+                                        3)
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 22),
+                                        child: moreButton(
+                                          context,
+                                          AppLocalizations.of(context)!
+                                              .see_more,
+                                          () {
+                                            Navigator.of(context).push(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ViewCommentsScreen(
+                                                  barberShopModel:
+                                                      widget.barberShopModel,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
                                       ),
-                                    ),
                                   ],
                                 );
                               },
@@ -812,8 +874,6 @@ class _BarberShopPageState extends State<BarberShopPage> {
                               controller.commentStatus,
                         ),
                       ),
-
-                      const SliverPadding(padding: EdgeInsets.only(top: 22)),
 
                       const SliverPadding(padding: EdgeInsets.only(top: 32)),
                       SliverToBoxAdapter(
@@ -1075,10 +1135,10 @@ class _BarberShopPageState extends State<BarberShopPage> {
                       ),
                     ],
                   ),
-                );
-              },
-            ),
-          ],
+                ],
+              ),
+            );
+          },
         ),
       ),
     );
@@ -1087,7 +1147,9 @@ class _BarberShopPageState extends State<BarberShopPage> {
   Widget moreButton(
       BuildContext context, String buttonText, VoidCallback onTapCallback) {
     return GestureDetector(
-      onTap: onTapCallback,
+      onTap: () {
+        onTapCallback();
+      },
       child: Container(
         height: 50,
         margin: const EdgeInsets.symmetric(horizontal: 22),

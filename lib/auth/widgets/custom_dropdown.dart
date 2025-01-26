@@ -1,25 +1,403 @@
+// import 'package:flutter/material.dart';
+// import 'package:provider/provider.dart';
+// import 'package:shop_style/common/configs/colors.dart';
+// import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+// import 'package:shop_style/common/statemanagment/global_controller.dart'; // فایل لوکالیزیشن
+
+// class CustomDropdown extends StatefulWidget {
+//   const CustomDropdown({
+//     super.key,
+//     required this.lableField,
+//     this.topPadding,
+//     required this.items,
+//   });
+
+//   final String lableField;
+//   final double? topPadding;
+//   final List<Map<String, dynamic>>
+//       items; // تغییرات: لیست شامل رنگ دایره نیز هست
+
+//   @override
+//   State<CustomDropdown> createState() => _CustomDropdownState();
+// }
+
+// class _CustomDropdownState extends State<CustomDropdown> {
+//   String? selectedValue;
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     // مقدار اولیه انتخاب شده را تنظیم می‌کنیم
+//     selectedValue = null;
+//   }
+
+//   // این متد برای نمایش پاپ‌آپ انتخاب از لیست آیتم‌ها است
+//   void _showDropdownDialog(BuildContext context) {
+//     final double width = MediaQuery.of(context).size.width;
+
+//     showDialog(
+//       context: context,
+//       builder: (context) {
+//         return Dialog(
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(16),
+//           ),
+//           child: Container(
+//             width: width * 0.8,
+//             padding: const EdgeInsets.all(16),
+//             child: Column(
+//               mainAxisSize: MainAxisSize.min,
+//               children: widget.items.asMap().entries.map(
+//                 (entry) {
+//                   String firstText = entry.value['first'] ?? '';
+//                   String secondText = entry.value['second'] ?? '';
+//                   Color circleColor = entry.value['circleColor'] ??
+//                       Colors.transparent; // رنگ دایره
+//                   bool isLastItem = entry.key ==
+//                       widget.items.length - 1; // چک کردن آخرین آیتم
+
+//                   return Column(
+//                     children: [
+//                       InkWell(
+//                         onTap: () {
+//                           setState(() {
+//                             selectedValue = '';
+//                           });
+//                           Navigator.of(context).pop();
+//                         },
+//                         child: Padding(
+//                           padding: const EdgeInsets.symmetric(vertical: 10),
+//                           child: Consumer<GlobalController>(
+//                             builder: (context, globallController, child) {
+//                               return Row(
+//                                 mainAxisAlignment:
+//                                     globallController.language == 'fa' ||
+//                                             globallController.language == 'ar'
+//                                         ? MainAxisAlignment.end
+//                                         : MainAxisAlignment.start,
+//                                 children: [
+//                                   // اضافه کردن دایره رنگی کنار متن
+
+//                                   if (globallController.language == 'fa' ||
+//                                       globallController.language == 'ar') ...[
+//                                     Text(
+//                                       firstText,
+//                                       style: Theme.of(context)
+//                                           .textTheme
+//                                           .displayMedium
+//                                           ?.copyWith(
+//                                             fontWeight: FontWeight.w400,
+//                                             fontSize: 14,
+//                                             color: AppColors.black,
+//                                           ),
+//                                     ),
+//                                     Text(
+//                                       secondText,
+//                                       style: Theme.of(context)
+//                                           .textTheme
+//                                           .displayLarge
+//                                           ?.copyWith(
+//                                             fontWeight: FontWeight.w700,
+//                                             fontSize: 14,
+//                                           ),
+//                                     ),
+//                                     const SizedBox(width: 8),
+//                                     if (circleColor != Colors.transparent) ...[
+//                                       Container(
+//                                         width: 20,
+//                                         height: 20,
+//                                         decoration: BoxDecoration(
+//                                           color: circleColor,
+//                                           shape: BoxShape.circle,
+//                                         ),
+//                                       ),
+//                                     ],
+//                                   ],
+
+//                                   if (globallController.language == 'en' ||
+//                                       globallController.language == 'tr') ...[
+//                                     if (circleColor != Colors.transparent) ...[
+//                                       Container(
+//                                         width: 20,
+//                                         height: 20,
+//                                         decoration: BoxDecoration(
+//                                           color: circleColor,
+//                                           shape: BoxShape.circle,
+//                                         ),
+//                                       ),
+//                                     ],
+//                                     const SizedBox(width: 8),
+//                                     Text(
+//                                       secondText,
+//                                       style: Theme.of(context)
+//                                           .textTheme
+//                                           .displayLarge
+//                                           ?.copyWith(
+//                                             fontWeight: FontWeight.w700,
+//                                             fontSize: 14,
+//                                           ),
+//                                     ),
+//                                     Text(
+//                                       firstText,
+//                                       style: Theme.of(context)
+//                                           .textTheme
+//                                           .displayMedium
+//                                           ?.copyWith(
+//                                             fontWeight: FontWeight.w400,
+//                                             fontSize: 14,
+//                                           ),
+//                                     ),
+//                                   ],
+//                                 ],
+//                               );
+//                             },
+//                           ),
+//                         ),
+//                       ),
+//                       // اگر آخرین آیتم نبود، دیوایدر را نمایش بده
+//                       if (!isLastItem)
+//                         const Divider(
+//                           color: AppColors.dividerColor900,
+//                           height: 1,
+//                         ),
+//                     ],
+//                   );
+//                 },
+//               ).toList(),
+//             ),
+//           ),
+//         );
+//       },
+//     );
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     final double width = MediaQuery.of(context).size.width;
+//     final double height = MediaQuery.of(context).size.height;
+
+//     return SizedBox(
+//       child: Padding(
+//         padding: EdgeInsets.only(top: widget.topPadding ?? 0),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.stretch,
+//           children: [
+//             Text(
+//               widget.lableField,
+//               style: Theme.of(context).textTheme.displayLarge?.copyWith(
+//                     color: AppColors.black,
+//                     fontSize: 12,
+//                   ),
+//             ),
+//             SizedBox(height: height / 100),
+//             GestureDetector(
+//               onTap: () {
+//                 _showDropdownDialog(context);
+//               },
+//               child: Container(
+//                 height: height / 18,
+//                 decoration: BoxDecoration(
+//                   border: Border.all(color: AppColors.onBoardColor, width: 1),
+//                   color: AppColors.white2,
+//                   borderRadius: const BorderRadius.all(Radius.circular(30)),
+//                 ),
+//                 child: Padding(
+//                   padding: EdgeInsets.symmetric(horizontal: width / 20),
+//                   child: Row(
+//                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//                     children: [
+//                       Text(
+//                         selectedValue ??
+//                             widget.items[0]['first']!, // نمایش انتخاب شده
+//                         style: TextStyle(color: AppColors.black, fontSize: 16),
+//                       ),
+//                       const Icon(
+//                         Icons.keyboard_arrow_down_outlined,
+//                         color: AppColors.black,
+//                         size: 30,
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shop_style/common/configs/colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:shop_style/common/statemanagment/global_controller.dart'; // فایل لوکالیزیشن
 
 class CustomDropdown extends StatefulWidget {
   const CustomDropdown({
     super.key,
     required this.lableField,
     this.topPadding,
+    required this.items,
   });
 
   final String lableField;
   final double? topPadding;
+  final List<Map<String, dynamic>>
+      items; // تغییرات: لیست شامل رنگ دایره نیز هست
 
   @override
   State<CustomDropdown> createState() => _CustomDropdownState();
 }
 
 class _CustomDropdownState extends State<CustomDropdown> {
+  String? selectedValue;
+
+  @override
+  void initState() {
+    super.initState();
+    // مقدار اولیه انتخاب شده را به null تنظیم می‌کنیم
+    selectedValue = null;
+  }
+
+  // این متد برای نمایش پاپ‌آپ انتخاب از لیست آیتم‌ها است
+  void _showDropdownDialog(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Container(
+            width: width * 0.8,
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: widget.items.asMap().entries.map(
+                (entry) {
+                  String firstText = entry.value['first'] ?? '';
+                  String secondText = entry.value['second'] ?? '';
+                  Color circleColor =
+                      entry.value['circleColor'] ?? Colors.transparent;
+                  bool isLastItem = entry.key == widget.items.length - 1;
+
+                  return Column(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {
+                            selectedValue = firstText;
+                          });
+                          Navigator.of(context).pop();
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: Consumer<GlobalController>(
+                            builder: (context, globallController, child) {
+                              return Row(
+                                mainAxisAlignment:
+                                    globallController.language == 'fa' ||
+                                            globallController.language == 'ar'
+                                        ? MainAxisAlignment.end
+                                        : MainAxisAlignment.start,
+                                children: [
+                                  if (globallController.language == 'fa' ||
+                                      globallController.language == 'ar') ...[
+                                    Text(
+                                      firstText,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14,
+                                            color: AppColors.black,
+                                          ),
+                                    ),
+                                    Text(
+                                      secondText,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 14,
+                                          ),
+                                    ),
+                                    const SizedBox(width: 8),
+                                    if (circleColor != Colors.transparent) ...[
+                                      Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          color: circleColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                    ],
+                                  ],
+                                  if (globallController.language == 'en' ||
+                                      globallController.language == 'tr') ...[
+                                    if (circleColor != Colors.transparent) ...[
+                                      Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          color: circleColor,
+                                          shape: BoxShape.circle,
+                                        ),
+                                      ),
+                                    ],
+                                    const SizedBox(width: 8),
+                                    Text(
+                                      secondText,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayLarge
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 14,
+                                          ),
+                                    ),
+                                    Text(
+                                      firstText,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .displayMedium
+                                          ?.copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            fontSize: 14,
+                                          ),
+                                    ),
+                                  ],
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      if (!isLastItem)
+                        const Divider(
+                          color: AppColors.dividerColor900,
+                          height: 1,
+                        ),
+                    ],
+                  );
+                },
+              ).toList(),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    String? selectedValue = AppLocalizations.of(context)!.yellow;
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
 
@@ -37,51 +415,38 @@ class _CustomDropdownState extends State<CustomDropdown> {
                   ),
             ),
             SizedBox(height: height / 100),
-            Container(
-              height: height / 18,
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.bgGrey, width: 2),
-                color: AppColors.white2,
-                borderRadius: const BorderRadius.all(Radius.circular(30)),
-              ),
-              child: DropdownButton<String>(
-                underline: const SizedBox(),
-                icon: const Icon(
-                  Icons.keyboard_arrow_down_outlined,
-                  color: AppColors.black,
-                  size: 30,
+            GestureDetector(
+              onTap: () {
+                _showDropdownDialog(context);
+              },
+              child: Container(
+                height: height / 18,
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.onBoardColor, width: 1),
+                  color: AppColors.white2,
+                  borderRadius: const BorderRadius.all(Radius.circular(30)),
                 ),
-                value: selectedValue,
-                items: <String>[
-                  AppLocalizations.of(context)!.yellow,
-                  AppLocalizations.of(context)!.red,
-                  AppLocalizations.of(context)!.green,
-                  AppLocalizations.of(context)!.blue,
-                ].map((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: width / 20),
-                      child: Stack(
-                        children: [
-                          SizedBox(width: width / 1.5),
-                          Text(
-                            value,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(color: AppColors.black),
-                          ),
-                        ],
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width / 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // نمایش مقدار انتخاب شده یا اگر هیچ انتخابی نشده باشد، هیچ چیزی نمایش داده نشود
+                      if (selectedValue != null)
+                        Text(
+                          selectedValue!,
+                          style:
+                              TextStyle(color: AppColors.black, fontSize: 16),
+                        ),
+                      const Icon(
+                        Icons.keyboard_arrow_down_outlined,
+                        color: AppColors.black,
+                        size: 20,
+                        weight: 2,
                       ),
-                    ),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedValue = newValue;
-                  });
-                },
+                    ],
+                  ),
+                ),
               ),
             ),
           ],

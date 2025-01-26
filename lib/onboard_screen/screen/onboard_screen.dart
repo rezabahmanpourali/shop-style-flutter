@@ -92,47 +92,94 @@ class _OnbordScreenState extends State<OnbordScreen> {
                           SizedBox(
                             height: height * 0.02,
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                left: width * 0.01, right: width * 0.01),
-                            child: Wrap(
-                              alignment: WrapAlignment.center,
-                              children: [
-                                Text(
-                                  textAlign: TextAlign.center,
-                                  contents[index].title3,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(fontSize: 32),
-                                ),
-                                Text(
-                                  textAlign: TextAlign.center,
-                                  contents[index].title2,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyMedium!
-                                      .copyWith(fontSize: 32),
-                                ),
-                                Text(
-                                  textAlign: TextAlign.center,
-                                  contents[index].title,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(fontSize: 32),
-                                ),
-                              ],
+                          if (globallController.language == 'en' ||
+                              globallController.language == 'tr') ...[
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: width * 0.01, right: width * 0.01),
+                              child: Wrap(
+                                alignment: WrapAlignment.center,
+                                children: [
+                                  Text(
+                                    textAlign: TextAlign.center,
+                                    contents[index].title3,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(fontSize: 32),
+                                  ),
+                                  Text(
+                                    textAlign: TextAlign.center,
+                                    contents[index].title2,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(fontSize: 32),
+                                  ),
+                                  Text(
+                                    textAlign: TextAlign.center,
+                                    contents[index].title,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(fontSize: 32),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          Text(
-                            textAlign: TextAlign.center,
-                            contents[index].title4,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(fontSize: 32),
-                          ),
+                            Text(
+                              textAlign: TextAlign.center,
+                              contents[index].title4,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(fontSize: 32),
+                            ),
+                          ],
+                          if (globallController.language == 'fa' ||
+                              globallController.language == 'ar') ...[
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: width * 0.01, right: width * 0.01),
+                              child: Wrap(
+                                alignment: WrapAlignment.center,
+                                children: [
+                                  Text(
+                                    textAlign: TextAlign.center,
+                                    contents[index].title,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(fontSize: 32),
+                                  ),
+                                  Text(
+                                    textAlign: TextAlign.center,
+                                    contents[index].title2,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium!
+                                        .copyWith(fontSize: 32),
+                                  ),
+                                  Text(
+                                    textAlign: TextAlign.center,
+                                    contents[index].title3,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(fontSize: 32),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Text(
+                              textAlign: TextAlign.center,
+                              contents[index].title4,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(fontSize: 32),
+                            ),
+                          ],
                           const SizedBox(
                             height: 20,
                           ),

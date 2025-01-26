@@ -1,99 +1,193 @@
-// import 'package:flutter/material.dart';
-// import 'package:shop_style/barber_shop_list/screens/widgets/barber_shop_list.dart';
-// import 'package:shop_style/common/configs/colors.dart';
-// import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_style/barber/model/barber_shop_model.dart';
+import 'package:shop_style/barber/screens/barber_shop_page.dart';
+import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
+import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
+import 'package:shop_style/barber_shop_list/screens/widgets/search_bar_widgets.dart';
+import 'package:shop_style/common/configs/colors.dart';
+import 'package:shop_style/barber_shop_list/screens/widgets/barber_shop_list.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:shop_style/locator.dart';
 
-// class BarberShopListPage extends StatefulWidget {
-//   const BarberShopListPage({super.key});
+class BarberShopListPage extends StatefulWidget {
+  const BarberShopListPage({super.key});
 
-//   @override
-//   State<BarberShopListPage> createState() => _BarberShopListPageState();
-// }
+  @override
+  State<BarberShopListPage> createState() => _BarberShopListPageState();
+}
 
-// class _BarberShopListPageState extends State<BarberShopListPage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: AppColors.white2,
-//       body: SafeArea(
-//         child: Directionality(
-//           textDirection: TextDirection.rtl,
-//           child: CustomScrollView(
-//             slivers: [
-//               SliverAppBar(
-//                 surfaceTintColor: AppColors.white2,
-//                 pinned: true,
-//                 title: Row(
-//                   children: [
-//                     const Icon(Icons.arrow_back),
-//                     const SizedBox(width: 5),
-//                     Text(
-//                       'آرایشگاه ها',
-//                       style: Theme.of(context).textTheme.titleSmall,
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//               const SliverToBoxAdapter(
-//                 child: Divider(
-//                   endIndent: 22,
-//                   indent: 22,
-//                   color: AppColors.dividerColor900,
-//                 ),
-//               ),
-//               SliverPadding(
-//                 padding: const EdgeInsets.symmetric(
-//                   horizontal: 22,
-//                   vertical: 10,
-//                 ),
-//                 sliver: SliverToBoxAdapter(
-//                   child: getSearchBox(context),
-//                 ),
-//               ),
-//               SliverList(
-//                 delegate: SliverChildBuilderDelegate(
-//                   childCount: 10,
-//                   (context, index) {
-//                     return const BarberShopList(barberShopListState: ,);
-//                   },
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
+class _BarberShopListPageState extends State<BarberShopListPage> {
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() =>
+        // ignore: use_build_context_synchronously
+        Provider.of<BarberShopController>(context, listen: false)
+            .fetchBarberShops());
+  }
 
-//   Widget getSearchBox(BuildContext context) {
-//     return Container(
-//       width: double.infinity,
-//       height: 59,
-//       decoration: BoxDecoration(
-//         border: Border.all(
-//           width: 1,
-//           color: AppColors.cardWhite,
-//         ),
-//         borderRadius: BorderRadius.circular(47),
-//       ),
-//       child: Padding(
-//         padding: const EdgeInsets.only(right: 15),
-//         child: Row(
-//           children: [
-//             const FaIcon(
-//               FontAwesomeIcons.search,
-//               size: 20,
-//             ),
-//             const SizedBox(
-//               width: 7,
-//             ),
-//             Text(
-//               'جستجوی نام آرایشگاه',
-//               style: Theme.of(context).textTheme.displayMedium,
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.white2,
+      body: SafeArea(
+        child: Directionality(
+          textDirection: TextDirection.rtl,
+          child: Consumer<BarberShopController>(
+            builder: (context, controller, child) {
+              return CustomScrollView(
+                slivers: [
+                  SliverAppBar(
+                    surfaceTintColor: AppColors.white2,
+                    pinned: false,
+                    automaticallyImplyLeading: false,
+                    title: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: const Icon(Icons.arrow_back),
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          'آرایشگاه ها',
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SliverToBoxAdapter(
+                    child: Divider(
+                      endIndent: 22,
+                      indent: 22,
+                      color: AppColors.dividerColor900,
+                    ),
+                  ),
+                  SliverPadding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 22,
+                      vertical: 10,
+                    ),
+                    sliver: SliverToBoxAdapter(
+                      child: SearchBarWidget(
+                        onChanged: (value) {
+                          controller.filterBarberShops(value); // اعمال فیلتر
+                        },
+                        onSubmitted: (value) {
+                          controller.filterBarberShops(value); // اعمال فیلتر
+                        },
+                      ),
+                    ),
+                  ),
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      childCount: controller.filteredBarberShops.isEmpty
+                          ? 1
+                          : controller.filteredBarberShops.length,
+                      (context, index) {
+                        if (controller.filteredBarberShops.isEmpty) {
+                          return const Center(
+                            child: Text('چیزی جستجو نشده'),
+                          );
+                        }
+                        final shop = controller.filteredBarberShops[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).push(
+                              PageRouteBuilder(
+                                pageBuilder:
+                                    (context, animation, secondaryAnimation) {
+                                  return MultiProvider(
+                                    providers: [
+                                      ChangeNotifierProvider.value(
+                                        value: locator.get<BarberController>(),
+                                      ),
+                                      ChangeNotifierProvider.value(
+                                        value:
+                                            locator.get<BarberShopController>(),
+                                      ),
+                                    ],
+                                    child: BarberShopPage(
+                                      barberShopModel: shop,
+                                      barberShopId: shop.id ?? 0,
+                                    ),
+                                  );
+                                },
+                                transitionsBuilder: (context, animation,
+                                    secondaryAnimation, child) {
+                                  const begin = Offset(1.0, 0.0);
+                                  const end = Offset.zero;
+                                  const curve = Curves.easeInOut;
+
+                                  var tween = Tween(begin: begin, end: end)
+                                      .chain(CurveTween(curve: curve));
+                                  var offsetAnimation = animation.drive(tween);
+
+                                  return SlideTransition(
+                                      position: offsetAnimation, child: child);
+                                },
+                              ),
+                            );
+                          },
+                          child: SearchCaedItem(shop: shop),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class SearchCaedItem extends StatelessWidget {
+  const SearchCaedItem({
+    super.key,
+    required this.shop,
+  });
+
+  final BarberShopModel shop;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const Divider(
+          color: AppColors.dividerColor900,
+          height: 1,
+        ),
+        Padding(
+          padding:
+              const EdgeInsets.only(left: 22, right: 22, top: 16, bottom: 16),
+          child: Row(
+            children: [
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.network(
+                    shop.images != null && shop.images!.isNotEmpty
+                        ? shop.images![0].url!
+                        : 'https://modirwp.com/wp-content/uploads/2019/12/wordpress-http-error.png',
+                    fit: BoxFit.cover,
+                    width: 66,
+                    height: 66,
+                  )),
+              Text(shop.barberShopName ?? 'نام آرایشگاه'),
+              const Spacer(),
+              const Icon(
+                Icons.chevron_right,
+                size: 20,
+              ),
+            ],
+          ),
+        )
+      ],
+    );
+  }
+}
+

@@ -17,3 +17,9 @@ class BarberShopRepository extends IBarberShopRepository {
     return response;
   }
 }
+
+
+
+
+
+

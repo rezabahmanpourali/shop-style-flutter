@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_style/auth/screens/completion_information.dart';
 import 'package:shop_style/auth/widgets/custom_button.dart';
+import 'package:shop_style/auth/widgets/custom_textbox.dart';
 import 'package:shop_style/auth/widgets/custom_textfield.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/common/widgets/text_padding.dart';
@@ -130,51 +131,50 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
       child: Row(
         children: [
           Container(
-            width: width / 20,
-            height: width / 20,
-            decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(5),
-              ),
-            ),
-            child: Checkbox(
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              checkColor: AppColors.white2,
-              activeColor: AppColors.purple,
-              value: hasAcceptance,
-              onChanged: (value) {
-                setState(() {
-                  hasAcceptance = !hasAcceptance;
-                });
-              },
-            ),
-          ),
-          SizedBox(width: width / 40),
-          TextPadding(
-            text: AppLocalizations.of(context)!.accept_terms,
-            theme: Theme.of(context).textTheme.displayMedium?.copyWith(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.bgBlack,
+              width: width / 20,
+              height: width / 20,
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(
+                  Radius.circular(5),
                 ),
+              ),
+              child: CustomCheckbox(
+                value: hasAcceptance,
+                onChanged: (value) {
+                  setState(() {
+                    hasAcceptance = value!;
+                  });
+                },
+              )),
+          SizedBox(width: width / 40),
+          Row(
+            children: [
+              TextPadding(
+                text: AppLocalizations.of(context)!.accept,
+                theme: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.bgBlack,
+                    ),
+              ),
+              TextPadding(
+                text: AppLocalizations.of(context)!.terms_conditions,
+                theme: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.purpleOpacity,
+                    ),
+              ),
+              TextPadding(
+                text: AppLocalizations.of(context)!.use_of_service,
+                theme: Theme.of(context).textTheme.displayMedium?.copyWith(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: AppColors.bgBlack,
+                    ),
+              ),
+            ],
           ),
-          // TextPadding(
-          //   text: AppLocalizations.of(context)!.terms_and_conditions,
-          //   theme: Theme.of(context).textTheme.displayMedium?.copyWith(
-          //         fontSize: 12,
-          //         fontWeight: FontWeight.w400,
-          //         color: AppColors.purpleOpacity,
-          //       ),
-          // ),
-          // TextPadding(
-          //   text: ' استفاده از سرویس {نام برنامه}',
-          //   theme: Theme.of(context).textTheme.displayMedium?.copyWith(
-          //         fontSize: 12,
-          //         fontWeight: FontWeight.w400,
-          //         color: AppColors.bgBlack,
-          //       ),
-          // ),
         ],
       ),
     );

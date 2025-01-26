@@ -6,8 +6,6 @@ class GlobalController extends ChangeNotifier {
   String language = 'en';
   BuildContext? context;
 
-  
-
   void setToken(String inputToken) {
     token = inputToken;
     notifyListeners();

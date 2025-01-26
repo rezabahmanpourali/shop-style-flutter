@@ -109,26 +109,172 @@ class _CompletionInformationState extends State<CompletionInformation> {
                           ?.copyWith(color: AppColors.textHeader),
                     ),
                   ),
+                  //Face Shape DDM
                   SliverToBoxAdapter(
                     child: CustomDropdown(
+                      items: [
+                        if (globalController.language == 'fa' ||
+                            globalController.language == 'ar') ...[
+                          {
+                            'first': AppLocalizations.of(context)!.round,
+                            'second': AppLocalizations.of(context)!.roundd,
+                          },
+                          {
+                            'first': AppLocalizations.of(context)!.square,
+                            'second': AppLocalizations.of(context)!.squaree,
+                          },
+                          {
+                            'first': AppLocalizations.of(context)!.heart,
+                            'second': AppLocalizations.of(context)!.heartt,
+                          },
+                          {
+                            'first': AppLocalizations.of(context)!.diamond,
+                            'second': AppLocalizations.of(context)!.diamondd,
+                          },
+                          {
+                            'first': AppLocalizations.of(context)!.triangle,
+                            'second': AppLocalizations.of(context)!.trianglee,
+                          },
+                          {
+                            'first': AppLocalizations.of(context)!.rectangle,
+                            'second': AppLocalizations.of(context)!.rectanglee,
+                          },
+                        ],
+                        if (globalController.language == 'en' ||
+                            globalController.language == 'tr') ...[
+                          {
+                            'first': AppLocalizations.of(context)!.round,
+                            'second': AppLocalizations.of(context)!.roundd_en,
+                          },
+                          {
+                            'first': AppLocalizations.of(context)!.square,
+                            'second': AppLocalizations.of(context)!.squaree_en,
+                          },
+                          {
+                            'first': AppLocalizations.of(context)!.heart,
+                            'second': AppLocalizations.of(context)!.heartt_en,
+                          },
+                          {
+                            'first': AppLocalizations.of(context)!.diamond,
+                            'second': AppLocalizations.of(context)!.diamondd_en,
+                          },
+                          {
+                            'first': AppLocalizations.of(context)!.triangle,
+                            'second':
+                                AppLocalizations.of(context)!.trianglee_en,
+                          },
+                          {
+                            'first': AppLocalizations.of(context)!.rectangle,
+                            'second':
+                                AppLocalizations.of(context)!.rectanglee_en,
+                          },
+                        ],
+                      ],
                       lableField: AppLocalizations.of(context)!.face_form,
                       topPadding: height / 40,
                     ),
                   ),
+                  //Hair Shape DDM
                   SliverToBoxAdapter(
                     child: CustomDropdown(
+                      items: [
+                        {
+                          'first': AppLocalizations.of(context)!
+                              .smooth_and_wave_free,
+                          'second': AppLocalizations.of(context)!.smooth,
+                        },
+                        {
+                          'first': AppLocalizations.of(context)!.large_waves,
+                          'second': AppLocalizations.of(context)!.curly,
+                        },
+                        {
+                          'first': AppLocalizations.of(context)!.small_curl,
+                          'second': AppLocalizations.of(context)!.frizzy,
+                        },
+                        {
+                          'first': AppLocalizations.of(context)!.slightly_wavy,
+                          'second': AppLocalizations.of(context)!.wavy,
+                        },
+                        {
+                          'first': AppLocalizations.of(context)!
+                              .rough_and_coarse_texture,
+                          'second': AppLocalizations.of(context)!.rough,
+                        },
+                      ],
                       lableField: AppLocalizations.of(context)!.hair_style,
                       topPadding: height / 40,
                     ),
                   ),
+                  //Eye Color DDM
                   SliverToBoxAdapter(
                     child: CustomDropdown(
+                      items: [
+                        {
+                          'first': AppLocalizations.of(context)!.dark_and_deep,
+                          'second': AppLocalizations.of(context)!.black_eye,
+                          'circleColor': AppColors.reserveContaner,
+                        },
+                        {
+                          'first': AppLocalizations.of(context)!.warm_and_deep,
+                          'second': AppLocalizations.of(context)!.brown_eye,
+                          'circleColor': AppColors.brown,
+                        },
+                        {
+                          'first': AppLocalizations.of(context)!.light_and_calm,
+                          'second': AppLocalizations.of(context)!.blue_eye,
+                          'circleColor': AppColors.blurshafaf,
+                        },
+                        {
+                          'first':
+                              AppLocalizations.of(context)!.attractive_and_rare,
+                          'second': AppLocalizations.of(context)!.green_eye,
+                          'circleColor': AppColors.greenD,
+                        },
+                        {
+                          'first':
+                              AppLocalizations.of(context)!.cold_and_mysterious,
+                          'second': AppLocalizations.of(context)!.gray_eye,
+                          'circleColor': AppColors.greyD,
+                        },
+                        {
+                          'first':
+                              AppLocalizations.of(context)!.yellow_and_shiny,
+                          'second': AppLocalizations.of(context)!.amber_eye,
+                          'circleColor': AppColors.yellowD,
+                        },
+                      ],
                       lableField: AppLocalizations.of(context)!.eye_color,
                       topPadding: height / 40,
                     ),
                   ),
                   SliverToBoxAdapter(
                     child: CustomDropdown(
+                      items: [
+                        {
+                          'first': AppLocalizations.of(context)!.round,
+                          'second': AppLocalizations.of(context)!.roundd,
+                        },
+                        {
+                          'first': AppLocalizations.of(context)!.square,
+                          'second': AppLocalizations.of(context)!.squaree,
+                        },
+                        {
+                          'first': AppLocalizations.of(context)!.heart,
+                          'second': AppLocalizations.of(context)!.heartt,
+                        },
+                        {
+                          'first': AppLocalizations.of(context)!.diamond,
+                          'second': AppLocalizations.of(context)!.diamondd,
+                        },
+                        {
+                          'first': AppLocalizations.of(context)!.triangle,
+                          'second': AppLocalizations.of(context)!.trianglee,
+                        },
+                        {
+                          'first': AppLocalizations.of(context)!.rectangle,
+                          'second': AppLocalizations.of(context)!.rectanglee,
+                        },
+                      ],
                       lableField:
                           AppLocalizations.of(context)!.preferred_hair_model,
                       topPadding: height / 40,

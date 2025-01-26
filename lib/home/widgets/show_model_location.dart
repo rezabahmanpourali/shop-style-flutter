@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:shop_style/common/configs/colors.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ShowModelLocation extends StatefulWidget {
   final Function(String) onSelectOption;
@@ -50,10 +49,67 @@ class _ShowModelLocationState extends State<ShowModelLocation> {
 
   String selectedCity = 'قم';
 
+  Map<String, LatLng> cityCoordinates = {
+    'آذربایجان شرقی': const LatLng(38.0962, 46.2732),
+    'آذربایجان غربی': const LatLng(37.4905, 45.3034),
+    'اصفهان': const LatLng(32.6559, 51.6740),
+    'البرز': const LatLng(35.8694, 50.9877),
+    'ایلام': const LatLng(33.6406, 46.4019),
+    'بوشهر': const LatLng(28.9257, 50.8383),
+    'تهران': const LatLng(35.6892, 51.3890),
+    'چهارمحال و بختیاری': const LatLng(32.6343, 50.0797),
+    'خراسان جنوبی': const LatLng(32.8693, 59.2194),
+    'خراسان رضوی': const LatLng(36.3035, 59.5890),
+    'خراسان شمالی': const LatLng(37.3270, 57.0604),
+    'خوزستان': const LatLng(31.3207, 48.2935),
+    'زنجان': const LatLng(36.6690, 48.4850),
+    'سمنان': const LatLng(35.5772, 53.3941),
+    'سیستان و بلوچستان': const LatLng(30.2824, 60.3887),
+    'فارس': const LatLng(29.5911, 52.5832),
+    'قزوین': const LatLng(36.2810, 50.0024),
+    'قم': const LatLng(34.5711, 50.8083),
+    'کردستان': const LatLng(35.3105, 46.9925),
+    'کرمان': const LatLng(30.2832, 57.0743),
+    'کرمانشاه': const LatLng(34.3145, 47.0630),
+    'کهگیلویه و بویراحمد': const LatLng(30.6363, 51.4243),
+    'گلستان': const LatLng(37.3549, 54.0425),
+    'گیلان': const LatLng(37.2735, 49.5887),
+    'لرستان': const LatLng(33.4811, 48.3543),
+    'مازندران': const LatLng(36.5955, 53.0731),
+    'مركزی': const LatLng(34.0743, 50.7049),
+    'هرمزگان': const LatLng(27.1900, 56.3635),
+    'همدان': const LatLng(34.7973, 48.5145),
+    'یزد': const LatLng(31.8974, 54.3560),
+  };
+
+  final MapController mapController = MapController();
+  LatLng? tappedLocation; // ذخیره مختصات کلیک شده
+  bool isMarkerVisible = false; // نشان‌دهنده نمایش یا عدم نمایش آیکون
+
+  @override
+  void initState() {
+    super.initState();
+    _getUserLocation(); // دریافت موقعیت مکانی کاربر
+  }
+
+  // متد برای دریافت موقعیت مکانی کاربر
+  Future<void> _getUserLocation() async {
+    LocationPermission permission = await Geolocator.requestPermission();
+    if (permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse) {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+      LatLng currentLocation = LatLng(position.latitude, position.longitude);
+      mapController.move(
+          currentLocation, 13); // نقشه را به موقعیت کاربر حرکت می‌دهیم
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
+
     return Container(
       height: height * 0.9,
       width: double.infinity,
@@ -93,9 +149,16 @@ class _ShowModelLocationState extends State<ShowModelLocation> {
                 SizedBox(
                   height: height * 0.7,
                   child: FlutterMap(
-                    options: const MapOptions(
-                      initialCenter: LatLng(34.571112, 50.808330),
+                    mapController: mapController,
+                    options: MapOptions(
+                      initialCenter: cityCoordinates[selectedCity]!,
                       initialZoom: 13,
+                      onTap: (_, latlng) {
+                        setState(() {
+                          tappedLocation = latlng; // ذخیره مختصات کلیک شده
+                          isMarkerVisible = true; // نمایش آیکون
+                        });
+                      },
                     ),
                     children: [
                       TileLayer(
@@ -103,147 +166,95 @@ class _ShowModelLocationState extends State<ShowModelLocation> {
                             "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
                         subdomains: const ['a', 'b', 'c'],
                       ),
-                      MarkerLayer(
-                        markers: [
-                          Marker(
-                            point: const LatLng(34.571112, 50.808330),
-                            child: Builder(
-                              builder: (context) => const Icon(
+                      if (isMarkerVisible && tappedLocation != null)
+                        MarkerLayer(
+                          markers: [
+                            Marker(
+                              point: tappedLocation!, // مختصات انتخاب شده
+                              width: 40,
+                              height: 40,
+                              child: const Icon(
                                 Icons.location_pin,
                                 size: 40,
-                                color: Colors.red,
+                                color: Colors.black,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        )
                     ],
                   ),
                 ),
                 Positioned(
+                  top: 20,
+                  left: width * 0.1,
                   child: Container(
-                    margin: const EdgeInsets.only(right: 22, left: 22, top: 10),
-                    width: double.infinity,
-                    height: 60,
+                    width: width * 0.8,
+                    padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
+                      color: AppColors.white2,
                       borderRadius: BorderRadius.circular(60),
-                      color: AppColors.white2,
-                      border: Border.all(
-                        width: 2,
-                        color: AppColors.cardWhite,
-                      ),
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 22, right: 20),
-                        child: Row(
-                          children: [
-                            const FaIcon(
-                              FontAwesomeIcons.search,
-                              color: AppColors.searchGreyColor,
-                              size: 25,
-                            ),
-                            const Spacer(),
-                            Text(
-                              'جستجوی محله',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayMedium!
-                                  .copyWith(
-                                    fontSize: 14,
-                                    color: AppColors.cardWhite,
-                                  ),
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                // نمایش منوی کشویی برای انتخاب شهر
-                                String? selected = await showDialog<String>(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Text('انتخاب شهر',
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyLarge),
-                                        ],
-                                      ),
-                                      content: DropdownButton<String>(
-                                        value: selectedCity,
-                                        onChanged: (String? newCity) {
-                                          setState(() {
-                                            selectedCity = newCity!;
-                                          });
-                                          Navigator.of(context).pop(newCity);
-                                        },
-                                        items: provinces
-                                            .map<DropdownMenuItem<String>>(
-                                                (String city) {
-                                          return DropdownMenuItem<String>(
-                                            value: city,
-                                            child: Text(
-                                              city,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .headlineSmall,
-                                            ),
-                                          );
-                                        }).toList(),
-                                      ),
-                                    );
-                                  },
-                                );
-                                if (selected != null) {
-                                  setState(() {
-                                    selectedCity = selected;
-                                  });
-                                }
-                              },
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                      Icons.keyboard_arrow_down_outlined),
-                                  Text(
-                                    selectedCity,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium!
-                                        .copyWith(
-                                          fontSize: 14,
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                      boxShadow: [
+                        BoxShadow(
+                          // ignore: deprecated_member_use
+                          color: Colors.black.withOpacity(0.2),
+                          blurRadius: 6,
+                          offset: const Offset(0, 4),
                         ),
-                      ),
+                      ],
                     ),
-                  ),
-                ),
-                Positioned(
-                  bottom: 22,
-                  right: 22,
-                  child: Container(
-                    width: 56,
-                    height: 56,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: AppColors.white2,
-                      border: Border.all(
-                        width: 1,
-                        color: AppColors.cardWhite,
-                      ),
-                    ),
-                    child: const Center(
-                      child: FaIcon(
-                        FontAwesomeIcons.locationCrosshairs,
-                        size: 32,
-                        color: AppColors.purpleOpacity,
-                      ),
+                    child: Row(
+                      children: [
+                        const SizedBox(
+                          width: 22,
+                        ),
+                        const Icon(
+                          Icons.search,
+                          color: AppColors.searchGreyColor,
+                          size: 24,
+                        ),
+                        const Spacer(),
+                        SizedBox(
+                          width: 140,
+                          child: TextField(
+                            textDirection: TextDirection.rtl,
+                            textAlign: TextAlign.right,
+                            onChanged: (value) {},
+                            decoration: const InputDecoration(
+                              hintText: 'جستجو',
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.only(left: 10),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        SizedBox(
+                          width: 60,
+                          child: DropdownButton<String>(
+                            value: selectedCity,
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                selectedCity = newValue!;
+                              });
+
+                              // حرکت نرم با انیمیشن
+                              _moveMapWithAnimation(
+                                  cityCoordinates[selectedCity]!);
+                            },
+                            isDense: true,
+                            isExpanded: true,
+                            items: provinces
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: const TextStyle(fontSize: 14),
+                                ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -252,6 +263,10 @@ class _ShowModelLocationState extends State<ShowModelLocation> {
           ),
           GestureDetector(
             onTap: () {
+              if (tappedLocation != null) {
+                widget.onSelectOption(
+                    "Lat: ${tappedLocation!.latitude}, Lng: ${tappedLocation!.longitude}");
+              }
               Navigator.of(context).pop();
             },
             child: Container(
@@ -280,5 +295,26 @@ class _ShowModelLocationState extends State<ShowModelLocation> {
         ],
       ),
     );
+  }
+
+  // متد برای حرکت نرم نقشه
+  void _moveMapWithAnimation(LatLng destination) async {
+    const duration = Duration(milliseconds: 1);
+    const steps = 100; // تعداد مراحل حرکت
+    LatLng currentPosition = mapController.camera.center;
+
+    for (int i = 1; i <= steps; i++) {
+      // تغییر مختصات به تدریج
+      double newLat = currentPosition.latitude +
+          (destination.latitude - currentPosition.latitude) * (i / steps);
+      double newLng = currentPosition.longitude +
+          (destination.longitude - currentPosition.longitude) * (i / steps);
+
+      // حرکت نقشه
+      mapController.move(LatLng(newLat, newLng), 13);
+
+      // تاخیر برای حرکت نرم
+      await Future.delayed(duration);
+    }
   }
 }

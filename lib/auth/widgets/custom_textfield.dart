@@ -47,7 +47,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
             Container(
               height: height / 18,
               decoration: BoxDecoration(
-                border: Border.all(color: AppColors.cardWhite, width: 2),
+                border: Border.all(color: AppColors.onBoardColor, width: 1),
                 color: AppColors.white2,
                 borderRadius: const BorderRadius.all(Radius.circular(360)),
               ),

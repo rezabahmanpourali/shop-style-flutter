@@ -51,4 +51,11 @@ class AppColors {
   static const Color searchGreyColor = Color(0xffABABAB);
   static const Color onBoardColor = Color(0xffD9D9D9);
   static const Color otpColor = Color(0xffF1F1F1);
+  //Face Colors Detection
+  static const Color brown = Color(0xff624800);
+  static const Color blurshafaf = Color(0xff6CD0EC);
+  static const Color greenD = Color(0xff44AE51);
+  static const Color greyD = Color(0xff949494);
+  static const Color yellowD = Color(0xffE7E13A);
+  static const Color textFilterScore = Color(0xffAEAEAE);
 }

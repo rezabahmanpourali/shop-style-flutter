@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_style/auth/screens/completion_information.dart';
 import 'package:shop_style/barber_shop_list/screens/barber_shop_list_screen.dart';
 import 'package:shop_style/change_user_info_page/screens/change_user_ingo.dart';
 import 'package:shop_style/common/configs/colors.dart';
@@ -365,46 +366,13 @@ class _UserPageState extends State<UserPage> {
                           indent: 43,
                           color: AppColors.dividerColor900,
                         ),
-
-                        //item2
-                        UserAccountItem(
-                          onChange: () {
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //   builder: (context) => const SavedModelsPage(),
-                            // ));
-                          },
-                          title: AppLocalizations.of(context)!.saved_models,
-                          iconRight: globalController.language == 'fa' ||
-                                  globalController.language == 'ar'
-                              ? SvgPicture.asset(
-                                  'assets/images/Vector (1).svg',
-                                  height: 8,
-                                  width: 4,
-                                  color: AppColors.reserveContaner,
-                                )
-                              : const Icon(
-                                  Icons.arrow_forward_ios,
-                                  size: 8,
-                                  color: AppColors.reserveContaner,
-                                ),
-                          iconLeft: const FaIcon(
-                            FontAwesomeIcons.bookmark,
-                            size: 20,
-                          ),
-                        ),
-
-                        const Divider(
-                          endIndent: 22,
-                          indent: 43,
-                          color: AppColors.dividerColor900,
-                        ),
-
                         //item3
                         UserAccountItem(
                           onChange: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const ViewReservedPage(),
-                            ));
+                            globalController.language == 'fa' ||
+                                    globalController.language == 'ar'
+                                ? locator.get<GlobalController>().update(1)
+                                : locator.get<GlobalController>().update(2);
                           },
                           title:
                               AppLocalizations.of(context)!.reservation_history,
@@ -471,11 +439,12 @@ class _UserPageState extends State<UserPage> {
                         //item5
                         UserAccountItem(
                           onChange: () {
-                            // Navigator.of(context).push(
-                            //   MaterialPageRoute(
-                            //     builder: (context) => const RecentlyViewedPage(),
-                            //   ),
-                            // );
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const RecentlyViewedPage(),
+                              ),
+                            );
                           },
                           title: AppLocalizations.of(context)!.recent_visits,
                           iconRight: globalController.language == 'fa' ||
@@ -507,7 +476,8 @@ class _UserPageState extends State<UserPage> {
                         UserAccountItem(
                           onChange: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const ChangeUserIngo(),
+                              builder: (context) =>
+                                  const CompletionInformation(),
                             ));
                           },
                           title: AppLocalizations.of(context)!.account_info,
@@ -538,9 +508,9 @@ class _UserPageState extends State<UserPage> {
 
                         UserAccountItem(
                           onChange: () {
-                            // Navigator.of(context).push(MaterialPageRoute(
-                            //   builder: (context) => const BarberShopListPage(),
-                            // ));
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const BarberShopListPage(),
+                            ));
                           },
                           title: AppLocalizations.of(context)!.salon_listtt,
                           iconRight: globalController.language == 'fa' ||

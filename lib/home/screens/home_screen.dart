@@ -427,7 +427,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     return SizedBox(
                                       height: 60,
                                       child: ListView.builder(
-                                        padding: EdgeInsets.only(bottom: 10),
+                                        padding: const EdgeInsets.only(bottom: 10),
                                         scrollDirection: Axis.horizontal,
                                         itemCount: 1,
                                         itemBuilder: (context, index) {
@@ -493,80 +493,76 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget getAppbar(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 19, right: 22),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Spacer(),
-          GestureDetector(
-            onTap: () {
-              showModalBottomSheet(
-                isScrollControlled: true, // برای کنترل ارتفاع باتم شیت
-                context: context,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Spacer(),
+        GestureDetector(
+          onTap: () {
+            showModalBottomSheet(
+              isScrollControlled: true, // برای کنترل ارتفاع باتم شیت
+              context: context,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
                 ),
-                builder: (BuildContext context) {
-                  return ShowModelLocation(
-                    onSelectOption: (p0) {},
-                  );
-                },
-              );
-            },
-            child: Center(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      const Icon(Icons.location_on,
-                          size: 15, color: AppColors.textHeader),
-                      Text(
-                        AppLocalizations.of(context)!.your_location,
-                        style: Theme.of(context).textTheme.displaySmall,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 1,
-                  ),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Container(
-                      width: 130,
-                      height: 20,
-                      color: AppColors.arayeshColor,
-                      child: Center(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Text(
-                              'پردیسان، بلوار شهروند',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .displayLarge!
-                                  .copyWith(
-                                    color: AppColors.black,
-                                  ),
-                            ),
-                            const Icon(Icons.keyboard_arrow_down_rounded)
-                          ],
-                        ),
+              ),
+              builder: (BuildContext context) {
+                return ShowModelLocation(
+                  onSelectOption: (p0) {},
+                );
+              },
+            );
+          },
+          child: Center(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.location_on,
+                        size: 15, color: AppColors.textHeader),
+                    Text(
+                      AppLocalizations.of(context)!.your_location,
+                      style: Theme.of(context).textTheme.displaySmall,
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 1,
+                ),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Container(
+                    width: 130,
+                    height: 20,
+                    color: AppColors.arayeshColor,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            'پردیسان، بلوار شهروند',
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(
+                                  color: AppColors.black,
+                                ),
+                          ),
+                          const Icon(Icons.keyboard_arrow_down_rounded)
+                        ],
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
-          const Spacer(),
-        ],
-      ),
+        ),
+        const Spacer(),
+      ],
     );
   }
 }

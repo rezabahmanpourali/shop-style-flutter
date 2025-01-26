@@ -40,9 +40,9 @@ class _SavedBarberShopState extends State<SavedBarberShop> {
             slivers: [
               const SliverAppBar(),
               const SliverPadding(
-                padding: EdgeInsets.only(right: 22, bottom: 32),
+                padding: EdgeInsets.only(right: 22, bottom: 22),
                 sliver: SliverToBoxAdapter(
-                  child: Text('آرایشگاه های ذخیره شده'),
+                  child: Text('آرایشگاه های برتر'),
                 ),
               ),
               SliverToBoxAdapter(
@@ -114,12 +114,6 @@ class _SavedBarberShopState extends State<SavedBarberShop> {
               const SliverPadding(
                 padding: EdgeInsets.only(right: 22),
                 sliver: SliverToBoxAdapter(
-                  child: Text('آرایشگاه های برتر'),
-                ),
-              ),
-              const SliverPadding(
-                padding: EdgeInsets.only(right: 22),
-                sliver: SliverToBoxAdapter(
                   child: Text('آرایشگاه های منطقه شما'),
                 ),
               ),
@@ -127,174 +121,6 @@ class _SavedBarberShopState extends State<SavedBarberShop> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class SavedCardItems extends StatefulWidget {
-  final BarberShopSavedModel barberShopSavedModel;
-  final Box<BarberShopSavedModel> box;
-  final int index;
-
-  const SavedCardItems({
-    required this.barberShopSavedModel,
-    required this.box,
-    required this.index,
-    super.key,
-  });
-
-  @override
-  State<SavedCardItems> createState() => _SavedCardItemsState();
-}
-
-class _SavedCardItemsState extends State<SavedCardItems> {
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: 214,
-          height: 242,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(width: 1, color: AppColors.cardWhite),
-          ),
-          child: Flex(
-            direction: Axis.vertical,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16),
-                    bottomLeft: Radius.zero,
-                    bottomRight: Radius.zero,
-                  ),
-                  child: Image.network(
-                    widget.barberShopSavedModel.imageUrl!,
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                    height: double.infinity,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.zero,
-                    topRight: Radius.zero,
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16),
-                  ),
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      color: Colors.transparent,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              right: 12, top: 8, left: 12),
-                          child: Text(
-                            widget.barberShopSavedModel.barberShopName ??
-                                'نام آرایشگاه',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayLarge!
-                                .copyWith(fontSize: 14),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              right: 12, top: 5, left: 12),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              const Icon(Icons.star),
-                              Text(
-                                '4.9',
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              const Text('(55)'),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 12, left: 12),
-                          child: Text(
-                            'قم، پردیسان',
-                            style: Theme.of(context).textTheme.displayMedium,
-                          ),
-                        ),
-                        const SizedBox(height: 6),
-                        Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(
-                                  right: 8, bottom: 12, left: 8),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  width: 1,
-                                  color: AppColors.cardWhite,
-                                ),
-                                borderRadius: BorderRadius.circular(24),
-                              ),
-                              height: 23,
-                              width: 74,
-                              child: Center(
-                                child: Text(
-                                  'آرایشگاه',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displaySmall!
-                                      .copyWith(
-                                          fontSize: 14, color: AppColors.black),
-                                ),
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  widget.box.deleteAt(widget.index);
-                                });
-                              },
-                              child: Container(
-                                margin: const EdgeInsets.only(
-                                    right: 8, bottom: 12, left: 8),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 1, color: AppColors.red),
-                                  borderRadius: BorderRadius.circular(24),
-                                ),
-                                height: 23,
-                                width: 74,
-                                child: Center(
-                                  child: Text(
-                                    'حذف',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .displaySmall!
-                                        .copyWith(
-                                          fontSize: 14,
-                                          color: AppColors.black,
-                                        ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 }

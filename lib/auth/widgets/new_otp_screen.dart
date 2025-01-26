@@ -9,7 +9,7 @@ class NewOtpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 47,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -26,12 +26,14 @@ class NewOtpScreen extends StatelessWidget {
 
   Widget buildOtpField(BuildContext context) {
     return Container(
-      width: 47,
+      width: 60,
       height: 47,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: AppColors.otpColor,
-      ),
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: AppColors.onBoardColor,
+            width: 1,
+          )),
       child: TextFormField(
         decoration: const InputDecoration(
           border: InputBorder.none,

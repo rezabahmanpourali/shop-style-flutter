@@ -9,14 +9,118 @@ import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
 import 'package:shop_style/reserve_page4/screen/reserve_page4.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
 
-class ServicesView extends StatelessWidget {
+// class ServicesView extends StatelessWidget {
+//   final ServiceModel serviceModel;
+//   final bool isLastItem; // پارامتر جدید برای شناسایی آخرین آیتم
+//   final bool shouldNavigate;
+//   const ServicesView({
+//     super.key,
+//     required this.serviceModel,
+//     required this.isLastItem,
+//     this.shouldNavigate = true,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.only(top: 22),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Text(
+//             serviceModel.hairModel.name,
+//             style: Theme.of(context).textTheme.headlineLarge!.copyWith(
+//                   fontSize: 16,
+//                 ),
+//           ),
+//           Row(
+//             children: [
+//               const Icon(Icons.av_timer_outlined),
+//               Text(
+//                 '40 دقیقه',
+//                 style: Theme.of(context)
+//                     .textTheme
+//                     .displayMedium
+//                     ?.copyWith(color: AppColors.textHeader),
+//               ),
+//               const Spacer(),
+//               GestureDetector(
+//                 onTap: () {
+//                   if (shouldNavigate) {
+//                     Navigator.of(context).push(
+//                       MaterialPageRoute(
+//                         builder: (context) {
+//                           return ChangeNotifierProvider.value(
+//                             value: locator.get<BarberController>(),
+//                             child: ResevePage2(),
+//                           );
+//                         },
+//                       ),
+//                     );
+//                   }
+//                 },
+//                 child: Container(
+//                   width: 100,
+//                   height: 35,
+//                   decoration: BoxDecoration(
+//                     border: Border.all(
+//                       width: 1,
+//                       color: AppColors.cardWhite,
+//                     ),
+//                     borderRadius: BorderRadius.circular(24),
+//                   ),
+//                   child: Center(
+//                     child: Text(
+//                       textAlign: TextAlign.center,
+//                       AppLocalizations.of(context)!.book_appointment,
+//                       style: Theme.of(context).textTheme.displayLarge!.copyWith(
+//                             fontSize: 13,
+//                           ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//           Text(
+//             serviceModel.price.toString(),
+//             style: Theme.of(context)
+//                 .textTheme
+//                 .displayMedium
+//                 ?.copyWith(color: AppColors.textHeader),
+//           ),
+//           if (!isLastItem) const SizedBox(height: 16),
+//           if (!isLastItem)
+//             const Divider(
+//               height: 1,
+//               color: AppColors.dividerColor900,
+//               endIndent: 22,
+//               indent: 22,
+//             ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+class ServicesView extends StatefulWidget {
   final ServiceModel serviceModel;
-  final bool isLastItem; // پارامتر جدید برای شناسایی آخرین آیتم
+  final bool isLastItem;
+  final bool shouldNavigate;
+
   const ServicesView({
     super.key,
     required this.serviceModel,
     required this.isLastItem,
+    this.shouldNavigate = true,
   });
+
+  @override
+  _ServicesViewState createState() => _ServicesViewState();
+}
+
+class _ServicesViewState extends State<ServicesView> {
+  bool isSelected = false; // وضعیت انتخاب یا تیک
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +130,7 @@ class ServicesView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            serviceModel.hairModel.name,
+            widget.serviceModel.hairModel.name,
             style: Theme.of(context).textTheme.headlineLarge!.copyWith(
                   fontSize: 16,
                 ),
@@ -44,19 +148,25 @@ class ServicesView extends StatelessWidget {
               const Spacer(),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return ChangeNotifierProvider.value(
-                          value: locator.get<BarberController>(),
-                          child: ResevePage2(),
-                        );
-                      },
-                    ),
-                  );
+                  if (widget.shouldNavigate) {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return ChangeNotifierProvider.value(
+                            value: locator.get<BarberController>(),
+                            child: ResevePage2(),
+                          );
+                        },
+                      ),
+                    );
+                  } else {
+                    setState(() {
+                      isSelected = !isSelected; // تغییر وضعیت
+                    });
+                  }
                 },
                 child: Container(
-                  width: 100,
+                  width: isSelected ? 35 : 100,
                   height: 35,
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -64,14 +174,32 @@ class ServicesView extends StatelessWidget {
                       color: AppColors.cardWhite,
                     ),
                     borderRadius: BorderRadius.circular(24),
+                    color: isSelected
+                        ? AppColors.purpleOpacity
+                        : Colors.transparent,
                   ),
                   child: Center(
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      AppLocalizations.of(context)!.book_appointment,
-                      style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                            fontSize: 13,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        if (isSelected)
+                          const Icon(
+                            Icons.check,
+                            color: Colors.white, // رنگ تیک
+                            size: 30,
                           ),
+                        if (!isSelected)
+                          Text(
+                            textAlign: TextAlign.center,
+                            AppLocalizations.of(context)!.book_appointment,
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayLarge!
+                                .copyWith(
+                                  fontSize: 13,
+                                ),
+                          ),
+                      ],
                     ),
                   ),
                 ),
@@ -79,14 +207,14 @@ class ServicesView extends StatelessWidget {
             ],
           ),
           Text(
-            serviceModel.price.toString(),
+            widget.serviceModel.price.toString(),
             style: Theme.of(context)
                 .textTheme
                 .displayMedium
                 ?.copyWith(color: AppColors.textHeader),
           ),
-          if (!isLastItem) const SizedBox(height: 16),
-          if (!isLastItem)
+          if (!widget.isLastItem) const SizedBox(height: 16),
+          if (!widget.isLastItem)
             const Divider(
               height: 1,
               color: AppColors.dividerColor900,
