@@ -8,6 +8,7 @@ import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/common/widgets/text_padding.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/enums.dart';
+import 'package:shop_style/common/widgets/text_row_padding.dart';
 import 'package:shop_style/main.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
 
@@ -47,13 +48,36 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                     ),
                   ),
                   SliverToBoxAdapter(
-                    child: TextPadding(
-                      text: AppLocalizations.of(context)!.almost_done,
-                      topPadding: height / 100,
-                      theme:
-                          Theme.of(context).textTheme.displayMedium!.copyWith(
-                                color: AppColors.purpleOpacity,
-                              ),
+                    child: TextRowPadding(
+                      texts: [
+                        AppLocalizations.of(context)!.almost_done,
+                        '09039044061',
+                      ],
+                      styles: [
+                        TextStyle(
+                          color: AppColors.black,
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .fontSize,
+                          fontWeight: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .fontWeight,
+                        ),
+                        TextStyle(
+                          color: AppColors.tankBlue3,
+                          fontSize: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .fontSize,
+                          fontWeight: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .fontWeight,
+                        ),
+                      ],
+                      topPadding: 10.0,
                     ),
                   ),
                   SliverToBoxAdapter(
@@ -109,10 +133,15 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                           ),
                         );
                       },
-                      child: TextPadding(
-                        textAlign: TextAlign.center,
-                        text: AppLocalizations.of(context)!.complete_later,
-                        theme: Theme.of(context).textTheme.displayMedium,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextPadding(
+                            textAlign: TextAlign.center,
+                            text: AppLocalizations.of(context)!.complete_later,
+                            theme: Theme.of(context).textTheme.displayMedium,
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -162,7 +191,7 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                 theme: Theme.of(context).textTheme.displayMedium?.copyWith(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
-                      color: AppColors.purpleOpacity,
+                      color: AppColors.tankBlue3,
                     ),
               ),
               TextPadding(

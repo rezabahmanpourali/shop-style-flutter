@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/common/configs/colors.dart';
 
 class Scoring extends StatelessWidget {
   const Scoring({
@@ -24,7 +25,9 @@ class Scoring extends StatelessWidget {
         hasShowvotesVotes
             ? Text(
                 '(55)',
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: AppColors.tankBlue3,
+                    ),
               )
             : const Text(''),
       ],

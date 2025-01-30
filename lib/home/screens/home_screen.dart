@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:shop_style/barber/model/barber_model.dart';
 import 'package:shop_style/barber/model/barber_shop_model.dart';
+import 'package:shop_style/barber/model/barber_shop_saved_model.dart';
 import 'package:shop_style/barber/screens/barber_shop_page.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
@@ -19,6 +22,8 @@ import 'package:shop_style/home/widgets/show_model_location.dart';
 import 'package:shop_style/home/widgets/widgets/card_item.dart';
 import 'package:shop_style/locator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
+import 'package:shop_style/barber/model/comment_model.dart';
+import 'package:shop_style/barber/model/barber_shop_model.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -26,6 +31,9 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
+
+late Box<BarberShopSavedModel> recentVisitsBox;
+late Box<BarberShopSavedModel> savedBarbersBox;
 
 class _HomeScreenState extends State<HomeScreen> {
   Future<void> _onRefresh() async {
@@ -37,9 +45,19 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<HomeController>(context, listen: false).fetchCategory();
   }
 
+  // تابع برای ذخیره کردن آرایشگاه‌ها در "بازدیدهای اخیر" اگر در "فروشگاه‌های ذخیره‌شده" نباشد
+  void _saveToRecentlyViewed(BarberShopSavedModel barberShop) {
+    var existingSavedShop = savedBarbersBox.get(barberShop.id);
+    if (existingSavedShop == null) {
+      recentVisitsBox.put(barberShop.id, barberShop);
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    recentVisitsBox = Hive.box<BarberShopSavedModel>('recentVisitsBox');
+    savedBarbersBox = Hive.box<BarberShopSavedModel>('CardBox');
 
     Future.delayed(
       const Duration(seconds: 2),
@@ -130,6 +148,88 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 22,
                         ),
                       ),
+                      ////////////////////////////////////
+                      SliverToBoxAdapter(
+                        child: SizedBox(
+                          height: 250,
+                          child: ValueListenableBuilder(
+                            valueListenable: recentVisitsBox.listenable(),
+                            builder:
+                                (context, Box<BarberShopSavedModel> box, _) {
+                              return ListView.builder(
+                                padding: const EdgeInsets.only(left: 22),
+                                scrollDirection: Axis.horizontal,
+                                itemCount: box.isEmpty ? 0 : box.length,
+                                itemBuilder: (context, index) {
+                                  var barberShopSavedModel = box.getAt(index);
+
+                                  // ساخت مدل BarberShop
+                                  BarberShopModel barberShopModel =
+                                      BarberShopModel(
+                                    id: barberShopSavedModel!.id,
+                                    barberShopName:
+                                        barberShopSavedModel.barberShopName,
+                                    images: barberShopSavedModel.imageUrl !=
+                                            null
+                                        ? [
+                                            ImageModel(
+                                              url:
+                                                  barberShopSavedModel.imageUrl,
+                                            )
+                                          ]
+                                        : [],
+                                    isBookmarked:
+                                        barberShopSavedModel.isBookmarked,
+                                    comments:
+                                        barberShopSavedModel.comments ?? [],
+                                    location: barberShopSavedModel.location ??
+                                        Location(latitude: 0.0, longitude: 0.0),
+                                    shopType:
+                                        barberShopSavedModel.shopType ?? '',
+                                    isActive:
+                                        barberShopSavedModel.isActive ?? true,
+                                  );
+
+                                  return Padding(
+                                    padding: const EdgeInsets.only(right: 22),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        // ذخیره آرایشگاه در "بازدیدهای اخیر" فقط اگر در "فروشگاه‌های ذخیره‌شده" نباشد
+                                        _saveToRecentlyViewed(
+                                            barberShopSavedModel);
+
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (context) {
+                                              return MultiProvider(
+                                                providers: [
+                                                  ChangeNotifierProvider.value(
+                                                    value: locator.get<
+                                                        BarberShopController>(),
+                                                  ),
+                                                ],
+                                                child: BarberShopPage(
+                                                  barberShopModel:
+                                                      barberShopModel,
+                                                  barberShopId:
+                                                      barberShopModel.id ?? 0,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        );
+                                      },
+                                      child: CardItem(
+                                          barberShopModel), // ویجت مربوط به نمایش هر آرایشگاه
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                      ////////////////////////////////////
                       SliverToBoxAdapter(
                         child: Selector<BarberShopController, BlocStatus>(
                           builder: (context, value, child) {
@@ -186,7 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         color: AppColors.white2,
                                         boxShadow: [
                                           BoxShadow(
-                                            color: AppColors.purpleOpacity,
+                                            color: AppColors.tankBlue3,
                                             offset: Offset(0, 0), // افست سایه
                                             blurRadius: 25.0, // میزان پخش سایه
                                             spreadRadius:
@@ -206,7 +306,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           MainAxisAlignment.start,
                                       children: [
                                         Image.asset(
-                                            'assets/images/percentage.jpg'),
+                                          'assets/images/percentage.png',
+                                          color: AppColors.tankBlue3,
+                                        ),
                                         const SizedBox(
                                           width: 9,
                                         ),
@@ -219,7 +321,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               .copyWith(
                                                 fontSize: 20,
                                                 fontWeight: FontWeight.w700,
-                                                color: AppColors.purpleOpacity,
+                                                color: AppColors.tankBlue3,
                                               ),
                                         ),
                                       ],
@@ -427,7 +529,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     return SizedBox(
                                       height: 60,
                                       child: ListView.builder(
-                                        padding: const EdgeInsets.only(bottom: 10),
+                                        padding:
+                                            const EdgeInsets.only(bottom: 10),
                                         scrollDirection: Axis.horizontal,
                                         itemCount: 1,
                                         itemBuilder: (context, index) {
@@ -495,6 +598,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget getAppbar(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         const Spacer(),
         GestureDetector(
@@ -522,10 +626,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   children: [
                     const Icon(Icons.location_on,
-                        size: 15, color: AppColors.textHeader),
+                        size: 15, color: AppColors.tankBlue3),
                     Text(
                       AppLocalizations.of(context)!.your_location,
-                      style: Theme.of(context).textTheme.displaySmall,
+                      style: Theme.of(context).textTheme.displaySmall!.copyWith(
+                            color: AppColors.tankBlue3,
+                          ),
                     ),
                   ],
                 ),
@@ -537,22 +643,30 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Container(
                     width: 130,
                     height: 20,
-                    color: AppColors.arayeshColor,
+                    color: AppColors.tankBlue2,
                     child: Center(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            'پردیسان، بلوار شهروند',
-                            style: Theme.of(context)
-                                .textTheme
-                                .displayLarge!
-                                .copyWith(
-                                  color: AppColors.black,
-                                ),
-                          ),
-                          const Icon(Icons.keyboard_arrow_down_rounded)
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 2, right: 6),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'پردیسان، بلوار شهروند',
+                              softWrap: true,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .displayLarge!
+                                  .copyWith(
+                                    color: AppColors.tankBlue3,
+                                    fontSize: 11,
+                                  ),
+                            ),
+                            const Icon(
+                              Icons.keyboard_arrow_down_rounded,
+                              color: AppColors.tankBlue3,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),

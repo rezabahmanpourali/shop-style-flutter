@@ -70,8 +70,7 @@ class _ShowModelSortState extends State<ShowModelSort> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  selectedOptions[0] =
-                      !selectedOptions[0]!;
+                  selectedOptions[0] = !selectedOptions[0]!;
                 });
                 Navigator.pop(context);
               },
@@ -85,7 +84,7 @@ class _ShowModelSortState extends State<ShowModelSort> {
                       shape: BoxShape.circle,
                       border: Border.all(
                           color: selectedOptions[0]!
-                              ? AppColors.purpleOpacity
+                              ? AppColors.tankBlueButton
                               : AppColors.cardWhite,
                           width: selectedOptions[0]! ? 4 : 1),
                       color: Colors.white,
@@ -122,7 +121,7 @@ class _ShowModelSortState extends State<ShowModelSort> {
                       shape: BoxShape.circle,
                       border: Border.all(
                           color: selectedOptions[1]!
-                              ? AppColors.purpleOpacity
+                              ? AppColors.tankBlueButton
                               : AppColors.cardWhite,
                           width: selectedOptions[1]! ? 4 : 1),
                       color: Colors.white,
@@ -159,7 +158,7 @@ class _ShowModelSortState extends State<ShowModelSort> {
                       shape: BoxShape.circle,
                       border: Border.all(
                           color: selectedOptions[2]!
-                              ? AppColors.purpleOpacity
+                              ? AppColors.tankBlueButton
                               : AppColors.cardWhite,
                           width: selectedOptions[2]! ? 4 : 1),
                       color: Colors.white,

@@ -94,14 +94,14 @@ class _ShowModelPriceState extends State<ShowModelPrice> {
               ),
             ),
             Slider(
-              inactiveColor: AppColors.purpleOpacity,
+              inactiveColor: AppColors.tankBlueButton,
               value: _currentPrice,
               min: 0,
               max: 1000000,
               divisions: 100, // تعداد تقسیمات خط کش
               label: _currentPrice.toStringAsFixed(2),
               onChanged: _onSliderChanged, // تابعی که در هنگام درگ اجرا می‌شود
-              activeColor: AppColors.purpleOpacity,
+              activeColor: AppColors.tankBlueButton,
             ),
             const SizedBox(
               height: 38,
@@ -147,7 +147,7 @@ class _ShowModelPriceState extends State<ShowModelPrice> {
                       width: 174,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: AppColors.bgBlack,
+                        color: AppColors.tankBlueButton,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Center(

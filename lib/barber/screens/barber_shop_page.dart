@@ -9,6 +9,7 @@ import 'package:shop_style/barber/model/barber_model.dart';
 import 'package:shop_style/barber/model/barber_shop_model.dart';
 import 'package:shop_style/barber/model/barber_shop_saved_model.dart';
 import 'package:shop_style/barber/model/comment_model.dart';
+import 'package:shop_style/barber/model/services_model.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/barber_shop_list/screens/widgets/barber_shop_list.dart';
@@ -398,8 +399,10 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                   highlightColor: Colors.grey[100]!,
                                   child: Padding(
                                     padding: EdgeInsets.only(
-                                        right: width * 0.05,
-                                        top: height * 0.01),
+                                      right: width * 0.05,
+                                      top: height * 0.01,
+                                      left: width * 0.05,
+                                    ),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -617,8 +620,10 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                   highlightColor: Colors.grey[100]!,
                                   child: Padding(
                                     padding: EdgeInsets.only(
-                                        right: width * 0.05,
-                                        top: height * 0.01),
+                                      right: width * 0.05,
+                                      top: height * 0.01,
+                                      left: width * 0.05,
+                                    ),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -801,7 +806,10 @@ class _BarberShopPageState extends State<BarberShopPage> {
                                             '(55)',
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyMedium,
+                                                .bodyMedium!
+                                                .copyWith(
+                                                  color: AppColors.tankBlue3,
+                                                ),
                                           ),
                                         ],
                                       ),
@@ -906,7 +914,12 @@ class _BarberShopPageState extends State<BarberShopPage> {
                               const SizedBox(height: 2),
                               Text(
                                 AppLocalizations.of(context)!.read_all,
-                                style: Theme.of(context).textTheme.bodyMedium,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: AppColors.tankBlue3,
+                                    ),
                               ),
                             ],
                           ),
@@ -1020,7 +1033,12 @@ class _BarberShopPageState extends State<BarberShopPage> {
                               ),
                               Text(
                                 AppLocalizations.of(context)!.show_on_map,
-                                style: Theme.of(context).textTheme.bodyMedium,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium!
+                                    .copyWith(
+                                      color: AppColors.tankBlue3,
+                                    ),
                               ),
                             ],
                           ),
@@ -1077,61 +1095,7 @@ class _BarberShopPageState extends State<BarberShopPage> {
                         ),
                       ),
                       SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            right: 7,
-                            bottom: 7,
-                            top: 7,
-                            left: 7,
-                          ),
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ServiceSelectionScreen(),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  width: 179,
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.bgBlack,
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 20, right: 20),
-                                      child: Text(
-                                        AppLocalizations.of(context)!
-                                            .book_appointment_button,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w700,
-                                          color: AppColors.white2,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const Spacer(),
-                              const Text(
-                                '6 مدل مو',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.textSearchColor,
-                                ),
-                              ),
-                              const Spacer(),
-                            ],
-                          ),
-                        ),
+                        child: ButtonService(),
                       ),
                     ],
                   ),
@@ -1177,6 +1141,69 @@ class _BarberShopPageState extends State<BarberShopPage> {
   }
 }
 
+class ButtonService extends StatelessWidget {
+  const ButtonService({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(
+        right: 7,
+        bottom: 7,
+        top: 7,
+        left: 7,
+      ),
+      child: Row(
+        children: [
+          GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const ServiceSelectionScreen(),
+                ),
+              );
+            },
+            child: Container(
+              width: 179,
+              height: 60,
+              decoration: BoxDecoration(
+                color: AppColors.tankBlue3,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 20, right: 20),
+                  child: Text(
+                    AppLocalizations.of(context)!.book_appointment_button,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.white2,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const Spacer(),
+          // نمایش تعداد خدمات از serviceModel
+          const Text(
+            '6 خدمات', // تعداد خدمات
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: AppColors.tankBlue3,
+            ),
+          ),
+          const Spacer(),
+        ],
+      ),
+    );
+  }
+}
+
 class BarberShopTitle extends StatelessWidget {
   final BarberShopModel barberShopModel;
   final BlocStatus barberShopListState;
@@ -1198,7 +1225,8 @@ class BarberShopTitle extends StatelessWidget {
           baseColor: Colors.grey[300]!,
           highlightColor: Colors.grey[100]!,
           child: Padding(
-            padding: EdgeInsets.only(right: width * 0.05, top: height * 0.01),
+            padding: EdgeInsets.only(
+                right: width * 0.05, top: height * 0.01, left: width * 0.05),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

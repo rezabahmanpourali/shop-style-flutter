@@ -94,7 +94,9 @@ class UserComment extends StatelessWidget {
           const SizedBox(height: 6),
           Text(
             AppLocalizations.of(context)!.read_all,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                  color: AppColors.tankBlue3,
+                ),
           ),
         ],
       ),

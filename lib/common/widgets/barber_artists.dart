@@ -10,7 +10,6 @@ class BarberArtists extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        
         SizedBox(
           height: 120,
           width: 91,
@@ -82,7 +81,7 @@ class BarberArtists extends StatelessWidget {
                     Text(
                       barberModel.barberName!,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.bodyLarge,
+                      style: Theme.of(context).textTheme.displayLarge,
                     ),
                     Text(
                       'متخصص رنگ مو',

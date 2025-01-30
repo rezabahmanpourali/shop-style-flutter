@@ -137,7 +137,10 @@ class CardItemParty extends StatelessWidget {
                               '4.9',
                               style: Theme.of(context).textTheme.bodyLarge,
                             ),
-                            const Text('(55)'),
+                            const Text(
+                              '(55)',
+                              style: TextStyle(color: AppColors.tankBlue3),
+                            ),
                           ],
                         ),
                       ),
@@ -181,7 +184,7 @@ class CardItemParty extends StatelessWidget {
                               width: 29,
                               height: 14,
                               decoration: const BoxDecoration(
-                                color: AppColors.purpleOpacity,
+                                color: AppColors.tankBlue3,
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(27),
                                 ),

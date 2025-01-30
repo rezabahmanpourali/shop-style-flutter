@@ -18,6 +18,7 @@ import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/home/statemanagment/home_controller.dart';
 import 'package:shop_style/locator.dart';
 import 'package:shop_style/onboard_screen/screen/onboard_screen.dart';
+import 'package:shop_style/test_widgets_screen.dart';
 import 'package:shop_style/user_page/screens/user_page.dart';
 import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
@@ -129,51 +130,93 @@ class _MyAppState extends State<MyApp> {
                   globalController.language == 'ar'
               ? [
                   BottomNavigationBarItem(
-                    activeIcon:
-                        SvgPicture.asset('assets/images/PersonFill.svg'),
-                    icon: SvgPicture.asset('assets/images/Person.svg'),
+                    activeIcon: SvgPicture.asset(
+                      'assets/images/PersonFill.svg',
+                      color: AppColors.tankBlue3,
+                    ),
+                    icon: SvgPicture.asset(
+                      'assets/images/Person.svg',
+                      color: AppColors.tankBlueOpacity100,
+                    ),
                     label: AppLocalizations.of(context)!.account_info,
                   ),
                   BottomNavigationBarItem(
-                    activeIcon: SvgPicture.asset('assets/images/CartFill.svg'),
-                    icon: SvgPicture.asset('assets/images/Cart.svg'),
+                    activeIcon: SvgPicture.asset(
+                      'assets/images/CartFill.svg',
+                      color: AppColors.tankBlue3,
+                    ),
+                    icon: SvgPicture.asset(
+                      'assets/images/Cart.svg',
+                      color: AppColors.tankBlueOpacity100,
+                    ),
                     label: AppLocalizations.of(context)!.reservation_history,
                   ),
                   BottomNavigationBarItem(
-                    activeIcon:
-                        SvgPicture.asset('assets/images/locationActive.svg'),
-                    icon:
-                        SvgPicture.asset('assets/images/locationOnActive.svg'),
+                    activeIcon: SvgPicture.asset(
+                      'assets/images/locationActive.svg',
+                      color: AppColors.tankBlue3,
+                    ),
+                    icon: SvgPicture.asset(
+                      'assets/images/locationOnActive.svg',
+                      color: AppColors.tankBlueOpacity100,
+                    ),
                     label: AppLocalizations.of(context)!.salon_list,
                   ),
                   BottomNavigationBarItem(
-                    activeIcon: SvgPicture.asset('assets/images/HouseFill.svg'),
-                    icon: SvgPicture.asset('assets/images/homeOnActive.svg'),
+                    activeIcon: SvgPicture.asset(
+                      'assets/images/HouseFill.svg',
+                      color: AppColors.tankBlue3,
+                    ),
+                    icon: SvgPicture.asset(
+                      'assets/images/homeOnActive.svg',
+                      color: AppColors.tankBlueOpacity100,
+                    ),
                     label: AppLocalizations.of(context)!.home,
                   ),
                 ]
               : [
                   BottomNavigationBarItem(
-                    activeIcon: SvgPicture.asset('assets/images/HouseFill.svg'),
-                    icon: SvgPicture.asset('assets/images/homeOnActive.svg'),
+                    activeIcon: SvgPicture.asset(
+                      'assets/images/HouseFill.svg',
+                      color: AppColors.tankBlue3,
+                    ),
+                    icon: SvgPicture.asset(
+                      'assets/images/homeOnActive.svg',
+                      color: AppColors.tankBlueOpacity100,
+                    ),
                     label: AppLocalizations.of(context)!.home,
                   ),
                   BottomNavigationBarItem(
-                    activeIcon:
-                        SvgPicture.asset('assets/images/locationActive.svg'),
-                    icon:
-                        SvgPicture.asset('assets/images/locationOnActive.svg'),
+                    activeIcon: SvgPicture.asset(
+                      'assets/images/locationActive.svg',
+                      color: AppColors.tankBlue3,
+                    ),
+                    icon: SvgPicture.asset(
+                      'assets/images/locationOnActive.svg',
+                      color: AppColors.tankBlueOpacity100,
+                    ),
                     label: AppLocalizations.of(context)!.salon_list,
                   ),
                   BottomNavigationBarItem(
-                    activeIcon: SvgPicture.asset('assets/images/CartFill.svg'),
-                    icon: SvgPicture.asset('assets/images/Cart.svg'),
+                    activeIcon: SvgPicture.asset(
+                      'assets/images/CartFill.svg',
+                      color: AppColors.tankBlue3,
+                    ),
+                    icon: SvgPicture.asset(
+                      'assets/images/Cart.svg',
+                      color: AppColors.tankBlueOpacity100,
+                    ),
                     label: AppLocalizations.of(context)!.reservation_history,
                   ),
                   BottomNavigationBarItem(
-                    activeIcon:
-                        SvgPicture.asset('assets/images/PersonFill.svg'),
-                    icon: SvgPicture.asset('assets/images/Person.svg'),
+                    activeIcon: SvgPicture.asset(
+                      'assets/images/PersonFill.svg',
+                      color: AppColors.tankBlue3,
+                    ),
+                    icon: SvgPicture.asset(
+                      'assets/images/Person.svg',
+                      color: AppColors.tankBlueOpacity100,
+                    ),
                     label: AppLocalizations.of(context)!.account_info,
                   ),
                 ];
@@ -230,13 +273,14 @@ class _MyAppState extends State<MyApp> {
               onTap: (int selectedIndex) {
                 globalController.update(selectedIndex);
               },
-              selectedItemColor: AppColors.purpleOpacity, // رنگ آیکن انتخابی
+              selectedItemColor: AppColors.tankBlue3, // رنگ آیکن انتخابی
               selectedFontSize: 10,
               unselectedFontSize: 10,
               selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w800),
               unselectedLabelStyle:
                   const TextStyle(fontWeight: FontWeight.w500),
-              unselectedItemColor: Colors.grey, // رنگ آیکن‌های غیرفعال
+              unselectedItemColor:
+                  AppColors.tankBlueOpacity100, // رنگ آیکن‌های غیرفعال
               showUnselectedLabels: true, // نمایش برچسب‌های غیرفعال
               items: navigationItems, // استفاده از آیتم‌ها بر اساس زبان
               type: BottomNavigationBarType.fixed,

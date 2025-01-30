@@ -24,14 +24,14 @@ class SelectOption extends StatelessWidget {
                     horizontal: 8, vertical: 6), // کمی فاصله از اطراف
 
                 decoration: BoxDecoration(
-                  color: AppColors.purpleOpacity,
+                  color: AppColors.tankBlueButton,
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(
-                      Icons.table_chart_rounded,
+                      Icons.check_circle,
                       color: Colors.white,
                     ),
                     const SizedBox(width: 3),
@@ -60,7 +60,7 @@ class SelectOption extends StatelessWidget {
             icon: const Center(
               child: FaIcon(
                 FontAwesomeIcons.calendarPlus,
-                color: AppColors.purpleOpacity,
+                color: AppColors.tankBlueButton,
               ),
             ),
             ontab: () {},
@@ -77,7 +77,7 @@ class SelectOption extends StatelessWidget {
             icon: const Center(
               child: FaIcon(
                 FontAwesomeIcons.locationArrow,
-                color: AppColors.purpleOpacity,
+                color: AppColors.tankBlueButton,
               ),
             ),
             ontab: () {},
@@ -94,7 +94,7 @@ class SelectOption extends StatelessWidget {
             icon: const Center(
               child: FaIcon(
                 FontAwesomeIcons.calendarDay,
-                color: AppColors.purpleOpacity,
+                color: AppColors.tankBlueButton,
               ),
             ),
             ontab: () {},

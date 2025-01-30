@@ -6,10 +6,8 @@ import 'package:shop_style/common/statemanagment/global_controller.dart';
 
 class CardItem extends StatelessWidget {
   final BarberShopModel barberShopModel;
-  
-  const CardItem(
-    this.barberShopModel, {super.key}
-  );
+
+  const CardItem(this.barberShopModel, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +90,12 @@ class CardItem extends StatelessWidget {
                                       style:
                                           Theme.of(context).textTheme.bodyLarge,
                                     ),
-                                    const Text('(55)'),
+                                    const Text(
+                                      '(55)',
+                                      style: TextStyle(
+                                        color: AppColors.tankBlue3,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

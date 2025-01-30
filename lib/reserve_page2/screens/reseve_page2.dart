@@ -12,14 +12,14 @@ import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
 
-class ResevePage2 extends StatefulWidget {
-  const ResevePage2({super.key});
+class ReservePage2 extends StatefulWidget {
+  const ReservePage2({super.key});
 
   @override
-  State<ResevePage2> createState() => _ResevePage2State();
+  State<ReservePage2> createState() => _ReservePage2State();
 }
 
-class _ResevePage2State extends State<ResevePage2> {
+class _ReservePage2State extends State<ReservePage2> {
   int? _selectedIndex;
 
   @override

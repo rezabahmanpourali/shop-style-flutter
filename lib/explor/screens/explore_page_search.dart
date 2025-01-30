@@ -327,7 +327,7 @@ class _ExplorePageSearchState extends State<ExplorePageSearch> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     CustomEndPageContainer(
-                      color: AppColors.black,
+                      color: AppColors.tankBlueButton,
                       heigh: 60,
                       onChange: (p0) {},
                       title: 'جستجو',

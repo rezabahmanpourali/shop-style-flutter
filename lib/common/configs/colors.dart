@@ -58,4 +58,10 @@ class AppColors {
   static const Color greyD = Color(0xff949494);
   static const Color yellowD = Color(0xffE7E13A);
   static const Color textFilterScore = Color(0xffAEAEAE);
+  static const Color tankBlue1 = Color(0xff1677FF);
+  static const Color tankBlue2 = Color(0xffE6F4FF);
+  static const Color tankBlue3 = Color(0xff15A4E1);
+  static const Color tankBlueButton = Color(0xff009CDD);
+  static const Color tankBlueOpacity100 = Color(0xff81D9FF);
+  static const Color textTankBlue = Color(0xff80D9FF);
 }

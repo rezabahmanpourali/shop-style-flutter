@@ -258,6 +258,23 @@ class _ShowModelLocationState extends State<ShowModelLocation> {
                     ),
                   ),
                 ),
+                Positioned(
+                  bottom: 12,
+                  right: 22,
+                  child: Container(
+                    width: 56,
+                    height: 56,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.white2,
+                    ),
+                    child: Icon(
+                      Icons.my_location,
+                      size: 35,
+                      color: AppColors.tankBlue3,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -280,7 +297,7 @@ class _ShowModelLocationState extends State<ShowModelLocation> {
               height: 60,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8),
-                color: AppColors.bgBlack,
+                color: AppColors.tankBlueButton,
               ),
               child: Center(
                 child: Text(

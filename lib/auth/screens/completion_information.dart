@@ -48,14 +48,62 @@ class _CompletionInformationState extends State<CompletionInformation> {
                     ),
                   ),
                   SliverToBoxAdapter(
-                    child: TextPadding(
-                      text:
-                          AppLocalizations.of(context)!.better_experience_info,
-                      topPadding: height / 100,
-                      theme:
-                          Theme.of(context).textTheme.displayMedium!.copyWith(
-                                color: AppColors.purpleOpacity,
+                    child: Wrap(
+                      alignment: WrapAlignment.start, // شروع از ابتدا
+                      spacing: 4.0, // فاصله افقی بین آیتم‌ها
+                      children: [
+                        TextPadding(
+                          text: AppLocalizations.of(context)!.forr,
+                          topPadding: height / 100,
+                          theme: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .copyWith(
+                                color: AppColors.black,
                               ),
+                        ),
+                        TextPadding(
+                          text: AppLocalizations.of(context)!.better_experience,
+                          topPadding: height / 100,
+                          theme: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .copyWith(
+                                color: AppColors.tankBlue3,
+                              ),
+                        ),
+                        TextPadding(
+                          text: AppLocalizations.of(context)!
+                              .in_using_the_service,
+                          topPadding: height / 100,
+                          theme: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .copyWith(
+                                color: AppColors.black,
+                              ),
+                        ),
+                        TextPadding(
+                          text: AppLocalizations.of(context)!.app_name,
+                          topPadding: height / 100,
+                          theme: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .copyWith(
+                                color: AppColors.tankBlue3,
+                              ),
+                        ),
+                        TextPadding(
+                          text: AppLocalizations.of(context)!.enter_information,
+                          topPadding: height / 100,
+                          theme: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .copyWith(
+                                color: AppColors.black,
+                              ),
+                        ),
+                      ],
                     ),
                   ),
                   SliverToBoxAdapter(
@@ -251,28 +299,36 @@ class _CompletionInformationState extends State<CompletionInformation> {
                     child: CustomDropdown(
                       items: [
                         {
-                          'first': AppLocalizations.of(context)!.round,
-                          'second': AppLocalizations.of(context)!.roundd,
+                          'first': AppLocalizations.of(context)!.volume_texture,
+                          'second': AppLocalizations.of(context)!.layered,
                         },
                         {
-                          'first': AppLocalizations.of(context)!.square,
-                          'second': AppLocalizations.of(context)!.squaree,
+                          'first':
+                              AppLocalizations.of(context)!.natural_beautiful,
+                          'second': AppLocalizations.of(context)!.long_wavy,
                         },
                         {
-                          'first': AppLocalizations.of(context)!.heart,
-                          'second': AppLocalizations.of(context)!.heartt,
+                          'first':
+                              AppLocalizations.of(context)!.modern_attractive,
+                          'second': AppLocalizations.of(context)!.short_chic,
                         },
                         {
-                          'first': AppLocalizations.of(context)!.diamond,
-                          'second': AppLocalizations.of(context)!.diamondd,
+                          'first': AppLocalizations.of(context)!.chic_shiny,
+                          'second': AppLocalizations.of(context)!.classic_bob,
                         },
                         {
-                          'first': AppLocalizations.of(context)!.triangle,
-                          'second': AppLocalizations.of(context)!.trianglee,
+                          'first':
+                              AppLocalizations.of(context)!.traditional_complex,
+                          'second': AppLocalizations.of(context)!.textures,
                         },
                         {
-                          'first': AppLocalizations.of(context)!.rectangle,
-                          'second': AppLocalizations.of(context)!.rectanglee,
+                          'first': AppLocalizations.of(context)!.sharp_youthful,
+                          'second': AppLocalizations.of(context)!.mohawk_spikes,
+                        },
+                        {
+                          'first':
+                              AppLocalizations.of(context)!.short_appealing,
+                          'second': AppLocalizations.of(context)!.pixie,
                         },
                       ],
                       lableField:
@@ -323,56 +379,84 @@ class _CompletionInformationState extends State<CompletionInformation> {
   }
 
   Widget scanFace(double height, double width) {
-    return Padding(
-      padding: EdgeInsets.only(top: height / 40),
-      child: Column(
-        children: [
-          Row(
+    return Consumer<GlobalController>(
+      builder: (context, globalController, child) {
+        return Padding(
+          padding: EdgeInsets.only(top: height / 40),
+          child: Column(
             children: [
-              TextPadding(
-                text: AppLocalizations.of(context)!.scan_face,
-                theme: Theme.of(context).textTheme.displayLarge!.copyWith(
-                      fontSize: 16,
-                    ),
-              ),
-              const Spacer(),
-              Container(
-                width: width / 5,
-                height: height / 15,
-                decoration: BoxDecoration(
-                  color: AppColors.white2,
-                  borderRadius: const BorderRadius.all(Radius.circular(360)),
-                  border: Border.all(color: AppColors.purple, width: 3),
-                ),
-                child: Center(
-                  child: SvgPicture.asset(
-                    'assets/images/teenyicons_face-id-solid.svg',
+              Row(
+                children: [
+                  TextPadding(
+                    text: AppLocalizations.of(context)!.scan_face,
+                    theme: Theme.of(context).textTheme.displayLarge!.copyWith(
+                          fontSize: 16,
+                        ),
                   ),
+                  const Spacer(),
+                  Container(
+                    width: width / 5,
+                    height: height / 15,
+                    decoration: BoxDecoration(
+                      color: AppColors.white2,
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(360)),
+                      border: Border.all(color: AppColors.tankBlue1, width: 3),
+                    ),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        'assets/images/teenyicons_face-id-solid.svg',
+                        color: AppColors.tankBlue1,
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: width / 20),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  right: globalController.language == 'en' ||
+                          globalController.language == 'tr'
+                      ? 150
+                      : 0,
+                  left: globalController.language == 'en' ||
+                          globalController.language == 'tr'
+                      ? 0
+                      : 150,
+                ),
+                child: TextPadding(
+                  text: AppLocalizations.of(context)!.face_scan_info,
+                  theme: Theme.of(context).textTheme.displayMedium?.copyWith(
+                        color: AppColors.textHeader,
+                        fontSize: 12,
+                      ),
                 ),
               ),
-              SizedBox(width: width / 20),
+              SizedBox(height: height / 100),
+              Row(
+                children: [
+                  TextPadding(
+                    text: AppLocalizations.of(context)!.note,
+                    theme: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                  Expanded(
+                    child: TextPadding(
+                      text: AppLocalizations.of(context)!.information_is_secure,
+                      theme:
+                          Theme.of(context).textTheme.displayMedium!.copyWith(
+                                color: AppColors.black,
+                              ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.only(),
-            child: TextPadding(
-              text: AppLocalizations.of(context)!.face_scan_info,
-              theme: Theme.of(context).textTheme.displayMedium?.copyWith(
-                    color: AppColors.textHeader,
-                    fontSize: 12,
-                  ),
-            ),
-          ),
-          SizedBox(height: height / 100),
-          TextPadding(
-            text: AppLocalizations.of(context)!.face_scan_note,
-            theme: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w700,
-                ),
-          ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

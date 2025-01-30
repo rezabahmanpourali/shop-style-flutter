@@ -7,7 +7,8 @@ import 'package:shop_style/locator.dart';
 class BestCardItemParty extends StatelessWidget {
   final HairModel hairModel;
   const BestCardItemParty({
-    super.key, required this.hairModel,
+    super.key,
+    required this.hairModel,
   });
 
   @override
@@ -36,9 +37,8 @@ class BestCardItemParty extends StatelessWidget {
                 ),
                 child: Image.network(
                   hairModel.images.isNotEmpty
-                          ? hairModel.images[0].url ??
-                              'assets/images/images1.jpg'
-                          : 'assets/images/images1.jpg',
+                      ? hairModel.images[0].url ?? 'assets/images/images1.jpg'
+                      : 'assets/images/images1.jpg',
                   fit: BoxFit.fill,
                   width: double.infinity,
                   height: double.infinity,
@@ -74,7 +74,12 @@ class BestCardItemParty extends StatelessWidget {
                           const SizedBox(width: 2),
                           Text(
                             '(55)',
-                            style: Theme.of(context).textTheme.bodyMedium,
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: AppColors.tankBlue3,
+                                ),
                           ),
                         ],
                       ),

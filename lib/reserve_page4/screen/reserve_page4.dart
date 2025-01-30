@@ -142,6 +142,7 @@ class _ReservePage4State extends State<ReservePage4> {
                     const SliverToBoxAdapter(
                       child: Divider(
                         height: 2,
+                        thickness: 3,
                         color: AppColors.dividerColor900,
                       ),
                     ),
@@ -162,7 +163,7 @@ class _ReservePage4State extends State<ReservePage4> {
                                 width: 179,
                                 height: 60,
                                 decoration: BoxDecoration(
-                                  color: AppColors.bgBlack,
+                                  color: AppColors.tankBlueButton,
                                   borderRadius: BorderRadius.circular(8),
                                 ),
                                 child: Center(
@@ -188,7 +189,9 @@ class _ReservePage4State extends State<ReservePage4> {
                               style: Theme.of(context)
                                   .textTheme
                                   .labelSmall
-                                  ?.copyWith(color: AppColors.textSearchColor),
+                                  ?.copyWith(
+                                    color: AppColors.textTankBlue,
+                                  ),
                             ),
                             const Spacer(),
                           ],
@@ -210,7 +213,7 @@ class _ReservePage4State extends State<ReservePage4> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Text(
-          AppLocalizations.of(context)!.select_date_and_time,
+          AppLocalizations.of(context)!.review_and_confirm,
           style: Theme.of(context).textTheme.titleMedium,
         ),
         SizedBox(height: height / 40),

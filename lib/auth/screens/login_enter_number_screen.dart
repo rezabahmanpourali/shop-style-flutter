@@ -46,7 +46,7 @@ class LoginEnterNumberPhoneScreen extends StatelessWidget {
                       theme: Theme.of(context).textTheme.displayLarge!.copyWith(
                             fontWeight: FontWeight.w400,
                             fontSize: 12,
-                            color: AppColors.purpleOpacity,
+                            color: AppColors.tankBlue3,
                           ),
                     ),
                   ),

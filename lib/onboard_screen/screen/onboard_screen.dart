@@ -114,7 +114,9 @@ class _OnbordScreenState extends State<OnbordScreen> {
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
-                                        .copyWith(fontSize: 32),
+                                        .copyWith(
+                                            fontSize: 32,
+                                            color: AppColors.tankBlue3),
                                   ),
                                   Text(
                                     textAlign: TextAlign.center,
@@ -234,14 +236,14 @@ class _OnbordScreenState extends State<OnbordScreen> {
                           width: double.infinity,
                           height: 60,
                           decoration: BoxDecoration(
-                            color: AppColors.purpleOpacity,
+                            color: AppColors.tankBlue3,
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: Center(
                             child: Text(
                               AppLocalizations.of(context)!.getAppointmentNow,
                               style: const TextStyle(
-                                color: Colors.white,
+                                color: AppColors.white2,
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
                               ),
@@ -261,7 +263,7 @@ class _OnbordScreenState extends State<OnbordScreen> {
                           width: 80,
                           height: 80,
                           decoration: const BoxDecoration(
-                            color: AppColors.purpleOpacity,
+                            color: AppColors.tankBlue3,
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
@@ -287,7 +289,7 @@ class _OnbordScreenState extends State<OnbordScreen> {
       margin: const EdgeInsets.only(right: 5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: currentIndex == index ? AppColors.purpleOpacity : Colors.grey,
+        color: currentIndex == index ? AppColors.tankBlue3 : Colors.grey,
       ),
     );
   }

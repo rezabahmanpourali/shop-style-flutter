@@ -28,7 +28,7 @@ class _ServiceCategoriesState extends State<ServiceCategories> {
             ...List.generate(
               widget.tabs.length,
               (index) {
-                return InkWell(
+                return GestureDetector(
                   onTap: () {
                     setState(() {
                       currentIndex = index;
@@ -39,7 +39,7 @@ class _ServiceCategoriesState extends State<ServiceCategories> {
                     height: 35,
                     decoration: BoxDecoration(
                       color: currentIndex == index
-                          ? AppColors.categoryBlack
+                          ? AppColors.tankBlue2
                           : Colors.transparent,
                       borderRadius: BorderRadius.circular(24),
                     ),
@@ -48,8 +48,8 @@ class _ServiceCategoriesState extends State<ServiceCategories> {
                         widget.tabs[index],
                         style: TextStyle(
                           color: currentIndex == index
-                              ? AppColors.white2
-                              : AppColors.categoryBlack,
+                              ? AppColors.tankBlue3
+                              : AppColors.tankBlue3,
                           fontSize: currentIndex == index ? 16 : 16,
                           fontWeight: currentIndex == index
                               ? FontWeight.w700

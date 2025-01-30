@@ -24,7 +24,7 @@ class BarberShopCarousel extends StatefulWidget {
     required this.controller,
     required this.selectedMarkerIndex,
     required this.barberShopController,
-    required this.barberShopModel, 
+    required this.barberShopModel,
   });
 
   @override
@@ -244,7 +244,7 @@ class _BarberShopCarouselState extends State<BarberShopCarousel> {
                 style: Theme.of(context)
                     .textTheme
                     .labelMedium
-                    ?.copyWith(color: AppColors.purpleOpacity),
+                    ?.copyWith(color: AppColors.tankBlue3),
               ),
               const SizedBox(width: 5),
               Text(
@@ -278,7 +278,9 @@ class _BarberShopCarouselState extends State<BarberShopCarousel> {
               const SizedBox(width: 5),
               Text(
                 '(55)',
-                style: Theme.of(context).textTheme.bodyMedium,
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                      color: AppColors.tankBlue3,
+                    ),
               ),
             ],
           ),
@@ -380,7 +382,7 @@ class _BarberShopCarouselState extends State<BarberShopCarousel> {
               Text(
                 AppLocalizations.of(context)!.see_more,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: AppColors.purpleOpacity,
+                      color: AppColors.tankBlue3,
                       fontSize: 16,
                     ),
               ),

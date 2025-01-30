@@ -60,11 +60,15 @@ class _LoginEnterPasswordScreenState extends State<LoginEnterPasswordScreen> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextPadding(
-                          text: AppLocalizations.of(context)!
-                              .verification_code_sent,
-                          topPadding: height / 100,
-                          theme: Theme.of(context).textTheme.bodyMedium,
-                        ),
+                            text: AppLocalizations.of(context)!
+                                .verification_code_sent,
+                            topPadding: height / 100,
+                            theme: Theme.of(context)
+                                .textTheme
+                                .bodyMedium!
+                                .copyWith(
+                                  color: AppColors.tankBlue3,
+                                )),
                       ],
                     ),
                   ),
@@ -78,15 +82,22 @@ class _LoginEnterPasswordScreenState extends State<LoginEnterPasswordScreen> {
                     ),
                   ),
                   SliverToBoxAdapter(
-                    child: TextPadding(
-                      text:
-                          AppLocalizations.of(context)!.resend_code_in_seconds,
-                      textAlign: TextAlign.center,
-                      topPadding: height / 3.6,
-                      theme:
-                          Theme.of(context).textTheme.displayMedium!.copyWith(
-                                color: AppColors.purple,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextPadding(
+                          text: AppLocalizations.of(context)!
+                              .resend_code_in_seconds,
+                          textAlign: TextAlign.center,
+                          topPadding: height / 3.6,
+                          theme: Theme.of(context)
+                              .textTheme
+                              .displayMedium!
+                              .copyWith(
+                                color: AppColors.tankBlue3,
                               ),
+                        ),
+                      ],
                     ),
                   ),
                   SliverToBoxAdapter(

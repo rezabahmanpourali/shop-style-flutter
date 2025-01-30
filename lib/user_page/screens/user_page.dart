@@ -14,7 +14,8 @@ import 'package:shop_style/recently_viewed_page/screens/recently_viewed_page.dar
 import 'package:shop_style/saved_barber_shop/screens/saved_barber_shop.dart';
 import 'package:shop_style/saved_model_page/screens/saved_models_page.dart';
 import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:url_launcher/url_launcher.dart'; // فایل لوکالیزیشن
 
 class UserPage extends StatefulWidget {
   const UserPage({super.key});
@@ -26,6 +27,16 @@ class UserPage extends StatefulWidget {
 class _UserPageState extends State<UserPage> {
   String selectedLanguage = 'فارسی';
   String selectedFlag = 'assets/images/twemoji_flag-iran.svg';
+
+// تابع برای باز کردن آدرس
+  void _launchURL() async {
+    final Uri url = Uri.parse('https://barber-shop.liara.run/');
+    if (await canLaunchUrl(url)) {
+      await launchUrl(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -246,8 +257,29 @@ class _UserPageState extends State<UserPage> {
                           GestureDetector(
                             onTap: () {
                               Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => const UserInfoPage(),
+                                PageRouteBuilder(
+                                  pageBuilder:
+                                      (context, animation, secondaryAnimation) {
+                                    // صفحه مقصد
+                                    return const UserInfoPage();
+                                  },
+                                  transitionsBuilder: (context, animation,
+                                      secondaryAnimation, child) {
+                                    var begin = const Offset(
+                                        1.0, 0.0); // حرکت از راست به چپ
+                                    var end = Offset.zero;
+                                    var curve = Curves.easeInOut;
+
+                                    var tween = Tween(begin: begin, end: end)
+                                        .chain(CurveTween(curve: curve));
+                                    var offsetAnimation =
+                                        animation.drive(tween);
+
+                                    return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: FadeTransition(
+                                            opacity: animation, child: child));
+                                  },
                                 ),
                               );
                             },
@@ -560,7 +592,9 @@ class _UserPageState extends State<UserPage> {
                         //item8
 
                         UserAccountItem(
-                          onChange: () {},
+                          onChange: () {
+                            _launchURL();
+                          },
                           title: AppLocalizations.of(context)!.support,
                           iconRight: globalController.language == 'fa' ||
                                   globalController.language == 'ar'

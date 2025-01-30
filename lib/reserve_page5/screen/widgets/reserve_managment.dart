@@ -26,7 +26,7 @@ class ReserveManagment extends StatelessWidget {
               width: 40,
               height: 40,
               decoration: const BoxDecoration(
-                color: AppColors.porpleLight,
+                color: AppColors.tankBlue2,
                 shape: BoxShape.circle,
               ),
               child: icon,

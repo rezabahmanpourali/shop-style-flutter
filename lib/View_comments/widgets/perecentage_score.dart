@@ -27,21 +27,7 @@ class _PercentageBoxScoreState extends State<PercentageBoxScore> {
           children: [
             Positioned(
               right: width * 0.01,
-              child:
-                  // Checkbox(
-                  //   splashRadius: 5,
-                  //   focusColor: Colors.transparent,
-                  //   hoverColor: Colors.transparent,
-                  //   checkColor: Colors.transparent,
-                  //   activeColor: AppColors.purple,
-                  //   value: selectedIndex == index,
-                  //   onChanged: (value) {
-                  //     setState(() {
-                  //       selectedIndex = value! ? index : -1;
-                  //     });
-                  //   },
-                  // ),
-                  CustomCheckbox(
+              child: CustomCheckbox(
                 value: selectedIndex == index,
                 onChanged: (value) {
                   setState(() {
@@ -49,7 +35,7 @@ class _PercentageBoxScoreState extends State<PercentageBoxScore> {
                   });
                 },
                 size: 20.0,
-                activeColor: AppColors.purple,
+                activeColor: AppColors.tankBlueButton,
                 checkColor: Colors.white,
                 borderColor: AppColors.cardWhite,
               ),

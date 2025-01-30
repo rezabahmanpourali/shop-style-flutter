@@ -22,6 +22,7 @@ class TextPadding extends StatelessWidget {
         textAlign: textAlign ?? TextAlign.start,
         text,
         style: theme ?? const TextStyle(),
+        softWrap: true,
       ),
     );
   }

@@ -118,7 +118,7 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
                         shape: BoxShape.circle,
                         border: Border.all(
                             color: selectedOptions[0]!
-                                ? AppColors.purpleOpacity
+                                ? AppColors.tankBlueButton
                                 : AppColors.cardWhite,
                             width: selectedOptions[0]! ? 4 : 1),
                         color: Colors.white,
@@ -156,7 +156,7 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
                         shape: BoxShape.circle,
                         border: Border.all(
                             color: selectedOptions[1]!
-                                ? AppColors.purpleOpacity
+                                ? AppColors.tankBlueButton
                                 : AppColors.cardWhite,
                             width: selectedOptions[1]! ? 4 : 1),
                         color: Colors.white,
@@ -194,7 +194,7 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
                         shape: BoxShape.circle,
                         border: Border.all(
                             color: selectedOptions[2]!
-                                ? AppColors.purpleOpacity
+                                ? AppColors.tankBlueButton
                                 : AppColors.cardWhite,
                             width: selectedOptions[2]! ? 4 : 1),
                         color: Colors.white,
@@ -240,14 +240,14 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
               ),
             ),
             Slider(
-              inactiveColor: AppColors.purpleOpacity,
+              inactiveColor: AppColors.tankBlueButton,
               value: _currentPrice,
               min: 0,
               max: 1000000,
               divisions: 100, // تعداد تقسیمات خط کش
               label: _currentPrice.toStringAsFixed(2),
               onChanged: _onSliderChanged, // تابعی که در هنگام درگ اجرا می‌شود
-              activeColor: AppColors.purpleOpacity,
+              activeColor: AppColors.tankBlueButton,
             ),
             const SizedBox(
               height: 32,
@@ -275,7 +275,7 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   AdvancedSwitch(
-                    activeColor: AppColors.activeSwitchColor,
+                    activeColor: AppColors.tankBlueButton,
                     inactiveColor: Colors.grey,
                     initialValue: _isSwitched,
                     onChanged: (value) {
@@ -312,7 +312,7 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
                 ],
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(left: 18, right: 18),
               child: Row(
@@ -348,7 +348,7 @@ class _ShowModelFilterState extends State<ShowModelFilter> {
                       width: 174,
                       height: 60,
                       decoration: BoxDecoration(
-                        color: AppColors.bgBlack,
+                        color: AppColors.tankBlueButton,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Center(
