@@ -24,7 +24,7 @@ class BarberShopSavedModelAdapter extends TypeAdapter<BarberShopSavedModel> {
       shopType: fields[4] as String?,
       isActive: fields[5] as bool?,
       comments: (fields[6] as List?)?.cast<CommentModel>(),
-      images: (fields[7] as List?)?.cast<ImageModel>(),
+      images: (fields[7] as List?)?.cast<ImageeModel>(),
       location: fields[8] as Location?,
     );
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/configs/enums.dart';
@@ -11,12 +12,21 @@ class CustomTextfield extends StatefulWidget {
     required this.type,
     this.hintText,
     this.topPadding,
+    this.controller,
+    this.inputType = TextInputType.text, // نوع ورودی رو از بیرون تعیین کن
+    this.inputFormatter,
+    this.textDirection = TextDirection.ltr, // اضافه کردن پارامتر textDirection
   });
 
   final String? lableField;
   final String? hintText;
   final TextfieldType type;
   final double? topPadding;
+  final TextEditingController? controller;
+  final TextInputType inputType; // برای نوع ورودی
+  final List<TextInputFormatter>?
+      inputFormatter; // برای فرمت ورودی‌ها (مثل فقط اعداد)
+  final TextDirection textDirection; // پارامتر جدید برای تعیین جهت متن
 
   @override
   State<CustomTextfield> createState() => _CustomTextfieldState();
@@ -93,6 +103,10 @@ class _CustomTextfieldState extends State<CustomTextfield> {
               ? width / 1.5
               : width / 1.45,
       child: TextField(
+        keyboardType:
+            widget.inputType, // استفاده از نوع ورودی مشخص شده از بیرون
+        inputFormatters: widget.inputFormatter ?? [],
+        controller: widget.controller,
         obscureText: widget.type == TextfieldType.security &&
             showPassword, // مخفی کردن متن در صورت نیاز
         style: Theme.of(context)
@@ -108,6 +122,7 @@ class _CustomTextfieldState extends State<CustomTextfield> {
                 fontSize: 12,
               ),
         ),
+        textDirection: widget.textDirection,
       ),
     );
   }

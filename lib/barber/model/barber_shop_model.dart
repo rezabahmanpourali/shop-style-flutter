@@ -6,9 +6,9 @@ class BarberShopModel {
   final bool? isActive;
   final String? shopType;
   final List<CommentModel>? comments;
-  final List<ImageModel>? images;
+  final List<ImageeModel>? images;
   final Location? location;
-  bool isBookmarked; 
+  bool isBookmarked;
 
   BarberShopModel({
     this.id,
@@ -31,7 +31,7 @@ class BarberShopModel {
           ?.map((e) => CommentModel.fromJson(e))
           .toList(),
       images: (json['images'] as List?)
-          ?.map((e) => ImageModel.fromJson(e))
+          ?.map((e) => ImageeModel.fromJson(e))
           .toList(),
       location:
           json['location'] != null ? Location.fromJson(json['location']) : null,
@@ -39,19 +39,19 @@ class BarberShopModel {
   }
 }
 
-class ImageModel {
+class ImageeModel {
   final int? id;
   final String? fileName;
   final String? url;
 
-  ImageModel({
+  ImageeModel({
     this.id,
     this.fileName,
     this.url,
   });
 
-  factory ImageModel.fromJson(Map<String, dynamic> json) {
-    return ImageModel(
+  factory ImageeModel.fromJson(Map<String, dynamic> json) {
+    return ImageeModel(
       id: json['id'],
       fileName: json['file_name'],
       url: json['url'],

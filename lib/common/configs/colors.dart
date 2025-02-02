@@ -64,4 +64,9 @@ class AppColors {
   static const Color tankBlueButton = Color(0xff009CDD);
   static const Color tankBlueOpacity100 = Color(0xff81D9FF);
   static const Color textTankBlue = Color(0xff80D9FF);
+  //Toast Colors
+  static const Color toastGreen = Color(0xffE6FFED);
+  static const Color toastLineGreen = Color(0xff82BD6B);
+  static const Color toastRed= Color(0xffE03532);
+  static const Color toastBottonRed= Color(0xffFFE6E6);
 }

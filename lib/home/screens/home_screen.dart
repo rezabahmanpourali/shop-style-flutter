@@ -18,12 +18,14 @@ import 'package:shop_style/common/widgets/category_item.dart';
 import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/home/statemanagment/home_controller.dart';
 import 'package:shop_style/home/widgets/barber_shop_list_widgets.dart';
+import 'package:shop_style/home/widgets/recently_barber_shop.dart';
 import 'package:shop_style/home/widgets/show_model_location.dart';
 import 'package:shop_style/home/widgets/widgets/card_item.dart';
 import 'package:shop_style/locator.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
 import 'package:shop_style/barber/model/comment_model.dart';
 import 'package:shop_style/barber/model/barber_shop_model.dart';
+import 'package:shop_style/barber/model/comment_model.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({super.key});
@@ -148,87 +150,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           height: 22,
                         ),
                       ),
-                      ////////////////////////////////////
+
                       SliverToBoxAdapter(
-                        child: SizedBox(
-                          height: 250,
-                          child: ValueListenableBuilder(
-                            valueListenable: recentVisitsBox.listenable(),
-                            builder:
-                                (context, Box<BarberShopSavedModel> box, _) {
-                              return ListView.builder(
-                                padding: const EdgeInsets.only(left: 22),
-                                scrollDirection: Axis.horizontal,
-                                itemCount: box.isEmpty ? 0 : box.length,
-                                itemBuilder: (context, index) {
-                                  var barberShopSavedModel = box.getAt(index);
-
-                                  // ساخت مدل BarberShop
-                                  BarberShopModel barberShopModel =
-                                      BarberShopModel(
-                                    id: barberShopSavedModel!.id,
-                                    barberShopName:
-                                        barberShopSavedModel.barberShopName,
-                                    images: barberShopSavedModel.imageUrl !=
-                                            null
-                                        ? [
-                                            ImageModel(
-                                              url:
-                                                  barberShopSavedModel.imageUrl,
-                                            )
-                                          ]
-                                        : [],
-                                    isBookmarked:
-                                        barberShopSavedModel.isBookmarked,
-                                    comments:
-                                        barberShopSavedModel.comments ?? [],
-                                    location: barberShopSavedModel.location ??
-                                        Location(latitude: 0.0, longitude: 0.0),
-                                    shopType:
-                                        barberShopSavedModel.shopType ?? '',
-                                    isActive:
-                                        barberShopSavedModel.isActive ?? true,
-                                  );
-
-                                  return Padding(
-                                    padding: const EdgeInsets.only(right: 22),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        // ذخیره آرایشگاه در "بازدیدهای اخیر" فقط اگر در "فروشگاه‌های ذخیره‌شده" نباشد
-                                        _saveToRecentlyViewed(
-                                            barberShopSavedModel);
-
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return MultiProvider(
-                                                providers: [
-                                                  ChangeNotifierProvider.value(
-                                                    value: locator.get<
-                                                        BarberShopController>(),
-                                                  ),
-                                                ],
-                                                child: BarberShopPage(
-                                                  barberShopModel:
-                                                      barberShopModel,
-                                                  barberShopId:
-                                                      barberShopModel.id ?? 0,
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      },
-                                      child: CardItem(
-                                          barberShopModel), // ویجت مربوط به نمایش هر آرایشگاه
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          ),
+                        child: RecentlySeenBarberShopsWidget(
+                          recentVisitsBox: recentVisitsBox,
+                          barberShopState: barberShopController
+                              .barberShopState, // ارسال recentVisitsBox
                         ),
                       ),
+
                       ////////////////////////////////////
                       SliverToBoxAdapter(
                         child: Selector<BarberShopController, BlocStatus>(

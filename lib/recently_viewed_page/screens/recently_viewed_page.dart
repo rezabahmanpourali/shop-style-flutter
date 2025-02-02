@@ -77,7 +77,7 @@ class _RecentlyViewedPageState extends State<RecentlyViewedPage> {
                                   barberShopSavedModel.barberShopName,
                               images: barberShopSavedModel.imageUrl != null
                                   ? [
-                                      ImageModel(
+                                      ImageeModel(
                                         url: barberShopSavedModel.imageUrl,
                                       )
                                     ]

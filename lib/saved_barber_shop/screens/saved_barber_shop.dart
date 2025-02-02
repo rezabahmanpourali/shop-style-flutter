@@ -63,7 +63,7 @@ class _SavedBarberShopState extends State<SavedBarberShop> {
                             barberShopName: barberShopSavedModel.barberShopName,
                             images: barberShopSavedModel.imageUrl != null
                                 ? [
-                                    ImageModel(
+                                    ImageeModel(
                                         url: barberShopSavedModel.imageUrl)
                                   ]
                                 : [],

@@ -54,6 +54,7 @@ dependencies:
   image_picker: ^1.1.2
   permission_handler: ^10.2.0
   url_launcher: ^6.3.1
+  flutter_spinkit: ^5.2.1
   # این پکیج های پایینی برای ویجت های تستی است
   toastification: ^2.3.0
   # The following adds the Cupertino Icons font to your application.

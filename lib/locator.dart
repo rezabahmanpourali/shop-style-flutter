@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shop_style/auth/data/repository/auth_repository.dart';
+import 'package:shop_style/auth/data/repository/otp_repository.dart';
+import 'package:shop_style/auth/data/repository/phone_repository.dart';
+import 'package:shop_style/auth/data/repository/register_user_repository.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
 import 'package:shop_style/barber/data/repository/barber_repository.dart';
 import 'package:shop_style/barber/data/repository/barber_shop_repository.dart';
@@ -42,7 +45,9 @@ Future<void> setupLocator() async {
       instanceName: "ApiClientV3Otp");
 
   //repository
-  locator.registerSingleton<IAuthenticateRepository>(AuthenticateRepository());
+  locator.registerSingleton<IAuthRepository>(AuthRepository());
+
+
   locator.registerSingleton<IBarberShopRepository>(BarberShopRepository());
   locator.registerSingleton<IBarberRepository>(BarberRepository());
   locator.registerSingleton<IHomeRepository>(HomeRepository());

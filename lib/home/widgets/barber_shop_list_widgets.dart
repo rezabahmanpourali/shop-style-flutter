@@ -110,8 +110,9 @@ class _BarberShopListWidgetState extends State<BarberShopListWidget> {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) {
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
                               return MultiProvider(
                                 providers: [
                                   ChangeNotifierProvider.value(
@@ -129,12 +130,24 @@ class _BarberShopListWidgetState extends State<BarberShopListWidget> {
                                 ),
                               );
                             },
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              // انیمیشن به سمت بالا
+                              var begin = Offset(0.0, 1.0); // شروع از پایین
+                              var end = Offset.zero; // پایان در وسط
+                              var curve = Curves.easeInOut;
+
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+                              var offsetAnimation = animation.drive(tween);
+
+                              return SlideTransition(
+                                  position: offsetAnimation, child: child);
+                            },
                           ),
                         );
                       },
-                      child: CardItem(
-                        barberShop
-                      ),
+                      child: CardItem(barberShop),
                     ),
                   );
                 },

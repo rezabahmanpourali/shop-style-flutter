@@ -28,7 +28,7 @@ class BarberShopController extends ChangeNotifier {
   List<BarberShopModel> filteredBarberShops = []; // لیست فیلتر شده آرایشگاه‌ها
 
   // کنترلر آرایشگاه ها
-  void fetchBarberShops() async {
+  Future<void> fetchBarberShops() async {
     barberShopState = BlocStatusLoading();
     notifyListeners();
 
@@ -117,6 +117,17 @@ class BarberShopController extends ChangeNotifier {
             shop.barberShopName != null && shop.barberShopName!.contains(query))
         .toList();
 
+    notifyListeners();
+  }
+
+
+   // متد ریست کردن فیلتر
+  void resetFilter() {
+    // ترکیب لیست آرایشگاه‌ها از هر دو منبع (SEEN_RECENTLY و TOP_BARBERS)
+    List<BarberShopModel> allShops = [...barberShops, ...topBarberShops];
+
+    // بازگشت به تمام داده‌ها
+    filteredBarberShops = List.from(allShops);
     notifyListeners();
   }
 }

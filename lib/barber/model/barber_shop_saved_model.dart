@@ -28,7 +28,7 @@ class BarberShopSavedModel {
   final List<CommentModel>? comments;
 
   @HiveField(7)
-  final List<ImageModel>? images;
+  final List<ImageeModel>? images;
 
   @HiveField(8)
   final Location? location;
@@ -45,4 +45,3 @@ class BarberShopSavedModel {
     this.location,
   });
 }
-

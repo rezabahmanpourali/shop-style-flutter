@@ -15,7 +15,7 @@ class CustomCheckbox extends StatelessWidget {
     required this.onChanged,
     this.size = 24.0,
     this.checkColor = AppColors.white2,
-    this.activeColor = AppColors.purple,
+    this.activeColor = AppColors.tankBlueButton,
     this.borderColor = AppColors.cardWhite,
   });
 

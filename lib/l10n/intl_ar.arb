@@ -208,5 +208,13 @@
   "app_name": "اسم التطبيق",
   "enter_information": "أدخل المعلومات التالية وفقًا لتفضيلاتك",
   "information_is_secure": "جميع المعلومات التي تقوم بإدخالها في هذا القسم محمية تمامًا.",
-  "note": ":ملاحظة"
+  "note": ":ملاحظة",
+  "please_enter_your_phone_number": "من فضلك أدخل رقم هاتفك",
+  "phone_number_sent_successfully": "تم إرسال رقم الهاتف بنجاح",
+  "invalid_phone_number": "رقم الهاتف غير صالح",
+  "phone_number_exists_error": "هذا الرقم مسجل بالفعل. من فضلك حاول مرة أخرى.",
+  "please_accept_terms_and_conditions": "يرجى قبول الشروط والأحكام",
+  "complete": "أكمل",
+  "passwords_do_not_match": "كلمات السر لا تتطابق",
+  "information_successfully_registered": "تم تسجيل معلوماتك بنجاح."
 }

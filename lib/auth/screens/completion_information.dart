@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_style/auth/statemanagment/auth_controller.dart';
 import 'package:shop_style/auth/widgets/custom_button.dart';
 import 'package:shop_style/auth/widgets/custom_dropdown.dart';
+import 'package:shop_style/common/configs/state_handeler.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
 import 'package:shop_style/common/widgets/header_for_screen.dart';
+import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/common/widgets/text_padding.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/main.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:toastification/toastification.dart'; // فایل لوکالیزیشن
 
 class CompletionInformation extends StatefulWidget {
   const CompletionInformation({super.key});
@@ -19,8 +24,49 @@ class CompletionInformation extends StatefulWidget {
 }
 
 class _CompletionInformationState extends State<CompletionInformation> {
-  String? selectedValue = 'زرد';
-  int selected = 0;
+  // String? selectedValue = 'زرد';
+  // int selected = 0;
+  // String selectedItem = ''; // متغیر برای ذخیره مقدار انتخابی
+  String selectedFaceForm = ''; // فرم صورت
+  String selectedHairForm = ''; // مدل مو
+  String selectedEyeColor = ''; // رنگ چشم
+  String selectedHairLike = ''; // مدل موی دلخواه
+  bool _navigated = false;
+
+  // تابع برای دریافت مقدار انتخابی
+  // void handleItemSelected(String selectedValue) {
+  //   setState(() {
+  //     selectedItem = selectedValue; // مقدار انتخابی را ذخیره می‌کنیم
+  //   });
+  // }
+
+  // برای فرم صورت
+  void handleFaceFormSelected(String selectedValue) {
+    setState(() {
+      selectedFaceForm = selectedValue;
+    });
+  }
+
+// برای مدل مو
+  void handleHairFormSelected(String selectedValue) {
+    setState(() {
+      selectedHairForm = selectedValue;
+    });
+  }
+
+// برای رنگ چشم
+  void handleEyeColorSelected(String selectedValue) {
+    setState(() {
+      selectedEyeColor = selectedValue;
+    });
+  }
+
+// برای مدل موی دلخواه
+  void handleHairLikeSelected(String selectedValue) {
+    setState(() {
+      selectedHairLike = selectedValue;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -160,6 +206,7 @@ class _CompletionInformationState extends State<CompletionInformation> {
                   //Face Shape DDM
                   SliverToBoxAdapter(
                     child: CustomDropdown(
+                      onChanged: handleFaceFormSelected,
                       items: [
                         if (globalController.language == 'fa' ||
                             globalController.language == 'ar') ...[
@@ -225,6 +272,7 @@ class _CompletionInformationState extends State<CompletionInformation> {
                   //Hair Shape DDM
                   SliverToBoxAdapter(
                     child: CustomDropdown(
+                      onChanged: handleHairFormSelected,
                       items: [
                         {
                           'first': AppLocalizations.of(context)!
@@ -256,6 +304,7 @@ class _CompletionInformationState extends State<CompletionInformation> {
                   //Eye Color DDM
                   SliverToBoxAdapter(
                     child: CustomDropdown(
+                      onChanged: handleEyeColorSelected,
                       items: [
                         {
                           'first': AppLocalizations.of(context)!.dark_and_deep,
@@ -297,6 +346,7 @@ class _CompletionInformationState extends State<CompletionInformation> {
                   ),
                   SliverToBoxAdapter(
                     child: CustomDropdown(
+                      onChanged: handleHairLikeSelected,
                       items: [
                         {
                           'first': AppLocalizations.of(context)!.volume_texture,
@@ -336,17 +386,97 @@ class _CompletionInformationState extends State<CompletionInformation> {
                       topPadding: height / 40,
                     ),
                   ),
+
                   SliverToBoxAdapter(
-                    child: CustomButton(
-                      textButton: AppLocalizations.of(context)!.let_go,
-                      topPadding: height / 20,
-                      onClick: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => MyApp(),
-                        ));
+                    child: Selector<AuthController, BlocStatus>(
+                      selector: (context, authController) =>
+                          authController.facePropertyState,
+                      builder: (context, userInfoState, child) {
+                        return StateManageWidget(
+                          status: userInfoState,
+                          initialWidget: () {
+                            return CustomButton(
+                              textButton: AppLocalizations.of(context)!.let_go,
+                              topPadding: height / 25,
+                              onClick: () {
+                                // بررسی مقادیر پر نشده
+                                if (selectedFaceForm.isEmpty ||
+                                    selectedHairForm.isEmpty ||
+                                    selectedEyeColor.isEmpty ||
+                                    selectedHairLike.isEmpty) {
+                                  // نمایش توست در صورتی که مقادیری پر نشده باشند
+                                  showToast(
+                                    context,
+                                    '',
+                                    AppLocalizations.of(context)!
+                                        .enter_information,
+                                    ToastificationType.error,
+                                  );
+                                  return;
+                                }
+
+                                // اگر همه فیلدها پر بودند، اطلاعات را ارسال می‌کنیم
+                                context.read<AuthController>().sendFaceProperty(
+                                      faceForm: selectedFaceForm,
+                                      hairForm: selectedHairForm,
+                                      ryeColor: selectedEyeColor,
+                                      likeHair: selectedHairLike,
+                                    );
+                              },
+                            );
+                          },
+                          loadingWidget: () {
+                            return const Padding(
+                              padding: EdgeInsets.only(top: 20.0),
+                              child: SpinKitCircle(
+                                color: AppColors.tankBlueButton,
+                                size: 50.0,
+                              ),
+                            );
+                          },
+                          errorWidgetBuilder: (message, statusCode) {
+                            return const Center(
+                              child: Text(
+                                'مشکلی پیش آمده',
+                              ),
+                            );
+                          },
+                          completedWidgetBuilder: (value) {
+                            // بررسی وضعیت موفقیت‌آمیز
+                            if (!_navigated) {
+                              _navigated = true;
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                // نمایش توست برای موفقیت‌آمیز بودن عملیات
+                                showToast(
+                                  context,
+                                  '',
+                                  AppLocalizations.of(context)!
+                                      .information_is_secure,
+                                  ToastificationType.success,
+                                );
+
+                                // هدایت به صفحه جدید بعد از نمایش توست
+                                Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MyApp(), // صفحه اصلی
+                                  ),
+                                );
+                              });
+                            }
+
+                            return const Center(
+                              child: Text(
+                                '',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            );
+                          },
+                        );
                       },
                     ),
                   ),
+
                   SliverToBoxAdapter(
                     child: TextButton(
                       onPressed: () {
@@ -457,6 +587,85 @@ class _CompletionInformationState extends State<CompletionInformation> {
           ),
         );
       },
+    );
+  }
+
+  void showToast(BuildContext context, String title, String description,
+      ToastificationType type) {
+    final String currentLanguage = context.read<GlobalController>().language;
+
+    // تعیین جهت متن (LTR یا RTL)
+    TextDirection textDirection =
+        (currentLanguage == 'en' || currentLanguage == 'tr')
+            ? TextDirection.ltr
+            : TextDirection.rtl;
+
+    // تعیین آیکون و رنگ‌ها برای موفقیت یا خطا
+    Icon icon = type == ToastificationType.error
+        ? const Icon(
+            Icons.close,
+            color: AppColors.toastRed,
+            size: 40,
+            weight: 25,
+          )
+        : const Icon(
+            Icons.check,
+            color: AppColors.toastLineGreen,
+            size: 40,
+            grade: 5,
+          );
+
+    Color backgroundColor = type == ToastificationType.success
+        ? AppColors.toastGreen
+        : type == ToastificationType.info
+            ? Colors.blue
+            : type == ToastificationType.warning
+                ? Colors.orange
+                : AppColors.toastBottonRed;
+
+    Color textColor = type == ToastificationType.success
+        ? AppColors.toastLineGreen
+        : AppColors.toastRed;
+
+    // نمایش Toast
+    toastification.show(
+      closeOnClick: false,
+      closeButtonShowType: CloseButtonShowType.none,
+      icon: icon,
+      context: context,
+      type: type,
+      title: Text(
+        title,
+        textDirection: textDirection,
+      ),
+      description: Padding(
+        padding: const EdgeInsets.only(bottom: 10),
+        child: Text(
+          description,
+          style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                color: textColor,
+              ),
+          textDirection: textDirection,
+        ),
+      ),
+      primaryColor: Colors.white,
+      autoCloseDuration: const Duration(seconds: 3),
+      progressBarTheme: ProgressIndicatorThemeData(
+        color: type == ToastificationType.success
+            ? AppColors.toastLineGreen
+            : type == ToastificationType.info
+                ? Colors.blue
+                : type == ToastificationType.warning
+                    ? Colors.orange
+                    : AppColors.toastRed,
+        linearTrackColor: Colors.transparent,
+      ),
+      showProgressBar: true,
+      direction: textDirection,
+      backgroundColor: backgroundColor,
+      foregroundColor: Colors.white,
     );
   }
 }

@@ -49,6 +49,7 @@ void main() async {
         ChangeNotifierProvider.value(
           value: locator.get<HomeController>(),
         ),
+        
       ],
       child: Consumer<GlobalController>(
         builder: (context, globalController, child) {

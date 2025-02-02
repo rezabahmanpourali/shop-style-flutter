@@ -214,5 +214,13 @@
   "app_name": "نام برنامه",
   "enter_information": "اطلاعات زیر را بر اساس سلیقه خود وارد کنید",
   "information_is_secure": "تمامی اطلاعاتی که در این بخش وارد می‌کنید کاملاً محفوظ است.",
-  "note": "نکته:"
+  "note": "نکته:",
+  "please_enter_your_phone_number": "لطفاً شماره موبایل خود را وارد کنید",
+  "phone_number_sent_successfully": "شماره موبایل با موفقیت ارسال شد",
+  "invalid_phone_number": "شماره موبایل نامعتبر",
+  "phone_number_exists_error": "این شماره موبایل قبلاً ثبت شده است. لطفاً دوباره تلاش کنید.",
+  "please_accept_terms_and_conditions": "قوانین رو بپذیر",
+  "complete": "کامل کنید",
+  "passwords_do_not_match": "پسوردها مطابقت ندارند",
+  "information_successfully_registered": "اطلاعات شما با موفقیت ثبت شد."
 }
