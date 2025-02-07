@@ -18,6 +18,7 @@ import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/home/statemanagment/home_controller.dart';
 import 'package:shop_style/locator.dart';
 import 'package:shop_style/onboard_screen/screen/onboard_screen.dart';
+import 'package:shop_style/test_widgets/point_dialog.dart';
 import 'package:shop_style/test_widgets_screen.dart';
 import 'package:shop_style/user_page/screens/user_page.dart';
 import 'package:shop_style/view_reserved_page/screens/view_reserved_page.dart';
@@ -49,7 +50,6 @@ void main() async {
         ChangeNotifierProvider.value(
           value: locator.get<HomeController>(),
         ),
-        
       ],
       child: Consumer<GlobalController>(
         builder: (context, globalController, child) {

@@ -126,101 +126,6 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                   SliverToBoxAdapter(
                     child: acceptance(height, width, context),
                   ),
-                  // SliverToBoxAdapter(
-                  //   child: Selector<AuthController, BlocStatus>(
-                  //     selector: (context, authController) =>
-                  //         authController.registerState,
-                  //     builder: (context, registerStatus, child) {
-                  //       return StateManageWidget(
-                  //         status: registerStatus,
-                  //         initialWidget: () {
-                  //           return CustomButton(
-                  //             topPadding: height / 5.5,
-                  //             textButton: AppLocalizations.of(context)!.sign_up,
-                  //             onClick: () {
-                  //               if (!hasAcceptance) {
-                  //                 ScaffoldMessenger.of(context).showSnackBar(
-                  //                   SnackBar(
-                  //                     content: Text(
-                  //                         AppLocalizations.of(context)!
-                  //                             .accept_terms),
-                  //                     backgroundColor: Colors.redAccent,
-                  //                   ),
-                  //                 );
-                  //                 return;
-                  //               }
-
-                  //               final name = nameController.text;
-                  //               final lastName = lastNameController.text;
-                  //               final password = passwordController.text;
-                  //               final repeatPassword =
-                  //                   repeatPasswordController.text;
-
-                  //               // تطابق پسوردها را بررسی می‌کنیم
-                  //               if (password == repeatPassword) {
-                  //                 context.read<AuthController>().registerUser(
-                  //                       name: name,
-                  //                       lastn: lastName,
-                  //                       password: password,
-                  //                     );
-                  //               } else {
-                  //                 ScaffoldMessenger.of(context).showSnackBar(
-                  //                   const SnackBar(
-                  //                     content: Text('پسوردها مطابقت ندارند'),
-                  //                     backgroundColor: Colors.redAccent,
-                  //                   ),
-                  //                 );
-                  //               }
-                  //             },
-                  //           );
-                  //         },
-                  //         loadingWidget: () {
-                  //           return const Padding(
-                  //             padding: EdgeInsets.only(top: 20.0),
-                  //             child: SpinKitCircle(
-                  //               color: AppColors.tankBlueButton,
-                  //               size: 50.0,
-                  //             ),
-                  //           );
-                  //         },
-                  //         errorWidgetBuilder: (message, statusCode) {
-                  //           if (message ==
-                  //               'This phone number is already registered') {
-                  //             return const Center(
-                  //               child: Text(
-                  //                 "این شماره موبایل قبلاً ثبت شده است.",
-                  //                 style: TextStyle(color: Colors.red),
-                  //               ),
-                  //             );
-                  //           }
-                  //           return const Center(
-                  //             child: Text('مشکلی پیش آمده'),
-                  //           );
-                  //         },
-                  //         completedWidgetBuilder: (value) {
-                  //           if (!isPageOpened) {
-                  //             isPageOpened = true;
-                  //             WidgetsBinding.instance.addPostFrameCallback((_) {
-                  //               Navigator.of(context).push(
-                  //                 MaterialPageRoute(
-                  //                   builder: (context) =>
-                  //                       const CompletionInformation(),
-                  //                 ),
-                  //               );
-                  //             });
-                  //           }
-
-                  //           return const Center(
-                  //             child: Text(
-                  //               '',
-                  //               style: TextStyle(fontSize: 16),
-                  //             ),
-                  //           );
-                  //         },
-                  //       );
-                  //     },
-                  //   ),
-                  // ),
                   SliverToBoxAdapter(
                     child: Selector<AuthController, BlocStatus>(
                       selector: (context, authController) =>
@@ -259,6 +164,31 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                                     context,
                                     '',
                                     AppLocalizations.of(context)!.complete,
+                                    ToastificationType.error,
+                                  );
+                                  return;
+                                }
+
+                                // بررسی طول پسورد
+                                if (password.length < 8) {
+                                  showToast(
+                                    context,
+                                    AppLocalizations.of(context)!
+                                        .password_length_error,
+                                    '',
+                                    ToastificationType.error,
+                                  );
+                                  return;
+                                }
+
+                                // بررسی اینکه پسورد شامل حداقل یک حرف کوچک و یک حرف بزرگ باشد
+                                if (!RegExp(r'(?=.*[a-z])(?=.*[A-Z])')
+                                    .hasMatch(password)) {
+                                  showToast(
+                                    context,
+                                    '',
+                                    AppLocalizations.of(context)!
+                                        .password_case_error,
                                     ToastificationType.error,
                                   );
                                   return;
@@ -321,11 +251,34 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                             if (!isPageOpened) {
                               isPageOpened = true;
                               WidgetsBinding.instance.addPostFrameCallback((_) {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CompletionInformation(),
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                        secondaryAnimation) {
+                                      return const CompletionInformation();
+                                    },
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      const begin = Offset(
+                                          1.0, 0.0); // شروع انیمیشن از راست
+                                      const end = Offset
+                                          .zero; // پایان انیمیشن در وسط صفحه
+                                      const curve =
+                                          Curves.easeInOut; // نوع انیمیشن
+
+                                      var tween = Tween(begin: begin, end: end)
+                                          .chain(CurveTween(curve: curve));
+                                      var offsetAnimation =
+                                          animation.drive(tween);
+
+                                      return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: child,
+                                      );
+                                    },
                                   ),
+                                  (Route<dynamic> route) =>
+                                      false, // این خط باعث می‌شود که تمام صفحات قبلی حذف شوند
                                 );
                               });
                             }
@@ -341,7 +294,6 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                       },
                     ),
                   ),
-
                   SliverToBoxAdapter(
                     child: TextButton(
                       onPressed: () {
@@ -442,7 +394,7 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
         ? const Icon(
             Icons.close,
             color: AppColors.toastRed,
-            size: 40,
+            size: 30,
             weight: 25,
           )
         : const Icon(
@@ -471,17 +423,20 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
       icon: icon,
       context: context,
       type: type,
-      title: Text(
-        title,
-        textDirection: textDirection,
+      title: Padding(
+        padding: const EdgeInsets.only(top: 0),
+        child: Text(
+          title,
+          textDirection: textDirection,
+        ),
       ),
       description: Padding(
-        padding: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.only(top: 0),
         child: Text(
           description,
           style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
                 color: textColor,
               ),
           textDirection: textDirection,

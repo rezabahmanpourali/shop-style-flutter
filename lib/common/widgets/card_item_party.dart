@@ -47,8 +47,8 @@ class CardItemParty extends StatelessWidget {
                     Image.network(
                       hairModel.images.isNotEmpty
                           ? hairModel.images[0].url ??
-                              'assets/images/images1.jpg'
-                          : 'assets/images/images1.jpg',
+                              'https://via.placeholder.com/150'
+                          : 'https://via.placeholder.com/150',
                       fit: BoxFit.fill,
                       width: double.infinity,
                       height: double.infinity,

@@ -69,4 +69,7 @@ class AppColors {
   static const Color toastLineGreen = Color(0xff82BD6B);
   static const Color toastRed= Color(0xffE03532);
   static const Color toastBottonRed= Color(0xffFFE6E6);
+  //Dialog Colors
+  static const Color dialogBlueLight= Color(0xffE6F4FF);
+  static const Color dialogBlue= Color(0xff4DB0FF);
 }

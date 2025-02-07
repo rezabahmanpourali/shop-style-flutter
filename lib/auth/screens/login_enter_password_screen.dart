@@ -105,11 +105,32 @@ class _LoginEnterPasswordScreenState extends State<LoginEnterPasswordScreen> {
                       textButton: AppLocalizations.of(context)!.login_register,
                       topPadding: height / 30,
                       onClick: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                const BasicInformationScreen(),
+                        Navigator.of(context).pushAndRemoveUntil(
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return const BasicInformationScreen();
+                            },
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              const begin =
+                                  Offset(1.0, 0.0); // شروع انیمیشن از راست
+                              const end =
+                                  Offset.zero; // پایان انیمیشن در وسط صفحه
+                              const curve = Curves.easeInOut; // نوع انیمیشن
+
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+                              var offsetAnimation = animation.drive(tween);
+
+                              return SlideTransition(
+                                position: offsetAnimation,
+                                child: child,
+                              );
+                            },
                           ),
+                          (Route<dynamic> route) =>
+                              false, // این خط باعث می‌شود که تمام صفحات قبلی حذف شوند
                         );
                       },
                     ),

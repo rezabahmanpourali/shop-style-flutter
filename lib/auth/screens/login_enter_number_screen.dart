@@ -13,7 +13,7 @@ import 'package:shop_style/common/widgets/state_manage_widget.dart';
 import 'package:shop_style/common/widgets/text_padding.dart';
 import 'package:shop_style/common/configs/enums.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:toastification/toastification.dart'; // فایل لوکالیزیشن
+import 'package:toastification/toastification.dart';
 
 class LoginEnterNumberPhoneScreen extends StatefulWidget {
   const LoginEnterNumberPhoneScreen({super.key});
@@ -27,7 +27,6 @@ class _LoginEnterNumberPhoneScreenState
     extends State<LoginEnterNumberPhoneScreen> {
   final TextEditingController phoneController = TextEditingController();
   bool _navigated = false;
-  bool _isLoading = false; // متغیر جدید برای کنترل وضعیت لودینگ
 
   @override
   Widget build(BuildContext context) {
@@ -84,135 +83,164 @@ class _LoginEnterNumberPhoneScreenState
                     child: Consumer<AuthController>(
                       builder: (context, authController, child) {
                         return StateManageWidget(
-                          status:
-                              authController.phoneUserState, // وضعیت شماره تلفن
-                          initialWidget: () {
-                            return CustomButton(
-                              textButton:
-                                  AppLocalizations.of(context)!.next_step,
-                              topPadding: height / 25,
-                              onClick: () {
-                                final phone = phoneController.text;
+                            status: authController
+                                .phoneUserState, // وضعیت شماره تلفن
+                            initialWidget: () {
+                              return CustomButton(
+                                textButton:
+                                    AppLocalizations.of(context)!.next_step,
+                                topPadding: height / 25,
+                                onClick: () {
+                                  final phone = phoneController.text;
 
-                                if (phone.isEmpty) {
+                                  if (phone.isEmpty) {
+                                    showToast(
+                                      context,
+                                      '',
+                                      AppLocalizations.of(context)!
+                                          .please_enter_your_phone_number,
+                                      ToastificationType.error,
+                                    );
+                                  } else if (phone.length == 11) {
+                                    // فقط در صورتی که وضعیت خطا نباشد، شماره ارسال می‌شود
+                                    if (authController.phoneUserState
+                                            is BlocStatusInitial ||
+                                        authController.phoneUserState
+                                            is BlocStatusError) {
+                                      authController.sendPhoneNumber(
+                                          phone: phone);
+                                    }
+                                  } else {
+                                    showToast(
+                                      context,
+                                      '',
+                                      AppLocalizations.of(context)!
+                                          .invalid_phone_number,
+                                      ToastificationType.error,
+                                    );
+                                  }
+                                },
+                              );
+                            },
+                            loadingWidget: () {
+                              return const Padding(
+                                padding: EdgeInsets.only(top: 20.0),
+                                child: SpinKitCircle(
+                                  color: AppColors.tankBlueButton,
+                                  size: 50.0,
+                                ),
+                              );
+                            },
+                            errorWidgetBuilder: (message, statusCode) {
+                              // بررسی وضعیت خطا برای شماره تکراری
+                              if (statusCode == 400) {
+                                // این قسمت پیغام خطا را فقط در صورتی که شماره تکراری باشد نمایش می‌دهد
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
                                   showToast(
                                     context,
                                     '',
                                     AppLocalizations.of(context)!
-                                        .please_enter_your_phone_number,
+                                        .phone_number_exists_error,
                                     ToastificationType.error,
                                   );
-                                } else if (phone.length == 11) {
-                                  // فقط در صورتی که وضعیت خطا نباشد، شماره ارسال می‌شود
-                                  if (authController.phoneUserState
-                                          is BlocStatusInitial ||
-                                      authController.phoneUserState
-                                          is BlocStatusError) {
+                                });
+                              }
+
+                              // ریست کردن وضعیت شماره موبایل پس از خطا
+                              WidgetsBinding.instance.addPostFrameCallback((_) {
+                                authController.resetPhoneUserState();
+                              });
+
+                              // بازگرداندن دکمه برای وارد کردن مجدد شماره
+                              return CustomButton(
+                                textButton:
+                                    AppLocalizations.of(context)!.next_step,
+                                topPadding: height / 25,
+                                onClick: () {
+                                  final phone = phoneController.text;
+
+                                  if (phone.isEmpty) {
+                                    showToast(
+                                      context,
+                                      '',
+                                      AppLocalizations.of(context)!
+                                          .please_enter_your_phone_number,
+                                      ToastificationType.error,
+                                    );
+                                  } else if (phone.length == 11) {
+                                    // ارسال شماره موبایل مجدد
                                     authController.sendPhoneNumber(
                                         phone: phone);
+                                  } else {
+                                    showToast(
+                                      context,
+                                      '',
+                                      AppLocalizations.of(context)!
+                                          .invalid_phone_number,
+                                      ToastificationType.error,
+                                    );
                                   }
-                                } else {
+                                },
+                              );
+                            },
+                            completedWidgetBuilder: (value) {
+                              // بررسی وضعیت موفقیت‌آمیز
+                              if (!_navigated) {
+                                _navigated = true;
+                                WidgetsBinding.instance
+                                    .addPostFrameCallback((_) {
                                   showToast(
                                     context,
                                     '',
                                     AppLocalizations.of(context)!
-                                        .invalid_phone_number,
-                                    ToastificationType.error,
+                                        .phone_number_sent_successfully,
+                                    ToastificationType.success,
                                   );
-                                }
-                              },
-                            );
-                          },
-                          loadingWidget: () {
-                            return const Padding(
-                              padding: EdgeInsets.only(top: 20.0),
-                              child: SpinKitCircle(
-                                color: AppColors.tankBlueButton,
-                                size: 50.0,
-                              ),
-                            );
-                          },
-                          errorWidgetBuilder: (message, statusCode) {
-                            // بررسی وضعیت خطا برای شماره تکراری
-                            if (statusCode == 400) {
-                              // این قسمت پیغام خطا را فقط در صورتی که شماره تکراری باشد نمایش می‌دهد
-                              WidgetsBinding.instance.addPostFrameCallback((_) {
-                                showToast(
-                                  context,
+
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation,
+                                          secondaryAnimation) {
+                                        return const LoginEnterPasswordScreen();
+                                      },
+                                      transitionsBuilder: (context, animation,
+                                          secondaryAnimation, child) {
+                                        const begin = Offset(
+                                            1.0, 0.0); // شروع انیمیشن از راست
+                                        const end = Offset
+                                            .zero; // پایان انیمیشن در وسط صفحه
+                                        const curve =
+                                            Curves.easeInOut; // نوع انیمیشن
+
+                                        var tween = Tween(
+                                                begin: begin, end: end)
+                                            .chain(CurveTween(curve: curve));
+                                        var offsetAnimation =
+                                            animation.drive(tween);
+
+                                        return SlideTransition(
+                                          position: offsetAnimation,
+                                          child: child,
+                                        );
+                                      },
+                                    ),
+                                    (Route<dynamic> route) =>
+                                        false, // این خط باعث می‌شود که تمام صفحات قبلی حذف شوند
+                                  );
+                                });
+                              }
+
+                              return const Center(
+                                child: Text(
                                   '',
-                                  AppLocalizations.of(context)!
-                                      .phone_number_exists_error,
-                                  ToastificationType.error,
-                                );
-                              });
-                            }
-
-                            // ریست کردن وضعیت شماره موبایل پس از خطا
-                            authController.resetPhoneUserState();
-
-                            // بازگرداندن دکمه برای وارد کردن مجدد شماره
-                            return CustomButton(
-                              textButton:
-                                  AppLocalizations.of(context)!.next_step,
-                              topPadding: height / 25,
-                              onClick: () {
-                                final phone = phoneController.text;
-
-                                if (phone.isEmpty) {
-                                  showToast(
-                                    context,
-                                    '',
-                                    AppLocalizations.of(context)!
-                                        .please_enter_your_phone_number,
-                                    ToastificationType.error,
-                                  );
-                                } else if (phone.length == 11) {
-                                  // ارسال شماره موبایل مجدد
-                                  authController.sendPhoneNumber(phone: phone);
-                                } else {
-                                  showToast(
-                                    context,
-                                    '',
-                                    AppLocalizations.of(context)!
-                                        .invalid_phone_number,
-                                    ToastificationType.error,
-                                  );
-                                }
-                              },
-                            );
-                          },
-                          completedWidgetBuilder: (value) {
-                            // بررسی وضعیت موفقیت‌آمیز
-                            if (!_navigated) {
-                              _navigated = true;
-                              WidgetsBinding.instance.addPostFrameCallback((_) {
-                                showToast(
-                                  context,
-                                  '',
-                                  AppLocalizations.of(context)!
-                                      .phone_number_sent_successfully,
-                                  ToastificationType.success,
-                                );
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const LoginEnterPasswordScreen(),
-                                  ),
-                                );
-                              });
-                            }
-
-                            return const Center(
-                              child: Text(
-                                '',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            );
-                          },
-                        );
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              );
+                            });
                       },
                     ),
-                  )
+                  ),
                 ],
               ),
             );
@@ -263,7 +291,10 @@ class _LoginEnterNumberPhoneScreenState
     toastification.show(
       closeOnClick: false,
       closeButtonShowType: CloseButtonShowType.none,
-      icon: icon,
+      icon: Padding(
+        padding: const EdgeInsets.only(top: 15),
+        child: icon,
+      ),
       context: context,
       type: type,
       title: Text(
@@ -271,7 +302,7 @@ class _LoginEnterNumberPhoneScreenState
         textDirection: textDirection,
       ),
       description: Padding(
-        padding: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.only(top: 0),
         child: Text(
           description,
           style: Theme.of(context).textTheme.displayLarge!.copyWith(

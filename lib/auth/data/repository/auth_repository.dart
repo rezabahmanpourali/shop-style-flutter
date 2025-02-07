@@ -67,7 +67,7 @@ class AuthRepository extends IAuthRepository {
   @override
   Future<ResponseModel> sendPhoneNumber({required String phone}) async {
     ResponseModel response = await dio.post(
-      'https://style-shop.liara.run/auth/customers/create/',
+      'https://style-shop.liara.run/auth/customers/otp/',
       data: {
         'phone': phone,
         'name': '', // ارسال مقدار خالی برای name

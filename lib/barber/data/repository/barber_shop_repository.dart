@@ -12,14 +12,9 @@ class BarberShopRepository extends IBarberShopRepository {
   @override
   Future<ResponseModel> getBarberShops({String? shopType}) async {
     ResponseModel response = await dio.get(
-        'https://style-shop.liara.run/barber_shop/barbershops/',
-        queryParameters: {'shop_type': shopType});
+      'https://style-shop.liara.run/barber_shop/barbershops/',
+      queryParameters: {'shop_type': shopType},
+    );
     return response;
   }
 }
-
-
-
-
-
-

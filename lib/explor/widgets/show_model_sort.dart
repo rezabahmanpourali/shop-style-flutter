@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
 
 class ShowModelSort extends StatefulWidget {
   final Function(String) onSelectOption;
-
+  final BarberShopController barberShopController; // پارامتر جدید
   const ShowModelSort({
     super.key,
-    required this.onSelectOption, // Callback برای ارسال داده به والد
+    required this.onSelectOption,
+    required this.barberShopController, // Callback برای ارسال داده به والد
   });
 
   @override
@@ -72,6 +74,8 @@ class _ShowModelSortState extends State<ShowModelSort> {
                 setState(() {
                   selectedOptions[0] = !selectedOptions[0]!;
                 });
+                widget.barberShopController.updateSortOption('ALL');
+
                 Navigator.pop(context);
               },
               child: Row(
@@ -109,6 +113,7 @@ class _ShowModelSortState extends State<ShowModelSort> {
                   selectedOptions[1] =
                       !selectedOptions[1]!; // تغییر وضعیت انتخاب گزینه دوم
                 });
+                widget.barberShopController.updateSortOption('TOP_BARBERS');
                 Navigator.pop(context);
               },
               child: Row(
@@ -146,6 +151,7 @@ class _ShowModelSortState extends State<ShowModelSort> {
                   selectedOptions[2] =
                       !selectedOptions[2]!; // تغییر وضعیت انتخاب گزینه سوم
                 });
+                widget.onSelectOption('ALL');
                 Navigator.pop(context);
               },
               child: Row(

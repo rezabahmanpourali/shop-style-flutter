@@ -435,10 +435,35 @@ class _CompletionInformationState extends State<CompletionInformation> {
                             );
                           },
                           errorWidgetBuilder: (message, statusCode) {
-                            return const Center(
-                              child: Text(
-                                'مشکلی پیش آمده',
-                              ),
+                            // وقتی که خطا رخ می‌دهد، دکمه را دوباره نشان می‌دهیم
+                            return CustomButton(
+                              textButton: AppLocalizations.of(context)!.let_go,
+                              topPadding: height / 25,
+                              onClick: () {
+                                // بررسی مجدد مقادیر پر نشده
+                                if (selectedFaceForm.isEmpty ||
+                                    selectedHairForm.isEmpty ||
+                                    selectedEyeColor.isEmpty ||
+                                    selectedHairLike.isEmpty) {
+                                  // نمایش توست در صورتی که مقادیری پر نشده باشند
+                                  showToast(
+                                    context,
+                                    '',
+                                    AppLocalizations.of(context)!
+                                        .enter_information,
+                                    ToastificationType.error,
+                                  );
+                                  return;
+                                }
+
+                                // اگر همه فیلدها پر بودند، اطلاعات را ارسال می‌کنیم
+                                context.read<AuthController>().sendFaceProperty(
+                                      faceForm: selectedFaceForm,
+                                      hairForm: selectedHairForm,
+                                      ryeColor: selectedEyeColor,
+                                      likeHair: selectedHairLike,
+                                    );
+                              },
                             );
                           },
                           completedWidgetBuilder: (value) {
@@ -480,10 +505,32 @@ class _CompletionInformationState extends State<CompletionInformation> {
                   SliverToBoxAdapter(
                     child: TextButton(
                       onPressed: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => const MyApp(),
+                        Navigator.of(context).pushAndRemoveUntil(
+                          PageRouteBuilder(
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return const MyApp();
+                            },
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              const begin =
+                                  Offset(1.0, 0.0); // شروع انیمیشن از راست
+                              const end =
+                                  Offset.zero; // پایان انیمیشن در وسط صفحه
+                              const curve = Curves.easeInOut; // نوع انیمیشن
+
+                              var tween = Tween(begin: begin, end: end)
+                                  .chain(CurveTween(curve: curve));
+                              var offsetAnimation = animation.drive(tween);
+
+                              return SlideTransition(
+                                position: offsetAnimation,
+                                child: child,
+                              );
+                            },
                           ),
+                          (Route<dynamic> route) =>
+                              false, // این خط باعث می‌شود که تمام صفحات قبلی حذف شوند
                         );
                       },
                       child: TextPadding(
@@ -639,12 +686,12 @@ class _CompletionInformationState extends State<CompletionInformation> {
         textDirection: textDirection,
       ),
       description: Padding(
-        padding: const EdgeInsets.only(bottom: 10),
+        padding: const EdgeInsets.only(bottom: 0),
         child: Text(
           description,
           style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
+                fontSize: 13, // کاهش اندازه فونت
+                fontWeight: FontWeight.w600, // سبک فونت سبک‌تر
                 color: textColor,
               ),
           textDirection: textDirection,

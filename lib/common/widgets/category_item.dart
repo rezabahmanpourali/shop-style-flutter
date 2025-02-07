@@ -52,11 +52,9 @@ class CategoryItem extends StatelessWidget {
                 const Spacer(),
                 SizedBox(
                   width: 80,
-                  child: Image.network(
-                    categoryModel.images.isNotEmpty
-                        ? categoryModel.images[0].url
-                        : 'assets/images/images1.jpg',
-                  ),
+                  child: Image.network(categoryModel.images.isNotEmpty
+                      ? categoryModel.images[0].url
+                      : 'https://via.placeholder.com/150'),
                 ),
               ],
             ),

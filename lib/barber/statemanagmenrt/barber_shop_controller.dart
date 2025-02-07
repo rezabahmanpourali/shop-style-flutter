@@ -26,8 +26,8 @@ class BarberShopController extends ChangeNotifier {
   String errorMessage = '';
   String searchQuery = ''; // برای ذخیره عبارت جستجو
   List<BarberShopModel> filteredBarberShops = []; // لیست فیلتر شده آرایشگاه‌ها
-
-  // کنترلر آرایشگاه ها
+  String currentSortOption = 'ALL';
+  //کنترلر آرایشگاه های برتر
   Future<void> fetchBarberShops() async {
     barberShopState = BlocStatusLoading();
     notifyListeners();
@@ -42,9 +42,10 @@ class BarberShopController extends ChangeNotifier {
       barberShops = (response.json as List)
           .map((e) => BarberShopModel.fromJson(e))
           .toList();
-      barberShopState = BlocStatusCompleted(null);
+      barberShopState = BlocStatusCompleted(barberShops);
     }
-
+// فیلتر کردن داده‌ها بر اساس گزینه مرتب‌سازی
+    filterShopsBasedOnSort();
     notifyListeners();
   }
 
@@ -65,7 +66,8 @@ class BarberShopController extends ChangeNotifier {
           .toList();
       topBarberShopState = BlocStatusCompleted(null);
     }
-
+// فیلتر کردن داده‌ها بر اساس گزینه مرتب‌سازی
+    filterShopsBasedOnSort();
     notifyListeners();
   }
 
@@ -105,13 +107,18 @@ class BarberShopController extends ChangeNotifier {
     notifyListeners();
   }
 
+  //متد پاکسازی خدمات
+  void clearServices() {
+    services.clear();
+    servicState = BlocStatusInitial();
+    notifyListeners();
+  }
+
   void filterBarberShops(String query) {
     searchQuery = query;
 
-    // ترکیب لیست آرایشگاه‌ها از هر دو منبع (SEEN_RECENTLY و TOP_BARBERS)
     List<BarberShopModel> allShops = [...barberShops, ...topBarberShops];
 
-    // اعمال فیلتر
     filteredBarberShops = allShops
         .where((shop) =>
             shop.barberShopName != null && shop.barberShopName!.contains(query))
@@ -120,14 +127,28 @@ class BarberShopController extends ChangeNotifier {
     notifyListeners();
   }
 
-
-   // متد ریست کردن فیلتر
   void resetFilter() {
-    // ترکیب لیست آرایشگاه‌ها از هر دو منبع (SEEN_RECENTLY و TOP_BARBERS)
     List<BarberShopModel> allShops = [...barberShops, ...topBarberShops];
 
-    // بازگشت به تمام داده‌ها
     filteredBarberShops = List.from(allShops);
+    notifyListeners();
+  }
+
+  // متد برای دریافت آرایشگاه‌ها براساس فیلتر مرتب‌سازی
+  void filterShopsBasedOnSort() {
+    if (currentSortOption == 'ALL') {
+      filteredBarberShops = [...barberShops, ...topBarberShops];
+    } else if (currentSortOption == 'TOP_BARBERS') {
+      filteredBarberShops = [...topBarberShops];
+    }
+
+    notifyListeners();
+  }
+
+  void updateSortOption(String option) {
+    currentSortOption = option;
+
+    filterShopsBasedOnSort();
     notifyListeners();
   }
 }

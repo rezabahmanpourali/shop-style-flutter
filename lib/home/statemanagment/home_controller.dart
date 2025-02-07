@@ -12,9 +12,11 @@ class HomeController extends ChangeNotifier {
 
   BlocStatus hairStatus = BlocStatusInitial();
   BlocStatus categoryStatus = BlocStatusInitial();
+  BlocStatus latLongStatus = BlocStatusInitial();
   List<HairModel> hairs = [];
   List<CategoryModel> categories = [];
   String errorMessage = '';
+  ResponseModel? latLongResponse;
 
   void fetchHair() async {
     hairStatus = BlocStatusLoading();
@@ -45,11 +47,39 @@ class HomeController extends ChangeNotifier {
       errorMessage = response.messageFactory;
       categoryStatus = BlocStatusError(errorMessage, response.statusCode);
       notifyListeners();
-    } else{
-      categories =
-          (response.json as List).map((e) => CategoryModel.fromJson(e)).toList();
+    } else {
+      categories = (response.json as List)
+          .map((e) => CategoryModel.fromJson(e))
+          .toList();
       categoryStatus = BlocStatusCompleted(categories);
       notifyListeners();
+    }
+  }
+
+  // متد ارسال مختصات طول و عرض جغرافیایی
+  void sendLatLong({
+    required String longitude,
+    required String latitude,
+    required int id,
+    required int customerId,
+  }) async {
+    latLongStatus = BlocStatusLoading();
+    notifyListeners();
+
+    latLongResponse = await homeRepository.sendLatLong(
+      longitude: longitude,
+      latitude: latitude,
+      id: id,
+      customerId: customerId,
+    );
+
+    if (latLongResponse?.statusCode == 200) {
+      latLongStatus = BlocStatusCompleted(latLongResponse);
+    } else {
+      latLongStatus = BlocStatusError(
+        latLongResponse?.error?.message,
+        latLongResponse!.statusCode,
+      );
     }
   }
 }

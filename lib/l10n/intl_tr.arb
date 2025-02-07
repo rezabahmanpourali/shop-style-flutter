@@ -217,5 +217,7 @@
   "please_accept_terms_and_conditions": "Şartları kabul edin",
   "complete": "Tamamlayın",
   "passwords_do_not_match": "Şifreler uyuşmuyor",
-  "information_successfully_registered": "Bilgileriniz başarıyla kaydedildi."
+  "information_successfully_registered": "Bilgileriniz başarıyla kaydedildi.",
+  "password_length_error": "Şifre en az 8 karakter uzunluğunda olmalıdır.",
+  "password_case_error": "Şifre büyük ve küçük harfleri içermelidir."
 }

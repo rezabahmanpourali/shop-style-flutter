@@ -140,6 +140,8 @@ class _BarberShopCarouselState extends State<BarberShopCarousel> {
                         final selectBarberShop = widget.barberShopController
                             .barberShops[widget.selectedMarkerIndex!];
 
+                        widget.barberShopController.clearServices();
+
                         Navigator.of(context).push(
                           PageRouteBuilder(
                             pageBuilder:

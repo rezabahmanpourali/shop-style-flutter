@@ -241,5 +241,7 @@
   "please_accept_terms_and_conditions": "Please accept the terms and conditions",
   "complete": "Complete",
   "passwords_do_not_match": "Passwords do not match",
-  "information_successfully_registered": "Your information has been successfully registered."
+  "information_successfully_registered": "Your information has been successfully registered.",
+  "password_length_error": "Password must be at least 8 characters long.",
+  "password_case_error": "Password must include both uppercase and lowercase letters."
 }

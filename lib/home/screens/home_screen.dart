@@ -191,7 +191,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   barberShopController.topBarberShops,
                             );
                           },
-                          selector: (p0, p1) => p1.barberShopState,
+                          selector: (p0, p1) => p1.topBarberShopState,
                         ),
                       ),
                       const SliverToBoxAdapter(

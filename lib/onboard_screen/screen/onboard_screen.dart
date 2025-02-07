@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_style/auth/screens/login_enter_number_screen.dart';
 import 'package:shop_style/common/configs/colors.dart';
 import 'package:shop_style/common/statemanagment/global_controller.dart';
+import 'package:shop_style/common/widgets/text_animation.dart';
 import 'package:shop_style/onboard_screen/content/content.dart';
 import 'package:video_player/video_player.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوکالیزیشن
@@ -14,14 +15,34 @@ class OnbordScreen extends StatefulWidget {
   State<OnbordScreen> createState() => _OnbordScreenState();
 }
 
-class _OnbordScreenState extends State<OnbordScreen> {
+class _OnbordScreenState extends State<OnbordScreen>
+    with TickerProviderStateMixin {
   int currentIndex = 0;
   PageController? _controller;
   late VideoPlayerController _videoController;
+  late AnimationController _Animationcontroller;
+  late Animation<Offset> _offsetAnimation1;
+  late Animation<Offset> _offsetAnimation2;
+  late Animation<Offset> _offsetAnimation3;
 
   @override
   void initState() {
     super.initState();
+    _Animationcontroller = AnimationController(
+      duration: Duration(seconds: 1),
+      vsync: this, // this refers to the TickerProviderStateMixin
+    )..forward();
+
+    // ساخت انیمیشن‌های مختلف برای هر متن
+    _offsetAnimation1 = Tween<Offset>(begin: Offset(0, -1), end: Offset.zero)
+        .animate(CurvedAnimation(
+            parent: _Animationcontroller, curve: Curves.easeInOut));
+    _offsetAnimation2 = Tween<Offset>(begin: Offset(0, -2), end: Offset.zero)
+        .animate(CurvedAnimation(
+            parent: _Animationcontroller, curve: Curves.easeInOut));
+    _offsetAnimation3 = Tween<Offset>(begin: Offset(0, -3), end: Offset.zero)
+        .animate(CurvedAnimation(
+            parent: _Animationcontroller, curve: Curves.easeInOut));
     _controller = PageController(initialPage: 0);
     _videoController = VideoPlayerController.asset('assets/videos/barber.mp4')
       ..initialize().then((_) {
@@ -36,6 +57,7 @@ class _OnbordScreenState extends State<OnbordScreen> {
   void dispose() {
     _controller?.dispose();
     _videoController.dispose();
+    _Animationcontroller.dispose();
     super.dispose();
   }
 
@@ -75,18 +97,12 @@ class _OnbordScreenState extends State<OnbordScreen> {
                                 ? height * 0.1
                                 : height * 0.0,
                           ),
-                          Container(
+                          SizedBox(
                             width: double.infinity,
                             height: globallController.language == 'fa' ||
                                     globallController.language == 'ar'
                                 ? height * 0.5
                                 : height * 0.42,
-                            //    SizedBox(
-                            //   height: globallController.language == 'fa' ||
-                            //           globallController.language == 'ar'
-                            //       ? height * 0.1
-                            //       : height * 0.0,
-                            // ),
                             child: VideoPlayer(_videoController),
                           ),
                           SizedBox(
@@ -96,47 +112,49 @@ class _OnbordScreenState extends State<OnbordScreen> {
                               globallController.language == 'tr') ...[
                             Padding(
                               padding: EdgeInsets.only(
-                                  left: width * 0.01, right: width * 0.01),
+                                  left: width * 0.05, right: width * 0.05),
                               child: Wrap(
                                 alignment: WrapAlignment.center,
                                 children: [
-                                  Text(
-                                    textAlign: TextAlign.center,
-                                    contents[index].title3,
+                                  AnimatedTextFromTop(
+                                    text: contents[index].title3,
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium!
                                         .copyWith(fontSize: 32),
+                                    duration: const Duration(seconds: 1),
                                   ),
-                                  Text(
-                                    textAlign: TextAlign.center,
-                                    contents[index].title2,
+                                  AnimatedTextFromTop(
+                                    text: contents[index].title2,
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
                                         .copyWith(
                                             fontSize: 32,
                                             color: AppColors.tankBlue3),
+                                    duration: const Duration(
+                                      seconds: 1,
+                                    ),
                                   ),
-                                  Text(
-                                    textAlign: TextAlign.center,
-                                    contents[index].title,
+                                  AnimatedTextFromTop(
+                                    text: contents[index].title,
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleMedium!
                                         .copyWith(fontSize: 32),
-                                  ),
+                                    duration: const Duration(seconds: 1),
+                                  )
                                 ],
                               ),
                             ),
-                            Text(
-                              textAlign: TextAlign.center,
-                              contents[index].title4,
+                            AnimatedTextFromTop(
+                              text: contents[index].title4,
                               style: Theme.of(context)
                                   .textTheme
                                   .titleMedium!
                                   .copyWith(fontSize: 32),
-                            ),
+                              duration: const Duration(seconds: 1),
+                            )
                           ],
                           if (globallController.language == 'fa' ||
                               globallController.language == 'ar') ...[
@@ -185,25 +203,29 @@ class _OnbordScreenState extends State<OnbordScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Column(
-                            children: [
-                              Text(
-                                textAlign: TextAlign.center,
-                                contents[index].discription,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayMedium!
-                                    .copyWith(fontSize: 20),
-                              ),
-                              Text(
-                                textAlign: TextAlign.center,
-                                contents[index].discription2,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayMedium!
-                                    .copyWith(fontSize: 20),
-                              ),
-                            ],
+                          Padding(
+                            padding: EdgeInsets.only(
+                                left: width * 0.08, right: width * 0.08),
+                            child: Column(
+                              children: [
+                                AnimatedTextFromTop(
+                                  text: contents[index].discription,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium!
+                                      .copyWith(fontSize: 20),
+                                  duration: const Duration(seconds: 1),
+                                ),
+                                AnimatedTextFromTop(
+                                  text: contents[index].discription2,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .displayMedium!
+                                      .copyWith(fontSize: 20),
+                                  duration: const Duration(seconds: 1),
+                                )
+                              ],
+                            ),
                           ),
                         ],
                       );
@@ -223,11 +245,32 @@ class _OnbordScreenState extends State<OnbordScreen> {
                 currentIndex == contents.length - 1
                     ? GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const LoginEnterNumberPhoneScreen(),
+                          Navigator.of(context).pushAndRemoveUntil(
+                            PageRouteBuilder(
+                              pageBuilder:
+                                  (context, animation, secondaryAnimation) {
+                                return const LoginEnterNumberPhoneScreen();
+                              },
+                              transitionsBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                const begin =
+                                    Offset(1.0, 0.0); // شروع انیمیشن از راست
+                                const end =
+                                    Offset.zero; // پایان انیمیشن در وسط صفحه
+                                const curve = Curves.easeInOut; // نوع انیمیشن
+
+                                var tween = Tween(begin: begin, end: end)
+                                    .chain(CurveTween(curve: curve));
+                                var offsetAnimation = animation.drive(tween);
+
+                                return SlideTransition(
+                                  position: offsetAnimation,
+                                  child: child,
+                                );
+                              },
                             ),
+                            (Route<dynamic> route) =>
+                                false, // این خط باعث می‌شود که تمام صفحات قبلی حذف شوند
                           );
                         },
                         child: Container(

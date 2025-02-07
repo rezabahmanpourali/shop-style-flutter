@@ -37,8 +37,9 @@ class BestCardItemParty extends StatelessWidget {
                 ),
                 child: Image.network(
                   hairModel.images.isNotEmpty
-                      ? hairModel.images[0].url ?? 'assets/images/images1.jpg'
-                      : 'assets/images/images1.jpg',
+                      ? hairModel.images[0].url ??
+                          'https://via.placeholder.com/150'
+                      : 'https://via.placeholder.com/150',
                   fit: BoxFit.fill,
                   width: double.infinity,
                   height: double.infinity,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_style/barber/model/barber_shop_model.dart';
 import 'package:shop_style/barber/screens/barber_shop_page.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_shop_controller.dart';
@@ -76,6 +77,8 @@ class _ExplorePageState extends State<ExplorePage> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     final controller = PageController(viewportFraction: 1);
+    bool isTopShop = selectedMarkerIndex != null &&
+        selectedMarkerIndex! >= barberShopController.barberShops.length;
     return Scaffold(
       backgroundColor: AppColors.white2,
       body: SafeArea(
@@ -98,18 +101,24 @@ class _ExplorePageState extends State<ExplorePage> {
                             subdomains: const ['a', 'b', 'c'],
                           ),
                           MarkerLayer(
-                            markers: barberShopController.barberShops
+                            markers: [
+                              ...barberShopController.barberShops,
+                              ...barberShopController.topBarberShops,
+                            ]
                                 .asMap()
-                                .map((index, barberShop) {
+                                .map((index, barberShops) {
                                   final isSelected =
                                       selectedMarkerIndex == index;
+                                  // برای شناسایی اینکه این آرایشگاه از کدام لیست آمده است
+                                  bool isTopShop = index >=
+                                      barberShopController.barberShops.length;
                                   return MapEntry(
                                     index,
                                     Marker(
                                       point: LatLng(
-                                        barberShop.location?.latitude ??
+                                        barberShops.location?.latitude ??
                                             34.571112,
-                                        barberShop.location?.longitude ??
+                                        barberShops.location?.longitude ??
                                             50.808330,
                                       ),
                                       child: GestureDetector(
@@ -157,8 +166,39 @@ class _ExplorePageState extends State<ExplorePage> {
                           bottom: 100,
                           child: GestureDetector(
                             onTap: () {
-                              final selectBarberShop = barberShopController
-                                  .barberShops[selectedMarkerIndex!];
+                              // بررسی اینکه آیا اندیس معتبر است
+                              bool isTopShop = selectedMarkerIndex! >=
+                                  barberShopController.barberShops.length;
+
+                              // انتخاب آرایشگاه صحیح با بررسی معتبر بودن اندیس
+                              BarberShopModel selectedBarberShop;
+                              if (isTopShop) {
+                                int topIndex = selectedMarkerIndex! -
+                                    barberShopController.barberShops.length;
+                                if (topIndex >= 0 &&
+                                    topIndex <
+                                        barberShopController
+                                            .topBarberShops.length) {
+                                  selectedBarberShop = barberShopController
+                                      .topBarberShops[topIndex];
+                                } else {
+                                  // در صورتی که اندیس در محدوده نیست، خطا یا آرایشگاه پیش‌فرض را نشان دهید
+
+                                  return;
+                                }
+                              } else {
+                                if (selectedMarkerIndex! >= 0 &&
+                                    selectedMarkerIndex! <
+                                        barberShopController
+                                            .barberShops.length) {
+                                  selectedBarberShop = barberShopController
+                                      .barberShops[selectedMarkerIndex!];
+                                } else {
+                                  // در صورتی که اندیس در محدوده نیست، خطا یا آرایشگاه پیش‌فرض را نشان دهید
+
+                                  return;
+                                }
+                              }
 
                               Navigator.of(context).push(
                                 PageRouteBuilder(
@@ -167,17 +207,16 @@ class _ExplorePageState extends State<ExplorePage> {
                                     return MultiProvider(
                                       providers: [
                                         ChangeNotifierProvider.value(
-                                          value:
-                                              locator.get<BarberController>(),
-                                        ),
+                                            value: locator
+                                                .get<BarberController>()),
                                         ChangeNotifierProvider.value(
-                                          value: locator
-                                              .get<BarberShopController>(),
-                                        ),
+                                            value: locator
+                                                .get<BarberShopController>()),
                                       ],
                                       child: BarberShopPage(
-                                        barberShopModel: selectBarberShop,
-                                        barberShopId: selectBarberShop.id ?? 0,
+                                        barberShopModel: selectedBarberShop,
+                                        barberShopId:
+                                            selectedBarberShop.id ?? 0,
                                       ),
                                     );
                                   },
@@ -219,11 +258,22 @@ class _ExplorePageState extends State<ExplorePage> {
                                         width: width * 0.3,
                                         height: height,
                                         child: Image.network(
-                                          barberShopController
-                                              .barberShops[selectedMarkerIndex!]
-                                              .images![0]
-                                              .url
-                                              .toString(),
+                                          isTopShop
+                                              ? barberShopController
+                                                  .topBarberShops[
+                                                      selectedMarkerIndex! -
+                                                          barberShopController
+                                                              .barberShops
+                                                              .length]
+                                                  .images![0]
+                                                  .url
+                                                  .toString()
+                                              : barberShopController
+                                                  .barberShops[
+                                                      selectedMarkerIndex!]
+                                                  .images![0]
+                                                  .url
+                                                  .toString(),
                                         ),
                                       ),
                                     ),
@@ -235,11 +285,20 @@ class _ExplorePageState extends State<ExplorePage> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          barberShopController
-                                                  .barberShops[
-                                                      selectedMarkerIndex!]
-                                                  .barberShopName ??
-                                              'نامی وجود ندارد',
+                                          isTopShop
+                                              ? barberShopController
+                                                      .topBarberShops[
+                                                          selectedMarkerIndex! -
+                                                              barberShopController
+                                                                  .barberShops
+                                                                  .length]
+                                                      .barberShopName ??
+                                                  'نامی وجود ندارد'
+                                              : barberShopController
+                                                      .barberShops[
+                                                          selectedMarkerIndex!]
+                                                      .barberShopName ??
+                                                  'نامی وجود ندارد',
                                         ),
                                         const Row(
                                           children: [
@@ -493,6 +552,8 @@ class _ExplorePageState extends State<ExplorePage> {
                                           builder: (BuildContext context) {
                                             return ShowModelSort(
                                               onSelectOption: (p0) {},
+                                              barberShopController:
+                                                  barberShopController,
                                             );
                                           },
                                         );
@@ -608,28 +669,172 @@ class _ExplorePageState extends State<ExplorePage> {
                                   ],
                                 ),
                               ),
-                              if (selectedMarkerIndex == null)
-                                Column(
-                                  children: barberShopController.barberShops
-                                      .map((barberShop) {
-                                    return BarberShopCarousel(
-                                      barberShopModel: barberShop,
-                                      controller: controller,
-                                      selectedMarkerIndex: selectedMarkerIndex,
-                                      barberShopController:
-                                          barberShopController,
-                                    );
-                                  }).toList(),
-                                ),
-                              if (selectedMarkerIndex != null)
-                                BarberShopCarousel(
-                                  barberShopModel: barberShopController
-                                          .barberShops[
-                                      selectedMarkerIndex!], // فقط آرایشگاه انتخاب‌شده
-                                  controller: controller,
-                                  selectedMarkerIndex: selectedMarkerIndex,
-                                  barberShopController: barberShopController,
-                                ),
+                              // if (selectedMarkerIndex == null)
+                              //   Column(
+                              //     children: [
+                              //       // اگر وضعیت مرتب‌سازی ALL باشد، همه‌ی آرایشگاه‌ها نمایش داده می‌شوند
+                              //       if (barberShopController
+                              //               .currentSortOption ==
+                              //           'ALL')
+                              //         ...barberShopController.barberShops
+                              //             .map((barberShop) {
+                              //           return BarberShopCarousel(
+                              //             barberShopModel: barberShop,
+                              //             controller: controller,
+                              //             selectedMarkerIndex:
+                              //                 selectedMarkerIndex,
+                              //             barberShopController:
+                              //                 barberShopController,
+                              //           );
+                              //         }).toList(),
+
+                              //       if (barberShopController
+                              //               .currentSortOption ==
+                              //           'ALL')
+                              //         ...barberShopController.topBarberShops
+                              //             .map((barberShop) {
+                              //           return BarberShopCarousel(
+                              //             barberShopModel: barberShop,
+                              //             controller: controller,
+                              //             selectedMarkerIndex:
+                              //                 selectedMarkerIndex,
+                              //             barberShopController:
+                              //                 barberShopController,
+                              //           );
+                              //         }).toList(),
+
+                              //       // اگر وضعیت مرتب‌سازی TOP_BARBERS باشد، فقط آرایشگاه‌های topBarberShops نمایش داده می‌شوند
+                              //       if (barberShopController
+                              //               .currentSortOption ==
+                              //           'TOP_BARBERS')
+                              //         ...barberShopController.topBarberShops
+                              //             .map((barberShop) {
+                              //           return BarberShopCarousel(
+                              //             barberShopModel: barberShop,
+                              //             controller: controller,
+                              //             selectedMarkerIndex:
+                              //                 selectedMarkerIndex,
+                              //             barberShopController:
+                              //                 barberShopController,
+                              //           );
+                              //         }).toList(),
+                              //     ],
+                              //   ),
+                              // if (selectedMarkerIndex != null)
+                              //   // بررسی اینکه آیا selectedMarkerIndex مربوط به barberShops است یا topBarberShops
+                              //   selectedMarkerIndex! <
+                              //           barberShopController.barberShops.length
+                              //       ? BarberShopCarousel(
+                              //           barberShopModel: barberShopController
+                              //                   .barberShops[
+                              //               selectedMarkerIndex!], // آرایشگاه انتخاب‌شده از barberShops
+                              //           controller: controller,
+                              //           selectedMarkerIndex:
+                              //               selectedMarkerIndex,
+                              //           barberShopController:
+                              //               barberShopController,
+                              //         )
+                              //       : BarberShopCarousel(
+                              //           barberShopModel: barberShopController
+                              //                   .topBarberShops[
+                              //               selectedMarkerIndex! -
+                              //                   barberShopController.barberShops
+                              //                       .length], // آرایشگاه انتخاب‌شده از topBarberShops
+                              //           controller: controller,
+                              //           selectedMarkerIndex:
+                              //               selectedMarkerIndex,
+                              //           barberShopController:
+                              //               barberShopController,
+                              //         ),
+
+                              Selector<BarberShopController, String>(
+                                selector: (context, barberShopController) =>
+                                    barberShopController.currentSortOption,
+                                builder: (context, currentSortOption, child) {
+                                  return Column(
+                                    children: [
+                                      // اگر وضعیت مرتب‌سازی ALL باشد، همه‌ی آرایشگاه‌ها نمایش داده می‌شوند
+                                      if (selectedMarkerIndex == null)
+                                        Column(
+                                          children: [
+                                            if (currentSortOption == 'ALL')
+                                              ...barberShopController
+                                                  .barberShops
+                                                  .map((barberShop) {
+                                                return BarberShopCarousel(
+                                                  barberShopModel: barberShop,
+                                                  controller: controller,
+                                                  selectedMarkerIndex:
+                                                      selectedMarkerIndex,
+                                                  barberShopController:
+                                                      barberShopController,
+                                                );
+                                              }).toList(),
+                                            if (currentSortOption == 'ALL')
+                                              ...barberShopController
+                                                  .topBarberShops
+                                                  .map((barberShop) {
+                                                return BarberShopCarousel(
+                                                  barberShopModel: barberShop,
+                                                  controller: controller,
+                                                  selectedMarkerIndex:
+                                                      selectedMarkerIndex,
+                                                  barberShopController:
+                                                      barberShopController,
+                                                );
+                                              }).toList(),
+                                            if (currentSortOption ==
+                                                'TOP_BARBERS')
+                                              ...barberShopController
+                                                  .topBarberShops
+                                                  .map((barberShop) {
+                                                return BarberShopCarousel(
+                                                  barberShopModel: barberShop,
+                                                  controller: controller,
+                                                  selectedMarkerIndex:
+                                                      selectedMarkerIndex,
+                                                  barberShopController:
+                                                      barberShopController,
+                                                );
+                                              }).toList(),
+                                          ],
+                                        ),
+
+                                      // اگر selectedMarkerIndex != null باشد، به صورت تک تک نمایش داده می‌شود
+                                      if (selectedMarkerIndex != null)
+                                        selectedMarkerIndex! <
+                                                barberShopController
+                                                    .barberShops.length
+                                            ? BarberShopCarousel(
+                                                barberShopModel:
+                                                    barberShopController
+                                                            .barberShops[
+                                                        selectedMarkerIndex!], // آرایشگاه انتخاب‌شده از barberShops
+                                                controller: controller,
+                                                selectedMarkerIndex:
+                                                    selectedMarkerIndex,
+                                                barberShopController:
+                                                    barberShopController,
+                                              )
+                                            : BarberShopCarousel(
+                                                barberShopModel:
+                                                    barberShopController
+                                                            .topBarberShops[
+                                                        selectedMarkerIndex! -
+                                                            barberShopController
+                                                                .barberShops
+                                                                .length], // آرایشگاه انتخاب‌شده از topBarberShops
+                                                controller: controller,
+                                                selectedMarkerIndex:
+                                                    selectedMarkerIndex,
+                                                barberShopController:
+                                                    barberShopController,
+                                              ),
+                                      
+                                    ],
+                                  );
+                                },
+                              )
                             ],
                           ),
                         ),

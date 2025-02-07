@@ -260,15 +260,16 @@ class _UserPageState extends State<UserPage> {
                                 PageRouteBuilder(
                                   pageBuilder:
                                       (context, animation, secondaryAnimation) {
-                                    // صفحه مقصد
                                     return const UserInfoPage();
                                   },
                                   transitionsBuilder: (context, animation,
                                       secondaryAnimation, child) {
-                                    var begin = const Offset(
-                                        1.0, 0.0); // حرکت از راست به چپ
-                                    var end = Offset.zero;
-                                    var curve = Curves.easeInOut;
+                                    const begin = Offset(
+                                        1.0, 0.0); // شروع انیمیشن از راست
+                                    const end = Offset
+                                        .zero; // پایان انیمیشن در وسط صفحه
+                                    const curve =
+                                        Curves.easeInOut; // نوع انیمیشن
 
                                     var tween = Tween(begin: begin, end: end)
                                         .chain(CurveTween(curve: curve));
@@ -276,9 +277,9 @@ class _UserPageState extends State<UserPage> {
                                         animation.drive(tween);
 
                                     return SlideTransition(
-                                        position: offsetAnimation,
-                                        child: FadeTransition(
-                                            opacity: animation, child: child));
+                                      position: offsetAnimation,
+                                      child: child,
+                                    );
                                   },
                                 ),
                               );

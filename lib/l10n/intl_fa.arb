@@ -222,5 +222,7 @@
   "please_accept_terms_and_conditions": "قوانین رو بپذیر",
   "complete": "کامل کنید",
   "passwords_do_not_match": "پسوردها مطابقت ندارند",
-  "information_successfully_registered": "اطلاعات شما با موفقیت ثبت شد."
+  "information_successfully_registered": "اطلاعات شما با موفقیت ثبت شد.",
+  "password_length_error": "طول پسورد باید 8 رقم باشد.",
+  "password_case_error": "پسورد باید شامل حروف کوچک و بزرگ باشد."
 }

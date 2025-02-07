@@ -76,6 +76,11 @@ class _BarberShopPageState extends State<BarberShopPage> {
         locator.get<BarberShopController>().fetchBarberShops();
       },
     );
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        locator.get<BarberShopController>().fetchTopBarberShops();
+      },
+    );
     Hive.openBox<BarberShopSavedModel>('CardBox');
   }
 
