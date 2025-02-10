@@ -264,38 +264,39 @@ class AuthRepository extends IAuthRepository {
   }
 
   // متد ثبت‌نام
-  @override
-  Future<ResponseModel> getUserRegister({
-    required String name,
-    required String lastn,
-    required String password,
-    required String phone,
-    required String faceForm,
-    required String hairForm,
-    required String ryeColor,
-    required String likeHair,
-    required String token,
-    required int userId,
-  }) async {
-    print(userId);
-    ResponseModel response = await makeRequestWithToken(
-      url: 'https://style-shop.liara.run/auth/customers/edit/?a_token=$token&customer_id=$userId/',
-      data: {
-        'name': name,
-        'lastn': lastn,
-        'phone': phone,
-        'face_form': faceForm,
-        'hair_form': hairForm,
-        'ryecolor': ryeColor,
-        'like_hair': likeHair,
-        'password': password,
-      },
-      method: 'PUT',
-    );
+@override
+Future<ResponseModel> getUserRegister({
+  required String name,
+  required String lastn,
+  required String password,
+  required String phone,
+  required String faceForm,
+  required String hairForm,
+  required String ryeColor,
+  required String likeHair,
+  required String token,
+  required int userId,
+}) async {
+  print(userId);
+  ResponseModel response = await makeRequestWithToken(
+    url: 'https://style-shop.liara.run/auth/customers/edit/?a_token=$token&customer_id=$userId',
+    data: {
+      'name': name,
+      'lastn': lastn,
+      'phone': phone,
+      'face_form': faceForm,
+      'hair_form': hairForm,
+      'ryecolor': ryeColor,
+      'like_hair': likeHair,
+      'password': password,
+    },
+    method: 'PUT',
+  );
 
-    print('Response: ${response.json}');
-    return response;
-  }
+  print('Response: ${response.json}');
+  return response;
+}
+
 
   // متد ارسال شماره موبایل به OTP
   @override
