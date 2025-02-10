@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shop_style/auth/data/repository/auth_repository.dart';
 import 'package:shop_style/auth/data/repository/otp_repository.dart';
 import 'package:shop_style/auth/data/repository/phone_repository.dart';
@@ -21,6 +22,8 @@ import 'package:shop_style/home/statemanagment/home_controller.dart';
 final locator = GetIt.instance;
 
 Future<void> setupLocator() async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  locator.registerSingleton<SharedPreferences>(prefs);
   // Register Dio instance
   locator.registerSingleton<Dio>(Dio());
 
@@ -47,14 +50,12 @@ Future<void> setupLocator() async {
   //repository
   locator.registerSingleton<IAuthRepository>(AuthRepository());
 
-
   locator.registerSingleton<IBarberShopRepository>(BarberShopRepository());
   locator.registerSingleton<IBarberRepository>(BarberRepository());
   locator.registerSingleton<IHomeRepository>(HomeRepository());
   locator.registerSingleton<ICategoryRepository>(CategoryRepository());
   locator.registerSingleton<ICommentRepository>(CommentRepository());
   locator.registerSingleton<IServicesRepository>(ServicesRepository());
-  
 
   //controllers
   locator.registerSingleton<AuthController>(AuthController());

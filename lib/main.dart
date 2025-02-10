@@ -6,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_style/auth/screens/login_enter_password_screen.dart';
 import 'package:shop_style/auth/statemanagment/auth_controller.dart';
 import 'package:shop_style/barber/model/barber_shop_saved_model.dart';
 import 'package:shop_style/barber/statemanagmenrt/barber_controller.dart';
@@ -27,7 +28,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart'; // فایل لوک
 void main() async {
   Provider.debugCheckInvalidValueType = null;
   WidgetsFlutterBinding.ensureInitialized();
-  setupLocator(); // مقداردهی اولیه کنترلرها
+  await setupLocator(); // مقداردهی اولیه کنترلرها
   await Hive.initFlutter();
   Hive.registerAdapter(BarberShopSavedModelAdapter());
   await Hive.openBox<BarberShopSavedModel>('CardBox');

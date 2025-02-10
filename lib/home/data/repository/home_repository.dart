@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:shop_style/common/models/api_service.dart';
 import 'package:shop_style/common/services/response_model.dart';
 import 'package:shop_style/locator.dart';
@@ -22,22 +23,33 @@ class HomeRepository extends IHomeRepository {
         queryParameters: {'sortby': sortbye});
     return response;
   }
+@override
+Future<ResponseModel> sendLatLong({
+  required String longitude,
+  required String latitude,
+  required int id,
+  required int customerId,
+}) async {
+  // ایجاد پارامتر options به صورت پیش‌فرض
+  Options options = Options(
+    headers: {
+      // در صورت نیاز، هدرها را اضافه کنید
+      // 'Authorization': 'Bearer YOUR_TOKEN',
+    },
+  );
 
-  @override
-  Future<ResponseModel> sendLatLong({
-    required String longitude,
-    required String latitude,
-    required int id,
-    required int customerId,
-  }) async {
-    ResponseModel response = await dio.post(
-        'https://style-shop.liara.run/auth/customers/${customerId}/addresses/',
-        data: {
-          "longitude": longitude,
-          "latitude": latitude,
-          "id": id,
-          "customer_id": customerId,
-        });
-    return response;
-  }
+  ResponseModel response = await dio.post(
+    'https://style-shop.liara.run/auth/customers/${customerId}/addresses/',
+    data: {
+      "longitude": longitude,
+      "latitude": latitude,
+      "id": id,
+      "customer_id": customerId,
+    },
+    options: options, // اضافه کردن options به متد
+  );
+
+  return response;
+}
+
 }

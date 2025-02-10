@@ -212,6 +212,10 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                                       name: name,
                                       lastn: lastName,
                                       password: password,
+                                      faceForm: 'test',
+                                      hairForm: 'test',
+                                      likeHair: 'test',
+                                      ryeColor: 'test',
                                     );
 
                                 showToast(
@@ -234,52 +238,51 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                             );
                           },
                           errorWidgetBuilder: (message, statusCode) {
-                            if (message ==
-                                'This phone number is already registered') {
-                              return const Center(
-                                child: Text(
-                                  "این شماره موبایل قبلاً ثبت شده است.",
-                                  style: TextStyle(color: Colors.red),
-                                ),
-                              );
-                            }
-                            return const Center(
-                              child: Text('مشکلی پیش آمده'),
+                            return Center(
+                              child: Text(message!),
                             );
                           },
                           completedWidgetBuilder: (value) {
                             if (!isPageOpened) {
                               isPageOpened = true;
                               WidgetsBinding.instance.addPostFrameCallback((_) {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                  PageRouteBuilder(
-                                    pageBuilder: (context, animation,
-                                        secondaryAnimation) {
-                                      return const CompletionInformation();
-                                    },
-                                    transitionsBuilder: (context, animation,
-                                        secondaryAnimation, child) {
-                                      const begin = Offset(
-                                          1.0, 0.0); // شروع انیمیشن از راست
-                                      const end = Offset
-                                          .zero; // پایان انیمیشن در وسط صفحه
-                                      const curve =
-                                          Curves.easeInOut; // نوع انیمیشن
+                                print(
+                                    "Response message: ${value?.json['message']}"); // Debug message
+                                if (value?.json['message'] ==
+                                    'User already logged in') {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) => MyApp()),
+                                    (Route<dynamic> route) => false,
+                                  );
+                                } else {
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation,
+                                          secondaryAnimation) {
+                                        return const CompletionInformation();
+                                      },
+                                      transitionsBuilder: (context, animation,
+                                          secondaryAnimation, child) {
+                                        const begin = Offset(1.0, 0.0);
+                                        const end = Offset.zero;
+                                        const curve = Curves.easeInOut;
 
-                                      var tween = Tween(begin: begin, end: end)
-                                          .chain(CurveTween(curve: curve));
-                                      var offsetAnimation =
-                                          animation.drive(tween);
+                                        var tween = Tween(
+                                                begin: begin, end: end)
+                                            .chain(CurveTween(curve: curve));
+                                        var offsetAnimation =
+                                            animation.drive(tween);
 
-                                      return SlideTransition(
-                                        position: offsetAnimation,
-                                        child: child,
-                                      );
-                                    },
-                                  ),
-                                  (Route<dynamic> route) =>
-                                      false, // این خط باعث می‌شود که تمام صفحات قبلی حذف شوند
-                                );
+                                        return SlideTransition(
+                                          position: offsetAnimation,
+                                          child: child,
+                                        );
+                                      },
+                                    ),
+                                    (Route<dynamic> route) => false,
+                                  );
+                                }
                               });
                             }
 

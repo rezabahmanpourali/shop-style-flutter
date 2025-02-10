@@ -93,7 +93,7 @@ class ApiClientV3 {
     Map<String, dynamic>? queryParameters,
     CancelToken? cancelToken,
     ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
+    ProgressCallback? onReceiveProgress, required Options options,
   }) async {
     dio.options.headers = headers != null ? headers! : getHeader(headerType);
     queryParameters = removeNullValueOFMap(queryParameters ?? {});
@@ -118,7 +118,7 @@ class ApiClientV3 {
     Map<String, dynamic>? queryParameters,
     Object? data,
     ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
+    ProgressCallback? onReceiveProgress, required options,
   }) async {
     dio.options.headers = headers != null ? headers! : getHeader(headerType);
     queryParameters = removeNullValueOFMap(queryParameters ?? {});
