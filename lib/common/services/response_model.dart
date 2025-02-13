@@ -5,7 +5,7 @@ import 'package:shop_style/common/models/error_model.dart';
 class ResponseModel<T> {
   final int? statusCode;
   final dynamic json;
-  late T? data;
+   T? data;
   ErrorModel? error;
   ResponseModel({
     required this.statusCode,

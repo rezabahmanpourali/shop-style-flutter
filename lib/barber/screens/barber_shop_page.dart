@@ -115,14 +115,14 @@ class _BarberShopPageState extends State<BarberShopPage> {
       body: SafeArea(
         child: Consumer<GlobalController>(
           builder: (context, globallController, child) {
-            return Directionality(
-              textDirection: globallController.language == 'fa' ||
-                      globallController.language == 'ar'
-                  ? TextDirection.rtl
-                  : TextDirection.ltr,
-              child: Stack(
-                children: [
-                  CustomScrollView(
+            return Stack(
+              children: [
+                Directionality(
+                  textDirection: globallController.language == 'fa' ||
+                          globallController.language == 'ar'
+                      ? TextDirection.rtl
+                      : TextDirection.ltr,
+                  child: CustomScrollView(
                     slivers: [
                       SliverToBoxAdapter(
                         child: Selector<BarberShopController, BlocStatus>(
@@ -1087,9 +1087,9 @@ class _BarberShopPageState extends State<BarberShopPage> {
                           selector: (p0, p1) => p1.barberShopState,
                         ),
                       ),
-                      const SliverToBoxAdapter(
+                      SliverToBoxAdapter(
                         child: SizedBox(
-                          height: 50,
+                          height: height * 0.1,
                         ),
                       ),
 
@@ -1099,13 +1099,22 @@ class _BarberShopPageState extends State<BarberShopPage> {
                           height: 1,
                         ),
                       ),
-                      SliverToBoxAdapter(
-                        child: ButtonService(),
-                      ),
+                      // SliverToBoxAdapter(
+                      //   child: ButtonService(),
+                      // ),
                     ],
                   ),
-                ],
-              ),
+                ),
+                Positioned(
+                  bottom: height * 0.0,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    color: AppColors.arayeshColor,
+                    child: ButtonService(),
+                  ),
+                ),
+              ],
             );
           },
         ),

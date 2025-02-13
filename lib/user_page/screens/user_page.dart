@@ -64,6 +64,7 @@ class _UserPageState extends State<UserPage> {
                         Consumer<GlobalController>(
                           builder: (context, globalController, child) {
                             return PopupMenuButton<String>(
+                              offset: Offset(0, 30),
                               onSelected: (value) {
                                 if (value != null) {
                                   globalController

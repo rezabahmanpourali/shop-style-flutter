@@ -132,6 +132,9 @@ class _LoginEnterNumberPhoneScreenState
                             );
                           },
                           errorWidgetBuilder: (message, statusCode) {
+                            Text(message!);
+                            print(message);
+                            print(statusCode);
                             // بررسی وضعیت خطا برای شماره تکراری
                             if (statusCode == 400) {
                               // این قسمت پیغام خطا را فقط در صورتی که شماره تکراری باشد نمایش می‌دهد

@@ -19,6 +19,7 @@ import 'package:shop_style/home/screens/home_screen.dart';
 import 'package:shop_style/home/statemanagment/home_controller.dart';
 import 'package:shop_style/locator.dart';
 import 'package:shop_style/onboard_screen/screen/onboard_screen.dart';
+import 'package:shop_style/reserve_page3/screens/reserve_page3.dart';
 import 'package:shop_style/test_widgets/point_dialog.dart';
 import 'package:shop_style/test_widgets_screen.dart';
 import 'package:shop_style/user_page/screens/user_page.dart';
@@ -79,6 +80,7 @@ void main() async {
               },
             ),
             home: const OnbordScreen(),
+
             builder: (context, child) {
               return Directionality(
                 textDirection: globalController.language == 'fa' ||

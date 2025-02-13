@@ -1,61 +1,62 @@
 // import 'dart:async';
-
 // import 'package:flutter/foundation.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:shop_style/auth/data/repository/auth_repository.dart';
 // import 'package:shop_style/common/configs/state_handeler.dart';
 // import 'package:shop_style/common/services/response_model.dart';
+// import 'package:shop_style/common/statemanagment/global_controller.dart';
 // import 'package:shop_style/locator.dart';
 
 // class AuthController extends ChangeNotifier {
 //   IAuthRepository authRepository = locator.get();
+//   GlobalController _globalController = locator.get();  // Get GlobalController
 
-//   ////////////////////////////////////////////////////////
+//   // وضعیت‌ها
 //   BlocStatus phoneUserState = BlocStatusInitial();
 //   BlocStatus otpState = BlocStatusInitial();
 //   BlocStatus registerState = BlocStatusInitial();
 //   BlocStatus facePropertyState = BlocStatusInitial();
-//   BlocStatus phoneVerificationState =
-//       BlocStatusInitial(); // وضعیت اولیه تایید شماره تلفن
+//   BlocStatus phoneVerificationState = BlocStatusInitial();
 
-//   ///////////////////////////////////////////////////////////
+//   // پاسخ‌ها
 //   ResponseModel? phoneVerificationResponse;
 //   ResponseModel? phoneUserResponse;
 //   ResponseModel? otpResponse;
 //   ResponseModel? registerResponse;
 //   ResponseModel? facePropertyResponse;
+
+//   // متغیرهای ذخیره‌شده
 //   String phoneSaved = '';
 //   String nameSaved = '';
 //   String lastNameSaved = '';
 //   String passwordSaved = '';
 
-//   //////////////////////////////////////////
-//   int timeRemaining = 120; // مدت زمان تایمر (مثلاً 60 ثانیه)
+//   // متغیرهای تایمر
+//   int timeRemaining = 120;
 //   bool canRequestOtpAgain = false;
-
 //   late Timer _timer;
 
+//   // متد شروع تایمر OTP
 //   void startOtpTimer() {
 //     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
 //       if (timeRemaining > 0) {
-//         timeRemaining--; // کاهش زمان
-//         notifyListeners(); // به‌روزرسانی وضعیت UI
+//         timeRemaining--;
+//         notifyListeners();
 //       } else {
-//         canRequestOtpAgain = true; // اجازه دادن به کاربر برای درخواست مجدد OTP
-//         notifyListeners(); // به‌روزرسانی وضعیت UI
-//         _timer.cancel(); // توقف تایمر
+//         canRequestOtpAgain = true;
+//         notifyListeners();
+//         _timer.cancel();
 //       }
 //     });
 //   }
 
 //   void cancelOtpTimer() {
-//     _timer.cancel(); // متوقف کردن تایمر
+//     _timer.cancel();
 //   }
 
 //   void requestOtpAgain() {
 //     if (canRequestOtpAgain) {
 //       timeRemaining = 120;
-//       canRequestOtpAgain = false; // غیرفعال کردن دکمه "ارسال مجدد کد"
+//       canRequestOtpAgain = false;
 
 //       authRepository.sendPhoneNumber(phone: phoneSaved).then((response) {
 //         if (response.statusCode == 200) {
@@ -65,15 +66,10 @@
 //           print('Error sending OTP');
 //         }
 //       });
-
-//       notifyListeners();
 //     }
 //   }
 
-//   //////////////////////////////////////////////////
-//   //Request
-
-//   // متد ارسال شماره تلفن
+//   // ارسال شماره تلفن
 //   void sendPhoneNumber({required String phone}) async {
 //     phoneSaved = phone;
 //     notifyListeners();
@@ -95,6 +91,7 @@
 //     notifyListeners();
 //   }
 
+//   // تایید شماره تلفن
 //   void verifyPhoneNumber({required String phone, required String otp}) async {
 //     phoneVerificationState = BlocStatusLoading();
 //     notifyListeners();
@@ -105,23 +102,20 @@
 //         otp: otp,
 //       );
 
-
 //       if (phoneVerificationResponse?.json != null) {
 //         var message = phoneVerificationResponse?.json['message'];
 
 //         if (phoneVerificationResponse?.statusCode == 200) {
 //           if (message == 'User already logged in') {
-//             phoneVerificationState =
-//                 BlocStatusCompleted(phoneVerificationResponse);
+//             phoneVerificationState = BlocStatusCompleted(phoneVerificationResponse);
 //             notifyListeners();
 //             return;
 //           }
 
 //           String token = phoneVerificationResponse?.json['token'];
-//           await saveToken(token);
+//           await _globalController.setToken(token); // ذخیره توکن در GlobalController
 
-//           phoneVerificationState =
-//               BlocStatusCompleted(phoneVerificationResponse);
+//           phoneVerificationState = BlocStatusCompleted(phoneVerificationResponse);
 //           notifyListeners();
 //         } else {
 //           phoneVerificationState = BlocStatusError(
@@ -131,8 +125,7 @@
 //           notifyListeners();
 //         }
 //       } else {
-//         phoneVerificationState =
-//             BlocStatusError('Response data is null or empty', 500);
+//         phoneVerificationState = BlocStatusError('Response data is null or empty', 500);
 //         notifyListeners();
 //       }
 //     } catch (e) {
@@ -141,111 +134,65 @@
 //     }
 //   }
 
-//   //////////////////////////////////////////////////////////////////////////////////////
-//   //Token Request
-
-//   // متد برای ذخیره توکن
-//   Future<void> saveToken(String token) async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     await prefs.setString('token', token);
-//   }
-
-//   // متد برای خواندن توکن
-//   Future<String?> getToken() async {
-//     SharedPreferences prefs = await SharedPreferences.getInstance();
-//     return prefs.getString('token');
-//   }
-
-//   //////////////////////////////////////////////////////////////////////////////////////
-
-//   // متدی برای ذخیره نام و نام خانوادگی و پسورد
-//   void setUserInfo({
+//   // ثبت‌نام کاربر
+//   void registerUser({
 //     required String name,
 //     required String lastn,
 //     required String password,
-//   }) {
+//     required String faceForm,
+//     required String hairForm,
+//     required String ryeColor,
+//     required String likeHair,
+//   }) async {
+//     String phone = phoneSaved;
 //     nameSaved = name;
 //     lastNameSaved = lastn;
 //     passwordSaved = password;
-
 //     notifyListeners();
-//   }
 
-//   // متدی برای ذخیره شماره تلفن
-//   void setPhone(String phoneNumber) {
-//     phoneSaved = phoneNumber;
+//     registerState = BlocStatusLoading();
 //     notifyListeners();
-//   }
 
-//   // //متد برای ثبت نام کاربر
-//   void registerUser({
-//   required String name,
-//   required String lastn,
-//   required String password,
-//   required String faceForm,
-//   required String hairForm,
-//   required String ryeColor,
-//   required String likeHair,
-// }) async {
-//   String phone = phoneSaved;
-//   nameSaved = name;
-//   lastNameSaved = lastn;
-//   passwordSaved = password;
-//   notifyListeners();
+//     try {
+//       // دریافت توکن ذخیره‌شده از GlobalController
+//       String? token = await _globalController.getToken();
 
-//   registerState = BlocStatusLoading();
-//   notifyListeners();
+//       // اگر توکن وجود نداشته باشد، خطا را نشان می‌دهیم
+//       if (token == null) {
+//         registerState = BlocStatusError('Token not found', 500);
+//         notifyListeners();
+//         return;
+//       }
 
-//   try {
-//     // دریافت توکن ذخیره‌شده
-//     String? token = await getToken();
-
-//     // اگر توکن وجود نداشته باشد، خطا را نشان می‌دهیم
-//     if (token == null) {
-//       registerState = BlocStatusError('Token not found', 500);
-//       notifyListeners();
-//       return;
-//     }
-
-//     // ارسال درخواست به سرور برای ثبت‌نام کاربر
-//     registerResponse = await authRepository.getUserRegister(
-//       name: name,
-//       lastn: lastn,
-//       password: password,
-//       phone: phone,
-//       userId: phoneUserResponse?.json['id'],
-//       faceForm: faceForm,
-//       hairForm: hairForm,
-//       ryeColor: ryeColor,
-//       likeHair: likeHair,
-//       token: token,
-//     );
-
-//     if (registerResponse?.statusCode == 200) {
-//       registerState = BlocStatusCompleted(registerResponse);
-//     } else {
-//       registerState = BlocStatusError(
-//         registerResponse?.error?.message ?? 'Unknown error',
-//         registerResponse?.statusCode,
+//       // ارسال درخواست به سرور برای ثبت‌نام کاربر
+//       registerResponse = await authRepository.getUserRegister(
+//         name: name,
+//         lastn: lastn,
+//         password: password,
+//         phone: phone,
+//         faceForm: faceForm,
+//         hairForm: hairForm,
+//         ryeColor: ryeColor,
+//         likeHair: likeHair,
+//         token: token, // ارسال توکن به‌روزرسانی شده
 //       );
+
+//       if (registerResponse?.statusCode == 200) {
+//         registerState = BlocStatusCompleted(registerResponse);
+//       } else {
+//         registerState = BlocStatusError(
+//           registerResponse?.error?.message ?? 'Unknown error',
+//           registerResponse?.statusCode,
+//         );
+//       }
+//     } catch (e) {
+//       registerState = BlocStatusError('An error occurred: $e', 500);
 //     }
-//   } catch (e) {
-//     registerState = BlocStatusError('An error occurred: $e', 500);
+
+//     notifyListeners();
 //   }
 
-//   notifyListeners();
-// }
-
-
-
-
-
-
-
-
-
-
-//   //متدی برای ارسا اطلاعات صورت کاربر
+//   // ارسال ویژگی‌های صورت کاربر
 //   void sendFaceProperty({
 //     required String faceForm,
 //     required String hairForm,
@@ -256,15 +203,14 @@
 //     notifyListeners();
 
 //     facePropertyResponse = await authRepository.sendFaceProperty(
-//       phone: phoneSaved, //شماره ذخیره شده از صفحه اول
+//       phone: phoneSaved,
 //       faceForm: faceForm,
 //       hairForm: hairForm,
 //       ryeColor: ryeColor,
 //       likeHair: likeHair,
-//       name: nameSaved, // نام ذخیره‌شده
-//       lastn: lastNameSaved, // نام خانوادگی ذخیره‌شده
-//       password: passwordSaved, // پسورد ذخیره‌شده
-//       userId: phoneUserResponse?.json['id'],
+//       name: nameSaved,
+//       lastn: lastNameSaved,
+//       password: passwordSaved,
 //     );
 
 //     if (facePropertyResponse?.statusCode == 200) {
@@ -285,30 +231,6 @@
 //     notifyListeners();
 //   }
 // }
-
-//اصلی بالایی هست
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 import 'dart:async';
 import 'package:flutter/foundation.dart';
@@ -418,7 +340,8 @@ class AuthController extends ChangeNotifier {
 
         if (phoneVerificationResponse?.statusCode == 200) {
           if (message == 'User already logged in') {
-            phoneVerificationState = BlocStatusCompleted(phoneVerificationResponse);
+            phoneVerificationState =
+                BlocStatusCompleted(phoneVerificationResponse);
             notifyListeners();
             return;
           }
@@ -426,7 +349,8 @@ class AuthController extends ChangeNotifier {
           String token = phoneVerificationResponse?.json['token'];
           await saveToken(token);
 
-          phoneVerificationState = BlocStatusCompleted(phoneVerificationResponse);
+          phoneVerificationState =
+              BlocStatusCompleted(phoneVerificationResponse);
           notifyListeners();
         } else {
           phoneVerificationState = BlocStatusError(
@@ -436,7 +360,8 @@ class AuthController extends ChangeNotifier {
           notifyListeners();
         }
       } else {
-        phoneVerificationState = BlocStatusError('Response data is null or empty', 500);
+        phoneVerificationState =
+            BlocStatusError('Response data is null or empty', 500);
         notifyListeners();
       }
     } catch (e) {
@@ -478,7 +403,7 @@ class AuthController extends ChangeNotifier {
     return null;
   }
 
-  // ثبت‌نام کاربر
+  // متد ثبت‌نام کاربر با توکن به‌روز شده
   void registerUser({
     required String name,
     required String lastn,
@@ -514,6 +439,11 @@ class AuthController extends ChangeNotifier {
       if (tokenExpired) {
         // رفرش توکن اگر منقضی شده باشد
         token = await refreshToken(token);
+        if (token == null) {
+          registerState = BlocStatusError('Failed to refresh token', 500);
+          notifyListeners();
+          return;
+        }
       }
 
       // ارسال درخواست به سرور برای ثبت‌نام کاربر
@@ -521,17 +451,16 @@ class AuthController extends ChangeNotifier {
         name: name,
         lastn: lastn,
         password: password,
-        phone: phone,
-        userId: phoneUserResponse?.json['id'],
         faceForm: faceForm,
         hairForm: hairForm,
         ryeColor: ryeColor,
         likeHair: likeHair,
-        token: token!, // ارسال توکن به‌روزرسانی شده
+        token: token, // ارسال توکن به‌روزرسانی شده
       );
+      print('controller TOKEN:$token');
 
       if (registerResponse?.statusCode == 200) {
-        registerState = BlocStatusCompleted(registerResponse);
+        registerState = BlocStatusCompleted(registerResponse?.json);
       } else {
         registerState = BlocStatusError(
           registerResponse?.error?.message ?? 'Unknown error',
@@ -564,7 +493,7 @@ class AuthController extends ChangeNotifier {
       name: nameSaved,
       lastn: lastNameSaved,
       password: passwordSaved,
-      userId: phoneUserResponse?.json['id'],
+      // userId: phoneUserResponse?.json['id'],
     );
 
     if (facePropertyResponse?.statusCode == 200) {
@@ -585,4 +514,3 @@ class AuthController extends ChangeNotifier {
     notifyListeners();
   }
 }
-

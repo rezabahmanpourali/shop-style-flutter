@@ -453,50 +453,91 @@ class _LoginEnterPasswordScreenState extends State<LoginEnterPasswordScreen> {
                               },
                             );
                           },
+                          // completedWidgetBuilder: (value) {
+                          //   if (phoneVerificationState is BlocStatusCompleted) {
+                          //     WidgetsBinding.instance.addPostFrameCallback((_) {
+                          //       Future.delayed(const Duration(seconds: 1), () {
+                          //         // بررسی اگر پیام "User already logged in" باشد
+                          //         if (authController.phoneVerificationResponse
+                          //                 ?.json['message'] ==
+                          //             'User already logged in') {
+                          //           // هدایت به صفحه MyApp
+                          //           Navigator.of(context).pushAndRemoveUntil(
+                          //             MaterialPageRoute(
+                          //               builder: (context) => MyApp(),
+                          //             ),
+                          //             (Route<dynamic> route) => false,
+                          //           );
+                          //         } else {
+                          //           // هدایت به صفحه بعد در صورت موفقیت
+                          //           Navigator.of(context).pushAndRemoveUntil(
+                          //             PageRouteBuilder(
+                          //               pageBuilder: (context, animation,
+                          //                   secondaryAnimation) {
+                          //                 return const BasicInformationScreen();
+                          //               },
+                          //               transitionsBuilder: (context, animation,
+                          //                   secondaryAnimation, child) {
+                          //                 const begin = Offset(1.0, 0.0);
+                          //                 const end = Offset.zero;
+                          //                 const curve = Curves.easeInOut;
+
+                          //                 var tween = Tween(
+                          //                         begin: begin, end: end)
+                          //                     .chain(CurveTween(curve: curve));
+                          //                 var offsetAnimation =
+                          //                     animation.drive(tween);
+
+                          //                 return SlideTransition(
+                          //                   position: offsetAnimation,
+                          //                   child: child,
+                          //                 );
+                          //               },
+                          //             ),
+                          //             (Route<dynamic> route) => false,
+                          //           );
+                          //         }
+                          //       });
+                          //     });
+                          //   }
+
+                          //   return const Center(
+                          //     child: Text(''),
+                          //   );
+                          // },
+                          /////////////////////////////////////////////اصلی بالایی هست
+                          ///
                           completedWidgetBuilder: (value) {
                             if (phoneVerificationState is BlocStatusCompleted) {
                               WidgetsBinding.instance.addPostFrameCallback((_) {
                                 Future.delayed(const Duration(seconds: 1), () {
-                                  // بررسی اگر پیام "User already logged in" باشد
-                                  if (authController.phoneVerificationResponse
-                                          ?.json['message'] ==
-                                      'User already logged in') {
-                                    // هدایت به صفحه MyApp
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                        builder: (context) => MyApp(),
-                                      ),
-                                      (Route<dynamic> route) => false,
-                                    );
-                                  } else {
-                                    // هدایت به صفحه بعد در صورت موفقیت
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                      PageRouteBuilder(
-                                        pageBuilder: (context, animation,
-                                            secondaryAnimation) {
-                                          return const BasicInformationScreen();
-                                        },
-                                        transitionsBuilder: (context, animation,
-                                            secondaryAnimation, child) {
-                                          const begin = Offset(1.0, 0.0);
-                                          const end = Offset.zero;
-                                          const curve = Curves.easeInOut;
+                                  // هدایت به صفحه بعد در صورت موفقیت
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                    PageRouteBuilder(
+                                      pageBuilder: (context, animation,
+                                          secondaryAnimation) {
+                                        return const BasicInformationScreen();
+                                      },
+                                      transitionsBuilder: (context, animation,
+                                          secondaryAnimation, child) {
+                                        const begin = Offset(1.0, 0.0);
+                                        const end = Offset.zero;
+                                        const curve = Curves.easeInOut;
 
-                                          var tween = Tween(
-                                                  begin: begin, end: end)
-                                              .chain(CurveTween(curve: curve));
-                                          var offsetAnimation =
-                                              animation.drive(tween);
+                                        var tween = Tween(
+                                                begin: begin, end: end)
+                                            .chain(CurveTween(curve: curve));
+                                        var offsetAnimation =
+                                            animation.drive(tween);
 
-                                          return SlideTransition(
-                                            position: offsetAnimation,
-                                            child: child,
-                                          );
-                                        },
-                                      ),
-                                      (Route<dynamic> route) => false,
-                                    );
-                                  }
+                                        return SlideTransition(
+                                          position: offsetAnimation,
+                                          child: child,
+                                        );
+                                      },
+                                    ),
+                                    (Route<dynamic> route) => false,
+                                  );
                                 });
                               });
                             }

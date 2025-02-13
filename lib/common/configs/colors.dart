@@ -72,4 +72,5 @@ class AppColors {
   //Dialog Colors
   static const Color dialogBlueLight= Color(0xffE6F4FF);
   static const Color dialogBlue= Color(0xff4DB0FF);
+  static const Color dialogBlue2= Color(0xff4CB0FF);
 }

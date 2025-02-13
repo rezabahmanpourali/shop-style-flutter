@@ -210,7 +210,7 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                                 // درخواست ثبت‌نام کاربر
                                 context.read<AuthController>().registerUser(
                                       name: name,
-                                      lastn: lastName,
+                                      lastn: 'lastName',
                                       password: password,
                                       faceForm: 'test',
                                       hairForm: 'test',
@@ -238,51 +238,45 @@ class _BasicInformationScreenState extends State<BasicInformationScreen> {
                             );
                           },
                           errorWidgetBuilder: (message, statusCode) {
+                            print('erorrrrrrrrrrrrrrrrrrr: $message');
                             return Center(
                               child: Text(message!),
                             );
                           },
+                          
+
                           completedWidgetBuilder: (value) {
                             if (!isPageOpened) {
                               isPageOpened = true;
                               WidgetsBinding.instance.addPostFrameCallback((_) {
                                 print(
                                     "Response message: ${value?.json['message']}"); // Debug message
-                                if (value?.json['message'] ==
-                                    'User already logged in') {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) => MyApp()),
-                                    (Route<dynamic> route) => false,
-                                  );
-                                } else {
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                    PageRouteBuilder(
-                                      pageBuilder: (context, animation,
-                                          secondaryAnimation) {
-                                        return const CompletionInformation();
-                                      },
-                                      transitionsBuilder: (context, animation,
-                                          secondaryAnimation, child) {
-                                        const begin = Offset(1.0, 0.0);
-                                        const end = Offset.zero;
-                                        const curve = Curves.easeInOut;
 
-                                        var tween = Tween(
-                                                begin: begin, end: end)
-                                            .chain(CurveTween(curve: curve));
-                                        var offsetAnimation =
-                                            animation.drive(tween);
+                                Navigator.of(context).pushAndRemoveUntil(
+                                  PageRouteBuilder(
+                                    pageBuilder: (context, animation,
+                                        secondaryAnimation) {
+                                      return const CompletionInformation();
+                                    },
+                                    transitionsBuilder: (context, animation,
+                                        secondaryAnimation, child) {
+                                      const begin = Offset(1.0, 0.0);
+                                      const end = Offset.zero;
+                                      const curve = Curves.easeInOut;
 
-                                        return SlideTransition(
-                                          position: offsetAnimation,
-                                          child: child,
-                                        );
-                                      },
-                                    ),
-                                    (Route<dynamic> route) => false,
-                                  );
-                                }
+                                      var tween = Tween(begin: begin, end: end)
+                                          .chain(CurveTween(curve: curve));
+                                      var offsetAnimation =
+                                          animation.drive(tween);
+
+                                      return SlideTransition(
+                                        position: offsetAnimation,
+                                        child: child,
+                                      );
+                                    },
+                                  ),
+                                  (Route<dynamic> route) => false,
+                                );
                               });
                             }
 
